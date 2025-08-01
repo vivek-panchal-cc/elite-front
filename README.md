@@ -1,4 +1,12 @@
+# Elite Store Customer
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Dependencies version
+
+#### Next: v15.4.5
+#### React: v19.1.0
+#### Node: v22.14.0
 
 ## Getting Started
 
