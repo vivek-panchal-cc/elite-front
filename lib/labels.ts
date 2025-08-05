@@ -66,6 +66,9 @@ export const labels = {
     about: "About Elite Galaxy",
     howItWorks: "How it Works",
     freeTrial: "Free Trial",
+    products: "Products",
+    orders: "Orders",
+    dashboard: "Dashboard",
   },
 
   // Sidebar menu items

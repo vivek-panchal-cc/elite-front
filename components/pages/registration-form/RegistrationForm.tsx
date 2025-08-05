@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, registrationLabels } from "@/lib/labels";
 import { registrationSchema } from "@/lib/validations";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { IconEyeClose, IconEyeOpen } from "@/components/images/icons";
 import ReCAPTCHA from "react-google-recaptcha";
 import { apiRequest } from "@/lib/apiRequest";
@@ -25,6 +25,7 @@ interface FormValues {
   captcha: boolean;
   marketing: boolean;
   agree: boolean;
+  g_recaptcha_token: string;
 }
 
 const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -53,28 +54,22 @@ const RegistrationForm: React.FC = () => {
       captcha: false,
       marketing: false,
       agree: false,
+      g_recaptcha_token: captchaToken ?? "",
     },
     validationSchema: registrationSchema,
-    onSubmit: async (values, { setSubmitting, setStatus, setErrors }) => {
-      setIsLoading(true);
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      // setIsLoading(true);
       try {
-        const result = await handleSubmit(values);
-        if (result?.error) {
-          setStatus({ error: result.error });
-        }
+        const { data } = await apiRequest.register(values);
+        console.log("Registration response:", data); // Debug log
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        router.push("/");
       } catch (error: any) {
-        const errorMessage =
-          error?.response?.data?.message || "Registration failed";
-        toast.error(errorMessage);
-        setStatus({ error: errorMessage });
-
-        // Handle field-specific errors if they exist
-        if (error?.response?.data?.errors) {
-          setErrors(error.response.data.errors);
-        }
+        if (typeof error === "string") return toast.error(error);
       } finally {
         setSubmitting(false);
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     },
   });
@@ -105,6 +100,7 @@ const RegistrationForm: React.FC = () => {
         captcha: values.captcha,
         marketing: values.marketing,
         agree: values.agree,
+        g_recaptcha_token: values.g_recaptcha_token,
       };
 
       // Call the registration API
@@ -112,7 +108,7 @@ const RegistrationForm: React.FC = () => {
 
       if (response.data.status) {
         toast.success(response.data.message || "Registration successful!");
-        router.push("/login");
+        router.push("/");
       } else {
         throw new Error(response.data.message || "Registration failed");
       }
@@ -134,12 +130,6 @@ const RegistrationForm: React.FC = () => {
       <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
         {registrationLabels.dealerRegistration}
       </h2>
-
-      {formik.status?.error && (
-        <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
-          {formik.status.error}
-        </div>
-      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
@@ -183,7 +173,7 @@ const RegistrationForm: React.FC = () => {
           />
           <button
             type="button"
-            className="absolute right-3 top-3"
+            className="absolute right-3 top-2"
             onClick={() =>
               setShowPassword((prev) => ({ ...prev, password: !prev.password }))
             }
@@ -208,7 +198,7 @@ const RegistrationForm: React.FC = () => {
           />
           <button
             type="button"
-            className="absolute right-3 top-3"
+            className="absolute right-3 top-2"
             onClick={() =>
               setShowPassword((prev) => ({
                 ...prev,
@@ -222,7 +212,7 @@ const RegistrationForm: React.FC = () => {
 
         <div className="space-y-1">
           <Input
-            type="email"
+            type="text"
             name="dealer_email"
             placeholder="Email"
             onChange={formik.handleChange}
@@ -307,16 +297,17 @@ const RegistrationForm: React.FC = () => {
             onChange={(token: string | null) => {
               setCaptchaToken(token);
               formik.setFieldValue("captcha", Boolean(token));
+              formik.setFieldValue("g_recaptcha_token", token || "");
             }}
             onExpired={() => {
               setCaptchaToken(null);
               formik.setFieldValue("captcha", false);
+              formik.setFieldValue("g_recaptcha_token", "");
             }}
           />
         ) : (
           <div className="text-red-500 text-sm">
-            ReCAPTCHA configuration is missing. Please set
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY in your environment.
+            ReCAPTCHA configuration is missing.
           </div>
         )}
       </div>

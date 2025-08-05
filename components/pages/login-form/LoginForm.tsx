@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, loginLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { IconEyeClose, IconEyeOpen } from "@/components/images/icons";
 
 interface LoginFormProps {
@@ -25,10 +25,10 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
       try {
         // TODO: Implement your API call here
         console.log("Login values:", values);
-        
+
         // Mock API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         toast.success("Login successful!");
         setLoginClose(false);
       } catch (error: any) {
@@ -42,7 +42,7 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
   });
 
   return (
-    <form 
+    <form
       onSubmit={formik.handleSubmit}
       className="w-full max-w-2xl bg-white rounded-lg p-6 md:p-8 space-y-4 mx-auto"
     >
@@ -58,7 +58,7 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
 
       <div className="space-y-1">
         <Input
-          type="email"
+          type="text"
           name="email"
           placeholder="Email"
           onChange={formik.handleChange}
@@ -82,7 +82,7 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
         />
         <button
           type="button"
-          className="absolute right-3 top-3"
+          className="absolute right-3 top-2"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <IconEyeClose /> : <IconEyeOpen />}
@@ -96,8 +96,8 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
         </a>
       </div>
 
-      <Button 
-        type="submit" 
+      <Button
+        type="submit"
         className="w-full rounded-[50px]"
         disabled={formik.isSubmitting}
       >

@@ -1,20 +1,28 @@
 "use client";
 
 import { Button } from "@/components/ui/ButtonUI";
-import { Menu } from "lucide-react";
+import { Menu, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { images } from "@/components/images";
 import { navigationLabels, commonLabels, altTextLabels } from "@/lib/labels";
 import Modal from "../ui/Modal";
-import LoginForm from "../pages/login/LoginForm";
-import RegistrationForm from "../pages/registration/RegistrationForm";
+import LoginForm from "../pages/login-form/LoginForm";
+import RegistrationForm from "../pages/registration-form/RegistrationForm";
 import Logout from "../pages/logout/Logout";
+import { useAuth } from "@/lib/useAuth";
 
-const navigationItems = [
+const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
   { name: navigationLabels.vapeProducts, href: "/vape-products" },
+  { name: navigationLabels.contactUs, href: "/contact" },
+];
+
+const privateNavigationItems = [
+  { name: navigationLabels.dashboard, href: "/dashboard" },
+  { name: navigationLabels.orders, href: "/orders" },
+  { name: navigationLabels.products, href: "/products" },
   { name: navigationLabels.contactUs, href: "/contact" },
 ];
 
@@ -23,6 +31,12 @@ export function HeaderLayout() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const [isLogoutOpen, setLogoutOpen] = useState(false);
+  const { isAuthenticated, token } = useAuth();
+
+  const navigationItems = isAuthenticated
+    ? privateNavigationItems
+    : publicNavigationItems;
+  const cartItemCount = 0; // You can replace this with actual cart count from your cart state
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -42,8 +56,8 @@ export function HeaderLayout() {
             </Link>
           </div>
 
-          {/* Right side - Navigation and Login Button */}
-          <div className="flex items-center space-x-8 ml-auto">
+          {/* Right side - Navigation and Buttons */}
+          <div className="flex items-center space-x-4 ml-auto">
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
               {navigationItems.map((item) => (
@@ -57,20 +71,34 @@ export function HeaderLayout() {
               ))}
             </nav>
 
-            {/* Login Button */}
-            <Button
-              className="bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
-              onClick={() => setLoginOpen(true)}
-            >
-              {commonLabels.login}
-            </Button>
+            {/* Cart Icon - Only show when authenticated */}
+            {isAuthenticated && (
+              <Link href="/cart" className="relative">
+                <ShoppingCart className="h-6 w-6 text-gray-700 hover:text-purple-600" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Link>
+            )}
 
-            {/* <Button
-              className="bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
-              onClick={() => setLogoutOpen(true)}
-            >
-              {commonLabels.logout}
-            </Button> */}
+            {/* User Actions */}
+            {isAuthenticated ? (
+              <Button
+                className="bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
+                onClick={() => setLogoutOpen(true)}
+              >
+                {commonLabels.logout}
+              </Button>
+            ) : (
+              <Button
+                className="bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
+                onClick={() => setLoginOpen(true)}
+              >
+                {commonLabels.login}
+              </Button>
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -96,6 +124,16 @@ export function HeaderLayout() {
                   {item.name}
                 </Link>
               ))}
+              {isAuthenticated && (
+                <Link
+                  href="/cart"
+                  className="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors flex items-center"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Cart {cartItemCount > 0 && `(${cartItemCount})`}
+                </Link>
+              )}
             </nav>
           </div>
         )}
@@ -112,7 +150,7 @@ export function HeaderLayout() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle="min-w-[600px]"
+        classStyle="w-full sm:min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[700px]"
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>

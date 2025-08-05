@@ -5,8 +5,8 @@ import Link from "next/link";
 import { images } from "@/components/images";
 import { homepageLabels, commonLabels } from "@/lib/labels";
 import Modal from "@/components/ui/Modal";
-import LoginForm from "@/components/pages/login/LoginForm";
-import RegistrationForm from "@/components/pages/registration/RegistrationForm";
+import LoginForm from "@/components/pages/login-form/LoginForm";
+import RegistrationForm from "@/components/pages/registration-form/RegistrationForm";
 
 export default function HeroSection() {
   const [isLoginOpen, setLoginOpen] = useState(false);
@@ -182,7 +182,7 @@ export default function HeroSection() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle="min-w-[600px]"
+        classStyle="w-full sm:min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[700px]"
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>

@@ -1,26 +1,25 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getToken } from './utils';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getToken } from "./utils";
 
 export function useAuth() {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if token exists in localStorage
     const checkAuth = () => {
-      const token = getToken();
-      if (!token) {
-        router.replace('/');
+      const currentToken = getToken();
+      setToken(currentToken);
+      setIsAuthenticated(!!currentToken);
+      if (!currentToken && window.location.pathname.startsWith("/dashboard")) {
+        router.replace("/");
       }
     };
-
-    // Check immediately
     checkAuth();
-
-    // Set up interval to check periodically
-    const interval = setInterval(checkAuth, 1000); // Check every second
-
-    // Cleanup interval on unmount
+    const interval = setInterval(checkAuth, 1000);
     return () => clearInterval(interval);
   }, [router]);
+
+  return { isAuthenticated, token };
 }

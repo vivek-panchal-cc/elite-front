@@ -28,18 +28,18 @@ interface ApiErrorResponse {
 
 // Create axios instances for different services
 export const axiosAuthInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  timeout: 10000,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
 });
 
 export const axiosUserInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  timeout: 10000,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
 });
 
 export const axiosProductInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  timeout: 10000,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
 });
 
 // Request interceptor
@@ -85,13 +85,14 @@ const handleRedirect = (
 // Error interceptor
 const responseErrorInterceptor = (error: AxiosError<ApiErrorResponse>) => {
   const errResponse = error.response;
-  if (!errResponse) {
-    if (error.code === "ERR_CANCELED") return Promise.reject(error);
-    console.error("No response received:", error);
-    return Promise.reject(error);
-  }
+  // if (!errResponse) {
+  //   if (error.code === "ERR_CANCELED") return Promise.reject(error);
+  //   console.error("No response received:", error);
+  //   return Promise.reject(error);
+  // }
 
-  const { status, data } = errResponse;
+  const status = errResponse?.status;
+  const data = errResponse?.data;
   const token = storageRequest.getAuth();
   const message = data?.message;
 
@@ -102,7 +103,7 @@ const responseErrorInterceptor = (error: AxiosError<ApiErrorResponse>) => {
     }
     storageRequest.removeAuth();
     useAuthStore.getState().logout();
-    window.location.href = "/login";
+    window.location.href = "/";
   }
 
   return Promise.reject(error);
