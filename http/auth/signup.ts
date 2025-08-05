@@ -1,7 +1,7 @@
 import { ErrorResponse, Response } from "@/types";
 import { api } from "../client";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/AuthStore";
 
 export interface SignupPayload {
   firstName: string;

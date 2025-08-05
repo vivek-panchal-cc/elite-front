@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-soft-white: #e9e9e9;
+  --color-blue: #10499e;
+  --color-red: #ed174b;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -119,4 +127,35 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.btn,
+.btn-primary {
+  background-color: var(--color-soft-white);
+  color: var(--color-blue);
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.header-section {
+  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
+  background-image: url("../components/images/public_background_layout.png");
+  background-repeat: repeat;
+  background-position: center center;
+  /* width: 100%;
+  height: 100%; */
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 100%;
 }

@@ -1,6 +1,6 @@
 import { ErrorResponse, Response } from "@/types";
 import api from "../axios-interceptor";
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "@/stores/AuthStore";
 
 export interface LoginResponse {
   email: string;

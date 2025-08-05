@@ -1,58 +1,76 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { User, Settings, CreditCard, FileText, BarChart3, Users, Bell, Shield, Home, ChevronRight } from "lucide-react"
-import { useState } from "react"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/ButtonUI";
+import { ScrollArea } from "@/components/ui/ScrollArea";
+import {
+  User,
+  Settings,
+  CreditCard,
+  FileText,
+  BarChart3,
+  Users,
+  Bell,
+  Shield,
+  Home,
+  ChevronRight,
+} from "lucide-react";
+import { useState } from "react";
+import { sidebarLabels } from "@/lib/labels";
 
 interface SidebarProps {
-  activeItem: string
-  onItemSelect: (item: string) => void
+  activeItem: string;
+  onItemSelect: (item: string) => void;
 }
 
 const menuItems = [
   {
-    category: "My Account",
+    category: sidebarLabels.myAccount,
     items: [
-      { id: "dashboard", label: "Dashboard", icon: Home },
-      { id: "profile", label: "Profile Information", icon: User },
-      { id: "settings", label: "Account Settings", icon: Settings },
-      { id: "billing", label: "Billing & Payments", icon: CreditCard },
-      { id: "documents", label: "Documents", icon: FileText },
+      { id: "dashboard", label: sidebarLabels.dashboard, icon: Home },
+      { id: "profile", label: sidebarLabels.profileInformation, icon: User },
+      { id: "settings", label: sidebarLabels.accountSettings, icon: Settings },
+      { id: "billing", label: sidebarLabels.billingPayments, icon: CreditCard },
+      { id: "documents", label: sidebarLabels.documents, icon: FileText },
     ],
   },
   {
-    category: "Analytics",
+    category: sidebarLabels.analytics,
     items: [
-      { id: "reports", label: "Reports", icon: BarChart3 },
-      { id: "analytics", label: "Analytics", icon: BarChart3 },
+      { id: "reports", label: sidebarLabels.reports, icon: BarChart3 },
+      { id: "analytics", label: sidebarLabels.analytics, icon: BarChart3 },
     ],
   },
   {
-    category: "Management",
+    category: sidebarLabels.management,
     items: [
-      { id: "users", label: "User Management", icon: Users },
-      { id: "notifications", label: "Notifications", icon: Bell },
-      { id: "security", label: "Security", icon: Shield },
+      { id: "users", label: sidebarLabels.userManagement, icon: Users },
+      { id: "notifications", label: sidebarLabels.notifications, icon: Bell },
+      { id: "security", label: sidebarLabels.security, icon: Shield },
     ],
   },
-]
+];
 
 export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(["My Account"])
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([
+    sidebarLabels.myAccount,
+  ]);
 
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
-    )
-  }
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-full">
       <ScrollArea className="h-full">
         <div className="p-4">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Menu</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            {sidebarLabels.menu}
+          </h2>
 
           {menuItems.map((section) => (
             <div key={section.category} className="mb-6">
@@ -65,7 +83,7 @@ export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
                 <ChevronRight
                   className={cn(
                     "h-4 w-4 transition-transform",
-                    expandedCategories.includes(section.category) && "rotate-90",
+                    expandedCategories.includes(section.category) && "rotate-90"
                   )}
                 />
               </Button>
@@ -73,7 +91,7 @@ export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
               {expandedCategories.includes(section.category) && (
                 <div className="ml-2 mt-2 space-y-1">
                   {section.items.map((item) => {
-                    const Icon = item.icon
+                    const Icon = item.icon;
                     return (
                       <Button
                         key={item.id}
@@ -82,14 +100,14 @@ export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
                           "w-full justify-start p-2 h-auto text-sm",
                           activeItem === item.id
                             ? "bg-purple-50 text-purple-700 border-r-2 border-purple-600"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                         )}
                         onClick={() => onItemSelect(item.id)}
                       >
                         <Icon className="h-4 w-4 mr-3" />
                         {item.label}
                       </Button>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -98,5 +116,5 @@ export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
         </div>
       </ScrollArea>
     </div>
-  )
+  );
 }

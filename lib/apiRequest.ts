@@ -1,0 +1,151 @@
+import { AxiosResponse } from "axios";
+import * as apiUrl from "@/constants/urls";
+import {
+  axiosAuthInstance,
+  axiosUserInstance,
+  axiosProductInstance,
+} from "@/http/axios-interceptor";
+
+// Types
+interface LoginCredentials {
+  country_code: string;
+  user_name: string;
+  password: string;
+}
+
+interface LoginOtpParams {
+  mobile_number: string;
+  country_code: string;
+}
+
+interface ApiResponse<T = any> {
+  status: boolean;
+  message: string;
+  data: T;
+}
+
+// API Request Functions
+const login = (
+  creds: LoginCredentials
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.LOGIN, creds);
+};
+
+const logout = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.LOGOUT);
+};
+
+const loginOtp = (
+  params: LoginOtpParams
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.LOGIN, params);
+};
+
+interface DealerRegistrationData {
+  dealer_ref: string;
+  dealer_name: string;
+  dealer_email: string;
+  dealer_password: string;
+  dealer_address1: string;
+  dealer_address2?: string;
+  dealer_city: string;
+  postcode: string;
+  dealer_mobile: string;
+  captcha: boolean;
+  marketing: boolean;
+  agree: boolean;
+}
+
+const register = (
+  data: DealerRegistrationData
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.REGISTER, data);
+};
+
+const forgotPassword = (email: string): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.FORGOT_PASSWORD, {
+    email,
+  });
+};
+
+const resetPassword = (data: {
+  token: string;
+  password: string;
+  password_confirmation: string;
+}): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.RESET_PASSWORD, data);
+};
+
+const getProfile = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosUserInstance.get(apiUrl.USER_ENDPOINTS.PROFILE);
+};
+
+const updateProfile = (
+  data: Record<string, any>
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosUserInstance.put(apiUrl.USER_ENDPOINTS.UPDATE_PROFILE, data);
+};
+
+const getProducts = (
+  params?: Record<string, any>
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.LIST, { params });
+};
+
+const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.DETAILS(id));
+};
+
+const getInvitedMemberRecurring = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosUserInstance.get(
+    apiUrl.SAVING_JAR_ENDPOINTS.INVITED_MEMBER_RECURRING_DETAILS
+  );
+};
+
+const getDashboardStats = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosUserInstance.get(
+    apiUrl.SAVING_JAR_ENDPOINTS.DASHBOARD_STATISTICS_DESCRIPTION
+  );
+};
+
+// Export all API functions in a single object
+export const apiRequest = {
+  // Auth
+  login,
+  logout,
+  loginOtp,
+  register,
+  forgotPassword,
+  resetPassword,
+
+  // User
+  getProfile,
+  updateProfile,
+
+  // Products
+  getProducts,
+  getProductDetails,
+
+  // Saving Jar
+  getInvitedMemberRecurring,
+  getDashboardStats,
+} as const;
+
+// Export type for the apiRequest object
+export type ApiRequest = typeof apiRequest;
+
+// Export individual functions as well if needed
+export {
+  login,
+  logout,
+  loginOtp,
+  register,
+  forgotPassword,
+  resetPassword,
+  getProfile,
+  updateProfile,
+  getProducts,
+  getProductDetails,
+  getInvitedMemberRecurring,
+  getDashboardStats,
+};

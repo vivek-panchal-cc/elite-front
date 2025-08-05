@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/ButtonUI";
 
 interface MortgageData {
-  amount: string
-  status: string
-  lastUpdated: string
+  amount: string;
+  status: string;
+  lastUpdated: string;
 }
 
 export function MortgageCard() {
@@ -14,7 +14,7 @@ export function MortgageCard() {
     amount: "£498.32",
     status: "Active",
     lastUpdated: new Date().toISOString(),
-  }
+  };
 
   return (
     <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
@@ -23,10 +23,13 @@ export function MortgageCard() {
       </CardHeader>
       <CardContent>
         <div className="text-3xl font-bold mb-4">{data?.amount}</div>
-        <Button variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100">
+        <Button
+          variant="secondary"
+          className="bg-white text-purple-600 hover:bg-gray-100"
+        >
           View Details
         </Button>
       </CardContent>
     </Card>
-  )
+  );
 }

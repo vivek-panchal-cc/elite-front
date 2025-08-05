@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import ToasterComponent from "@/components/ui/toaster";
+import { HeaderLayout } from "@/components/layout/HeaderLayout";
+import { FooterLayout } from "@/components/layout/FooterLayout";
+import ToasterComponent from "@/components/ui/Toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { LoaderProvider } from "@/components/providers/loader-provider";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Elite Galaxy - Premium Dashboard & Analytics",
-    template: "%s | Elite Galaxy",
+    default: "Elite Extra Rewards - Welcome to Elite Galaxy",
+    template: "%s | Elite Extra Rewards",
   },
   description:
-    "Elite Galaxy provides comprehensive dashboard solutions, mortgage services, and business analytics tools for modern enterprises.",
-  keywords: ["dashboard", "analytics", "mortgage", "business tools", "elite galaxy"],
+    "Welcome to Elite Extra Rewards. Access your rewards, order vape products, top up your data, and manage your account with Elite Galaxy.",
+  keywords: [
+    "elite rewards",
+    "vape products",
+    "data top up",
+    "mobile services",
+    "elite galaxy",
+    "rewards program",
+  ],
   authors: [{ name: "Elite Galaxy Team" }],
   creator: "Elite Galaxy",
   publisher: "Elite Galaxy",
@@ -34,23 +42,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://elitegalaxy.com",
-    title: "Elite Galaxy - Premium Dashboard & Analytics",
+    title: "Elite Extra Rewards - Welcome to Elite Galaxy",
     description:
-      "Elite Galaxy provides comprehensive dashboard solutions, mortgage services, and business analytics tools for modern enterprises.",
-    siteName: "Elite Galaxy",
+      "Welcome to Elite Extra Rewards. Access your rewards, order vape products, top up your data, and manage your account with Elite Galaxy.",
+    siteName: "Elite Extra Rewards",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elite Galaxy - Premium Dashboard & Analytics",
+    title: "Elite Extra Rewards - Welcome to Elite Galaxy",
     description:
-      "Elite Galaxy provides comprehensive dashboard solutions, mortgage services, and business analytics tools for modern enterprises.",
+      "Welcome to Elite Extra Rewards. Access your rewards, order vape products, top up your data, and manage your account with Elite Galaxy.",
     creator: "@elitegalaxy",
   },
   verification: {
     google: "your-google-verification-code",
   },
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
 export default function RootLayout({
   children,
@@ -65,10 +73,12 @@ export default function RootLayout({
       >
         <div className="min-h-screen">
           <QueryProvider>
-            <ToasterComponent />
-            <Header />
-            {children}
-            <Footer />
+            <LoaderProvider>
+              <ToasterComponent />
+              <HeaderLayout />
+              {children}
+              <FooterLayout />
+            </LoaderProvider>
           </QueryProvider>
         </div>
       </body>
