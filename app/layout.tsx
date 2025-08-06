@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import { HeaderLayout } from "@/components/layout/HeaderLayout";
 import { FooterLayout } from "@/components/layout/FooterLayout";
@@ -8,7 +8,11 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { LoaderProvider } from "@/components/providers/loader-provider";
 import { AuthProvider } from "@/lib/AuthProvider";
 
-const roboto = Roboto({ subsets: ["latin"] });
+const robotoFlex = Roboto_Flex({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto-flex",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -55,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={`${robotoFlex.variable} font-sans antialiased`}>
         <AuthProvider>
           <QueryProvider>
             <LoaderProvider>

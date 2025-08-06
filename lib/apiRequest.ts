@@ -54,7 +54,7 @@ interface DealerRegistrationData {
   dealer_mobile: string;
   captcha: boolean;
   marketing: boolean;
-  agree: boolean;
+  term_and_condition: boolean;
 }
 
 const register = (

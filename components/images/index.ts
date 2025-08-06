@@ -14,6 +14,15 @@ import broucher from "./broucher.svg";
 import contactUs from "./contact_us.svg";
 import simply from "./products/simply-blue.png";
 import rightTick from "./RightTick.svg";
+import awardOne from "./awards/award_1.png";
+import awardTwo from "./awards/award_2.png";
+import awardThree from "./awards/award_3.png";
+import awardFour from "./awards/award_4.png";
+import awardFive from "./awards/award_5.png";
+import awardSix from "./awards/award_6.png";
+import googlePlay from "./imgs/google_play.png";
+import appleStore from "./imgs/app_store.png";
+import rightArrow from "./imgs/right_arrow.png";
 
 // Export all images as a single object
 export const images = {
@@ -32,6 +41,15 @@ export const images = {
   contactUs,
   simply,
   rightTick,
+  awardOne,
+  awardTwo,
+  awardThree,
+  awardFour,
+  awardFive,
+  awardSix,
+  googlePlay,
+  appleStore,
+  rightArrow,
 } as const;
 
 // Export individual images for direct import
@@ -51,6 +69,15 @@ export {
   contactUs,
   simply,
   rightTick,
+  awardOne,
+  awardTwo,
+  awardThree,
+  awardFour,
+  awardFive,
+  awardSix,
+  googlePlay,
+  appleStore,
+  rightArrow,
 };
 
 // Type for the images object

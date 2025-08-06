@@ -42,8 +42,8 @@ export function HeaderLayout() {
   const cartItemCount = 0; // You can replace this with actual cart count from your cart state
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-[#E9E9E9] border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         <div className="flex items-center h-16">
           {/* Logo */}
           <div className="flex items-center mr-4 md:mr-0">
@@ -96,7 +96,7 @@ export function HeaderLayout() {
               </Button>
             ) : (
               <Button
-                className="bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
+                className="hidden md:inline-flex bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
                 onClick={() => setLoginOpen(true)}
               >
                 {commonLabels.login}
@@ -157,7 +157,7 @@ export function HeaderLayout() {
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
-        <RegistrationForm />
+        <RegistrationForm setRegistrationClose={setSignUpOpen} />
       </Modal>
       <Modal
         isOpen={isLogoutOpen}

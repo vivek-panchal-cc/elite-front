@@ -24,13 +24,17 @@ interface FormValues {
   dealer_address2: string;
   captcha: boolean;
   marketing: boolean;
-  agree: boolean;
+  term_and_condition: boolean;
   g_recaptcha_token: string;
+}
+
+interface RegistrationFormProps {
+  setRegistrationClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-const RegistrationForm: React.FC = () => {
+const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
   const { setIsLoading } = useLoader();
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const router = useRouter();
@@ -53,7 +57,7 @@ const RegistrationForm: React.FC = () => {
       dealer_address2: "",
       captcha: false,
       marketing: false,
-      agree: false,
+      term_and_condition: false,
       g_recaptcha_token: captchaToken ?? "",
     },
     validationSchema: registrationSchema,
@@ -61,9 +65,9 @@ const RegistrationForm: React.FC = () => {
       // setIsLoading(true);
       try {
         const { data } = await apiRequest.register(values);
-        console.log("Registration response:", data); // Debug log
         if (!data.success) throw data.message;
         toast.success(data.message);
+        setRegistrationClose(false);
         router.push("/");
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);
@@ -99,7 +103,7 @@ const RegistrationForm: React.FC = () => {
         dealer_mobile: values.dealer_mobile,
         captcha: values.captcha,
         marketing: values.marketing,
-        agree: values.agree,
+        term_and_condition: values.term_and_condition,
         g_recaptcha_token: values.g_recaptcha_token,
       };
 
@@ -333,18 +337,23 @@ const RegistrationForm: React.FC = () => {
         <div className="flex items-start gap-2">
           <input
             type="checkbox"
-            id="agree"
-            name="agree"
+            id="term_and_condition"
+            name="term_and_condition"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            checked={formik.values.agree}
+            checked={formik.values.term_and_condition}
             className="mt-1"
           />
           <div className="flex flex-col">
-            <label htmlFor="agree">{registrationLabels.iConfirm}</label>
-            {formik.touched.agree && formik.errors.agree && (
-              <div className="text-red-500 text-sm">{formik.errors.agree}</div>
-            )}
+            <label htmlFor="term_and_condition">
+              {registrationLabels.iConfirm}
+            </label>
+            {formik.touched.term_and_condition &&
+              formik.errors.term_and_condition && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.term_and_condition}
+                </div>
+              )}
           </div>
         </div>
       </div>

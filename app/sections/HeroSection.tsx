@@ -16,16 +16,16 @@ export default function HeroSection() {
     <>
       <section className="header-section">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16 px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16 px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
             {/* Left Content */}
             <div className="space-y-8">
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-[28px] md:text-[52px] font-bold leading-tight text-center md:text-left">
                 {homepageLabels.hero.title}
               </h1>
 
               <div className="flex items-center justify-center bg-cover bg-center">
                 <div className="space-y-4 text-center">
-                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                  <div className="flex sm:flex-row gap-4 items-center justify-center">
                     <Button
                       size="lg"
                       className="btn px-8 py-3 text-lg border-white rounded-[50px]"
@@ -115,55 +115,56 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-          <div className="pb-16 px-4">
+          <div className="pb-16 px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
             <div className="max-w-7xl mx-auto">
-              <div className="border border-white rounded-2xl p-10 shadow-lg bg-white/5">
-                <h2 className="text-2xl font-bold text-center mb-10 uppercase tracking-wide">
+              <div className="border border-white rounded-2xl p-6 sm:p-10 shadow-lg bg-white/5">
+                <h2 className="text-2xl font-bold text-center mb-8 sm:mb-10 uppercase tracking-wide">
                   {homepageLabels.loginFeatures.title}
                 </h2>
-                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                  {/* Feature: See Your Latest Statement */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.bankStagementNew} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.seeLatestStatement}
-                    </span>
-                  </div>
-                  {/* Feature: Check and Claim Rewards */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.badge_new} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.checkClaimRewards}
-                    </span>
-                  </div>
-                  {/* Feature: Order Vape Products */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.liquidNew} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.orderVapeProducts}
-                    </span>
-                  </div>
-                  {/* Feature: Order SIMs */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.simToolkitNew} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.orderSims}
-                    </span>
-                  </div>
-                  {/* Feature: Claim Super Bonus */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.commissionNew} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.claimSuperBonus}
-                    </span>
-                  </div>
-                  {/* Feature: Check a SIM Card */}
-                  <div className="flex flex-col items-center flex-1 min-w-[120px]">
-                    <Image src={images.dualSim} alt="log img" />
-                    <span className="text-xs font-semibold text-center uppercase tracking-wide mt-3">
-                      {homepageLabels.loginFeatures.checkSimCard}
-                    </span>
-                  </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-6 gap-x-4 sm:gap-8">
+                  {[
+                    {
+                      img: images.bankStagementNew,
+                      label: homepageLabels.loginFeatures.seeLatestStatement,
+                    },
+                    {
+                      img: images.badge_new,
+                      label: homepageLabels.loginFeatures.checkClaimRewards,
+                    },
+                    {
+                      img: images.liquidNew,
+                      label: homepageLabels.loginFeatures.orderVapeProducts,
+                    },
+                    {
+                      img: images.simToolkitNew,
+                      label: homepageLabels.loginFeatures.orderSims,
+                    },
+                    {
+                      img: images.commissionNew,
+                      label: homepageLabels.loginFeatures.claimSuperBonus,
+                    },
+                    {
+                      img: images.dualSim,
+                      label: homepageLabels.loginFeatures.checkSimCard,
+                    },
+                  ].map(({ img, label }, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center justify-start text-center min-h-[120px] px-2"
+                    >
+                      <div className="w-[48px] h-[48px] sm:w-[52px] sm:h-[52px] flex items-center justify-center">
+                        <Image
+                          src={img}
+                          alt="feature icon"
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <span className="mt-3 text-[13px] sm:text-[14px] font-semibold uppercase tracking-wide leading-tight">
+                        {label}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -186,7 +187,7 @@ export default function HeroSection() {
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
-        <RegistrationForm />
+        <RegistrationForm setRegistrationClose={setSignUpOpen} />
       </Modal>
     </>
   );

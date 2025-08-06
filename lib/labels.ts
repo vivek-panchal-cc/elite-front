@@ -149,12 +149,13 @@ export const labels = {
     },
     newsletter: {
       title: "Newsletter",
-      description: "Get the latest updates and offers",
-      placeholder: "Enter your email",
+      description:
+        "I would like to receive marketing communications and exclusive offers.",
+      placeholder: "Your email",
       subscribe: "Subscribe",
     },
     awards: {
-      partnerOfYear: `Partner of the Year ${new Date().getFullYear()}`,
+      partnerOfYear: `Partner of the Year 2023`,
       indirectPartner: "Indirect Partner Awards",
       bestServiceProvider: "Best Service Provider",
       customerChoice: "Customer Choice Award",
