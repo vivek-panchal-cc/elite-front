@@ -1,13 +1,18 @@
 "use client";
 
-import { useAuth } from "@/lib/useAuth";
+import { useAuthContext } from "@/lib/AuthProvider";
 import { AnalyticsCard } from "@/components/homepage/AnalyticsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 
 const Dashboard = () => {
-  // This will check for token and redirect to / if not found
-  useAuth();
+  // Use AuthContext instead of useAuth
+  const { isAuthenticated, token } = useAuthContext();
+
+  // AuthProvider handles redirects automatically
+  if (!isAuthenticated) {
+    return null; // AuthProvider will handle redirect
+  }
 
   return (
     <ScrollArea className="h-full">

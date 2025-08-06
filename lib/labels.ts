@@ -68,7 +68,10 @@ export const labels = {
     freeTrial: "Free Trial",
     products: "Products",
     orders: "Orders",
-    dashboard: "Dashboard",
+    dashboard: "Home",
+    claim: "Claim",
+    transfer: "Transfer",
+    reports: "Reports",
   },
 
   // Sidebar menu items

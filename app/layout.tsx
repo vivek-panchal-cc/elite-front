@@ -6,6 +6,7 @@ import { FooterLayout } from "@/components/layout/FooterLayout";
 import ToasterComponent from "@/components/ui/Toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { LoaderProvider } from "@/components/providers/loader-provider";
+import { AuthProvider } from "@/lib/AuthProvider";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
@@ -34,8 +35,6 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
     },
   },
   openGraph: {
@@ -47,17 +46,6 @@ export const metadata: Metadata = {
       "Welcome to Elite Extra Rewards. Access your rewards, order vape products, top up your data, and manage your account with Elite Galaxy.",
     siteName: "Elite Extra Rewards",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Elite Extra Rewards - Welcome to Elite Galaxy",
-    description:
-      "Welcome to Elite Extra Rewards. Access your rewards, order vape products, top up your data, and manage your account with Elite Galaxy.",
-    creator: "@elitegalaxy",
-  },
-  verification: {
-    google: "your-google-verification-code",
-  },
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
@@ -67,11 +55,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={roboto.className}
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="min-h-screen">
+      <body className={roboto.className}>
+        <AuthProvider>
           <QueryProvider>
             <LoaderProvider>
               <ToasterComponent />
@@ -80,7 +65,7 @@ export default function RootLayout({
               <FooterLayout />
             </LoaderProvider>
           </QueryProvider>
-        </div>
+        </AuthProvider>
       </body>
     </html>
   );

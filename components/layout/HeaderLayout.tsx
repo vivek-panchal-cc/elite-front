@@ -11,7 +11,7 @@ import Modal from "../ui/Modal";
 import LoginForm from "../pages/login-form/LoginForm";
 import RegistrationForm from "../pages/registration-form/RegistrationForm";
 import Logout from "../pages/logout/Logout";
-import { useAuth } from "@/lib/useAuth";
+import { useAuthContext } from "@/lib/AuthProvider";
 
 const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
@@ -20,9 +20,12 @@ const publicNavigationItems = [
 ];
 
 const privateNavigationItems = [
-  { name: navigationLabels.dashboard, href: "/dashboard" },
+  { name: navigationLabels.home, href: "/dashboard" },
   { name: navigationLabels.orders, href: "/orders" },
-  { name: navigationLabels.products, href: "/products" },
+  { name: navigationLabels.claim, href: "/claim" },
+  { name: navigationLabels.transfer, href: "/Transfer" },
+  { name: navigationLabels.vapeProducts, href: "/vape-products" },
+  { name: navigationLabels.reports, href: "/reports" },
   { name: navigationLabels.contactUs, href: "/contact" },
 ];
 
@@ -31,7 +34,7 @@ export function HeaderLayout() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const [isLogoutOpen, setLogoutOpen] = useState(false);
-  const { isAuthenticated, token } = useAuth();
+  const { isAuthenticated, token } = useAuthContext();
 
   const navigationItems = isAuthenticated
     ? privateNavigationItems
@@ -59,7 +62,7 @@ export function HeaderLayout() {
           {/* Right side - Navigation and Buttons */}
           <div className="flex items-center space-x-4 ml-auto">
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex">
               {navigationItems.map((item) => (
                 <Link
                   key={item.name}
