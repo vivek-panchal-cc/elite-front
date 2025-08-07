@@ -8,8 +8,7 @@ import {
 
 // Types
 interface LoginCredentials {
-  country_code: string;
-  user_name: string;
+  email: string;
   password: string;
 }
 

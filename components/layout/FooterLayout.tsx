@@ -19,8 +19,8 @@ const footerSections = [
     links: [
       { name: "Home", href: "/" },
       { name: "About Elite Galaxy", href: "/about" },
-      { name: "How it Works", href: "/how-it-works" },
-      { name: "Free Trial", href: "/free-trial" },
+      { name: "Careers", href: "/careers" },
+      { name: "Contact", href: "/contact" },
     ],
   },
   {
@@ -58,7 +58,7 @@ const footerSections = [
   {
     title: footerLabels.sections.corporateAccounts,
     links: [
-      { name: footerLabels.contact.phone, href: "tel:01619071717" },
+      { name: footerLabels.contact.corporatePhone, href: "tel:01619071717" },
       {
         name: footerLabels.contact.corpEmail,
         href: "mailto:corp@elitegalaxy.co.uk",

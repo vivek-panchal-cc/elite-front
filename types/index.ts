@@ -1,4 +1,3 @@
-
 export interface LoginFormPayload {
   username: string;
   password: string;
@@ -13,7 +12,7 @@ export interface ApiResponse<T> {
 }
 
 export interface Response<T> {
-  msg: string;
+  message: string;
   data: T;
 }
 export interface ErrorResponse {
@@ -21,8 +20,8 @@ export interface ErrorResponse {
   message: string;
   response?: {
     data?: {
-      msg?: string;
-      errors?: { msg?: string }[];
+      message?: string;
+      errors?: { message?: string }[];
     };
   };
 }

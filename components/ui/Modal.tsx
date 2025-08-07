@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ButtonUI";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  classStyle: React.ReactNode;
-  isClose: boolean;
+  classStyle?: string;
+  isClose?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -16,6 +16,19 @@ const Modal: React.FC<ModalProps> = ({
   classStyle = "",
   isClose = true,
 }) => {
+  // Disable background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Cleanup
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
@@ -25,8 +38,8 @@ const Modal: React.FC<ModalProps> = ({
       role="dialog"
     >
       <div
-        className={`relative bg-white rounded-lg shadow-lg w-full max-w-md mx-4 ${classStyle}`}
-        onClick={(e) => e.stopPropagation()} // Prevent closing on outside click
+        className={`relative bg-white rounded-lg shadow-lg max-h-[90vh] overflow-y-auto mx-4 ${classStyle}`}
+        onClick={(e) => e.stopPropagation()}
       >
         {isClose && (
           <Button

@@ -1,7 +1,8 @@
 import { ErrorResponse, Response } from "@/types";
 import { api } from "../client";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/AuthStore";
+import { useAuthStore } from "@/stores/AuthStoreDealer";
+import { setToken } from "@/lib/utils";
 
 export interface LoginPayload {
   email: string;
@@ -23,36 +24,24 @@ export const login = async ({
 }: {
   queryKey: string;
   payload: LoginPayload;
-}): Promise<Response<LoginResponse>> => {
+}): Promise<Response<any>> => {
   try {
-    const response = await api.post<Response<LoginResponse>>(
-      queryKey,
-      payload
-    );
-    toast.success(response.data.msg);
+    const response = await api.post<Response<any>>(queryKey, payload);
+    toast.success(response.data.message || "Login success!");
+
     const loginData = response.data.data;
-    const user = {
-      email: loginData.email,
-      firstName: loginData.firstName,
-      lastName: loginData.lastName,
-      id: loginData.id,
-      is2FAEnabled: loginData.is2FAEnabled,
-      isShowOtpScreen: loginData.isShowOtpScreen,
-    };
-    useAuthStore.getState().setUser(user);
-    useAuthStore
-      .getState()
-      .setAuth({ email: payload.email, password: payload.password });
+    const { dealer, user, token } = loginData;
+    setToken(token);
+    // Set user and dealer data in the auth store
+    useAuthStore.getState().setAuthData({ dealer, user, token });
     return response.data;
   } catch (error) {
-    console.log(error);
     const err = error as ErrorResponse;
-    const errMsg = err.response?.data?.msg ?? err.message;
+    const errMsg = err.response?.data?.message ?? err.message;
     toast.error(errMsg);
     throw new Error(errMsg);
   }
 };
-
 
 /**
  * TODO: Call login hook in component

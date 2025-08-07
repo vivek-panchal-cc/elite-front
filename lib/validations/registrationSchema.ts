@@ -17,7 +17,7 @@ export const registrationSchema = createSchema({
     "ReCAPTCHA verification is required"
   ),
   marketing: Yup.boolean(),
-  agree: commonValidations.checkbox(
+  term_and_condition: commonValidations.checkbox(
     "You must agree to the terms and conditions"
   ),
 });

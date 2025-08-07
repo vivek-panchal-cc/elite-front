@@ -185,7 +185,7 @@ export default function HeroSection() {
       <Modal
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
-        classStyle=""
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
@@ -194,7 +194,7 @@ export default function HeroSection() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle="w-full sm:min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[700px]"
+        classStyle=""
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>

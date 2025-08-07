@@ -6,13 +6,21 @@ import { commonLabels, loginLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";
 import { toast } from "sonner";
 import { IconEyeClose, IconEyeOpen } from "@/components/images/icons";
-
+import { Label } from "@/components/ui/Label";
+import { login } from "@/http/auth/login";
+import { useRouter } from "next/navigation";
+import { AUTH_ENDPOINTS } from "@/constants/urls";
 interface LoginFormProps {
   setLoginClose: React.Dispatch<React.SetStateAction<boolean>>;
   setSignUpOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -23,16 +31,16 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
     validationSchema: loginSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        // TODO: Implement your API call here
-        console.log("Login values:", values);
-
-        // Mock API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
+        const payload = {
+          email: values.email,
+          password: values.password,
+        };
+        await login({ queryKey: AUTH_ENDPOINTS.LOGIN, payload });
         toast.success("Login successful!");
-        setLoginClose(false);
+        setLoginClose(true); // Close login modal
+        router.push("/dashboard");
       } catch (error: any) {
-        const errorMessage = error?.response?.data?.message || "Login failed";
+        const errorMessage = error.message || "Login failed";
         toast.error(errorMessage);
         setStatus({ error: errorMessage });
       } finally {
@@ -57,10 +65,13 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
       )}
 
       <div className="space-y-1">
+        <Label className="font-medium leading-[24.42px] tracking-[0px]">
+          {loginLabels.email}
+        </Label>
         <Input
           type="text"
           name="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
@@ -70,10 +81,13 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
       </div>
 
       <div className="space-y-1 relative">
+        <Label className="font-medium leading-[24.42px] tracking-[0px]">
+          {loginLabels.password}
+        </Label>
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
@@ -82,7 +96,7 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
         />
         <button
           type="button"
-          className="absolute right-3 top-2"
+          className="absolute right-3 top-9 cursor-pointer"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <IconEyeClose /> : <IconEyeOpen />}

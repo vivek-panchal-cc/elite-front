@@ -35,6 +35,8 @@ export const labels = {
     forgotPassword: "Forgot your password?",
     resetPassword: "Reset your password",
     dontHaveAccount: "Don’t have an account?",
+    email: "Email",
+    password: "Password",
   },
 
   // Logout
@@ -55,6 +57,16 @@ export const labels = {
       "I would like to receive marketing communications and exclusive offers.",
     iConfirm:
       "*I agree that I am authorised to set up an account on behalf of the company We agree to Elite Mobile's terms and conditions.",
+    dealerAccountRef: "Dealer Account/Reference Number",
+    dealerName: "Dealer Name",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    email: "Email",
+    mobileNumber: "Mobile Number",
+    postCode: "Postcode",
+    city: "City",
+    address: "Address",
+    reCaptchaMissing: "ReCAPTCHA configuration is missing.",
   },
 
   // Navigation and menu items
@@ -139,13 +151,14 @@ export const labels = {
       privacy: "Privacy Policy",
       cookies: "Cookie Policy",
       gdpr: "GDPR Compliance",
-      dealerRegistration: "Dealer Registration",
+      dealerRegistration: "Call: +44 (0) 17 8521 6850",
     },
     contact: {
-      phone: "Call us on 0161 907 1717",
-      infoEmail: "info@elitegalaxy.co.uk",
-      dealerEmail: "dealer@elitegalaxy.co.uk",
-      corpEmail: "corp@elitegalaxy.co.uk",
+      phone: "Call: +44 (0) 1827 307 777",
+      infoEmail: "Email: sims@elitemobile.com",
+      dealerEmail: "Email: dealers@elitemobile.com",
+      corpEmail: "Email: corporate@elitemobile.com",
+      corporatePhone: "Call: +44 (0) 17 8521 6850",
     },
     newsletter: {
       title: "Newsletter",

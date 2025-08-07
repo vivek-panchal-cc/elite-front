@@ -10,6 +10,7 @@ import { IconEyeClose, IconEyeOpen } from "@/components/images/icons";
 import ReCAPTCHA from "react-google-recaptcha";
 import { apiRequest } from "@/lib/apiRequest";
 import { useLoader } from "@/components/providers/loader-provider";
+import { Label } from "@/components/ui/Label";
 
 interface FormValues {
   dealer_ref: string;
@@ -137,10 +138,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.dealerAccountRef}
+          </Label>
           <Input
             type="text"
             name="dealer_ref"
-            placeholder="Dealer Account/Reference Number"
+            placeholder="Enter Dealer Account/Reference Number"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_ref}
@@ -149,10 +153,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.dealerName}
+          </Label>
           <Input
             type="text"
             name="dealer_name"
-            placeholder="Dealer Name"
+            placeholder="Enter Dealer Name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_name}
@@ -161,10 +168,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1 relative">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.password}
+          </Label>
           <Input
             type={showPassword.password ? "text" : "password"}
             name="dealer_password"
-            placeholder="Password"
+            placeholder="Enter Password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_password}
@@ -177,7 +187,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
           />
           <button
             type="button"
-            className="absolute right-3 top-2"
+            className="absolute right-3 top-9 cursor-pointer"
             onClick={() =>
               setShowPassword((prev) => ({ ...prev, password: !prev.password }))
             }
@@ -187,10 +197,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1 relative">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.confirmPassword}
+          </Label>
           <Input
             type={showPassword.confirmPassword ? "text" : "password"}
             name="confirm_password"
-            placeholder="Confirm Password"
+            placeholder="Enter Confirm Password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.confirm_password}
@@ -202,7 +215,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
           />
           <button
             type="button"
-            className="absolute right-3 top-2"
+            className="absolute right-3 top-9 cursor-pointer"
             onClick={() =>
               setShowPassword((prev) => ({
                 ...prev,
@@ -215,10 +228,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.email}
+          </Label>
           <Input
             type="text"
             name="dealer_email"
-            placeholder="Email"
+            placeholder="Enter Email"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_email}
@@ -227,10 +243,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.mobileNumber}
+          </Label>
           <Input
             type="tel"
             name="dealer_mobile"
-            placeholder="Mobile Number"
+            placeholder="Enter Mobile Number"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_mobile}
@@ -239,10 +258,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.postCode}
+          </Label>
           <Input
             type="text"
             name="postcode"
-            placeholder="Postcode"
+            placeholder="Enter Postcode"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.postcode}
@@ -251,10 +273,13 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         </div>
 
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.city}
+          </Label>
           <Input
             type="text"
             name="dealer_city"
-            placeholder="City"
+            placeholder="Enter City"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.dealer_city}
@@ -266,6 +291,9 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
       {/* Address Fields */}
       <div className="grid grid-cols-1 gap-4">
         <div className="space-y-1">
+          <Label className="font-medium leading-[24.42px] tracking-[0px]">
+            {registrationLabels.address}
+          </Label>
           <Input
             type="text"
             name="dealer_address1"
@@ -311,7 +339,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
           />
         ) : (
           <div className="text-red-500 text-sm">
-            ReCAPTCHA configuration is missing.
+            {registrationLabels.reCaptchaMissing}
           </div>
         )}
       </div>
