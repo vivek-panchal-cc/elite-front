@@ -79,14 +79,83 @@ const awards = [
 export function FooterLayout() {
   return (
     <footer className="bg-[#E9E9E9] border-t">
-      <div className="max-w-7xl mx-auto px-[12px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+      <div className="max-w-7xl mx-auto px-[40px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
+        {/* ✅ Mobile View Custom Layout */}
+        <div className="block lg:hidden space-y-6 mb-8">
+          {/* Group 1: Get Started + Legals in a row */}
+          <div className="grid grid-cols-2 gap-6 items-start">
+            {[footerSections[0], footerSections[1]].map((section) => (
+              <div key={section.title} className="flex-1">
+                <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
+                  {section.title}
+                </h3>
+                <ul className="space-y-0 sm:space-y-2">
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="text-[12px] sm:text-[14px] text-gray-600 hover:text-purple-600 transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Group 2: Sim Cards, Dealer Accounts, Corporate Accounts (stacked) */}
+          <div className="grid grid-cols-2 gap-6 items-start">
+            <div className="space-y-6">
+              {[footerSections[2], footerSections[3], footerSections[4]].map(
+                (section) => (
+                  <div key={section.title}>
+                    <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
+                      {section.title}
+                    </h3>
+                    <ul className="space-y-0 sm:space-y-2">
+                      {section.links.map((link) => (
+                        <li key={link.name}>
+                          <Link
+                            href={link.href}
+                            className="text-[12px] sm:text-[14px] text-gray-600 hover:text-purple-600 transition-colors"
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              )}
+            </div>
+
+            {/* Awards in second column */}
+            <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4">
+              {awards.map((award, index) => (
+                <div key={index} className="flex justify-center items-center">
+                  <Image
+                    src={award.image}
+                    alt={`Award ${index + 1}`}
+                    width={60}
+                    height={60}
+                    className="sm:w-[100px] sm:h-[100px]"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ✅ Web View (Unchanged) */}
+        <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-4">
+              <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
                 {section.title}
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-0 sm:space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <Link
@@ -102,7 +171,8 @@ export function FooterLayout() {
           ))}
         </div>
 
-        <div className="border-t border-gray-200 mb-6 sm:mb-8">
+        {/* Newsletter for Desktop (top-right) */}
+        <div className="hidden lg:flex border-t border-gray-200 mb-6 sm:mb-8">
           <div className="w-full flex flex-col md:flex-row md:items-center md:justify-end gap-4 lg:mt-[-50px] lg:ml-[-50px] md:mt-[-100px] md:ml-[-60px]">
             <div className="w-full md:w-auto">
               <label
@@ -119,8 +189,7 @@ export function FooterLayout() {
                   placeholder={footerLabels.newsletter.placeholder}
                   className="rounded-r-none text-[12px] sm:text-[14px] bg-white w-full"
                 />
-
-                <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[25%]">
+                <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
                   <Image src={rightArrow} alt="right arrow icon" />
                 </Button>
               </div>
@@ -142,7 +211,46 @@ export function FooterLayout() {
           </div>
         </div>
 
-        <div className="border-t border-gray-200 pt-6 sm:pt-8 pb-6 sm:pb-0">
+        {/* Newsletter for Mobile/Tablet (bottom) */}
+        <div className="block lg:hidden border-t border-gray-200 sm:pt-8 pb-6 sm:pb-0">
+          <div className="w-full">
+            <label
+              htmlFor="newsletter-mobile"
+              className="block text-[12px] sm:text-[16px] font-semibold text-gray-900 mb-1"
+            >
+              {footerLabels.newsletter.title}
+            </label>
+
+            <div className="flex w-full">
+              <Input
+                id="newsletter-mobile"
+                type="email"
+                placeholder={footerLabels.newsletter.placeholder}
+                className="rounded-r-none text-[12px] sm:text-[14px] bg-white w-full"
+              />
+              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
+                <Image src={rightArrow} alt="right arrow icon" />
+              </Button>
+            </div>
+
+            <div className="flex items-start gap-2 mt-2">
+              <input
+                type="checkbox"
+                id="newsletterConsentMobile"
+                className="mt-[2px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px]"
+              />
+              <label
+                htmlFor="newsletterConsentMobile"
+                className="text-[8px] sm:text-[10px] text-black-600 cursor-pointer"
+              >
+                {footerLabels.newsletter.description}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Only Awards */}
+        <div className="hidden lg:block border-t border-gray-200 pt-6 sm:pt-8 pb-6 sm:pb-0">
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3">
             {awards.map((award, index) => (
               <div key={index} className="flex-shrink-0">
