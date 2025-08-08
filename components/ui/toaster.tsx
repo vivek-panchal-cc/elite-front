@@ -4,6 +4,7 @@ const ToasterComponent = () => {
   return (
     <Toaster
       position="top-right"
+      duration={3000}
       toastOptions={{
         classNames: {
           error: "bg-red-400",

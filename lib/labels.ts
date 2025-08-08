@@ -30,6 +30,11 @@ export const labels = {
     okay: "Okay",
   },
 
+  // Profile
+  profile: {
+    myProfile: "My Profile",
+  },
+
   // Login
   login: {
     forgotPassword: "Forgot your password?",
@@ -302,3 +307,4 @@ export const monthLabels = labels.months;
 export const loginLabels = labels.login;
 export const logoutLabels = labels.logout;
 export const registrationLabels = labels.registration;
+export const profileLabels = labels.profile;

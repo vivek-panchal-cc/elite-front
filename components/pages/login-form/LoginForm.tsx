@@ -10,17 +10,24 @@ import { Label } from "@/components/ui/Label";
 import { login } from "@/http/auth/login";
 import { useRouter } from "next/navigation";
 import { AUTH_ENDPOINTS } from "@/constants/urls";
+import { useAuthContext } from "@/lib/AuthProvider";
 interface LoginFormProps {
   setLoginClose: React.Dispatch<React.SetStateAction<boolean>>;
   setSignUpOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setResetPasswordOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface FormValues {
   email: string;
   password: string;
 }
 
-const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
+const LoginForm = ({
+  setLoginClose,
+  setSignUpOpen,
+  setResetPasswordOpen,
+}: LoginFormProps) => {
   const router = useRouter();
+  const { setIsAuthenticated } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -36,13 +43,13 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
           password: values.password,
         };
         await login({ queryKey: AUTH_ENDPOINTS.LOGIN, payload });
-        toast.success("Login successful!");
-        setLoginClose(true); // Close login modal
+        setLoginClose(false); // Close login modal
+        setIsAuthenticated(true);
         router.push("/dashboard");
       } catch (error: any) {
         const errorMessage = error.message || "Login failed";
         toast.error(errorMessage);
-        setStatus({ error: errorMessage });
+        // setStatus({ error: errorMessage });
       } finally {
         setSubmitting(false);
       }
@@ -91,6 +98,8 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
           error={formik.touched.password && formik.errors.password}
           aria-label="Password"
         />
@@ -105,7 +114,14 @@ const LoginForm = ({ setLoginClose, setSignUpOpen }: LoginFormProps) => {
 
       <div className="text-xs text-left">
         {loginLabels.forgotPassword}{" "}
-        <a href="#" className="text-pink-600">
+        <a
+          href="#"
+          className="text-pink-600"
+          onClick={() => {
+            setLoginClose(false);
+            setResetPasswordOpen(true);
+          }}
+        >
           {loginLabels.resetPassword}
         </a>
       </div>

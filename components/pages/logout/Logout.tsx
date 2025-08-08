@@ -1,18 +1,27 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, logoutLabels } from "@/lib/labels";
 import { images } from "@/components/images";
 import Image from "next/image";
+import { removeToken } from "@/lib/utils";
+import { useAuthContext } from "@/lib/AuthProvider";
 
 const Logout = ({
   setLogoutOpen,
 }: {
   setLogoutOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { logout } = useAuthContext();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const router = useRouter();
 
   const handleLogout = () => {
     setShowConfirmModal(true);
+    setTimeout(async () => {
+      await setLogoutOpen(false);
+    }, 2500);
+    logout();
   };
 
   return (

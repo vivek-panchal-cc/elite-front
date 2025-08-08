@@ -56,16 +56,20 @@ interface DealerRegistrationData {
   term_and_condition: boolean;
 }
 
+interface ForgotPasswordData {
+  email: string;
+}
+
 const register = (
   data: DealerRegistrationData
 ): Promise<AxiosResponse<ApiResponse>> => {
   return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.REGISTER, data);
 };
 
-const forgotPassword = (email: string): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.FORGOT_PASSWORD, {
-    email,
-  });
+const forgotPassword = (
+  email: ForgotPasswordData
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.FORGOT_PASSWORD, email);
 };
 
 const resetPassword = (data: {

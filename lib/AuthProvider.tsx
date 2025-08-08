@@ -10,6 +10,7 @@ import {
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   token: string | null;
   login: (token: string) => void;
   logout: () => void;
@@ -44,7 +45,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, token, login, logout, setIsAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );

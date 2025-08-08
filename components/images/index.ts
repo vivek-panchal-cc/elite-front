@@ -23,6 +23,10 @@ import awardSix from "./awards/award_6.png";
 import googlePlay from "./imgs/google_play.png";
 import appleStore from "./imgs/app_store.png";
 import rightArrow from "./imgs/right_arrow.png";
+import burgerMenu from "./imgs/burger_menu.png";
+import burgerMenuArrow from "./imgs/burger-menu-arrow.png";
+import closeIcon from "./imgs/close.png";
+import shoppingCart from "./imgs/shopping_cart.png";
 
 // Export all images as a single object
 export const images = {
@@ -50,6 +54,10 @@ export const images = {
   googlePlay,
   appleStore,
   rightArrow,
+  burgerMenu,
+  burgerMenuArrow,
+  closeIcon,
+  shoppingCart,
 } as const;
 
 // Export individual images for direct import
@@ -78,6 +86,10 @@ export {
   googlePlay,
   appleStore,
   rightArrow,
+  burgerMenu,
+  burgerMenuArrow,
+  closeIcon,
+  shoppingCart,
 };
 
 // Type for the images object

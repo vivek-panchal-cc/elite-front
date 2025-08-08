@@ -1,6 +1,6 @@
 // Auth endpoints
 export const AUTH_ENDPOINTS = {
-  LOGIN: "/login",
+  LOGIN: "/dealer/login",
   REGISTER: "/dealer/register",
   LOGOUT: "/logout",
   REFRESH_TOKEN: "/refresh-token",

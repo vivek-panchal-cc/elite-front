@@ -6,7 +6,7 @@ export const routeConfig = {
   public: ["/"],
 
   // Private routes - require authentication
-  private: ["/dashboard"],
+  private: ["/dashboard", "/orders", "/claim", "/transfer"],
 
   // Admin routes - none currently configured
   admin: ["/test-image"],

@@ -7,10 +7,12 @@ import { homepageLabels, commonLabels } from "@/lib/labels";
 import Modal from "@/components/ui/Modal";
 import LoginForm from "@/components/pages/login-form/LoginForm";
 import RegistrationForm from "@/components/pages/registration-form/RegistrationForm";
+import ResetPassword from "@/components/pages/reset-password/ResetPasswordForm";
 
 export default function HeroSection() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
+  const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
 
   return (
     <>
@@ -59,12 +61,18 @@ export default function HeroSection() {
 
                   {/* Lost password */}
                   <div>
-                    <Link
+                    {/* <Link
                       href="/forgot-password"
                       className="text-[12px] sm:text-sm text-white/80 hover:text-white underline"
+                    > */}
+                    {/* </Link> */}
+                    <a
+                      href="#"
+                      className="text-[12px] sm:text-sm text-white/80 hover:text-white underline"
+                      onClick={() => setResetPasswordOpen(true)}
                     >
                       {homepageLabels.hero.lostPassword}
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -189,7 +197,11 @@ export default function HeroSection() {
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
-        <LoginForm setLoginClose={setLoginOpen} setSignUpOpen={setSignUpOpen} />
+        <LoginForm
+          setLoginClose={setLoginOpen}
+          setSignUpOpen={setSignUpOpen}
+          setResetPasswordOpen={setResetPasswordOpen}
+        />
       </Modal>
       <Modal
         isOpen={isSignUpOpen}
@@ -199,6 +211,15 @@ export default function HeroSection() {
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
         <RegistrationForm setRegistrationClose={setSignUpOpen} />
+      </Modal>
+      <Modal
+        isOpen={resetPasswordOpen}
+        onClose={() => setResetPasswordOpen(false)}
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        isClose={true}
+      >
+        <div style={{ color: "red", fontWeight: "bold" }}></div>
+        <ResetPassword setLoginClose={setResetPasswordOpen} />
       </Modal>
     </>
   );

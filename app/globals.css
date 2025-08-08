@@ -159,3 +159,21 @@
   position: relative;
   min-height: 100%;
 }
+
+/* Dynamic Link Hover Effect - Centralized control */
+.link-hover {
+  @apply transition-colors duration-200;
+}
+
+.link-hover:hover {
+  color: #9333ea; /* purple-600 */
+}
+
+/* Alternative class for different contexts */
+.text-link {
+  @apply transition-colors duration-200;
+}
+
+.text-link:hover {
+  color: #9333ea; /* purple-600 */
+}

@@ -27,8 +27,10 @@ export const login = async ({
 }): Promise<Response<any>> => {
   try {
     const response = await api.post<Response<any>>(queryKey, payload);
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
     toast.success(response.data.message || "Login success!");
-
     const loginData = response.data.data;
     const { dealer, user, token } = loginData;
     setToken(token);
@@ -38,7 +40,6 @@ export const login = async ({
   } catch (error) {
     const err = error as ErrorResponse;
     const errMsg = err.response?.data?.message ?? err.message;
-    toast.error(errMsg);
     throw new Error(errMsg);
   }
 };

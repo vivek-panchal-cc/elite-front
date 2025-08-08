@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/ButtonUI";
 import { Input } from "@/components/ui/Input";
 import Link from "next/link";
+import { CustomLink } from "@/components/ui/CustomLink";
 import Image from "next/image";
 import { footerLabels } from "@/lib/labels";
 import {
@@ -92,12 +93,12 @@ export function FooterLayout() {
                 <ul className="space-y-0 sm:space-y-2">
                   {section.links.map((link) => (
                     <li key={link.name}>
-                      <Link
+                      <CustomLink
                         href={link.href}
-                        className="text-[12px] sm:text-[14px] text-gray-600 hover:text-purple-600 transition-colors"
+                        className="text-[12px] sm:text-[14px] text-gray-600"
                       >
                         {link.name}
-                      </Link>
+                      </CustomLink>
                     </li>
                   ))}
                 </ul>
@@ -117,12 +118,12 @@ export function FooterLayout() {
                     <ul className="space-y-0 sm:space-y-2">
                       {section.links.map((link) => (
                         <li key={link.name}>
-                          <Link
+                          <CustomLink
                             href={link.href}
-                            className="text-[12px] sm:text-[14px] text-gray-600 hover:text-purple-600 transition-colors"
+                            className="text-[12px] sm:text-[14px] text-gray-600"
                           >
                             {link.name}
-                          </Link>
+                          </CustomLink>
                         </li>
                       ))}
                     </ul>
@@ -158,12 +159,12 @@ export function FooterLayout() {
               <ul className="space-y-0 sm:space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <Link
+                    <CustomLink
                       href={link.href}
-                      className="text-[12px] sm:text-[14px] text-gray-600 hover:text-purple-600 transition-colors"
+                      className="text-[12px] sm:text-[14px] text-gray-600"
                     >
                       {link.name}
-                    </Link>
+                    </CustomLink>
                   </li>
                 ))}
               </ul>

@@ -12,6 +12,8 @@ export interface ApiResponse<T> {
 }
 
 export interface Response<T> {
+  success: any;
+  statusCode: number;
   message: string;
   data: T;
 }
