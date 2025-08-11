@@ -39,12 +39,12 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
         className="w-10 h-10 rounded-full bg-white border flex items-center justify-center cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <User className="text-black w-5 h-5" />
+        <User className="text-[var(--color-black)] w-5 h-5" />
       </button>
 
       {/* Dropdown (on click) */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
+        <div className="absolute right-0 mt-2 w-30 bg-white border rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
           <button
             className="w-full text-center font-medium px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
             onClick={() => {

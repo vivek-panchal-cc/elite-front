@@ -3,10 +3,20 @@
 
 export const routeConfig = {
   // Public routes - accessible without authentication
-  public: ["/"],
+  public: ["/", "/vape-products", "/contact", "/offers"],
 
   // Private routes - require authentication
-  private: ["/dashboard", "/orders", "/claim", "/transfer"],
+  private: [
+    "/dashboard",
+    "/orders",
+    "/claim",
+    "/transfer",
+    "/cart",
+    "/vape-products",
+    "/contact",
+    "/offers",
+    "/logout",
+  ],
 
   // Admin routes - none currently configured
   admin: ["/test-image"],
@@ -20,10 +30,15 @@ export function getRouteType(pathname: string): "public" | "private" | "admin" {
   if (routeConfig.admin.includes(pathname)) return "admin";
 
   // Check path prefixes
-  if (routeConfig.private.some((route) => pathname.startsWith(route)))
+  if (routeConfig.private.some((route) => pathname.startsWith(route + "/")))
     return "private";
-  if (routeConfig.admin.some((route) => pathname.startsWith(route)))
+  if (routeConfig.admin.some((route) => pathname.startsWith(route + "/")))
     return "admin";
+
+  // if (routeConfig.private.some((route) => pathname.startsWith(route)))
+  //   return "private";
+  // if (routeConfig.admin.some((route) => pathname.startsWith(route)))
+  //   return "admin";
 
   // Default to public for unknown routes
   return "public";

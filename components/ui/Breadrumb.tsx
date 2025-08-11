@@ -21,23 +21,26 @@ const Breadcrumb = () => {
   });
 
   return (
-    <nav className="text-sm text-gray-600 mb-4">
+    <nav className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-[var(--color-gray)]">
       <ol className="flex flex-wrap items-center space-x-2">
         <li>
-          <Link href="/" className="hover:underline text-blue-600 font-medium">
-            Home
+          <Link
+            href="/"
+            className="hover:underline text-[var(--color-blue)] font-medium"
+          >
+            Dashboard
           </Link>
         </li>
         {breadcrumbLinks.map((crumb, idx) => (
           <React.Fragment key={crumb.href}>
-            <li>/</li>
+            <li>&gt;</li>
             <li>
               {idx === breadcrumbLinks.length - 1 ? (
-                <span className="text-gray-500">{crumb.label}</span>
+                <span className="text-[var(--color-gray)]">{crumb.label}</span>
               ) : (
                 <Link
                   href={crumb.href}
-                  className="hover:underline text-blue-600"
+                  className="hover:underline text-[var(--color-blue)]"
                 >
                   {crumb.label}
                 </Link>

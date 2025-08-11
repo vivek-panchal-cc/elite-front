@@ -11,6 +11,7 @@ import { login } from "@/http/auth/login";
 import { useRouter } from "next/navigation";
 import { AUTH_ENDPOINTS } from "@/constants/urls";
 import { useAuthContext } from "@/lib/AuthProvider";
+import { useLoader } from "@/components/providers/loader-provider";
 interface LoginFormProps {
   setLoginClose: React.Dispatch<React.SetStateAction<boolean>>;
   setSignUpOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,16 +28,18 @@ const LoginForm = ({
   setResetPasswordOpen,
 }: LoginFormProps) => {
   const router = useRouter();
+  const { setIsLoading } = useLoader();
   const { setIsAuthenticated } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
-  const formik = useFormik({
+  const formik = useFormik<FormValues>({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
+      setIsLoading(true);
       try {
         const payload = {
           email: values.email,
@@ -52,6 +55,7 @@ const LoginForm = ({
         // setStatus({ error: errorMessage });
       } finally {
         setSubmitting(false);
+        setIsLoading(false);
       }
     },
   });
@@ -66,7 +70,7 @@ const LoginForm = ({
       </h2>
 
       {formik.status?.error && (
-        <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+        <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded">
           {formik.status.error}
         </div>
       )}
@@ -79,6 +83,7 @@ const LoginForm = ({
           type="text"
           name="email"
           placeholder="Enter Email"
+          autoComplete="username"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
@@ -95,28 +100,27 @@ const LoginForm = ({
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Enter Password"
+          autoComplete="current-password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
           onCopy={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
-          error={formik.touched.password && formik.errors.password}
+          // error={formik.touched.password && formik.errors.password}
           aria-label="Password"
         />
-        <button
-          type="button"
+        <span
           className="absolute right-3 top-9 cursor-pointer"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <IconEyeClose /> : <IconEyeOpen />}
-        </button>
+        </span>
       </div>
 
       <div className="text-xs text-left">
         {loginLabels.forgotPassword}{" "}
         <a
-          href="#"
-          className="text-pink-600"
+          className="text-[var(--color-red)] cursor-pointer"
           onClick={() => {
             setLoginClose(false);
             setResetPasswordOpen(true);
@@ -137,7 +141,7 @@ const LoginForm = ({
       <div className="text-xs text-center mt-2 cursor-pointer">
         {loginLabels.dontHaveAccount}{" "}
         <a
-          className="text-pink-600"
+          className="text-[var(--color-red)]"
           onClick={() => {
             setLoginClose(false);
             setSignUpOpen(true);

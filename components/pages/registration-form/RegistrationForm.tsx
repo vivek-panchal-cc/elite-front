@@ -185,15 +185,14 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
               formik.touched.dealer_password && formik.errors.dealer_password
             }
           />
-          <button
-            type="button"
+          <span
             className="absolute right-3 top-9 cursor-pointer"
             onClick={() =>
               setShowPassword((prev) => ({ ...prev, password: !prev.password }))
             }
           >
             {showPassword.password ? <IconEyeClose /> : <IconEyeOpen />}
-          </button>
+          </span>
         </div>
 
         <div className="space-y-1 relative">
@@ -213,8 +212,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
               formik.touched.confirm_password && formik.errors.confirm_password
             }
           />
-          <button
-            type="button"
+          <span
             className="absolute right-3 top-9 cursor-pointer"
             onClick={() =>
               setShowPassword((prev) => ({
@@ -224,7 +222,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
             }
           >
             {showPassword.confirmPassword ? <IconEyeClose /> : <IconEyeOpen />}
-          </button>
+          </span>
         </div>
 
         <div className="space-y-1">
@@ -338,17 +336,19 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
             }}
           />
         ) : (
-          <div className="text-red-500 text-sm">
+          <div className="text-[var(--color-red)] text-sm">
             {registrationLabels.reCaptchaMissing}
           </div>
         )}
       </div>
       {formik.touched.captcha && formik.errors.captcha && (
-        <div className="text-red-500 text-sm mt-2">{formik.errors.captcha}</div>
+        <div className="text-[var(--color-red)] text-sm mt-2">
+          {formik.errors.captcha}
+        </div>
       )}
 
       {/* Checkboxes */}
-      <div className="space-y-2 text-sm text-gray-700">
+      <div className="space-y-2 text-sm text-[var(--color-gray)]">
         <div className="flex items-start gap-2">
           <input
             type="checkbox"
@@ -378,7 +378,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
             </label>
             {formik.touched.term_and_condition &&
               formik.errors.term_and_condition && (
-                <div className="text-red-500 text-sm">
+                <div className="text-[var(--color-red)] text-sm">
                   {formik.errors.term_and_condition}
                 </div>
               )}

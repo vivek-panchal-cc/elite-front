@@ -100,18 +100,6 @@ const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.DETAILS(id));
 };
 
-const getInvitedMemberRecurring = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosUserInstance.get(
-    apiUrl.SAVING_JAR_ENDPOINTS.INVITED_MEMBER_RECURRING_DETAILS
-  );
-};
-
-const getDashboardStats = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosUserInstance.get(
-    apiUrl.SAVING_JAR_ENDPOINTS.DASHBOARD_STATISTICS_DESCRIPTION
-  );
-};
-
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -129,10 +117,6 @@ export const apiRequest = {
   // Products
   getProducts,
   getProductDetails,
-
-  // Saving Jar
-  getInvitedMemberRecurring,
-  getDashboardStats,
 } as const;
 
 // Export type for the apiRequest object
@@ -150,6 +134,4 @@ export {
   updateProfile,
   getProducts,
   getProductDetails,
-  getInvitedMemberRecurring,
-  getDashboardStats,
 };

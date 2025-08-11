@@ -1,22 +1,17 @@
 import axios, {
   AxiosError,
   AxiosInstance,
-  AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { storageRequest } from "@/lib/helpers/storageRequests";
 import {
   browserName,
   fullVersion,
-  timeZone,
+  getTimeZone,
 } from "@/lib/helpers/headerRequests";
-import {
-  addPendingRequest,
-  removePendingRequest,
-} from "@/lib/helpers/requestManager";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/stores/AuthStore";
+import { getToken, removeToken } from "@/lib/utils";
 
 interface ApiErrorResponse {
   message?: string;
@@ -44,19 +39,19 @@ export const axiosProductInstance = axios.create({
 
 // Request interceptor
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const countryTimeZone = storageRequest.getTimeZone();
-  const country_time_zone = countryTimeZone
-    ? countryTimeZone.country_time_zone
-    : null;
-  const token = storageRequest.getAuth();
+  // const countryTimeZone = storageRequest.getTimeZone();
+  const countryTimeZone = getTimeZone();
+  // const country_time_zone = countryTimeZone
+  //   ? countryTimeZone.country_time_zone
+  //   : null;
+  const token = getToken();
 
   config.headers = config.headers || new axios.AxiosHeaders();
 
   config.headers["Os-Version"] = `${browserName}/${fullVersion}`;
   config.headers["Device-Type"] = "web";
-  config.headers["User-Timezone"] = country_time_zone || timeZone;
+  config.headers["User-Timezone"] = countryTimeZone;
   if (token) config.headers.Authorization = `Bearer ${token}`;
-
   return config;
 };
 
@@ -93,7 +88,7 @@ const responseErrorInterceptor = (error: AxiosError<ApiErrorResponse>) => {
 
   const status = errResponse?.status;
   const data = errResponse?.data;
-  const token = storageRequest.getAuth();
+  const token = getToken();
   const message = data?.message;
 
   // Handle only 401 Unauthorized status
@@ -101,7 +96,7 @@ const responseErrorInterceptor = (error: AxiosError<ApiErrorResponse>) => {
     if (token && message) {
       toast.error(message); // Changed to error toast since it's an unauthorized error
     }
-    storageRequest.removeAuth();
+    removeToken();
     useAuthStore.getState().logout();
     window.location.href = "/";
   }

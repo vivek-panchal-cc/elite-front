@@ -10,6 +10,7 @@ import simToolkitNew from "./imgs/sim-toolkit-new.png";
 import liquidNew from "./imgs/liquid-new.png";
 import publicBackground from "./public_background_layout.png";
 import productOne from "./products/product_1.png";
+import productTwo from "./products/product_2.png";
 import broucher from "./imgs/broucher.png";
 import contactUs from "./imgs/contact_us.png";
 import simply from "./products/simply-blue.png";
@@ -27,6 +28,7 @@ import burgerMenu from "./imgs/burger_menu.png";
 import burgerMenuArrow from "./imgs/burger-menu-arrow.png";
 import closeIcon from "./imgs/close.png";
 import shoppingCart from "./imgs/shopping_cart.png";
+import eliteWallet from "./imgs/elite_wallet.png";
 
 // Export all images as a single object
 export const images = {
@@ -41,6 +43,7 @@ export const images = {
   liquidNew,
   publicBackground,
   productOne,
+  productTwo,
   broucher,
   contactUs,
   simply,
@@ -58,6 +61,7 @@ export const images = {
   burgerMenuArrow,
   closeIcon,
   shoppingCart,
+  eliteWallet,
 } as const;
 
 // Export individual images for direct import
@@ -73,6 +77,7 @@ export {
   liquidNew,
   publicBackground,
   productOne,
+  productTwo,
   broucher,
   contactUs,
   simply,
@@ -90,6 +95,7 @@ export {
   burgerMenuArrow,
   closeIcon,
   shoppingCart,
+  eliteWallet,
 };
 
 // Type for the images object

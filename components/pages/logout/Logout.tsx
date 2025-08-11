@@ -21,14 +21,14 @@ const Logout = ({
     setTimeout(async () => {
       await setLogoutOpen(false);
     }, 2500);
-    logout();
+    router.push("/logout");
   };
 
   return (
     <div className="w-full max-w-2xl bg-white rounded-lg p-6 md:p-8 space-y-4 mx-auto">
       {!showConfirmModal ? (
         <>
-          <h2 className="text-lg md:text-xl font-semibold text-gray-800 text-left">
+          <h2 className="text-lg md:text-xl font-semibold text-[var(--color-gray)] text-left">
             <span className="text-[var(--color-blue)]">
               {logoutLabels.areYouSure}
             </span>
@@ -37,13 +37,13 @@ const Logout = ({
             </span>
           </h2>
 
-          <p className="text-sm text-gray-600 text-left mt-3">
+          <p className="text-sm text-[var(--color-gray)] text-left mt-3">
             {logoutLabels.logoutMessage}
           </p>
 
           <div className="flex flex-col md:flex-row w-full gap-3 mt-6">
             <Button
-              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-pink-700 text-white py-2 rounded-full font-medium"
+              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-white py-2 rounded-full font-medium"
               onClick={handleLogout}
             >
               {logoutLabels.logoutConfirm}

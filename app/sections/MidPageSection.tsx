@@ -28,7 +28,7 @@ export default function MidPageSection() {
           <div className="w-full lg:hidden order-2">
             <Card className="bg-[#E9E9E9] border-none">
               <CardContent className="pt-0 pb-0 px-6 lg:p-6 flex flex-col items-center justify-center text-center h-full">
-                <h3 className="text-[18px] md:text-[27px] font-bold text-gray-900 mb-4">
+                <h3 className="text-[18px] md:text-[27px] font-bold text-[var(--color-gray)] mb-4">
                   {homepageLabels.platform.downloadApp}
                 </h3>
                 <div className="flex flex-wrap gap-4 justify-center">
@@ -79,7 +79,7 @@ export default function MidPageSection() {
             <div className="hidden lg:block">
               <Card className="bg-[#E9E9E9] border-none">
                 <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
-                  <h3 className="text-[18px] md:text-[27px] font-bold text-gray-900 mb-4">
+                  <h3 className="text-[18px] md:text-[27px] font-bold text-[var(--color-gray)] mb-4">
                     {homepageLabels.platform.downloadApp}
                   </h3>
                   <div className="flex flex-wrap gap-4 justify-center">

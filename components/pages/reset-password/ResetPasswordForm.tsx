@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
-import { commonLabels, loginLabels } from "@/lib/labels";
+import { commonLabels, loginLabels, registrationLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";
 import { toast } from "sonner";
 import { IconEyeClose, IconEyeOpen } from "@/components/images/icons";
@@ -12,16 +12,28 @@ import { useRouter } from "next/navigation";
 import { AUTH_ENDPOINTS } from "@/constants/urls";
 import { resetPasswordSchema } from "@/lib/validations/resetPasswordSchema";
 import { apiRequest } from "@/lib/apiRequest";
+import ReCAPTCHA from "react-google-recaptcha";
 
+interface FormValues {
+  email: string;
+  captcha: boolean;
+  g_recaptcha_token: string;
+}
 interface ResetPasswordFormProps {
   setLoginClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
 const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const router = useRouter();
-  const formik = useFormik({
+
+  const formik = useFormik<FormValues>({
     initialValues: {
       email: "",
+      captcha: false,
+      g_recaptcha_token: captchaToken ?? "",
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -49,7 +61,7 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
       </h2>
 
       {formik.status?.error && (
-        <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+        <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded">
           {formik.status.error}
         </div>
       )}
@@ -70,12 +82,39 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
         />
       </div>
 
+      <div className="flex justify-left">
+        {SITE_KEY ? (
+          <ReCAPTCHA
+            sitekey={SITE_KEY}
+            onChange={(token: string | null) => {
+              setCaptchaToken(token);
+              formik.setFieldValue("captcha", Boolean(token));
+              formik.setFieldValue("g_recaptcha_token", token || "");
+            }}
+            onExpired={() => {
+              setCaptchaToken(null);
+              formik.setFieldValue("captcha", false);
+              formik.setFieldValue("g_recaptcha_token", "");
+            }}
+          />
+        ) : (
+          <div className="text-[var(--color-red)] text-sm">
+            {registrationLabels.reCaptchaMissing}
+          </div>
+        )}
+      </div>
+      {formik.touched.captcha && formik.errors.captcha && (
+        <div className="text-[var(--color-red)] text-sm mt-2">
+          {formik.errors.captcha}
+        </div>
+      )}
+
       <Button
         type="submit"
         className="w-full rounded-[50px]"
         disabled={formik.isSubmitting}
       >
-        {formik.isSubmitting ? "Submitting..." : commonLabels.submit}
+        {formik.isSubmitting ? "Sending..." : commonLabels.send}
       </Button>
     </form>
   );

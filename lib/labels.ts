@@ -28,6 +28,7 @@ export const labels = {
     warning: "Warning",
     info: "Info",
     okay: "Okay",
+    send: "Send",
   },
 
   // Profile
@@ -254,6 +255,31 @@ export const labels = {
     emailSent: "Email sent successfully",
   },
 
+  cart: {
+    shoppingCart: "Shopping Cart",
+    price: "Price",
+    sku: "SKU",
+    quantity: "Quantity",
+    subtotal: "Subtotal",
+    clearCart: "Clear Cart",
+    products: "Products",
+    juceBarRaspberryEdition: "Jucce Bar Raspberry Edition",
+    eliteWallet: "Elite Wallet",
+    amountLeftInEliteWallet: "Amount left in Elite Wallet",
+    redeemEliteWalletRewards: "Redeem Elite Wallet Rewards",
+    redeemEliteWalletRewardsDescription: "Redeem your Elite Wallet Rewards",
+    orderDetails: "Order Details",
+    totalSKUs: "Total SKUs",
+    totalUnits: "Total Units",
+    cartSummary: "Cart Summary",
+    delivery: "Delivery",
+    vat: "VAT",
+    eliteRewards: "Elite Rewards",
+    total: "Total",
+    proceedToPayment: "Proceed to Payment",
+    continueShopping: "Continue Shopping",
+  },
+
   // Months for charts and date displays
   months: {
     jan: "Jan",
@@ -308,3 +334,4 @@ export const loginLabels = labels.login;
 export const logoutLabels = labels.logout;
 export const registrationLabels = labels.registration;
 export const profileLabels = labels.profile;
+export const cartLabels = labels.cart;

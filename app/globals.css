@@ -7,6 +7,7 @@
   --color-soft-white: #e9e9e9;
   --color-blue: #10499e;
   --color-red: #ed174b;
+  --color-gray: #363940;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -176,4 +177,23 @@
 
 .text-link:hover {
   color: #9333ea; /* purple-600 */
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #c9c9c9 #f2f2f2;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  cursor: pointer;
+  background: #f2f2f2;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c9c9c9;
+  border-radius: 4px;
 }

@@ -13,7 +13,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
         ref={ref}
         className={cn(
           // Responsive, accessible, and scalable label styles
-          "block text-base font-medium text-gray-700 dark:text-gray-200 mb-1",
+          "block text-base font-medium text-[var(--color-gray)] dark:text-gray-200 mb-1",
           "sm:text-base text-[11px] sm:text-[12px] md:text-[13px] lg:text-[14px] ml-3",
           className
         )}

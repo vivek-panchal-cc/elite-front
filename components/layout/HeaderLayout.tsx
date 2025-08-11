@@ -26,6 +26,7 @@ import Logout from "../pages/logout/Logout";
 import { useAuthContext } from "@/lib/AuthProvider";
 import ResetPassword from "../pages/reset-password/ResetPasswordForm";
 import ProfileMenu from "../ui/ProfileMenu";
+import WrapAmount from "../wrapper/WrapAmount";
 
 const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
@@ -111,7 +112,7 @@ export function HeaderLayout() {
                   {/* Amount Section */}
                   <div className="bg-[#E9E9E9] border-2 border-[#10499E] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
                     <span className="text-[#10499E] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
-                      £{50.0}
+                      <WrapAmount value={"50.0"} />
                     </span>
                   </div>
                 </div>

@@ -50,7 +50,7 @@ export const signup = async ({
       queryKey,
       payload
     );
-    toast.success(response.data.msg);
+    toast.success(response.data.message);
     const userData = response.data.data;
     useAuthStore.getState().setUserRegistrationDetails({
       id: userData.id,
@@ -78,8 +78,8 @@ export const signup = async ({
     console.error(error);
     const err = error as ErrorResponse;
     const errMsg =
-      err.response?.data?.msg ??
-      err.response?.data?.errors?.[0]?.msg ??
+      err.response?.data?.message ??
+      err.response?.data?.errors?.[0]?.message ??
       err.message;
     toast.error(errMsg);
     throw new Error(errMsg);

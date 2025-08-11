@@ -67,8 +67,7 @@ export default function HeroSection() {
                     > */}
                     {/* </Link> */}
                     <a
-                      href="#"
-                      className="text-[12px] sm:text-sm text-white/80 hover:text-white underline"
+                      className="text-[12px] sm:text-sm text-white/80 hover:text-white underline cursor-pointer"
                       onClick={() => setResetPasswordOpen(true)}
                     >
                       {homepageLabels.hero.lostPassword}

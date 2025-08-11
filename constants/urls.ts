@@ -2,9 +2,9 @@
 export const AUTH_ENDPOINTS = {
   LOGIN: "/dealer/login",
   REGISTER: "/dealer/register",
-  LOGOUT: "/logout",
+  LOGOUT: "/dealer/logout",
   REFRESH_TOKEN: "/refresh-token",
-  FORGOT_PASSWORD: "/forgot-password",
+  FORGOT_PASSWORD: "/dealer/forgot-password",
   RESET_PASSWORD: "/reset-password",
 } as const;
 
@@ -20,14 +20,6 @@ export const PRODUCT_ENDPOINTS = {
   LIST: "/list",
   DETAILS: (id: string) => `/details/${id}`,
   CATEGORIES: "/categories",
-} as const;
-
-// Saving Jar endpoints
-export const SAVING_JAR_ENDPOINTS = {
-  INVITED_MEMBER_RECURRING_DETAILS:
-    "/get-invited-member-recurring-for-saving-jar",
-  DASHBOARD_STATISTICS_DESCRIPTION:
-    "/get-saving-jar-dashboard-stats-description",
 } as const;
 
 // Generate full URLs with base path

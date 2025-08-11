@@ -35,15 +35,17 @@ export const LoaderProvider: React.FC<LoaderProviderProps> = ({ children }) => {
     <LoaderContext.Provider value={value}>
       {isLoading && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-transparent backdrop-blur-md">
-          <div className="flex flex-col items-center gap-6 p-8 rounded-2xl bg-card/80 border shadow-2xl">
+          <div className="flex flex-col items-center gap-6 p-8 ">
+            {" "}
+            {/* rounded-2xl border shadow-2xl bg-card/80 */}
             <div className="relative">
               <DefaultLoader size="xl" variant="spinner" />
               <div className="absolute inset-0 rounded-full bg-primary/10 animate-ping"></div>
             </div>
             <div className="text-center">
-              <p className="text-lg font-medium text-foreground animate-pulse">
+              {/* <p className="text-lg font-medium text-foreground animate-pulse">
                 {loaderLabels.loading}
-              </p>
+              </p> */}
               <p className="text-sm text-muted-foreground mt-1">
                 {loaderLabels.pleaseWait}
               </p>

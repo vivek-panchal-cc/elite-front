@@ -1,19 +1,11 @@
 "use client";
 
-import { useAuthContext } from "@/lib/AuthProvider";
 import { AnalyticsCard } from "@/components/homepage/AnalyticsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import PrivateLayout from "../PrivateLayout";
+import WrapAmount from "@/components/wrapper/WrapAmount";
 
 const Orders = () => {
-  // Use AuthContext instead of useAuth
-  const { isAuthenticated, token } = useAuthContext();
-
-  // AuthProvider handles redirects automatically
-  if (!isAuthenticated) {
-    return null; // AuthProvider will handle redirect
-  }
-
   return (
     <PrivateLayout>
       <div className="flex items-center justify-between space-y-2">
@@ -25,7 +17,9 @@ const Orders = () => {
             <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">£2,498.32</div>
+            <div className="text-2xl font-bold">
+              <WrapAmount value={"2498.32"} />
+            </div>
             <p className="text-xs text-muted-foreground">
               +20.1% from last month
             </p>
@@ -81,7 +75,9 @@ const Orders = () => {
                     </p>
                     <p className="text-sm text-muted-foreground">2 hours ago</p>
                   </div>
-                  <div className="ml-auto font-medium">+£1,999.00</div>
+                  <div className="ml-auto font-medium">
+                    + <WrapAmount value={1999} />
+                  </div>
                 </div>
               ))}
             </div>

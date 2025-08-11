@@ -87,7 +87,7 @@ export function FooterLayout() {
           <div className="grid grid-cols-2 gap-6 items-start">
             {[footerSections[0], footerSections[1]].map((section) => (
               <div key={section.title} className="flex-1">
-                <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
+                <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
                   {section.title}
                 </h3>
                 <ul className="space-y-0 sm:space-y-2">
@@ -95,7 +95,7 @@ export function FooterLayout() {
                     <li key={link.name}>
                       <CustomLink
                         href={link.href}
-                        className="text-[12px] sm:text-[14px] text-gray-600"
+                        className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
                       >
                         {link.name}
                       </CustomLink>
@@ -112,7 +112,7 @@ export function FooterLayout() {
               {[footerSections[2], footerSections[3], footerSections[4]].map(
                 (section) => (
                   <div key={section.title}>
-                    <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
+                    <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
                       {section.title}
                     </h3>
                     <ul className="space-y-0 sm:space-y-2">
@@ -120,7 +120,7 @@ export function FooterLayout() {
                         <li key={link.name}>
                           <CustomLink
                             href={link.href}
-                            className="text-[12px] sm:text-[14px] text-gray-600"
+                            className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
                           >
                             {link.name}
                           </CustomLink>
@@ -153,7 +153,7 @@ export function FooterLayout() {
         <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-[12px] sm:text-[14px] font-semibold text-gray-900 mb-2">
+              <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
                 {section.title}
               </h3>
               <ul className="space-y-0 sm:space-y-2">
@@ -161,7 +161,7 @@ export function FooterLayout() {
                   <li key={link.name}>
                     <CustomLink
                       href={link.href}
-                      className="text-[12px] sm:text-[14px] text-gray-600"
+                      className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
                     >
                       {link.name}
                     </CustomLink>
@@ -178,7 +178,7 @@ export function FooterLayout() {
             <div className="w-full md:w-auto">
               <label
                 htmlFor="newsletter"
-                className="block text-[12px] sm:text-[16px] font-semibold text-gray-900 mb-1 ml-[10px]"
+                className="block text-[12px] sm:text-[16px] font-semibold text-[var(--color-gray)] mb-1 ml-[10px]"
               >
                 {footerLabels.newsletter.title}
               </label>
@@ -203,7 +203,7 @@ export function FooterLayout() {
                 />
                 <label
                   htmlFor="newsletterConsent"
-                  className="text-[8px] sm:text-[10px] text-black-600 cursor-pointer"
+                  className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer"
                 >
                   {footerLabels.newsletter.description}
                 </label>
@@ -217,7 +217,7 @@ export function FooterLayout() {
           <div className="w-full">
             <label
               htmlFor="newsletter-mobile"
-              className="block text-[12px] sm:text-[16px] font-semibold text-gray-900 mb-1"
+              className="block text-[12px] sm:text-[16px] font-semibold text-[var(--color-gray)] mb-1"
             >
               {footerLabels.newsletter.title}
             </label>
@@ -242,7 +242,7 @@ export function FooterLayout() {
               />
               <label
                 htmlFor="newsletterConsentMobile"
-                className="text-[8px] sm:text-[10px] text-black-600 cursor-pointer"
+                className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer"
               >
                 {footerLabels.newsletter.description}
               </label>
@@ -269,8 +269,8 @@ export function FooterLayout() {
       </div>
 
       {/* Copyright */}
-      <div className="flex justify-center bg-[#ffffff] border-t border-gray-200 p-5">
-        <p className="text-center text-sm text-gray-600">
+      <div className="flex justify-center bg-[var(--color-white)] border-t border-gray-200 p-5">
+        <p className="text-center text-sm text-[var(--color-gray)]">
           {footerLabels.copyright}
         </p>
       </div>
