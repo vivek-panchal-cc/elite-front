@@ -79,7 +79,7 @@ const awards = [
 
 export function FooterLayout() {
   return (
-    <footer className="bg-[#E9E9E9] border-t">
+    <footer className="bg-[var(--color-soft-white)] border-t">
       <div className="max-w-7xl mx-auto px-[40px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         {/* ✅ Mobile View Custom Layout */}
         <div className="block lg:hidden space-y-6 mb-8">

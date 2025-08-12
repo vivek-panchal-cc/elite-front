@@ -29,6 +29,15 @@ import burgerMenuArrow from "./imgs/burger-menu-arrow.png";
 import closeIcon from "./imgs/close.png";
 import shoppingCart from "./imgs/shopping_cart.png";
 import eliteWallet from "./imgs/elite_wallet.png";
+import searchIcon from "./imgs/search_icon.png";
+import dualUSB from "./imgs/dual_usb.png";
+import arrowUp from "./imgs/arrow_up.png";
+import arrowDown from "./imgs/arrow_down.png";
+import hotFire from "./imgs/hot_fire.png";
+import fire from "./svgs/Fire";
+import eye from "./svgs/Eye";
+import heart from "./svgs/Heart";
+import addToCart from "./svgs/Cart";
 
 // Export all images as a single object
 export const images = {
@@ -62,6 +71,15 @@ export const images = {
   closeIcon,
   shoppingCart,
   eliteWallet,
+  searchIcon,
+  dualUSB,
+  arrowUp,
+  arrowDown,
+  hotFire,
+  fire,
+  eye,
+  heart,
+  addToCart,
 } as const;
 
 // Export individual images for direct import
@@ -96,6 +114,15 @@ export {
   closeIcon,
   shoppingCart,
   eliteWallet,
+  searchIcon,
+  dualUSB,
+  arrowUp,
+  arrowDown,
+  hotFire,
+  fire,
+  eye,
+  heart,
+  addToCart,
 };
 
 // Type for the images object

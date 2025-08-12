@@ -85,7 +85,7 @@ export const labels = {
     howItWorks: "How it Works",
     freeTrial: "Free Trial",
     products: "Products",
-    orders: "Orders",
+    orders: "Order",
     dashboard: "Home",
     claim: "Claim",
     transfer: "Transfer",

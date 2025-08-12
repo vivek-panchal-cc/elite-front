@@ -8,7 +8,7 @@ export const routeConfig = {
   // Private routes - require authentication
   private: [
     "/dashboard",
-    "/orders",
+    "/order",
     "/claim",
     "/transfer",
     "/cart",

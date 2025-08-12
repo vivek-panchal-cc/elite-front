@@ -36,7 +36,7 @@ const publicNavigationItems = [
 
 const privateNavigationItems = [
   { name: navigationLabels.home, href: "/dashboard" },
-  { name: navigationLabels.orders, href: "/orders" },
+  { name: navigationLabels.orders, href: "/order" },
   { name: navigationLabels.claim, href: "/claim" },
   { name: navigationLabels.transfer, href: "/transfer" },
   { name: navigationLabels.vapeProducts, href: "/vape-products" },
@@ -58,7 +58,7 @@ export function HeaderLayout() {
   const cartItemCount = 5; // Replace with actual cart count from your cart state
 
   return (
-    <header className="bg-[#E9E9E9] border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         <div className="flex items-center h-16">
           {/* Logo */}
@@ -110,7 +110,7 @@ export function HeaderLayout() {
                   </div>
 
                   {/* Amount Section */}
-                  <div className="bg-[#E9E9E9] border-2 border-[#10499E] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
+                  <div className="bg-[var(--color-soft-white)] border-2 border-[#10499E] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
                     <span className="text-[#10499E] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
                       <WrapAmount value={"50.0"} />
                     </span>

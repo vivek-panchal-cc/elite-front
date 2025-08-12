@@ -8,6 +8,10 @@
   --color-blue: #10499e;
   --color-red: #ed174b;
   --color-gray: #363940;
+  --color-orange: #ff3e00;
+  --color-green: #56d936;
+  --color-light-blue: #3d80e6;
+  --color-light-gray: #F6F6F6;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -196,4 +200,21 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #c9c9c9;
   border-radius: 4px;
+}
+
+.swiper {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-pagination,
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
 }
