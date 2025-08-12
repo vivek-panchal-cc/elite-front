@@ -172,7 +172,7 @@ export default function Orders() {
               {/* Main Category Button - Responsive */}
               <button
                 onClick={() => toggleMain(cat.name)}
-                className={`relative z-9999 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
+                className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
                   isOpen
                     ? "bg-[var(--color-red)] text-[var(--color-white)]"
                     : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-blue-800"
@@ -199,7 +199,7 @@ export default function Orders() {
 
               {/* Subcategories */}
               {isOpen && cat.subCategories && (
-                <div className="mt-[-4px] z-10 mx-2 sm:mx-4 p-2 sm:p-4 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
+                <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
                   {cat.subCategories.map((sub, sIdx) => {
                     const isSubOpen = openSub === sub.name;
                     return (
@@ -240,11 +240,13 @@ export default function Orders() {
                                 <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
                                   {isExpanded
                                     ? text
-                                    : `${text.slice(0, 150)}...`}
+                                    : `${text.slice(0, 150)}${
+                                        text?.length > 150 ? "..." : ""
+                                      }`}
                                   {text.length > 150 && (
                                     <button
                                       onClick={() => setIsExpanded(!isExpanded)}
-                                      className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold underline cursor-pointer hover:underline"
+                                      className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
                                     >
                                       {isExpanded
                                         ? "Read less"
@@ -404,7 +406,7 @@ export default function Orders() {
         })}
       </section>
       {cart?.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 p-3 sm:p-4 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 p-3 sm:p-4 z-11">
           <div className="max-w-7xl mx-auto flex flex-col">
             {/* Totals row - responsive */}
             <div className="flex justify-center items-center mb-2 sm:mb-3">
