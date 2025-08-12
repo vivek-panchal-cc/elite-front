@@ -290,13 +290,13 @@ export default function Orders() {
                                       <span
                                         className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
                                           p.tag === "25%"
-                                            ? "bg-green-500 text-white"
+                                            ? "bg-[var(--color-green)] text-[var(--color-white)]"
                                             : p.tag === "HOT"
-                                            ? "bg-orange-500 text-white"
+                                            ? "bg-[var(--color-orange)] text-[var(--color-white)]"
                                             : p.tag === "BUY 5 GET 2 FREE"
-                                            ? "bg-blue-500 text-white"
+                                            ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
                                             : p.tag === "SOLD OUT"
-                                            ? "bg-red-500 text-white"
+                                            ? "bg-[var(--color-red)] text-[var(--color-white)]"
                                             : ""
                                         } ${
                                           selectedProduct === idx
@@ -408,7 +408,6 @@ export default function Orders() {
       {cart?.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 p-3 sm:p-4 z-11">
           <div className="max-w-7xl mx-auto flex flex-col">
-            {/* Totals row - responsive */}
             <div className="flex justify-center items-center mb-2 sm:mb-3">
               <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1">
                 <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
@@ -453,7 +452,6 @@ export default function Orders() {
               </div>
             </div>
 
-            {/* View Cart button - responsive */}
             <button
               className="bg-[var(--color-red)] text-white w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
               onClick={() => {
