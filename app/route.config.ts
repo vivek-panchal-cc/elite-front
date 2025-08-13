@@ -16,6 +16,7 @@ export const routeConfig = {
     "/contact",
     "/offers",
     "/logout",
+    "/profile",
   ],
 
   // Admin routes - none currently configured

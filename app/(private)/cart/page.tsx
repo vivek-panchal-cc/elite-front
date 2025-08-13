@@ -140,7 +140,7 @@ const Cart = () => {
             </h3>
             <p className="text-sm text-[var(--color-black)] mb-2 text-center">
               {cartLabels.amountLeftInEliteWallet}:{" "}
-              <span className="text-[#ED174B] font-semibold">
+              <span className="text-[var(--color-red)] font-semibold">
                 {" "}
                 <WrapAmount value={6.6} />
                 396.50
@@ -204,7 +204,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.eliteRewards}</span>
-                <span className="text-[#ED174B]">
+                <span className="text-[var(--color-red)]">
                   - <WrapAmount value={60} />
                 </span>
               </div>
@@ -212,14 +212,14 @@ const Cart = () => {
 
             <div className="flex justify-between text-lg font-semibold mt-4 p-2 pb-0 mb-0">
               <span>{cartLabels.total}</span>
-              <span className="text-[#ED174B]">
+              <span className="text-[var(--color-red)]">
                 {" "}
                 <WrapAmount value={710} />
               </span>
             </div>
 
             <div className="space-y-2 mt-0">
-              <Button className="w-full bg-[#ED174B] hover:bg-[#c6143f] text-white rounded-[50px]">
+              <Button className="w-full bg-[var(--color-red)] hover:bg-[#c6143f] text-white rounded-[50px]">
                 {cartLabels.proceedToPayment}
               </Button>
               <Button variant="outline" className="w-full rounded-[50px]">

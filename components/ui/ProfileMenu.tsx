@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { User } from "lucide-react";
 import { Button } from "./ButtonUI";
 import { commonLabels, profileLabels } from "@/lib/labels";
+import { useRouter } from "next/navigation";
 
 interface ProfileMenuProps {
   isAuthenticated: boolean;
@@ -15,6 +16,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   setLogoutOpen,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
@@ -32,6 +34,12 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleProfileOpen = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push("/profile");
+    setIsOpen(false);
+  };
+
   return isAuthenticated ? (
     <div className="relative hidden md:inline-block" ref={dropdownRef}>
       {/* Profile Icon */}
@@ -47,10 +55,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
         <div className="absolute right-0 mt-2 w-30 bg-white border rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
           <button
             className="w-full text-center font-medium px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
-            onClick={() => {
-              console.log("My Profile clicked");
-              setIsOpen(false);
-            }}
+            onClick={handleProfileOpen}
           >
             {profileLabels.myProfile}
           </button>
@@ -60,6 +65,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
               setLogoutOpen(true);
               setIsOpen(false);
             }}
+            role="menuitem"
           >
             {commonLabels.logout}
           </button>

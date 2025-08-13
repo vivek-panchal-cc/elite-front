@@ -11,7 +11,8 @@
   --color-orange: #ff3e00;
   --color-green: #56d936;
   --color-light-blue: #3d80e6;
-  --color-light-gray: #F6F6F6;
+  --color-light-gray: #f6f6f6;
+  --color-side-bar: #d4d4d4;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -184,6 +185,7 @@
 }
 
 .custom-scrollbar {
+  overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #c9c9c9 #f2f2f2;
 }
@@ -217,4 +219,16 @@
 .swiper-button-prev,
 .swiper-button-next {
   display: none !important;
+}
+
+.profile-header-section {
+  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
+  background-image: url("../components/images/public_background_layout.png");
+  background-repeat: repeat;
+  background-position: center center;
+  /* width: 100%;
+  height: 100%; */
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 100%;
 }

@@ -38,6 +38,9 @@ import fire from "./svgs/Fire";
 import eye from "./svgs/Eye";
 import heart from "./svgs/Heart";
 import addToCart from "./svgs/Cart";
+import mail from "./svgs/Mail";
+import phone from "./svgs/Phone";
+import profile from "./svgs/Profile";
 
 // Export all images as a single object
 export const images = {
@@ -80,6 +83,9 @@ export const images = {
   eye,
   heart,
   addToCart,
+  mail,
+  phone,
+  profile,
 } as const;
 
 // Export individual images for direct import
@@ -123,6 +129,9 @@ export {
   eye,
   heart,
   addToCart,
+  mail,
+  phone,
+  profile,
 };
 
 // Type for the images object

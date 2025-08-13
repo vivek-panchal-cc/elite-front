@@ -34,6 +34,28 @@ export const labels = {
   // Profile
   profile: {
     myProfile: "My Profile",
+    myAccount: "My Account",
+    hello: "Hello ",
+    yourRewardBalance: "Your Reward Balance",
+    withdraw: "WITHDRAW",
+    deposite: "DEPOSITE",
+    orderHistory: "Order History",
+    eliteWalletTrans: "Elite Wallet Transactions",
+    reorder: "Reorder",
+    rewardGraph: "Reward Graph",
+    contactUs: "Contact Our Nearby Executive",
+    profileEmail: "loreumispum@gmail.com",
+    profilePhone: "1234567899",
+    id: "ID",
+    amount: "Amount",
+    units: "Units",
+    date: "Date",
+    orderNo: "Order Number",
+    orderDate: "Date",
+    total: "Total",
+    action: "Action",
+    received: "Received",
+    withdrawal: "Withdrawal",
   },
 
   // Login
