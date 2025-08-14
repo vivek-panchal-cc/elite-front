@@ -15,7 +15,7 @@ interface CustomLinkProps extends ComponentProps<typeof Link> {
 export function CustomLink({
   children,
   className = "",
-  activeClassName = "text-[#ED174B] font-medium", // default active styles
+  activeClassName = "text-[var(--color-red)] font-medium", // default active styles
   exact = false,
   ...props
 }: CustomLinkProps) {

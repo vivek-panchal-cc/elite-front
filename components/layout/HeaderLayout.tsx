@@ -172,7 +172,7 @@ export function HeaderLayout() {
             <div className="mt-4 flex justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
               {isAuthenticated ? (
                 <Button
-                  className="px-8 mt-5 bg-[#ED174B] text-[var(--color-soft-white)] rounded-[50px]"
+                  className="px-8 mt-5 bg-[var(--color-red)] text-[var(--color-soft-white)] rounded-[50px]"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     setLogoutOpen(true);

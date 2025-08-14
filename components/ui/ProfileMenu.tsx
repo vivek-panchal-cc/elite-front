@@ -60,7 +60,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             {profileLabels.myProfile}
           </button>
           <button
-            className="w-full text-[#ED174B] font-medium text-center px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
+            className="w-full text-[var(--color-red)] font-medium text-center px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
             onClick={() => {
               setLogoutOpen(true);
               setIsOpen(false);

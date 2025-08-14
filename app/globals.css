@@ -7,12 +7,14 @@
   --color-soft-white: #e9e9e9;
   --color-blue: #10499e;
   --color-red: #ed174b;
+  --color-red-hover: #c6143f;
   --color-gray: #363940;
   --color-orange: #ff3e00;
   --color-green: #56d936;
   --color-light-blue: #3d80e6;
   --color-light-gray: #f6f6f6;
   --color-side-bar: #d4d4d4;
+  --table-border: #0000001a;
 }
 
 @custom-variant dark (&:is(.dark *));

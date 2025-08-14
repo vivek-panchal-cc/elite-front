@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PrivateLayout from "../PrivateLayout";
 import ProfileHeader from "./(section)/ProfileHeader";
 import { profileLabels } from "@/lib/labels";
@@ -31,41 +31,61 @@ interface SidebarItem {
 }
 
 const sidebarNavItems: SidebarItem[] = [
-  { title: "Profile Information", icon: <ProfileIcon fill="currentColor" /> },
-  { title: "Order History", icon: <OrderHistory stroke="currentColor" /> },
-  { title: "My Rep Details", icon: <RepDetails fill="currentColor" /> },
-  { title: "My Rewards/Elite Wallet", icon: <Reward stroke="currentColor" /> },
-  { title: "My Branches", icon: <Branch stroke="currentColor" /> },
-  { title: "My Company", icon: <Company fill="currentColor" /> },
-  { title: "My Favourites", icon: <Favourite fill="currentColor" /> },
-  { title: "Log Out", icon: <Logout fill="currentColor" /> },
+  {
+    title: profileLabels.profileInfo,
+    icon: <ProfileIcon fill="currentColor" />,
+  },
+  {
+    title: profileLabels.profileOrderHistory,
+    icon: <OrderHistory stroke="currentColor" />,
+  },
+  { title: profileLabels.repDetails, icon: <RepDetails fill="currentColor" /> },
+  { title: profileLabels.rewardWallet, icon: <Reward stroke="currentColor" /> },
+  { title: profileLabels.myBranches, icon: <Branch stroke="currentColor" /> },
+  { title: profileLabels.myCompany, icon: <Company fill="currentColor" /> },
+  { title: profileLabels.myFavourite, icon: <Favourite fill="currentColor" /> },
+  { title: profileLabels.profLogout, icon: <Logout fill="currentColor" /> },
 ];
 
 const Profile: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isLogoutOpen, setLogoutOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const renderActiveSection = () => {
+    const mobileProps = { isMobile };
     switch (activeIndex) {
       case 0:
-        return <ProfileInfo />;
+        return <ProfileInfo {...mobileProps} />;
       case 1:
-        return <ProfileOrderHistory />;
+        return <ProfileOrderHistory {...mobileProps} />;
       case 2:
-        return <ProfileRepDetails />;
+        return <ProfileRepDetails {...mobileProps} />;
       case 3:
-        return <ProfileReward />;
+        return <ProfileReward {...mobileProps} />;
       case 4:
-        return <ProfileBranch />;
+        return <ProfileBranch {...mobileProps} />;
       case 5:
-        return <ProfileCompany />;
+        return <ProfileCompany {...mobileProps} />;
       case 6:
-        return <ProfileFavourite />;
+        return <ProfileFavourite {...mobileProps} />;
       case 7:
         return null;
       default:
         return null;
     }
+  };
+
+  const handleProfileInfo = () => {
+    setActiveIndex(0);
+    setLogoutOpen(false);
   };
 
   return (
@@ -79,7 +99,13 @@ const Profile: React.FC = () => {
           {/* Sidebar */}
           <div className="w-full md:w-1/3">
             <SidebarNav
-              items={sidebarNavItems}
+              items={sidebarNavItems?.map((item, index) => ({
+                ...item,
+                renderContent:
+                  isMobile && index === activeIndex
+                    ? renderActiveSection()
+                    : null,
+              }))}
               activeIndex={activeIndex}
               onItemSelect={(index: number) => {
                 setActiveIndex(index);
@@ -89,7 +115,7 @@ const Profile: React.FC = () => {
               }}
             />
           </div>
-          {renderActiveSection()}
+          {!isMobile && renderActiveSection()}
         </div>
       </PrivateLayout>
       <Modal
@@ -98,7 +124,7 @@ const Profile: React.FC = () => {
         classStyle=""
         isClose={false}
       >
-        <LogoutForm setLogoutOpen={setLogoutOpen} />
+        <LogoutForm setLogoutOpen={handleProfileInfo} />
       </Modal>
     </>
   );

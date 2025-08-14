@@ -219,7 +219,7 @@ const Cart = () => {
             </div>
 
             <div className="space-y-2 mt-0">
-              <Button className="w-full bg-[var(--color-red)] hover:bg-[#c6143f] text-white rounded-[50px]">
+              <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white rounded-[50px]">
                 {cartLabels.proceedToPayment}
               </Button>
               <Button variant="outline" className="w-full rounded-[50px]">

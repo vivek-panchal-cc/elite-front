@@ -101,7 +101,7 @@ export default function ProfileDashboard() {
               <WrapAmount value={498.32} />
             </p>
             <div className="space-y-3 w-full">
-              <Button className="w-full bg-[var(--color-red)] hover:bg-[#c6143f] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
+              <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
                 {profileLabels.withdraw}
               </Button>
               <Button className="w-full bg-[var(--color-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
@@ -113,75 +113,79 @@ export default function ProfileDashboard() {
           {/* Right Column */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Order History */}
-            <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-              <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
-                {profileLabels.orderHistory}
-              </h3>
-              <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
-                <thead>
-                  <tr className="text-left text-[var(--color-black)]">
-                    <th>{profileLabels.orderNo}</th>
-                    <th>{profileLabels.orderDate}</th>
-                    <th>{profileLabels.total}</th>
-                    <th>{profileLabels.action}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colSpan={4} className="p-0">
-                      <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
-                    </td>
-                  </tr>
-                  {orderHistory.map((o, idx) => (
-                    <tr
-                      key={idx}
-                      className="text-[var(--color-black)] rounded-lg"
-                    >
-                      <td>{o.orderNumber}</td>
-                      <td>{o.date}</td>
-                      <td>{o.total}</td>
-                      <td className="text-[var(--color-red)] cursor-pointer">
-                        {profileLabels.reorder}
+            <div className="overflow-hidden rounded-xl">
+              <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
+                <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
+                  {profileLabels.orderHistory}
+                </h3>
+                <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+                  <thead>
+                    <tr className="text-left text-[var(--color-black)]">
+                      <th>{profileLabels.orderNo}</th>
+                      <th>{profileLabels.orderDate}</th>
+                      <th>{profileLabels.total}</th>
+                      <th>{profileLabels.action}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colSpan={4} className="p-0">
+                        <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                    {orderHistory.map((o, idx) => (
+                      <tr
+                        key={idx}
+                        className="text-[var(--color-black)] rounded-lg"
+                      >
+                        <td>{o.orderNumber}</td>
+                        <td>{o.date}</td>
+                        <td>{o.total}</td>
+                        <td className="text-[var(--color-red)] cursor-pointer">
+                          {profileLabels.reorder}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Wallet Transactions */}
-            <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-              <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
-                {profileLabels.eliteWalletTrans}
-              </h3>
-              <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
-                <thead>
-                  <tr className="text-left text-[var(--color-black)]">
-                    <th>{profileLabels.id}</th>
-                    <th>{profileLabels.amount}</th>
-                    <th>{profileLabels.units}</th>
-                    <th>{profileLabels.date}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colSpan={4} className="p-0">
-                      <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
-                    </td>
-                  </tr>
-                  {walletTransactions.map((w, idx) => (
-                    <tr
-                      key={idx}
-                      className="text-left text-[var(--color-black)]"
-                    >
-                      <td>{w.id}</td>
-                      <td className="text-[var(--color-red)]">{w.amount}</td>
-                      <td>{w.units}</td>
-                      <td>{w.date}</td>
+            <div className="overflow-hidden rounded-xl">
+              <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
+                <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
+                  {profileLabels.eliteWalletTrans}
+                </h3>
+                <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+                  <thead>
+                    <tr className="text-left text-[var(--color-black)]">
+                      <th>{profileLabels.id}</th>
+                      <th>{profileLabels.amount}</th>
+                      <th>{profileLabels.units}</th>
+                      <th>{profileLabels.date}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colSpan={4} className="p-0">
+                        <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
+                      </td>
+                    </tr>
+                    {walletTransactions.map((w, idx) => (
+                      <tr
+                        key={idx}
+                        className="text-left text-[var(--color-black)]"
+                      >
+                        <td>{w.id}</td>
+                        <td className="text-[var(--color-red)]">{w.amount}</td>
+                        <td>{w.units}</td>
+                        <td>{w.date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Reward Graph */}
@@ -212,7 +216,7 @@ export default function ProfileDashboard() {
               <div className="flex flex-col gap-2 w-full px-6 sm:px-10">
                 <a
                   href={`tel:${profileLabels.profilePhone}`}
-                  className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[#c6143f] text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
+                  className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
                 >
                   <Phone />
                   {profileLabels.profilePhone}

@@ -5,6 +5,7 @@ import Arrow from "../images/svgs/Arrow";
 interface SidebarNavItem {
   title: string;
   icon?: React.ReactNode;
+  renderContent?: React.ReactNode;
 }
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
@@ -20,37 +21,97 @@ export function SidebarNav({
   onItemSelect,
   ...props
 }: SidebarNavProps) {
+  const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
+  const [isMobileOrTablet, setIsMobileOrTablet] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      setIsMobileOrTablet(isMobile);
+      if (isMobile) {
+        setExpandedIndex(activeIndex ?? null);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [activeIndex]);
+
+  const handleClick = (index: number) => {
+    if (isMobileOrTablet) {
+      setExpandedIndex((prev) => (prev === index ? null : index));
+      onItemSelect?.(index);
+    } else {
+      onItemSelect?.(index);
+    }
+  };
+
   return (
-    <nav className={cn("flex flex-col gap-2", className)} {...props}>
+    <nav
+      className={cn(
+        "flex flex-col",
+        isMobileOrTablet ? "gap-6" : "gap-2",
+        className
+      )}
+      {...props}
+    >
       {items.map((item, index) => {
-        const isActive = index === activeIndex;
+        const isActive = !isMobileOrTablet && index === activeIndex;
+        const isExpanded = isMobileOrTablet && expandedIndex === index;
 
         return (
-          <button
-            key={item.title}
-            onClick={() => onItemSelect?.(index)}
-            className={cn(
-              "group flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium transition-all h-[35px] w-full text-left cursor-pointer",
-              isActive
-                ? "bg-[var(--color-red)] text-white shadow-md border-none"
-                : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-white hover:border-none border border-[var(--color-side-bar)]"
-            )}
-          >
-            {item.icon && (
+          <div key={item.title} className="flex flex-col">
+            <button
+              key={item.title}
+              onClick={() => handleClick(index)}
+              className={cn(
+                "relative z-10 group flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium transition-all h-[35px] w-full text-left cursor-pointer",
+                isMobileOrTablet
+                  ? "h-[50px] border border-[var(--color-red)]"
+                  : "h-[35px] border border-[var(--color-side-bar)]",
+                isActive || isExpanded
+                  ? "bg-[var(--color-red)] text-white shadow-md border-none"
+                  : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-white hover:border-none"
+              )}
+            >
+              {item.icon && (
+                <span
+                  className={cn(
+                    "text-lg transition-colors",
+                    isActive || isExpanded
+                      ? "text-white"
+                      : "text-[var(--color-red)] group-hover:text-white"
+                  )}
+                >
+                  {item.icon}
+                </span>
+              )}
+              {item.title}
               <span
                 className={cn(
-                  "text-lg transition-colors",
-                  isActive
-                    ? "text-white"
-                    : "text-[var(--color-red)] group-hover:text-white"
+                  "ml-auto transition-transform duration-300",
+                  isMobileOrTablet
+                    ? isExpanded
+                      ? "rotate-270"
+                      : "rotate-90"
+                    : ""
                 )}
               >
-                {item.icon}
+                <Arrow className="text-inherit" stroke="currentColor" />
               </span>
+            </button>
+            {item.renderContent && (
+              <>
+                {isMobileOrTablet
+                  ? isExpanded && (
+                      <div className="-mt-2">{item.renderContent}</div>
+                    )
+                  : isActive && (
+                      <div className="-mt-2">{item.renderContent}</div>
+                    )}
+              </>
             )}
-            {item.title}
-            <Arrow className="ml-auto text-inherit" stroke="currentColor" />
-          </button>
+          </div>
         );
       })}
     </nav>
