@@ -6,11 +6,19 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
-import { dualUSB, eye, heart, searchIcon } from "@/components/images";
+import {
+  dualUSB,
+  eye,
+  heart,
+  productTwo,
+  searchIcon,
+} from "@/components/images";
 import Fire from "@/components/images/svgs/Fire";
 import Eye from "@/components/images/svgs/Eye";
 import Heart from "@/components/images/svgs/Heart";
 import Cart from "@/components/images/svgs/Cart";
+import WrapAmount from "@/components/wrapper/WrapAmount";
+import { CURRENCY_SYMBOL } from "@/lib/constants/all";
 
 // ---------- TYPES ----------
 interface Product {
@@ -175,7 +183,7 @@ export default function Orders() {
                 className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
                   isOpen
                     ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                    : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-blue-800"
+                    : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
                 }`}
               >
                 <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
@@ -184,7 +192,7 @@ export default function Orders() {
                     alt={cat.name}
                     width={12}
                     height={12}
-                    className="w-3 h-3 sm:w-4 sm:h-4"
+                    // className="w-3 h-3 sm:w-4 sm:h-4"
                   />
                   <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
                     {cat.name}
@@ -207,10 +215,10 @@ export default function Orders() {
                         {/* Subcategory Button - Responsive */}
                         <button
                           onClick={() => toggleSub(sub.name)}
-                          className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors cursor-pointer ${
+                          className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
                             isSubOpen
                               ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                              : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-blue-800"
+                              : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
                           }`}
                         >
                           <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
@@ -219,7 +227,7 @@ export default function Orders() {
                               alt={sub.name}
                               width={12}
                               height={12}
-                              className="w-3 h-3 sm:w-4 sm:h-4"
+                              // className="w-3 h-3 sm:w-4 sm:h-4"
                             />
                             <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
                               {sub.name}
@@ -273,72 +281,83 @@ export default function Orders() {
                                   <div
                                     className={`relative mb-1 sm:mb-2 ${
                                       selectedProduct !== idx
-                                        ? "border border-[var(--color-orange)] rounded-lg"
+                                        ? "rounded-lg"
                                         : ""
                                     }`}
                                   >
-                                    <div
-                                      className={`h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-md ${
-                                        selectedProduct === idx
-                                          ? "bg-[var(--color-soft-white)]"
-                                          : "bg-[var(--color-white)]"
-                                      }`}
-                                    />
-
-                                    {/* Tag Badge - Responsive */}
-                                    {p.tag && (
-                                      <span
-                                        className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
-                                          p.tag === "25%"
-                                            ? "bg-[var(--color-green)] text-[var(--color-white)]"
-                                            : p.tag === "HOT"
-                                            ? "bg-[var(--color-orange)] text-[var(--color-white)]"
-                                            : p.tag === "BUY 5 GET 2 FREE"
-                                            ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
-                                            : p.tag === "SOLD OUT"
-                                            ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                                    <div className="relative mb-1 sm:mb-2 w-full">
+                                      <div
+                                        className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden ${
+                                          selectedProduct !== idx
+                                            ? "border border-[var(--color-orange)]"
                                             : ""
-                                        } ${
-                                          selectedProduct === idx
-                                            ? "-top-5 sm:-top-7 left-0"
-                                            : "-top-2 sm:-top-3 left-2 sm:left-3"
                                         }`}
                                       >
-                                        {p.tag === "HOT" && (
-                                          <Fire className="w-3 h-3 sm:w-4 sm:h-4" />
-                                        )}{" "}
-                                        {p.tag}
-                                      </span>
-                                    )}
-                                  </div>
+                                        <Image
+                                          src={productTwo}
+                                          alt="Product"
+                                          fill
+                                          className="object-contain rounded p-4"
+                                        />
 
-                                  {/* Product Info - Responsive */}
-                                  <p className="text-xs sm:text-sm font-medium">
-                                    {p.name}
-                                  </p>
-                                  <p className="text-[10px] sm:text-xs text-gray-500">
-                                    {p.category}
-                                  </p>
-                                  <div className="w-full font-bold text-[var(--color-red)] mt-1">
-                                    <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
-                                      <div className="flex items-center gap-1 sm:gap-2">
-                                        {selectedProduct === idx ? (
-                                          <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-                                        ) : (
-                                          <div className="w-3 sm:w-5" />
+                                        {/* Tag Badge - Responsive */}
+                                        {p.tag && (
+                                          <span
+                                            className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
+                                              p.tag === "25%"
+                                                ? "bg-[var(--color-green)] text-[var(--color-white)]"
+                                                : p.tag === "HOT"
+                                                ? "bg-[var(--color-orange)] text-[var(--color-white)]"
+                                                : p.tag === "BUY 5 GET 2 FREE"
+                                                ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
+                                                : p.tag === "SOLD OUT"
+                                                ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                                                : ""
+                                            } ${
+                                              selectedProduct === idx
+                                                ? "-top-5 sm:-top-7 left-0"
+                                                : "-top-2 sm:-top-3 left-2 sm:left-3"
+                                            }`}
+                                          >
+                                            {p.tag === "HOT" && (
+                                              <Fire className="w-3 h-3 sm:w-4 sm:h-4" />
+                                            )}{" "}
+                                            {p.tag}
+                                          </span>
                                         )}
                                       </div>
+                                    </div>
 
-                                      <span className="text-base sm:text-lg md:text-[19px]">
-                                        £{p.price}
-                                      </span>
+                                    {/* Product Info - Responsive */}
+                                    <div className="px-2">
+                                      <p className="text-xs sm:text-sm font-medium">
+                                        {p.name}
+                                      </p>
+                                      <p className="text-[10px] sm:text-xs text-gray-500">
+                                        {p.category}
+                                      </p>
+                                      <div className="w-full font-bold text-[var(--color-red)] mt-1">
+                                        <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
+                                          <div className="flex items-center gap-1 sm:gap-2">
+                                            {selectedProduct === idx ? (
+                                              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                                            ) : (
+                                              <div className="w-3 sm:w-5" />
+                                            )}
+                                          </div>
 
-                                      <div className="flex items-center gap-1 sm:gap-2">
-                                        {selectedProduct === idx ? (
-                                          <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
-                                        ) : (
-                                          <div className="w-3 sm:w-5" />
-                                        )}
+                                          <span className="text-base sm:text-lg md:text-[19px]">
+                                            <WrapAmount value={p.price} />
+                                          </span>
+
+                                          <div className="flex items-center gap-1 sm:gap-2">
+                                            {selectedProduct === idx ? (
+                                              <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
+                                            ) : (
+                                              <div className="w-3 sm:w-5" />
+                                            )}
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -377,7 +396,7 @@ export default function Orders() {
                                           </button>
                                         </div>
                                         <button
-                                          className="bg-[var(--color-red)] text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ml-1 cursor-pointer hover:bg-red-700 transition-colors flex items-center justify-center gap-1 text-xs sm:text-[8px] md:text-[10px] lg:text-[8px] xl:text-[12px]"
+                                          className="bg-[var(--color-red)] text-[var(--color-white)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ml-1 cursor-pointer hover:bg-red-700 transition-colors flex items-center justify-center gap-1 text-xs sm:text-[8px] md:text-[10px] lg:text-[8px] xl:text-[12px]"
                                           onClick={(e) => {
                                             e.stopPropagation();
                                             addToCart(p, quantities[idx]);
@@ -406,14 +425,14 @@ export default function Orders() {
         })}
       </section>
       {cart?.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 p-3 sm:p-4 z-11">
+        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t-[2px] border-[var(--color-red)] p-3 sm:p-4 z-11">
           <div className="max-w-7xl mx-auto flex flex-col">
             <div className="flex justify-center items-center mb-2 sm:mb-3">
               <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1">
                 <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
                   Total:
                   <span className="font-bold text-[var(--color-blue)]">
-                    £
+                    {CURRENCY_SYMBOL}
                     {cart
                       .reduce(
                         (sum, item) => sum + item.product.price * item.quantity,
@@ -440,7 +459,7 @@ export default function Orders() {
                 <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
                   Elite Rewards:
                   <span className="font-bold text-[var(--color-red)]">
-                    £
+                    {CURRENCY_SYMBOL}
                     {(
                       cart.reduce(
                         (sum, item) => sum + item.product.price * item.quantity,
@@ -453,7 +472,7 @@ export default function Orders() {
             </div>
 
             <button
-              className="bg-[var(--color-red)] text-white w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
+              className="bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
               onClick={() => {
                 console.log("View Cart clicked", cart);
               }}

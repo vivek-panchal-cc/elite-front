@@ -52,15 +52,15 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
 
       {/* Dropdown (on click) */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-30 bg-white border rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
+        <div className="absolute right-0 mt-2 w-30 bg-white border border-[var(--color-red)] rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
           <button
-            className="w-full text-center font-medium px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
+            className="w-full text-center font-medium px-4 py-2 hover:bg-gray-100 text-sm rounded-t-md cursor-pointer"
             onClick={handleProfileOpen}
           >
             {profileLabels.myProfile}
           </button>
           <button
-            className="w-full text-[var(--color-red)] font-medium text-center px-4 py-2 hover:bg-gray-100 text-sm cursor-pointer"
+            className="w-full text-[var(--color-red)] font-medium text-center px-4 py-2 hover:bg-gray-100 rounded-b-md text-sm cursor-pointer"
             onClick={() => {
               setLogoutOpen(true);
               setIsOpen(false);
