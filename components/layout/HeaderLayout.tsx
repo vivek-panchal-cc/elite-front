@@ -83,7 +83,7 @@ export function HeaderLayout() {
                 <CustomLink
                   key={item.name}
                   href={item.href}
-                  className="text-[#363848] px-3 py-2 text-sm font-medium"
+                  className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
                 >
                   {item.name}
                 </CustomLink>
@@ -95,7 +95,7 @@ export function HeaderLayout() {
               <Link href="/cart" className="relative flex items-center">
                 <div className="flex items-center">
                   {/* Cart Icon Section */}
-                  <div className="relative bg-[#10499E] w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-y border-l border-[#10499E]">
+                  <div className="relative bg-[var(--color-blue)] w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-y border-l border-[var(--color-blue)]">
                     <Image
                       src={shoppingCart}
                       alt="shopping cart"
@@ -103,15 +103,15 @@ export function HeaderLayout() {
                       priority
                     />
                     {cartItemCount > 0 && (
-                      <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#F14A29] text-white text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
+                      <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-white text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
                         {cartItemCount}
                       </span>
                     )}
                   </div>
 
                   {/* Amount Section */}
-                  <div className="bg-[var(--color-soft-white)] border-2 border-[#10499E] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
-                    <span className="text-[#10499E] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
+                  <div className="bg-[var(--color-soft-white)] border-2 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
+                    <span className="text-[var(--color-blue)] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
                       <WrapAmount value={"50.0"} />
                     </span>
                   </div>
@@ -151,13 +151,14 @@ export function HeaderLayout() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 py-4">
-          <nav className="flex flex-col space-y-2">
+        <div className="md:hidden pt-4 flex flex-col h-[50vh]">
+          {/* Scrollable navigation items */}
+          <nav className="flex-1 overflow-y-auto">
             {navigationItems.map((item) => (
               <CustomLink
                 key={item.name}
                 href={item.href}
-                className="flex justify-between text-[#363848] px-10 py-2 text-sm font-medium"
+                className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
@@ -168,31 +169,47 @@ export function HeaderLayout() {
                 />
               </CustomLink>
             ))}
-
-            <div className="mt-4 flex justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-              {isAuthenticated ? (
-                <Button
-                  className="px-8 mt-5 bg-[var(--color-red)] text-[var(--color-soft-white)] rounded-[50px]"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setLogoutOpen(true);
-                  }}
-                >
-                  {commonLabels.logout}
-                </Button>
-              ) : (
-                <Button
-                  className="px-8 mt-5 bg-[#10499E] text-[var(--color-soft-white)] rounded-[50px]"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setLoginOpen(true);
-                  }}
-                >
-                  {commonLabels.login}
-                </Button>
-              )}
-            </div>
+            <nav className="flex-1 overflow-y-auto">
+              <CustomLink
+                key="profile"
+                href="/profile"
+                className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {profileLabels.myProfile}
+                <Image
+                  src={burgerMenuArrow}
+                  alt="Menu arrow"
+                  className="h-[15px] w-[10px]"
+                />
+              </CustomLink>
+            </nav>
           </nav>
+
+          {/* Sticky button section */}
+          <div className="sticky bottom-0 py-4 flex justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+            {isAuthenticated ? (
+              <Button
+                className="px-8 bg-[var(--color-red)] text-[var(--color-soft-white)] rounded-[50px]"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setLogoutOpen(true);
+                }}
+              >
+                {commonLabels.logout}
+              </Button>
+            ) : (
+              <Button
+                className="px-8 bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setLoginOpen(true);
+                }}
+              >
+                {commonLabels.login}
+              </Button>
+            )}
+          </div>
         </div>
       )}
 

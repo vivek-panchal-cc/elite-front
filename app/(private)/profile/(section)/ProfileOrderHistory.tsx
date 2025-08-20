@@ -92,7 +92,7 @@ export default function ProfileOrderHistory({
         >
           {!isMobile && (
             <h3
-              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-blue)]`}
+              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
             >
               {profileLabels.profileOrderHistory}
             </h3>
@@ -139,21 +139,21 @@ export default function ProfileOrderHistory({
                             }
                             className="p-1"
                           >
-                            <MoreVertical className="w-5 h-5 text-[var(--color-blue)]" />
+                            <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
                           </button>
                         </div>
                         {openMenuIndex === idx && (
                           <div className="overflow-hidden absolute right-0 mt-1 w-25 bg-[var(--color-white)] border border-[var(--color-red)] rounded-xl shadow-md z-10">
-                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {
                                 profileLabels.profileOrderHistoryLabel
                                   .viewReceipt
                               }
                             </button>
-                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.viewOrder}
                             </button>
-                            <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                            <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.reOrder}
                             </button>
                           </div>
@@ -208,13 +208,13 @@ export default function ProfileOrderHistory({
                         {order.total}
                       </td>
                       <td className="px-2 py-3 whitespace-nowrap flex gap-2">
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
                         </Button>
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewOrder}
                         </Button>
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
                         </Button>
                       </td>

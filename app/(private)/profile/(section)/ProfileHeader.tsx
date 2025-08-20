@@ -91,20 +91,20 @@ export default function ProfileDashboard() {
         <div className="mx-auto grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-4 sm:px-5 md:px-8 lg:px-[60px]">
           {/* Reward Balance Card */}
           <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center text-center min-h-[300px] sm:min-h-[350px]">
-            <h2 className="text-[22px] sm:text-[26px] md:text-[28px] lg:text-[30px] font-bold mb-4 sm:mb-6 text-[var(--color-blue)]">
+            <h2 className="text-[22px] sm:text-[26px] md:text-[28px] lg:text-[30px] font-bold mb-4 sm:mb-6 text-[var(--color-dark-blue)]">
               {profileLabels.hello}Mattguant
             </h2>
             <p className="text-[var(--color-black)] text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px]">
               {profileLabels.yourRewardBalance}
             </p>
-            <p className="font-extrabold text-[var(--color-blue)] text-[48px] sm:text-[60px] md:text-[70px] leading-none mb-6 sm:mb-8 md:mb-10">
+            <p className="font-extrabold text-[var(--color-dark-blue)] text-[48px] sm:text-[60px] md:text-[70px] leading-none mb-6 sm:mb-8 md:mb-10">
               <WrapAmount value={498.32} />
             </p>
             <div className="space-y-3 w-full">
               <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
                 {profileLabels.withdraw}
               </Button>
-              <Button className="w-full bg-[var(--color-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
+              <Button className="w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 rounded-full text-sm">
                 {profileLabels.deposite}
               </Button>
             </div>
@@ -198,7 +198,7 @@ export default function ProfileDashboard() {
                   <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)]">
                     {profileLabels.received}
                   </p>
-                  <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-blue)]">
+                  <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-dark-blue)]">
                     {profileLabels.withdrawal}
                   </p>
                 </div>
@@ -223,7 +223,7 @@ export default function ProfileDashboard() {
                 </a>
                 <a
                   href={`mailto:${profileLabels.profileEmail}`}
-                  className="flex items-center justify-center gap-2 bg-[var(--color-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
+                  className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
                 >
                   <Mail />
                   {profileLabels.profileEmail}

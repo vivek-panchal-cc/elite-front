@@ -25,7 +25,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
         >
           {!isMobile && (
             <h3
-              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-blue)]`}
+              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
             >
               {profileLabels.profileInfo}
             </h3>
@@ -73,7 +73,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
 
         {/* Address Section */}
         <h3
-          className={`text-[18px] sm:text-[20px] md:text-[25px] font-bold text-[var(--color-blue)] mb-4 ${
+          className={`text-[18px] sm:text-[20px] md:text-[25px] font-bold text-[var(--color-dark-blue)] mb-4 ${
             isMobile ? "mt-4" : ""
           }`}
         >

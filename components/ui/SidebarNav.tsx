@@ -87,18 +87,21 @@ export function SidebarNav({
                 </span>
               )}
               {item.title}
-              <span
-                className={cn(
-                  "ml-auto transition-transform duration-300",
-                  isMobileOrTablet
-                    ? isExpanded
-                      ? "rotate-270"
-                      : "rotate-90"
-                    : ""
-                )}
-              >
-                <Arrow className="text-inherit" stroke="currentColor" />
-              </span>
+              {(!isMobileOrTablet ||
+                (isMobileOrTablet && item.title !== "Log Out")) && (
+                <span
+                  className={cn(
+                    "ml-auto transition-transform duration-300",
+                    isMobileOrTablet
+                      ? isExpanded
+                        ? "rotate-270"
+                        : "rotate-90"
+                      : ""
+                  )}
+                >
+                  <Arrow className="text-inherit" stroke="currentColor" />
+                </span>
+              )}
             </button>
             {item.renderContent && (
               <>
