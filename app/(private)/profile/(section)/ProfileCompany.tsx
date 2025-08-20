@@ -92,7 +92,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
               <div className="p-6 bg-[var(--color-light-gray)]">
                 <div className="flex justify-end mb-6 gap-3">
                   <Button
-                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-normal"
+                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
                     onClick={handleSave}
                   >
                     {profileLabels.profileCompanyLabel.companySave}
@@ -224,7 +224,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                               {co.companyName}
                             </h4>
                             <Button
-                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-sm font-normal"
+                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
                               onClick={() => handleEdit(idx)}
                             >
                               <Edit
@@ -244,7 +244,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                             </h4>
                             <div className="flex gap-2 ">
                               <Button
-                                className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-sm font-normal"
+                                className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
                                 onClick={() => handleEdit(idx)}
                               >
                                 <Edit

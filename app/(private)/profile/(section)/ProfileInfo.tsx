@@ -32,12 +32,12 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
           )}
           <div className={`flex gap-2 sm:gap-3 ${isMobile ? "flex-col" : ""}`}>
             <Button
-              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-sm md:text-sm font-medium hover:opacity-90`}
+              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90`}
             >
               {profileLabels.changePass}
             </Button>
             <Button
-              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-sm md:text-sm font-medium hover:opacity-90 flex items-center justify-center gap-1 ${
+              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90 flex items-center justify-center gap-1 ${
                 isMobile ? "mb-4" : ""
               }`}
             >

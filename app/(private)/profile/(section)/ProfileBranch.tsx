@@ -97,12 +97,12 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)]">
+        <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)] gap-2">
           <h3 className="font-bold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
             {profileLabels.myBranches}
           </h3>
           <Button
-            className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-normal"
+            className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
             onClick={handleAdd}
           >
             <RoundedAdd />
@@ -123,7 +123,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
               <div className="p-6 border-b-[2px] border-[var(--table-border)] bg-[var(--color-light-gray)]">
                 <div className="flex justify-end mb-6 gap-3 mt-[-15px]">
                   <Button
-                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-normal"
+                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
                     onClick={handleSave}
                   >
                     {profileLabels.profileMyBranchesLabel.branchSave}
@@ -258,7 +258,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                       {isMobile && (
                         <div className="flex gap-2 w-full justify-end mb-2">
                           <Button
-                            className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-sm font-normal"
+                            className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
                             onClick={() => handleEdit(idx)}
                           >
                             <Edit
@@ -268,7 +268,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                             {profileLabels.profileMyBranchesLabel.branchEdit}
                           </Button>
                           <Button
-                            className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-sm font-normal"
+                            className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-[12px] font-normal"
                             onClick={() => handleDelete(idx)}
                           >
                             <Delete className="w-4 h-4" />
@@ -285,7 +285,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                           </h4>
                           <div className="flex gap-2 mt-[-10px]">
                             <Button
-                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-sm font-normal"
+                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-[12px] font-normal"
                               onClick={() => handleDelete(idx)}
                             >
                               <Delete className="w-4 h-4" />
@@ -295,7 +295,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                               }
                             </Button>
                             <Button
-                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-sm font-normal"
+                              className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
                               onClick={() => handleEdit(idx)}
                             >
                               <Edit
