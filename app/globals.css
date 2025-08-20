@@ -9,7 +9,7 @@
   --color-dark-blue: #005198;
   --color-red: #ed174b;
   --color-red-hover: #c6143f;
-  --color-dark-gray: #363940;
+  --color-gray: #363940;
   --color-gray: #363940;
   --color-orange: #ff3e00;
   --color-green: #56d936;
@@ -222,7 +222,16 @@
 .swiper-pagination,
 .swiper-button-prev,
 .swiper-button-next {
-  display: none !important;
+  /* display: none !important; */
+}
+
+.swiper-pagination-bullet {
+  background: var(--color-white) !important;
+}
+
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 1rem;
 }
 
 .profile-header-section {
