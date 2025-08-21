@@ -20,7 +20,16 @@ export function removeToken() {
   }
 }
 
+// export function getToken() {
+//   if (typeof window === "undefined") return null;
+//   return localStorage.getItem("token");
+// }
+
 export function getToken() {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("token");
+
+  const match = document.cookie.match(new RegExp("(^| )token=([^;]+)"));
+  if (match) return match[2];
+
+  return null;
 }

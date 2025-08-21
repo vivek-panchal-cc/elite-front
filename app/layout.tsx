@@ -7,6 +7,7 @@ import ToasterComponent from "@/components/ui/Toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { LoaderProvider } from "@/components/providers/loader-provider";
 import { AuthProvider } from "@/lib/AuthProvider";
+import { RouteLoader } from "@/components/route-loader/RouteLoader";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
@@ -63,6 +64,7 @@ export default function RootLayout({
         <AuthProvider>
           <QueryProvider>
             <LoaderProvider>
+              <RouteLoader />
               <ToasterComponent />
               <HeaderLayout />
               {children}

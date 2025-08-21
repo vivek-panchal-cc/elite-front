@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   getToken,
   setToken as setTokenUtil,
@@ -20,6 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
@@ -28,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const currentToken = getToken();
     setToken(currentToken);
     setIsAuthenticated(!!currentToken);
-  }, []);
+  }, [pathname]);
 
   const login = (newToken: string) => {
     setTokenUtil(newToken);
