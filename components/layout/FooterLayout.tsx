@@ -28,7 +28,7 @@ const footerSections = [
     title: footerLabels.sections.legals,
     links: [
       { name: footerLabels.sections.terms, href: "/terms" },
-      { name: footerLabels.sections.privacy, href: "/privacy" },
+      { name: footerLabels.sections.privacy, href: "/privacy-policy" },
       { name: footerLabels.sections.cookies, href: "/cookies" },
       { name: footerLabels.sections.gdpr, href: "/gdpr" },
     ],

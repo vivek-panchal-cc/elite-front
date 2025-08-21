@@ -203,14 +203,14 @@ export default function ProfileDashboard() {
           href={`tel:${profileLabels.profilePhone}`}
           className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
         >
-          <Phone />
+          <Phone fill="var(--color-white)" />
           {profileLabels.profilePhone}
         </a>
         <a
           href={`mailto:${profileLabels.profileEmail}`}
           className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[14px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
         >
-          <Mail />
+          <Mail fill="var(--color-white)" />
           {profileLabels.profileEmail}
         </a>
       </div>

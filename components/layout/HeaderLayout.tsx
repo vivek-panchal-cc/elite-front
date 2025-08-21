@@ -27,6 +27,7 @@ import { useAuthContext } from "@/lib/AuthProvider";
 import ResetPassword from "../pages/reset-password/ResetPasswordForm";
 import ProfileMenu from "../ui/ProfileMenu";
 import WrapAmount from "../wrapper/WrapAmount";
+import LoaderDiv from "../loaders/LoaderDiv";
 
 const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
@@ -50,7 +51,7 @@ export function HeaderLayout() {
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const [isLogoutOpen, setLogoutOpen] = useState(false);
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
-  const { isAuthenticated, token } = useAuthContext();
+  const { isAuthenticated, loading } = useAuthContext();
 
   const navigationItems = isAuthenticated
     ? privateNavigationItems
@@ -78,17 +79,30 @@ export function HeaderLayout() {
           {/* Right side - Navigation and Buttons */}
           <div className="flex items-center ml-auto space-x-3 sm:space-x-4">
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex">
-              {navigationItems.map((item) => (
-                <CustomLink
-                  key={item.name}
-                  href={item.href}
-                  className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
-                >
-                  {item.name}
-                </CustomLink>
-              ))}
-            </nav>
+            {!loading ? (
+              <nav className="hidden md:flex">
+                {navigationItems.map((item) => (
+                  <CustomLink
+                    key={item.name}
+                    href={item.href}
+                    className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
+                  >
+                    {item.name}
+                  </CustomLink>
+                ))}
+              </nav>
+            ) : (
+              <div className="hidden md:flex space-x-3">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <LoaderDiv
+                    key={i}
+                    height="20"
+                    width="80"
+                    uniqueKey="loader-nav"
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Cart Icon - Only show when NOT authenticated */}
             {isAuthenticated && (

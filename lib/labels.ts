@@ -280,6 +280,17 @@ export const labels = {
       qualityAssurance: "Quality Assurance",
     },
     copyright: `Copyright © ${new Date().getFullYear()} Elite Mobile. All rights reserved.`,
+    privacy: {
+      privacyPolicy: "Privacy Policy",
+      privacyMessage:
+        "Your privacy matters. Learn how we protect and use your information.",
+      privacyHeaderMessage:
+        "Elite Store is committed to protecting our customers' personal information. We have created this Privacy Policy to help you understand how we collect, use and protect your information when you visit our website and buy our products and services.",
+      privacyFooterMessage: "Questions About Our Privacy Policy?",
+      privacyFooterDesc: "Contact our team for any clarifications or concerns",
+      privacyFooterMobile: "020 8799 8043",
+      privacyFooterEmail: "Email Us",
+    },
   },
 
   // Dashboard and analytics

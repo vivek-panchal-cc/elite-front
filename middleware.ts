@@ -26,6 +26,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+  if (routeType === "shared") {
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 

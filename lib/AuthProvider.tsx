@@ -14,6 +14,7 @@ interface AuthContextType {
   token: string | null;
   login: (token: string) => void;
   logout: () => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,12 +24,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Just load the token, no need to handle redirect here
   useEffect(() => {
     const currentToken = getToken();
     setToken(currentToken);
     setIsAuthenticated(!!currentToken);
+    setLoading(false);
   }, [pathname]);
 
   const login = (newToken: string) => {
@@ -47,7 +50,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, token, login, logout, setIsAuthenticated }}
+      value={{
+        isAuthenticated,
+        token,
+        login,
+        logout,
+        setIsAuthenticated,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>

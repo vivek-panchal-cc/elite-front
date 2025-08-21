@@ -21,11 +21,17 @@ export const routeConfig = {
 
   // Admin routes - none currently configured
   admin: ["/test-image"],
+
+  // Shared routes - accessible for both public and private
+  shared: ["/privacy-policy"],
 };
 
 // Helper function to check route type
-export function getRouteType(pathname: string): "public" | "private" | "admin" {
+export function getRouteType(
+  pathname: string
+): "public" | "private" | "admin" | "shared" {
   // Check exact matches first
+  if (routeConfig.shared.includes(pathname)) return "shared";
   if (routeConfig.public.includes(pathname)) return "public";
   if (routeConfig.private.includes(pathname)) return "private";
   if (routeConfig.admin.includes(pathname)) return "admin";

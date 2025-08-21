@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Arrow from "../images/svgs/Arrow";
+import { profileLabels } from "@/lib/labels";
 
 interface SidebarNavItem {
   title: string;
@@ -88,7 +89,8 @@ export function SidebarNav({
               )}
               {item.title}
               {(!isMobileOrTablet ||
-                (isMobileOrTablet && item.title !== "Log Out")) && (
+                (isMobileOrTablet &&
+                  item.title !== profileLabels.profLogout)) && (
                 <span
                   className={cn(
                     "ml-auto transition-transform duration-300",

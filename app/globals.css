@@ -245,3 +245,23 @@
   position: relative;
   min-height: 100%;
 }
+
+.privacy-policy-header-section {
+  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
+  background: linear-gradient(90deg, #10499e 0%, #0091ca 100%);
+  background-repeat: repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 100%;
+}
+
+.privacy-policy-footer-section {
+  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
+  background: linear-gradient(90deg, #ed174b 0%, #10499e 100%);
+  background-repeat: repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 100%;
+}
