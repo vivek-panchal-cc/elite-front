@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
 import { profileLabels } from "@/lib/labels";
+import { useRouter } from "next/navigation";
 
 interface ProfileInfoProps {
   isMobile?: boolean;
 }
 
 export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
+  const router = useRouter();
   return (
     <div className={`${isMobile ? "w-[95%] mx-auto" : "w-3/4"}`}>
       <div
@@ -32,12 +34,13 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
           )}
           <div className={`flex gap-2 sm:gap-3 ${isMobile ? "flex-col" : ""}`}>
             <Button
-              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90`}
+              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90`}
+              onClick={() => router.push("/change-password")}
             >
               {profileLabels.changePass}
             </Button>
             <Button
-              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90 flex items-center justify-center gap-1 ${
+              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-[12px] sm:text-[12px] md:text-[12px] font-medium hover:opacity-90 flex items-center justify-center gap-1 ${
                 isMobile ? "mb-4" : ""
               }`}
             >

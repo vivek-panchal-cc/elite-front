@@ -59,9 +59,9 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         <AnalyticsCard />
-        <Card className="col-span-1 md:col-span-1 lg:col-span-3">
+        <Card className="col-span-1 md:col-span-1 lg:col-span-1">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>

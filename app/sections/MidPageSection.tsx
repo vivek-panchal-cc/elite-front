@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function MidPageSection() {
   return (
-    <section className="bg-white py-16 px-[40px] sm:px-6 md:px-10 lg:px-[60px] mt-[50px]">
+    <section className="bg-[var(--color-white)] py-16 px-[40px] sm:px-6 md:px-10 lg:px-[60px] mt-[50px]">
       <div className="max-w-[73rem] mx-auto w-full">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Mobile App Image */}

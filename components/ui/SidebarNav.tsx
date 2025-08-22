@@ -71,8 +71,8 @@ export function SidebarNav({
                   ? "h-[50px] border border-[var(--color-red)]"
                   : "h-[35px] border border-[var(--color-side-bar)]",
                 isActive || isExpanded
-                  ? "bg-[var(--color-red)] text-white shadow-md border-none"
-                  : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-white hover:border-none"
+                  ? "bg-[var(--color-red)] text-[var(--color-white)] shadow-md border-none"
+                  : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-[var(--color-white)] hover:border-none"
               )}
             >
               {item.icon && (
@@ -80,8 +80,8 @@ export function SidebarNav({
                   className={cn(
                     "text-lg transition-colors",
                     isActive || isExpanded
-                      ? "text-white"
-                      : "text-[var(--color-red)] group-hover:text-white"
+                      ? "text-[var(--color-white)]"
+                      : "text-[var(--color-red)] group-hover:text-[var(--color-white)]"
                   )}
                 >
                   {item.icon}

@@ -149,7 +149,7 @@ const Cart = () => {
             <div className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center">
               <WrapAmount value={60} />
             </div>
-            <Button className="w-full text-white rounded-[50px]">
+            <Button className="w-full text-[var(--color-white)] rounded-[50px]">
               {cartLabels.redeemEliteWalletRewards}
             </Button>
           </div>
@@ -219,7 +219,7 @@ const Cart = () => {
             </div>
 
             <div className="space-y-2 mt-0">
-              <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white rounded-[50px]">
+              <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]">
                 {cartLabels.proceedToPayment}
               </Button>
               <Button variant="outline" className="w-full rounded-[50px]">

@@ -12,6 +12,7 @@ import publicBackground from "./public_background_layout.png";
 import productOne from "./products/product_1.png";
 import productTwo from "./products/product_2.png";
 import broucher from "./imgs/broucher.png";
+import userIcon from "./imgs/user_icon.png";
 import contactUs from "./imgs/contact_us.png";
 import simply from "./products/simply-blue.png";
 import rightTick from "./RightTick.svg";
@@ -57,6 +58,7 @@ export const images = {
   productOne,
   productTwo,
   broucher,
+  userIcon,
   contactUs,
   simply,
   rightTick,
@@ -103,6 +105,7 @@ export {
   productOne,
   productTwo,
   broucher,
+  userIcon,
   contactUs,
   simply,
   rightTick,

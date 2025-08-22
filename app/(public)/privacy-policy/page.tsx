@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
       content:
         "We may hold information relating to you that you have provided to us (such as on an application or registration form). This information may include, amongst other things, your name, address, telephone numbers, information on how you use our products and services (such as the type, date, time, location and information on your browsing activity), lifestyle information and any other information collected in relation to your use of our products and services.",
       icon: (
-        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-red)] text-white">
+        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)]">
           <PrivacyProtect />
         </div>
       ),
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className={`border bg-white shadow-sm overflow-hidden ${
+                  className={`border bg-[var(--color-white)] shadow-sm overflow-hidden ${
                     openId === item.id ? "rounded-2xl" : "rounded-full"
                   }`}
                 >

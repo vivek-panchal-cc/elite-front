@@ -42,17 +42,17 @@ export default function HeroSection() {
                   <div className="flex sm:flex-row gap-2 sm:gap-4 items-center justify-center">
                     <Button
                       size="lg"
-                      className="btn px-8 py-2 text-[15px] sm:px-12 sm:py-7 sm:text-lg border-white rounded-[50px]"
+                      className="btn px-8 py-2 text-[15px] sm:px-12 sm:py-7 sm:text-lg border-[var(--color-white)] rounded-[50px]"
                       onClick={() => setLoginOpen(true)}
                     >
                       {commonLabels.login}
                     </Button>
-                    <span className="text-[15px] sm:text-xl font-medium text-white">
+                    <span className="text-[15px] sm:text-xl font-medium text-[var(--color-white)]">
                       {commonLabels.or}
                     </span>
                     <Button
                       size="lg"
-                      className="btn px-8 py-2 text-[15px] sm:px-12 sm:py-7 sm:text-lg border-white rounded-[50px]"
+                      className="btn px-8 py-2 text-[15px] sm:px-12 sm:py-7 sm:text-lg border-[var(--color-white)] rounded-[50px]"
                       onClick={() => setSignUpOpen(true)}
                     >
                       {commonLabels.signUp}
@@ -63,11 +63,11 @@ export default function HeroSection() {
                   <div>
                     {/* <Link
                       href="/forgot-password"
-                      className="text-[12px] sm:text-sm text-white/80 hover:text-white underline"
+                      className="text-[12px] sm:text-sm text-[var(--color-white)]/80 hover:text-[var(--color-white)] underline"
                     > */}
                     {/* </Link> */}
                     <a
-                      className="text-[12px] sm:text-sm text-white/80 hover:text-white underline cursor-pointer"
+                      className="text-[12px] sm:text-sm text-[var(--color-white)]/80 hover:text-[var(--color-white)] underline cursor-pointer"
                       onClick={() => setResetPasswordOpen(true)}
                     >
                       {homepageLabels.hero.lostPassword}
@@ -78,9 +78,9 @@ export default function HeroSection() {
 
               {/* Find Out More Section */}
               <div className="relative mt-12 flex justify-center lg:justify-start">
-                <div className="w-full lg:w-[392px] border border-white/30 rounded-[15px] pt-3 px-2 sm:px-4 md:px-6 pb-6 bg-white/5">
+                <div className="w-full lg:w-[392px] border border-[var(--color-white)]/30 rounded-[15px] pt-3 px-2 sm:px-4 md:px-6 pb-6 bg-[var(--color-white)]/5">
                   {/* Modified label with better positioning and styling */}
-                  <div className="absolute px-2 text-white font-semibold text-md">
+                  <div className="absolute px-2 text-[var(--color-white)] font-semibold text-md">
                     {homepageLabels.hero.findOutMore}
                   </div>
 
@@ -100,7 +100,7 @@ export default function HeroSection() {
                       <Link
                         key={index}
                         href={link}
-                        className="flex flex-col items-center text-center rounded-[12px] hover:bg-white/20 transition px-1"
+                        className="flex flex-col items-center text-center rounded-[12px] hover:bg-[var(--color-white)]/20 transition px-1"
                       >
                         <div className="w-[30px] h-[30px] sm:w-[48px] sm:h-[48px] flex items-center justify-center">
                           <Image
@@ -109,10 +109,10 @@ export default function HeroSection() {
                             className="w-full h-full object-contain"
                           />
                         </div>
-                        <div className="mt-2 text-[12px] sm:text-[13px] font-semibold uppercase tracking-wide leading-tight text-white text-center">
+                        <div className="mt-2 text-[12px] sm:text-[13px] font-semibold uppercase tracking-wide leading-tight text-[var(--color-white)] text-center">
                           {title}
                         </div>
-                        <div className="text-[11px] sm:text-sm text-white/80 underline mt-1">
+                        <div className="text-[11px] sm:text-sm text-[var(--color-white)]/80 underline mt-1">
                           {homepageLabels.hero.clickHere}
                         </div>
                       </Link>
@@ -135,7 +135,7 @@ export default function HeroSection() {
 
           <div className="pb-10 lg:pb-16 px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
             <div className="max-w-7xl mx-auto">
-              <div className="border border-white rounded-2xl p-6 sm:p-5 shadow-lg bg-white/5">
+              <div className="border border-[var(--color-white)] rounded-2xl p-6 sm:p-5 shadow-lg bg-[var(--color-white)]/5">
                 <h2 className="text-[24px] lg:text-[30px] font-bold text-center mb-8 sm:mb-10 uppercase tracking-wide">
                   {homepageLabels.loginFeatures.title}
                 </h2>

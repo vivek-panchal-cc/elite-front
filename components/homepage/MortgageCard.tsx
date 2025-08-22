@@ -25,7 +25,7 @@ export function MortgageCard() {
         <div className="text-3xl font-bold mb-4">{data?.amount}</div>
         <Button
           variant="secondary"
-          className="bg-white text-purple-600 hover:bg-gray-100"
+          className="bg-[var(--color-white)] text-purple-600 hover:bg-gray-100"
         >
           View Details
         </Button>

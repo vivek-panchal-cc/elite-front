@@ -54,7 +54,7 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-full max-w-2xl bg-white rounded-lg p-6 md:p-8 space-y-4 mx-auto"
+      className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
     >
       <h2 className="text-xl font-bold text-left mb-2 text-[var(--color-blue)]">
         {loginLabels.resetPassword}

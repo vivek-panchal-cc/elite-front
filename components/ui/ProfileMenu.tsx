@@ -44,7 +44,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
     <div className="relative hidden md:inline-block" ref={dropdownRef}>
       {/* Profile Icon */}
       <button
-        className="w-10 h-10 rounded-full bg-white border flex items-center justify-center cursor-pointer"
+        className="w-10 h-10 rounded-full bg-[var(--color-white)] border flex items-center justify-center cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <User className="text-[var(--color-black)] w-5 h-5" />
@@ -52,7 +52,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
 
       {/* Dropdown (on click) */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-30 bg-white border border-[var(--color-red)] rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
+        <div className="absolute right-0 mt-2 w-30 bg-[var(--color-white)] border border-[var(--color-red)] rounded-md shadow-md z-50 divide-y divide-[#E9E9E9]">
           <button
             className="w-full text-center font-medium px-4 py-2 hover:bg-gray-100 text-sm rounded-t-md cursor-pointer"
             onClick={handleProfileOpen}

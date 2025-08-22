@@ -117,7 +117,7 @@ export function HeaderLayout() {
                       priority
                     />
                     {cartItemCount > 0 && (
-                      <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-white text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
+                      <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-[var(--color-white)] text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
                         {cartItemCount}
                       </span>
                     )}

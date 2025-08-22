@@ -65,7 +65,7 @@ export function Sidebar({ activeItem, onItemSelect }: SidebarProps) {
   };
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-full">
+    <div className="w-64 bg-[var(--color-white)] border-r border-gray-200 h-full">
       <ScrollArea className="h-full">
         <div className="p-4">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">

@@ -24,7 +24,7 @@ function Input({ className, type, error, ...props }: InputProps) {
       />
 
       {typeof error === "string" && error && (
-        <div className="text-[var(--color-red)] text-sm mt-1">{error}</div>
+        <div className="text-[var(--color-red)] text-sm mt-1 ml-3">{error}</div>
       )}
     </div>
   );

@@ -63,7 +63,7 @@ const LoginForm = ({
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-full max-w-2xl bg-white rounded-lg p-6 md:p-8 space-y-4 mx-auto"
+      className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
     >
       <h2 className="text-xl font-bold text-left mb-2 text-[var(--color-blue)]">
         {commonLabels.login}
@@ -106,7 +106,7 @@ const LoginForm = ({
           value={formik.values.password}
           onCopy={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
-          // error={formik.touched.password && formik.errors.password}
+          error={formik.touched.password && formik.errors.password}
           aria-label="Password"
         />
         <span

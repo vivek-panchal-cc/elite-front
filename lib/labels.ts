@@ -132,6 +132,19 @@ export const labels = {
       noCompany: "No company found",
       companyEdit: "Edit",
     },
+    profileRepLabel: {
+      repName: "Rep Name",
+      phoneNo: "Phone Number",
+      email: "Email",
+    },
+    rewardWalletLabel: {
+      redeemDate: "Redeem Date",
+      creditAmount: "Credit Amount",
+      debitAmount: "Debit Amount",
+      balanceAmount: "Balance Amount",
+      desc: "Description",
+      viewStatement: "VIEW YOUR FULL STATEMENT",
+    },
   },
 
   // Login
@@ -141,6 +154,15 @@ export const labels = {
     dontHaveAccount: "Don’t have an account?",
     email: "Email",
     password: "Password",
+  },
+
+  // Change Password
+  changePassowrd: {
+    email: "Email",
+    oldPassword: "Old Password",
+    newPassword: "New Password",
+    confirmPassword: "Confirm Password",
+    changePassword: "Change Password",
   },
 
   // Logout
@@ -440,6 +462,7 @@ export const errorLabels = labels.errors;
 export const successLabels = labels.success;
 export const monthLabels = labels.months;
 export const loginLabels = labels.login;
+export const changePassowrdLabels = labels.changePassowrd;
 export const logoutLabels = labels.logout;
 export const registrationLabels = labels.registration;
 export const profileLabels = labels.profile;

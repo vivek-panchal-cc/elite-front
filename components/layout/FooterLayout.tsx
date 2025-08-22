@@ -188,7 +188,7 @@ export function FooterLayout() {
                   id="newsletter"
                   type="email"
                   placeholder={footerLabels.newsletter.placeholder}
-                  className="rounded-r-none text-[12px] sm:text-[14px] bg-white w-full"
+                  className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-white)] w-full"
                 />
                 <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
                   <Image src={rightArrow} alt="right arrow icon" />
@@ -227,7 +227,7 @@ export function FooterLayout() {
                 id="newsletter-mobile"
                 type="email"
                 placeholder={footerLabels.newsletter.placeholder}
-                className="rounded-r-none text-[12px] sm:text-[14px] bg-white w-full"
+                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-white)] w-full"
               />
               <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
                 <Image src={rightArrow} alt="right arrow icon" />

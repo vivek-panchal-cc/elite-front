@@ -25,7 +25,7 @@ const Logout = ({
   };
 
   return (
-    <div className="w-full max-w-2xl bg-white rounded-lg p-6 md:p-8 space-y-4 mx-auto">
+    <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto">
       {!showConfirmModal ? (
         <>
           <h2 className="text-lg md:text-xl font-semibold text-[var(--color-gray)] text-left">
@@ -43,13 +43,13 @@ const Logout = ({
 
           <div className="flex flex-col md:flex-row w-full gap-3 mt-6">
             <Button
-              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-white py-2 rounded-full font-medium"
+              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-[var(--color-white)] py-2 rounded-full font-medium"
               onClick={handleLogout}
             >
               {logoutLabels.logoutConfirm}
             </Button>
             <Button
-              className="w-full md:flex-1 bg-[var(--color-blue)] hover:bg-blue-800 text-white py-2 rounded-full font-medium"
+              className="w-full md:flex-1 bg-[var(--color-blue)] text-[var(--color-white)] py-2 rounded-full font-medium"
               onClick={() => setLogoutOpen(false)}
             >
               {commonLabels.cancel}
@@ -63,7 +63,7 @@ const Logout = ({
             {logoutLabels.logoutSuccessMessage}
           </h2>
           {/* <Button
-            className="bg-[var(--color-blue)] hover:bg-blue-800 text-white py-2 px-6 rounded-full font-medium"
+            className="bg-[var(--color-blue)] hover:bg-blue-800 text-[var(--color-white)] py-2 px-6 rounded-full font-medium"
             onClick={() => {
               setShowConfirmModal(false);
               setLogoutOpen(false); // close entire modal after confirmation

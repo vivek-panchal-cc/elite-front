@@ -59,11 +59,23 @@ interface DealerRegistrationData {
 interface ForgotPasswordData {
   email: string;
 }
+interface DealerChangePassword {
+  email: string;
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+}
 
 const register = (
   data: DealerRegistrationData
 ): Promise<AxiosResponse<ApiResponse>> => {
   return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.REGISTER, data);
+};
+
+const changePassword = (
+  data: DealerChangePassword
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.USER_ENDPOINTS.CHANGE_PASSWORD, data);
 };
 
 const forgotPassword = (
@@ -107,6 +119,7 @@ export const apiRequest = {
   logout,
   loginOtp,
   register,
+  changePassword,
   forgotPassword,
   resetPassword,
 
