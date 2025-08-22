@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { DefaultLoader } from "@/components/ui/loader";
 import { useLoader } from "@/components/providers/loader-provider";
 import { useApiWithLoader } from "@/lib/useApiWithLoader";

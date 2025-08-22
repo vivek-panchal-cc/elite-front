@@ -11,6 +11,7 @@ import liquidNew from "./imgs/liquid-new.png";
 import publicBackground from "./public_background_layout.png";
 import productOne from "./products/product_1.png";
 import productTwo from "./products/product_2.png";
+import productOfferOne from "./products/product_offer.png";
 import broucher from "./imgs/broucher.png";
 import contactUs from "./imgs/contact_us.png";
 import simply from "./products/simply-blue.png";
@@ -41,6 +42,13 @@ import addToCart from "./svgs/Cart";
 import mail from "./svgs/Mail";
 import phone from "./svgs/Phone";
 import profile from "./svgs/Profile";
+import stokeOffer from "./imgs/stoke_offer.png";
+import mobile from "./products/iphone.png";
+import simCard from "./products/vodafone.png";
+import vapeDevice from "./products/vape.png";
+import laptop from "./products/AdobeStock.png";
+import voucher from "./products/amazon.png";
+import vapePod from "./products/group_product.png";
 
 // Export all images as a single object
 export const images = {
@@ -86,6 +94,14 @@ export const images = {
   mail,
   phone,
   profile,
+  productOfferOne,
+  stokeOffer,
+  mobile,
+  vapeDevice,
+  vapePod,
+  laptop,
+  simCard,
+  voucher
 } as const;
 
 // Export individual images for direct import
