@@ -22,6 +22,7 @@ interface ApiResponse<T = any> {
   status: boolean;
   message: string;
   data: T;
+  statusCode?: number;
 }
 
 // API Request Functions
@@ -102,6 +103,10 @@ const updateProfile = (
   return axiosUserInstance.put(apiUrl.USER_ENDPOINTS.UPDATE_PROFILE, data);
 };
 
+const getCategory = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.CATEGORIES);
+};
+
 const getProducts = (
   params?: Record<string, any>
 ): Promise<AxiosResponse<ApiResponse>> => {
@@ -130,6 +135,7 @@ export const apiRequest = {
   // Products
   getProducts,
   getProductDetails,
+  getCategory,
 } as const;
 
 // Export type for the apiRequest object
@@ -147,4 +153,5 @@ export {
   updateProfile,
   getProducts,
   getProductDetails,
+  getCategory,
 };

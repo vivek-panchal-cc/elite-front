@@ -19,6 +19,9 @@ import Heart from "@/components/images/svgs/Heart";
 import Cart from "@/components/images/svgs/Cart";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "@/lib/constants/all";
+import useCategoryTypeList from "@/hooks/useCategoryType";
+import LoaderCategory from "@/components/loaders/LoaderCategory";
+import { commonLabels } from "@/lib/labels";
 
 // ---------- TYPES ----------
 interface Product {
@@ -34,6 +37,7 @@ interface SubCategory {
 }
 
 interface Category {
+  id: number;
   name: string;
   icon: string;
   subCategories?: SubCategory[];
@@ -43,40 +47,6 @@ interface CartItem {
   product: Product;
   quantity: number;
 }
-
-// ---------- DATA ----------
-const subCategories: SubCategory[] = [
-  { name: "8 in 1", icon: "/icons/icon1.png" },
-  { name: "8 in 1 Dual 10K", icon: "/icons/icon2.png" },
-  { name: "EPNS Pouches", icon: "/icons/icon3.png" },
-  { name: "Havoc 500 Crystal", icon: "/icons/icon4.png" },
-  { name: "Havoc Pro Max", icon: "/icons/icon5.png" },
-  { name: "Lost Mary BM6000", icon: "/icons/icon6.png" },
-  { name: "Lost Mary Max 30K", icon: "/icons/icon7.png" },
-  { name: "Phone Cables", icon: "/icons/icon8.png" },
-  { name: "Wall Chargers", icon: "/icons/icon9.png" },
-];
-
-const mainCategories: Category[] = [
-  { name: "High Street Vouchers", icon: "/icons/icon1.png", subCategories },
-  { name: "Laptops", icon: "/icons/icon2.png", subCategories },
-  { name: "Mobile Phone Accessories", icon: "/icons/icon3.png", subCategories },
-  { name: "Mobile Phones", icon: "/icons/icon4.png", subCategories },
-  { name: "Nicotine Pouches", icon: "/icons/icon5.png", subCategories },
-  { name: "SIM Cards", icon: "/icons/icon6.png", subCategories },
-  {
-    name: "Vape Bars (Large Big Puff)",
-    icon: "/icons/icon7.png",
-    subCategories,
-  },
-  {
-    name: "Vape Bars (Single POD Style)",
-    icon: "/icons/icon8.png",
-    subCategories,
-  },
-  { name: "Vape Devices", icon: "/icons/icon9.png", subCategories },
-  { name: "Vape Pod Replacements", icon: "/icons/icon10.png", subCategories },
-];
 
 const products: Product[] = [
   {
@@ -108,18 +78,40 @@ const products: Product[] = [
 
 // ---------- COMPONENT ----------
 export default function Orders() {
-  const [openMain, setOpenMain] = useState<string | null>(null);
+  const [loading, categories] = useCategoryTypeList();
+  const [openMain, setOpenMain] = useState<number | null>(null);
   const [openSub, setOpenSub] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
-  const [quantities, setQuantities] = useState<number[]>(Array(5).fill(1));
+  const [quantities, setQuantities] = useState<number[]>(
+    Array(products.length).fill(0)
+  );
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const text =
     "lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has Been The Industry's Standard Dummy Text Ever Since The 1500s, When An Unknown Printer Took A Galley Of Type And Scrambled It To Make A Type Specimen Book. It Has Survived Not Only Five Centuries, But Also The Leap Into Electronic Typesetting, Remaining Essentially Unchanged. It Was Popularised In The 1960s With The Release Of Letraset Sheets Containing Lorem Ipsum Passages, And More Recently With Desktop Publishing Software Like Aldus Pagemaker Including Versions Of Lorem Ipsum.";
 
-  const toggleMain = (name: string) => {
-    setOpenMain((prev) => (prev === name ? null : name));
+  const subCategories: SubCategory[] = [
+    { name: "8 in 1", icon: "/icons/icon1.png" },
+    { name: "8 in 1 Dual 10K", icon: "/icons/icon2.png" },
+    { name: "EPNS Pouches", icon: "/icons/icon3.png" },
+    { name: "Havoc 500 Crystal", icon: "/icons/icon4.png" },
+    { name: "Havoc Pro Max", icon: "/icons/icon5.png" },
+    { name: "Lost Mary BM6000", icon: "/icons/icon6.png" },
+    { name: "Lost Mary Max 30K", icon: "/icons/icon7.png" },
+    { name: "Phone Cables", icon: "/icons/icon8.png" },
+    { name: "Wall Chargers", icon: "/icons/icon9.png" },
+  ];
+
+  const mainCategories: Category[] = categories?.map((cat: any) => ({
+    id: cat.cat_type_id,
+    name: cat.cat_type_name,
+    icon: "/icons/default.png",
+    subCategories,
+  }));
+
+  const toggleMain = (id: number) => {
+    setOpenMain((prev) => (prev === id ? null : id));
     setOpenSub(null);
   };
 
@@ -128,10 +120,13 @@ export default function Orders() {
   };
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    const newQuantities = [...quantities];
-    newQuantities[index] = newQuantity;
-    setQuantities(newQuantities);
+    if (newQuantity < 0) return;
+    setQuantities((prev) => {
+      const newQuantities = [...prev];
+      if (index >= newQuantities.length) return prev;
+      newQuantities[index] = newQuantity;
+      return newQuantities;
+    });
   };
 
   const addToCart = (product: Product, quantity: number) => {
@@ -172,257 +167,327 @@ export default function Orders() {
 
       {/* Main Categories */}
       <section className="space-y-2 sm:space-y-3">
-        {mainCategories.map((cat, idx) => {
-          const isOpen = openMain === cat.name;
+        {loading ? (
+          <LoaderCategory count={5} />
+        ) : mainCategories.length <= 0 ? (
+          <p className="text-center text-[var(--color-gray)] py-6">
+            {commonLabels.notFound}
+          </p>
+        ) : (
+          mainCategories.map((cat, idx) => {
+            const isOpen = openMain === cat.id;
 
-          return (
-            <div key={idx}>
-              {/* Main Category Button - Responsive */}
-              <button
-                onClick={() => toggleMain(cat.name)}
-                className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
-                  isOpen
-                    ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                    : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
-                }`}
-              >
-                <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                  <Image
-                    src={dualUSB}
-                    alt={cat.name}
-                    width={12}
-                    height={12}
-                    // className="w-3 h-3 sm:w-4 sm:h-4"
-                  />
-                  <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
-                    {cat.name}
-                  </span>
-                </div>
-                {isOpen ? (
-                  <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                ) : (
-                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
-                )}
-              </button>
+            return (
+              <div key={idx}>
+                {/* Main Category Button - Responsive */}
+                <button
+                  onClick={() => toggleMain(cat.id)}
+                  className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
+                    isOpen
+                      ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                      : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
+                    <Image
+                      src={dualUSB}
+                      alt={cat.name}
+                      width={12}
+                      height={12}
+                      // className="w-3 h-3 sm:w-4 sm:h-4"
+                    />
+                    <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
+                      {cat.name}
+                    </span>
+                  </div>
+                  {isOpen ? (
+                    <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                  ) : (
+                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                  )}
+                </button>
 
-              {/* Subcategories */}
-              {isOpen && cat.subCategories && (
-                <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
-                  {cat.subCategories.map((sub, sIdx) => {
-                    const isSubOpen = openSub === sub.name;
-                    return (
-                      <div key={sIdx}>
-                        {/* Subcategory Button - Responsive */}
-                        <button
-                          onClick={() => toggleSub(sub.name)}
-                          className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
-                            isSubOpen
-                              ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                              : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
-                          }`}
-                        >
-                          <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                            <Image
-                              src={dualUSB}
-                              alt={sub.name}
-                              width={12}
-                              height={12}
-                              // className="w-3 h-3 sm:w-4 sm:h-4"
-                            />
-                            <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
-                              {sub.name}
-                            </span>
-                          </div>
-                          {isSubOpen ? (
-                            <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                          ) : (
-                            <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
-                          )}
-                        </button>
-
-                        {/* Products */}
-                        {isSubOpen && (
-                          <>
-                            <div className="mb-2 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 px-1 sm:px-2">
-                              <div>
-                                <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
-                                  {isExpanded
-                                    ? text
-                                    : `${text.slice(0, 150)}${
-                                        text?.length > 150 ? "..." : ""
-                                      }`}
-                                  {text.length > 150 && (
-                                    <button
-                                      onClick={() => setIsExpanded(!isExpanded)}
-                                      className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
-                                    >
-                                      {isExpanded
-                                        ? "Read less"
-                                        : "Read more..."}
-                                    </button>
-                                  )}
-                                </p>
-                              </div>
+                {/* Subcategories */}
+                {isOpen && cat.subCategories && (
+                  <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
+                    {cat.subCategories.map((sub, sIdx) => {
+                      const isSubOpen = openSub === sub.name;
+                      return (
+                        <div key={sIdx}>
+                          {/* Subcategory Button - Responsive */}
+                          <button
+                            onClick={() => toggleSub(sub.name)}
+                            className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
+                              isSubOpen
+                                ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                                : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
+                              <Image
+                                src={dualUSB}
+                                alt={sub.name}
+                                width={12}
+                                height={12}
+                                // className="w-3 h-3 sm:w-4 sm:h-4"
+                              />
+                              <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
+                                {sub.name}
+                              </span>
                             </div>
+                            {isSubOpen ? (
+                              <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                            ) : (
+                              <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                            )}
+                          </button>
 
-                            {/* Product Grid - Responsive */}
-                            <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-                              {products.map((p, idx) => (
-                                <div
-                                  key={idx}
-                                  className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
-                                    selectedProduct === idx
-                                      ? "ring-1 sm:ring-2 ring-[var(--color-red)]"
-                                      : ""
-                                  }`}
-                                  onClick={() => setSelectedProduct(idx)}
-                                >
-                                  {/* Product Image with Orange Border */}
+                          {/* Products */}
+                          {isSubOpen && (
+                            <>
+                              <div className="mb-2 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 px-1 sm:px-2">
+                                <div>
+                                  <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
+                                    {isExpanded
+                                      ? text
+                                      : `${text.slice(0, 150)}${
+                                          text?.length > 150 ? "..." : ""
+                                        }`}
+                                    {text.length > 150 && (
+                                      <button
+                                        onClick={() =>
+                                          setIsExpanded(!isExpanded)
+                                        }
+                                        className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
+                                      >
+                                        {isExpanded
+                                          ? "Read less"
+                                          : "Read more..."}
+                                      </button>
+                                    )}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Product Grid - Responsive */}
+                              <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                                {products.map((p, idx) => (
                                   <div
-                                    className={`relative mb-1 sm:mb-2 ${
-                                      selectedProduct !== idx
-                                        ? "rounded-lg"
+                                    key={idx}
+                                    className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
+                                      selectedProduct === idx
+                                        ? "ring-1 sm:ring-2 ring-[var(--color-red)]"
                                         : ""
                                     }`}
+                                    onClick={() => setSelectedProduct(idx)}
                                   >
-                                    <div className="relative mb-1 sm:mb-2 w-full">
-                                      <div
-                                        className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden ${
-                                          selectedProduct !== idx
-                                            ? "border border-[var(--color-orange)]"
-                                            : ""
-                                        }`}
-                                      >
-                                        <Image
-                                          src={productTwo}
-                                          alt="Product"
-                                          fill
-                                          className="object-contain rounded p-4"
-                                        />
-
-                                        {/* Tag Badge - Responsive */}
-                                        {p.tag && (
-                                          <span
-                                            className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
-                                              p.tag === "25%"
-                                                ? "bg-[var(--color-green)] text-[var(--color-white)]"
-                                                : p.tag === "HOT"
-                                                ? "bg-[var(--color-orange)] text-[var(--color-white)]"
-                                                : p.tag === "BUY 5 GET 2 FREE"
-                                                ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
-                                                : p.tag === "SOLD OUT"
-                                                ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                                                : ""
-                                            } ${
-                                              selectedProduct === idx
-                                                ? "-top-5 sm:-top-7 left-0"
-                                                : "-top-2 sm:-top-3 left-2 sm:left-3"
-                                            }`}
-                                          >
-                                            {p.tag === "HOT" && (
-                                              <Fire className="w-3 h-3 sm:w-4 sm:h-4" />
-                                            )}{" "}
-                                            {p.tag}
-                                          </span>
-                                        )}
-                                      </div>
-                                    </div>
-
-                                    {/* Product Info - Responsive */}
-                                    <div className="px-2">
-                                      <p className="text-xs sm:text-sm font-medium">
-                                        {p.name}
-                                      </p>
-                                      <p className="text-[10px] sm:text-xs text-gray-500">
-                                        {p.category}
-                                      </p>
-                                      <div className="w-full font-bold text-[var(--color-red)] mt-1">
-                                        <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
-                                          <div className="flex items-center gap-1 sm:gap-2">
-                                            {selectedProduct === idx ? (
-                                              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-                                            ) : (
-                                              <div className="w-3 sm:w-5" />
-                                            )}
-                                          </div>
-
-                                          <span className="text-base sm:text-lg md:text-[19px]">
-                                            <WrapAmount value={p.price} />
-                                          </span>
-
-                                          <div className="flex items-center gap-1 sm:gap-2">
-                                            {selectedProduct === idx ? (
-                                              <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
-                                            ) : (
-                                              <div className="w-3 sm:w-5" />
-                                            )}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {/* Action Buttons - Responsive */}
-                                  {selectedProduct === idx && (
-                                    <div className="w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2">
-                                      <div className="flex items-center justify-between w-full">
-                                        <div className="flex items-center border rounded-full px-0 sm:px-1">
-                                          <button
-                                            className="w-4 h-5 sm:h-6 flex items-center justify-center cursor-pointer border-r text-[#888888]"
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              handleQuantityChange(
-                                                idx,
-                                                quantities[idx] - 1
-                                              );
-                                            }}
-                                          >
-                                            -
-                                          </button>
-                                          <span className="px-0 text-xs sm:text-sm w-6 text-center">
-                                            {quantities[idx]}
-                                          </span>
-                                          <button
-                                            className="w-4 h-5 sm:h-6 flex items-center justify-center cursor-pointer border-l text-[#888888]"
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              handleQuantityChange(
-                                                idx,
-                                                quantities[idx] + 1
-                                              );
-                                            }}
-                                          >
-                                            +
-                                          </button>
-                                        </div>
-                                        <button
-                                          className="bg-[var(--color-red)] text-[var(--color-white)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ml-1 cursor-pointer hover:bg-red-700 transition-colors flex items-center justify-center gap-1 text-xs sm:text-[8px] md:text-[10px] lg:text-[8px] xl:text-[12px]"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            addToCart(p, quantities[idx]);
-                                          }}
+                                    {/* Product Image with Orange Border */}
+                                    <div
+                                      className={`relative mb-1 sm:mb-2 ${
+                                        selectedProduct !== idx
+                                          ? "rounded-lg"
+                                          : ""
+                                      }`}
+                                    >
+                                      <div className="relative mb-1 sm:mb-2 w-full">
+                                        <div
+                                          className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden ${
+                                            selectedProduct !== idx
+                                              ? "border border-[var(--color-orange)]"
+                                              : ""
+                                          }`}
                                         >
-                                          <Cart className="h-4 w-4 sm:hidden" />
-                                          <span className="hidden sm:inline">
-                                            Add To Cart
-                                          </span>
-                                        </button>
+                                          <Image
+                                            src={productTwo}
+                                            alt="Product"
+                                            fill
+                                            className="object-contain rounded p-4"
+                                          />
+
+                                          {/* Tag Badge - Responsive */}
+                                          {p.tag && (
+                                            <span
+                                              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
+                                                p.tag === "25%"
+                                                  ? "bg-[var(--color-green)] text-[var(--color-white)]"
+                                                  : p.tag === "HOT"
+                                                  ? "bg-[var(--color-orange)] text-[var(--color-white)]"
+                                                  : p.tag === "BUY 5 GET 2 FREE"
+                                                  ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
+                                                  : p.tag === "SOLD OUT"
+                                                  ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                                                  : ""
+                                              } ${
+                                                selectedProduct === idx
+                                                  ? "-top-5 sm:-top-7 left-0"
+                                                  : "-top-2 sm:-top-3 left-2 sm:left-3"
+                                              }`}
+                                            >
+                                              {p.tag === "HOT" && (
+                                                <Fire className="w-3 h-3 sm:w-4 sm:h-4" />
+                                              )}{" "}
+                                              {p.tag}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      {/* Product Info - Responsive */}
+                                      <div className="px-2">
+                                        <p className="text-xs sm:text-sm font-medium">
+                                          {p.name}
+                                        </p>
+                                        <p className="text-[10px] sm:text-xs text-gray-500">
+                                          {p.category}
+                                        </p>
                                       </div>
                                     </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
+                                    <div className="w-full font-bold text-[var(--color-red)] px-1">
+                                      <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
+                                        <div className="flex items-center gap-1 sm:gap-2">
+                                          {selectedProduct === idx ? (
+                                            <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                                          ) : (
+                                            <div className="w-3 sm:w-5" />
+                                          )}
+                                        </div>
+
+                                        <span className="text-base sm:text-lg md:text-[19px]">
+                                          <WrapAmount value={p.price} />
+                                        </span>
+
+                                        <div className="flex items-center gap-1 sm:gap-2">
+                                          {selectedProduct === idx ? (
+                                            <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
+                                          ) : (
+                                            <div className="w-3 sm:w-5" />
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Action Buttons - Responsive */}
+                                    {selectedProduct === idx && (
+                                      <div className="w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2">
+                                        <div className="flex items-center justify-between w-full">
+                                          <div className="relative w-16 h-5 flex items-center justify-center overflow-hidden lg:w-auto lg:h-auto lg:overflow-visible">
+                                            {/* --- Mobile & Tablet Transition Counter --- */}
+                                            <button
+                                              className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out lg:hidden
+      ${
+        quantities[idx] === 0
+          ? "opacity-100 scale-100"
+          : "opacity-0 scale-90 pointer-events-none"
+      }`}
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleQuantityChange(idx, 1);
+                                              }}
+                                            >
+                                              +
+                                            </button>
+
+                                            <div
+                                              className={`absolute left-0 flex items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden lg:hidden
+      ${
+        quantities[idx] > 0
+          ? "opacity-100 px-1 scale-x-100"
+          : "opacity-0 px-0 scale-x-0 pointer-events-none"
+      }`}
+                                              style={{
+                                                transformOrigin: "left",
+                                              }}
+                                            >
+                                              <button
+                                                className="w-4 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  handleQuantityChange(
+                                                    idx,
+                                                    quantities[idx] - 1
+                                                  );
+                                                }}
+                                              >
+                                                -
+                                              </button>
+                                              <span className="px-0 text-[10px] sm:text-xs w-5 text-center">
+                                                {quantities[idx]}
+                                              </span>
+                                              <button
+                                                className="w-4 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  handleQuantityChange(
+                                                    idx,
+                                                    quantities[idx] + 1
+                                                  );
+                                                }}
+                                              >
+                                                +
+                                              </button>
+                                            </div>
+
+                                            {/* --- Desktop Version (No Transition) --- */}
+                                            <div className="hidden lg:flex items-center border rounded-full px-1 bg-transparent">
+                                              <button
+                                                className="w-4 h-6 flex items-center justify-center cursor-pointer lg:border-r text-[#888888]"
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  handleQuantityChange(
+                                                    idx,
+                                                    quantities[idx] - 1
+                                                  );
+                                                }}
+                                              >
+                                                -
+                                              </button>
+                                              <span className="px-0 text-sm w-6 text-center text-[var(--color-black)]">
+                                                {quantities[idx]}
+                                              </span>
+                                              <button
+                                                className="w-4 h-6 flex items-center justify-center cursor-pointer lg:border-l text-[#888888]"
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  handleQuantityChange(
+                                                    idx,
+                                                    quantities[idx] + 1
+                                                  );
+                                                }}
+                                              >
+                                                +
+                                              </button>
+                                            </div>
+                                          </div>
+
+                                          <button
+                                            className="bg-[var(--color-red)] text-[var(--color-white)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ml-1 cursor-pointer hover:bg-red-700 transition-colors flex items-center justify-center gap-1 text-xs sm:text-[8px] md:text-[10px] lg:text-[8px] xl:text-[12px]"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              addToCart(p, quantities[idx]);
+                                            }}
+                                          >
+                                            <Cart className="h-4 w-4 sm:hidden" />
+                                            <span className="hidden sm:inline">
+                                              Add To Cart
+                                            </span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
       </section>
       {cart?.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-white)] shadow-lg border-t-[2px] border-[var(--color-red)] p-3 sm:p-4 z-11">

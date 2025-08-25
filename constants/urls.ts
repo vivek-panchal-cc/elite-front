@@ -19,7 +19,7 @@ export const USER_ENDPOINTS = {
 export const PRODUCT_ENDPOINTS = {
   LIST: "/list",
   DETAILS: (id: string) => `/details/${id}`,
-  CATEGORIES: "/categories",
+  CATEGORIES: "orders/cat-type-list",
 } as const;
 
 // Generate full URLs with base path

@@ -29,6 +29,7 @@ export const labels = {
     info: "Info",
     okay: "Okay",
     send: "Send",
+    notFound: "Data not found",
   },
 
   // Profile
