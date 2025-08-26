@@ -67,6 +67,11 @@ interface DealerChangePassword {
   confirm_password: string;
 }
 
+interface ProductGetParams {
+  cat_type_id: number;
+  title: string;
+}
+
 const register = (
   data: DealerRegistrationData
 ): Promise<AxiosResponse<ApiResponse>> => {
@@ -103,14 +108,16 @@ const updateProfile = (
   return axiosUserInstance.put(apiUrl.USER_ENDPOINTS.UPDATE_PROFILE, data);
 };
 
-const getCategory = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.CATEGORIES);
+const getCategory = (data: {
+  title: string;
+}): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.CATEGORIES, data);
 };
 
 const getProducts = (
-  params?: Record<string, any>
+  data: ProductGetParams
 ): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.LIST, { params });
+  return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.PRODUCT_LIST, data);
 };
 
 const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {

@@ -17,7 +17,7 @@ export const USER_ENDPOINTS = {
 
 // Product endpoints
 export const PRODUCT_ENDPOINTS = {
-  LIST: "/list",
+  PRODUCT_LIST: "orders/product-list",
   DETAILS: (id: string) => `/details/${id}`,
   CATEGORIES: "orders/cat-type-list",
 } as const;

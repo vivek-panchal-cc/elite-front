@@ -30,6 +30,8 @@ export const labels = {
     okay: "Okay",
     send: "Send",
     notFound: "Data not found",
+    notSubCategory: "No sub-categories found",
+    viewCart: "View Cart",
   },
 
   // Profile
@@ -391,6 +393,7 @@ export const labels = {
     shoppingCart: "Shopping Cart",
     price: "Price",
     sku: "SKU",
+    skus: "Skus",
     quantity: "Quantity",
     subtotal: "Subtotal",
     clearCart: "Clear Cart",
@@ -410,6 +413,10 @@ export const labels = {
     total: "Total",
     proceedToPayment: "Proceed to Payment",
     continueShopping: "Continue Shopping",
+    addToCart: "Add To Cart",
+    viewCart: "View Cart",
+    units: "Units",
+    items: "Items",
   },
 
   // Months for charts and date displays
