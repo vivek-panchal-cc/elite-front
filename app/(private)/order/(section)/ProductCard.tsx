@@ -62,7 +62,7 @@ const ProductCard = ({
       </div>
       <div className="px-2 max-w-24 sm:max-w-32 md:max-w-30 lg:max-w-40">
         <p className="text-xs sm:text-sm font-medium">{p.prod_name}</p>
-        <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_id}</p>
+        {/* <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_id}</p> */}
       </div>
     </div>
 

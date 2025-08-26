@@ -5,6 +5,7 @@ import {
   axiosUserInstance,
   axiosProductInstance,
 } from "@/http/axios-interceptor";
+import { BranchAdd } from "@/types/branches";
 
 // Types
 interface LoginCredentials {
@@ -124,6 +125,25 @@ const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.DETAILS(id));
 };
 
+const getBranches = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.BRANCH_LIST);
+};
+
+const addBranch = (data: BranchAdd): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.BRANCH_CREATE, data);
+};
+
+const updateBranch = (
+  id: string,
+  data: BranchAdd
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.put(apiUrl.PROFILE.BRANCH_UPDATE(id), data);
+};
+
+const deleteBranch = (id: string): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.delete(apiUrl.PROFILE.BRANCH_DELETE(id));
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -143,6 +163,12 @@ export const apiRequest = {
   getProducts,
   getProductDetails,
   getCategory,
+
+  // Profile
+  getBranches,
+  addBranch,
+  updateBranch,
+  deleteBranch,
 } as const;
 
 // Export type for the apiRequest object
@@ -161,4 +187,8 @@ export {
   getProducts,
   getProductDetails,
   getCategory,
+  getBranches,
+  addBranch,
+  updateBranch,
+  deleteBranch,
 };

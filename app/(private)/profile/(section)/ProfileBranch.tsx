@@ -1,87 +1,113 @@
 import React, { useState } from "react";
-import { Input } from "@/components/ui/Input";
+import { useFormik } from "formik";
 import { Button } from "@/components/ui/ButtonUI";
+import { Input } from "@/components/ui/Input";
 import Edit from "@/components/images/svgs/Edit";
 import RoundedAdd from "@/components/images/svgs/RoundedAdd";
 import Delete from "@/components/images/svgs/Delete";
 import { Label } from "@/components/ui/Label";
 import { profileLabels } from "@/lib/labels";
-interface Branch {
-  branchName: string;
-  address1: string;
-  address2: string;
-  country: string;
-  city: string;
-  postcode: string;
-}
+import useBranchList from "@/hooks/useBranches";
+import { Branch } from "@/types/branches";
+import { toast } from "sonner";
+import { apiRequest } from "@/lib/apiRequest";
+import { branchSchema } from "@/lib/validations/branchSchema";
+import LoaderBranch from "@/components/loaders/LoaderBranch";
 interface ProfileBranchProps {
   isMobile?: boolean;
 }
 
 export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
-  const [branches, setBranches] = useState<Branch[]>([
-    {
-      branchName: "Branch Name",
-      address1: "It is a long established fact.",
-      address2: "It is a long established fact.",
-      country: "India",
-      city: "Ahmedabad",
-      postcode: "382210",
-    },
-    {
-      branchName: "Branch Name 2",
-      address1: "Lorem Ipsum Dummy Text 2",
-      address2: "Lorem Ipsum Dummy Text 2",
-      country: "India",
-      city: "Ahmedabad 2",
-      postcode: "382212",
-    },
-  ]);
+  const [loading, branchList, reloadBranch] = useBranchList();
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (branchList && Array.isArray(branchList)) {
+      setBranches(branchList);
+    }
+    return () => {
+      setIsAdding(false);
+      setEditIndex(null);
+      setEditingBranchId(null);
+      setDeletingId(null);
+    };
+  }, [branchList]);
 
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [formBranch, setFormBranch] = useState<Branch | null>(null);
+  const [editingBranchId, setEditingBranchId] = useState<number | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleInputChange = (field: keyof Branch, value: string) => {
-    setFormBranch((prev) => (prev ? { ...prev, [field]: value } : null));
-  };
+  const formik = useFormik({
+    initialValues: {
+      branch_name: "",
+      address_line1: "",
+      address_line2: "",
+      country: "",
+      city: "",
+      postcode: "",
+    },
+    validationSchema: branchSchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        let response;
+        if (editingBranchId !== null) {
+          response = await apiRequest.updateBranch(
+            editingBranchId.toString(),
+            values
+          );
+        } else {
+          response = await apiRequest.addBranch(values);
+        }
 
-  const handleSave = () => {
-    if (!formBranch) return;
+        const { data } = response;
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        resetForm();
+        setIsAdding(false);
+        setEditIndex(null);
+        setEditingBranchId(null);
+        reloadBranch();
+      } catch (error: any) {
+        if (typeof error === "string") return toast.error(error);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
-    if (editIndex !== null) {
-      // Update existing branch
-      const updated = [...branches];
-      updated[editIndex] = formBranch;
-      setBranches(updated);
-      setEditIndex(null);
-    } else {
-      // Add new branch
-      setBranches([...branches, formBranch]);
-      setIsAdding(false);
+  const handleDelete = async (idx: number) => {
+    const branch = branches[idx];
+    setDeletingId(branch.id);
+    try {
+      const { data } = await apiRequest.deleteBranch(branch.id.toString());
+      if (!data.success) throw data.message;
+      reloadBranch();
+      toast.success(data.message);
+    } catch (error: any) {
+      if (typeof error === "string") return toast.error(error);
+    } finally {
+      setDeletingId(null);
     }
-    setFormBranch(null);
-  };
-
-  const handleEdit = (idx: number) => {
-    setEditIndex(idx);
-    setFormBranch({ ...branches[idx] });
-  };
-
-  const handleDelete = (idx: number) => {
-    const updated = branches.filter((_, i) => i !== idx);
-    setBranches(updated);
   };
 
   const handleAdd = () => {
     setIsAdding(true);
-    setFormBranch({
-      branchName: "",
-      address1: "",
-      address2: "",
-      country: "",
-      city: "",
-      postcode: "",
+    formik.resetForm();
+  };
+
+  const handleEdit = (idx: number) => {
+    setEditIndex(idx);
+    const branch = branches[idx];
+    setEditingBranchId(branch.id);
+    setIsAdding(true);
+    formik.setValues({
+      branch_name: branch.branch_name,
+      address_line1: branch.address_line1,
+      address_line2: branch.address_line2,
+      country: branch.country,
+      city: branch.city,
+      postcode: branch.postcode,
     });
   };
 
@@ -92,8 +118,8 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
       <div
         className={`border border-[var(--color-red)] ${
           isMobile
-            ? "max-h-[770px] min-h-[770px] border-t-0 rounded-t-none rounded-b-xl"
-            : "max-h-[525px] min-h-[495px] rounded-xl"
+            ? "max-h-[770px] border-t-0 rounded-t-none rounded-b-xl" //min-h-[770px]
+            : "max-h-[525px] rounded-xl" //min-h-[495px]
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {/* Header */}
@@ -115,126 +141,155 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
           <div
             className={`custom-scrollbar ${
               isMobile
-                ? "max-h-[690px] min-h-[690px]"
-                : "max-h-[417px] min-h-[417px]"
+                ? "max-h-[690px]" //min-h-[690px]
+                : "max-h-[417px]" //min-h-[417px]
             }`}
           >
-            {(isAdding || editIndex !== null) && formBranch && (
-              <div className="p-6 border-b-[2px] border-[var(--table-border)] bg-[var(--color-light-gray)]">
-                <div className="flex justify-end mb-6 gap-3 mt-[-15px]">
-                  <Button
-                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
-                    onClick={handleSave}
+            {isAdding && (
+              <form onSubmit={formik.handleSubmit}>
+                <div className="p-6 border-b-[2px] border-[var(--table-border)] bg-[var(--color-light-gray)]">
+                  <div className="flex justify-end mb-6 gap-3 mt-[-15px]">
+                    <Button
+                      type="submit"
+                      className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
+                      disabled={formik.isSubmitting}
+                    >
+                      {formik.isSubmitting
+                        ? editingBranchId !== null
+                          ? profileLabels.profileMyBranchesLabel.branchUpdating
+                          : profileLabels.profileMyBranchesLabel.branchSaving
+                        : editingBranchId !== null
+                        ? profileLabels.profileMyBranchesLabel.branchUpdate
+                        : profileLabels.profileMyBranchesLabel.branchSave}
+                    </Button>
+                    <Button
+                      type="button"
+                      className="min-w-[78px] max-h-[25px] bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-full px-5 py-2 text-sm"
+                      onClick={() => {
+                        formik.resetForm();
+                        setEditIndex(null);
+                        setIsAdding(false);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                  <div
+                    className={`grid grid-cols-1 md:grid-cols-3 gap-4 mt-[-20px] ${
+                      isMobile ? "px-0" : "px-10"
+                    }`}
                   >
-                    {profileLabels.profileMyBranchesLabel.branchSave}
-                  </Button>
-                  {/* <Button
-                className="min-w-[78px] max-h-[25px] bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-full px-5 py-2 text-sm"
-                onClick={() => {
-                  setFormBranch(null);
-                  setEditIndex(null);
-                  setIsAdding(false);
-                }}
-              >
-                Cancel
-              </Button> */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.branchName}
+                      </Label>
+                      <Input
+                        name="branch_name"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.branch_name}
+                        placeholder="Branch Name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.branch_name &&
+                          formik.errors.branch_name
+                        }
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.addressLine1}
+                      </Label>
+                      <Input
+                        name="address_line1"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.address_line1}
+                        placeholder="Address Line 1"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.address_line1 &&
+                          formik.errors.address_line1
+                        }
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.addressLine2}
+                      </Label>
+                      <Input
+                        name="address_line2"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.address_line2}
+                        placeholder="Address Line 2"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.address_line2 &&
+                          formik.errors.address_line2
+                        }
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.postCode}
+                      </Label>
+                      <Input
+                        name="postcode"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.postcode}
+                        placeholder="Post Code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.postcode && formik.errors.postcode
+                        }
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.country}
+                      </Label>
+                      <Input
+                        name="country"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.country}
+                        placeholder="Country"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.country && formik.errors.country}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {" "}
+                        {profileLabels.profileMyBranchesLabel.city}
+                      </Label>
+                      <Input
+                        name="city"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.city}
+                        placeholder="City"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.city && formik.errors.city}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div
-                  className={`grid grid-cols-1 md:grid-cols-3 gap-4 mt-[-30px] ${
-                    isMobile ? "px-0" : "px-10"
-                  }`}
-                >
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.branchName}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.branchName}
-                      placeholder="Branch Name"
-                      onChange={(e) =>
-                        handleInputChange("branchName", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.addressLine1}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.address1}
-                      placeholder="Address Line 1"
-                      onChange={(e) =>
-                        handleInputChange("address1", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.addressLine2}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.address2}
-                      placeholder="Address Line 2"
-                      onChange={(e) =>
-                        handleInputChange("address2", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.postCode}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.postcode}
-                      placeholder="Post Code"
-                      onChange={(e) =>
-                        handleInputChange("postcode", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.country}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.country}
-                      placeholder="Country"
-                      onChange={(e) =>
-                        handleInputChange("country", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {" "}
-                      {profileLabels.profileMyBranchesLabel.city}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formBranch.city}
-                      placeholder="City"
-                      onChange={(e) =>
-                        handleInputChange("city", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
+              </form>
             )}
 
             {/* Branch List */}
             <div className="flex flex-col divide-y-[2px] divide-[var(--table-border)]">
-              {branches.length <= 0 ? (
+              {loading ? (
+                <LoaderBranch isMobile={isMobile} />
+              ) : branches.length <= 0 ? (
                 <div className="p-6 text-center text-sm text-[var(--color-gray)]">
                   {profileLabels.profileMyBranchesLabel.noBranches}
                 </div>
@@ -270,9 +325,14 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                           <Button
                             className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-[12px] font-normal"
                             onClick={() => handleDelete(idx)}
+                            disabled={deletingId === branch.id}
                           >
                             <Delete className="w-4 h-4" />
-                            {profileLabels.profileMyBranchesLabel.branchDelete}
+                            {deletingId === branch.id
+                              ? profileLabels.profileMyBranchesLabel
+                                  .branchDeleting
+                              : profileLabels.profileMyBranchesLabel
+                                  .branchDelete}
                           </Button>
                         </div>
                       )}
@@ -281,18 +341,20 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                       {!isMobile && (
                         <div className="flex items-start justify-between w-full">
                           <h4 className="font-semibold text-lg">
-                            {branch.branchName}
+                            {branch.branch_name}
                           </h4>
                           <div className="flex gap-2 mt-[-10px]">
                             <Button
                               className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-red)] text-[var(--color-white)] hover:bg-[var(--color-red-hover)] px-3 rounded-full text-[12px] font-normal"
                               onClick={() => handleDelete(idx)}
+                              disabled={deletingId === branch.id}
                             >
                               <Delete className="w-4 h-4" />
-                              {
-                                profileLabels.profileMyBranchesLabel
-                                  .branchDelete
-                              }
+                              {deletingId === branch.id
+                                ? profileLabels.profileMyBranchesLabel
+                                    .branchDeleting
+                                : profileLabels.profileMyBranchesLabel
+                                    .branchDelete}
                             </Button>
                             <Button
                               className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
@@ -311,7 +373,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                       {/* Branch name (mobile version) */}
                       {isMobile && (
                         <h4 className="font-semibold text-lg">
-                          {branch.branchName}
+                          {branch.branch_name}
                         </h4>
                       )}
                     </div>
@@ -339,7 +401,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                                 !isMobile ? "max-w-[200px] min-w-[200px]" : ""
                               }`}
                             >
-                              {branch.address1}
+                              {branch.address_line1}
                             </p>
                           </div>
                           <div>
@@ -354,7 +416,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                                 !isMobile ? "max-w-[200px] min-w-[200px]" : ""
                               }`}
                             >
-                              {branch.address2}
+                              {branch.address_line2}
                             </p>
                           </div>
                         </div>

@@ -22,6 +22,13 @@ export const PRODUCT_ENDPOINTS = {
   CATEGORIES: "orders/cat-type-list",
 } as const;
 
+export const PROFILE = {
+  BRANCH_LIST: "/branches",
+  BRANCH_CREATE: "/branches/create",
+  BRANCH_UPDATE: (id: string) => `/branches/edit/${id}`,
+  BRANCH_DELETE: (id: string) => `/branches/delete/${id}`,
+};
+
 // Generate full URLs with base path
 export const generateUrl = (basePath: string, endpoint: string) =>
   `${basePath}${endpoint}`;

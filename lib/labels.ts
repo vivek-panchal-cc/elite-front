@@ -114,6 +114,9 @@ export const labels = {
     profileMyBranchesLabel: {
       addBranches: "Add Branches",
       branchSave: "Save",
+      branchSaving: "Saving...",
+      branchUpdate: "Update",
+      branchUpdating: "Updating...",
       branchName: "Branch Name",
       addressLine1: "Address Line 1",
       addressLine2: "Address Line 2",
@@ -123,6 +126,7 @@ export const labels = {
       noBranches: "No branches found",
       branchEdit: "Edit",
       branchDelete: "Delete",
+      branchDeleting: "Deleting...",
     },
     profileCompanyLabel: {
       companySave: "Save",
