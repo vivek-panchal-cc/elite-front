@@ -31,6 +31,7 @@ export default function Orders() {
 
   const [subCategories, setSubCategories] = useState<any[]>([]);
   const [directProducts, setDirectProducts] = useState<any[]>([]);
+  const text: string = "";
 
   useEffect(() => {
     if (products) {
@@ -198,24 +199,51 @@ export default function Orders() {
 
                             {/* Products inside subcategory */}
                             {isSubOpen && (
-                              <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-                                {sub.productList.map(
-                                  (p: Product, idx: number) => (
-                                    <ProductCard
-                                      key={p.prod_id}
-                                      p={p}
-                                      idx={idx}
-                                      selectedProduct={selectedProduct}
-                                      setSelectedProduct={setSelectedProduct}
-                                      quantities={quantities}
-                                      handleQuantityChange={
-                                        handleQuantityChange
-                                      }
-                                      addToCart={addToCart}
-                                    />
-                                  )
+                              <>
+                                {text && (
+                                  <div className="mb-2 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 px-1 sm:px-2">
+                                    <div>
+                                      <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
+                                        {isExpanded
+                                          ? text
+                                          : `${text.slice(0, 150)}${
+                                              text?.length > 150 ? "..." : ""
+                                            }`}
+                                        {text.length > 150 && (
+                                          <button
+                                            onClick={() =>
+                                              setIsExpanded(!isExpanded)
+                                            }
+                                            className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
+                                          >
+                                            {isExpanded
+                                              ? "Read less"
+                                              : "Read more..."}
+                                          </button>
+                                        )}
+                                      </p>
+                                    </div>
+                                  </div>
                                 )}
-                              </div>
+                                <div className="pt-2 mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                                  {sub.productList.map(
+                                    (p: Product, idx: number) => (
+                                      <ProductCard
+                                        key={p.prod_id}
+                                        p={p}
+                                        idx={idx}
+                                        selectedProduct={selectedProduct}
+                                        setSelectedProduct={setSelectedProduct}
+                                        quantities={quantities}
+                                        handleQuantityChange={
+                                          handleQuantityChange
+                                        }
+                                        addToCart={addToCart}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </>
                             )}
                           </div>
                         );

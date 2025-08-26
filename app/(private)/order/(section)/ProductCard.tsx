@@ -1,6 +1,7 @@
 import { productTwo } from "@/components/images";
 import Cart from "@/components/images/svgs/Cart";
 import Eye from "@/components/images/svgs/Eye";
+import Fire from "@/components/images/svgs/Fire";
 import Heart from "@/components/images/svgs/Heart";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { cartLabels } from "@/lib/labels";
@@ -35,6 +36,28 @@ const ProductCard = ({
             fill
             className="object-contain rounded p-4"
           />
+          {p.tag && (
+            <span
+              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
+                p.tag === "25%"
+                  ? "bg-[var(--color-green)] text-[var(--color-white)]"
+                  : p.tag === "HOT"
+                  ? "bg-[var(--color-orange)] text-[var(--color-white)]"
+                  : p.tag === "BUY 5 GET 2 FREE"
+                  ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
+                  : p.tag === "SOLD OUT"
+                  ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                  : ""
+              } ${
+                selectedProduct === idx
+                  ? "-top-5 sm:-top-7 left-0"
+                  : "-top-2 sm:-top-3 left-2 sm:left-3"
+              }`}
+            >
+              {p.tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}{" "}
+              {p.tag}
+            </span>
+          )}
         </div>
       </div>
       <div className="px-2 max-w-24 sm:max-w-32 md:max-w-30 lg:max-w-40">
