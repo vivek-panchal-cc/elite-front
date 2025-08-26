@@ -24,7 +24,6 @@ export default function Orders() {
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [cart, setCart] = useState<CartItem[]>([]);
-  console.log("cart: ", cart);
   const [isProductLoading, products, reloadProduct] = useProductList({
     cat_type_id: catId ?? undefined,
     title: searchText.trim(),
