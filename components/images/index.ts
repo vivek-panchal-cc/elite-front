@@ -50,6 +50,11 @@ import vapeDevice from "./products/vape.png";
 import laptop from "./products/AdobeStock.png";
 import voucher from "./products/amazon.png";
 import vapePod from "./products/group_product.png";
+import transferHero from "./transfer/transfer-hero.png";
+import vapeJucceAc from "./transfer/vape-jucce-ac.png";
+import simplyElite from "./transfer/simply-elite-mobile.png";
+import paypal from './transfer/paypal.png';
+import paypalButton from "./transfer/paypal-button.png";
 
 // Export all images as a single object
 export const images = {
@@ -103,7 +108,12 @@ export const images = {
   vapePod,
   laptop,
   simCard,
-  voucher
+  voucher,
+  transferHero,
+  paypal, 
+  vapeJucceAc,
+  simplyElite,
+  paypalButton
 } as const;
 
 // Export individual images for direct import
