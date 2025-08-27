@@ -6,6 +6,7 @@ export const AUTH_ENDPOINTS = {
   REFRESH_TOKEN: "/refresh-token",
   FORGOT_PASSWORD: "/dealer/forgot-password",
   RESET_PASSWORD: "/reset-password",
+  GET_PROFILE: "/dealer/profile",
 } as const;
 
 // User endpoints

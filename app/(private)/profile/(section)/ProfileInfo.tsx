@@ -5,12 +5,15 @@ import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
 import { profileLabels } from "@/lib/labels";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/AuthStoreDealer";
 
 interface ProfileInfoProps {
   isMobile?: boolean;
 }
 
 export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
+  const { dealer, user, token } = useAuthStore();
+  console.log("user: ", user);
   const router = useRouter();
   return (
     <div className={`${isMobile ? "w-[95%] mx-auto" : "w-3/4"}`}>

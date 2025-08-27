@@ -182,25 +182,6 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                       />
                     </div>
 
-                    {/* Address 1 */}
-                    <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                        {profileLabels.profileCompanyLabel.addressLine1}
-                      </Label>
-                      <Input
-                        name="address_line1"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                        value={formik.values.address_line1}
-                        placeholder="Address Line 1"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          (formik.touched.address_line1 &&
-                            formik.errors.address_line1) as string
-                        }
-                      />
-                    </div>
-
                     {/* Address 2 */}
                     <div className="space-y-1">
                       <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
@@ -220,25 +201,6 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                       />
                     </div>
 
-                    {/* Postcode */}
-                    <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                        {profileLabels.profileCompanyLabel.postCode}
-                      </Label>
-                      <Input
-                        name="postcode"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                        value={formik.values.postcode}
-                        placeholder="Post Code"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                          (formik.touched.postcode &&
-                            formik.errors.postcode) as string
-                        }
-                      />
-                    </div>
-
                     {/* Country */}
                     <div className="space-y-1">
                       <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
@@ -254,6 +216,44 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                         error={
                           (formik.touched.country &&
                             formik.errors.country) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Address 1 */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.addressLine1}
+                      </Label>
+                      <Input
+                        name="address_line1"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.address_line1}
+                        placeholder="Address Line 1"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.address_line1 &&
+                            formik.errors.address_line1) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Postcode */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.postCode}
+                      </Label>
+                      <Input
+                        name="postcode"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.postcode}
+                        placeholder="Post Code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.postcode &&
+                            formik.errors.postcode) as string
                         }
                       />
                     </div>

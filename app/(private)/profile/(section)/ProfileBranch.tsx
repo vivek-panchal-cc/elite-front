@@ -398,7 +398,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                             </p>
                             <p
                               className={`text-sm text-[var(--color-black)] ${
-                                !isMobile ? "max-w-[200px] min-w-[200px]" : ""
+                                !isMobile ? "max-w-[200px]" : "" //min-w-[200px]
                               }`}
                             >
                               {branch.address_line1}
@@ -413,7 +413,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                             </p>
                             <p
                               className={`text-sm text-[var(--color-black)] ${
-                                !isMobile ? "max-w-[200px] min-w-[200px]" : ""
+                                !isMobile ? "max-w-[200px]" : "" //min-w-[200px]
                               }`}
                             >
                               {branch.address_line2}
