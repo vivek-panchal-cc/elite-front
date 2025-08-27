@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/ButtonUI";
-import { Input } from "@/components/ui/Input";
 import Link from "next/link";
 import { CustomLink } from "@/components/ui/CustomLink";
 import Image from "next/image";
@@ -13,6 +12,7 @@ import {
   awardTwo,
   rightArrow,
 } from "../images";
+import { Input } from "@/components/ui/input";
 
 const footerSections = [
   {

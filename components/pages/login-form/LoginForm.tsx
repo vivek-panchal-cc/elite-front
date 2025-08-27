@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, loginLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";

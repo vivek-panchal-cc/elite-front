@@ -4,7 +4,6 @@ import Image from "next/image";
 import PrivateLayout from "../PrivateLayout";
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import { dualUSB, searchIcon } from "@/components/images";
 import { CURRENCY_SYMBOL } from "@/lib/constants/all";
@@ -15,6 +14,7 @@ import { cartLabels, commonLabels } from "@/lib/labels";
 import useProductList from "@/hooks/useProductList";
 import { Product, Category, SubCategory, CartItem } from "@/types/product";
 import ProductCard from "./(section)/ProductCard";
+import { Input } from "@/components/ui/input";
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");

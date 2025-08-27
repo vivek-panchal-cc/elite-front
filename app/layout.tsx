@@ -3,11 +3,11 @@ import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import { HeaderLayout } from "@/components/layout/HeaderLayout";
 import { FooterLayout } from "@/components/layout/FooterLayout";
-import ToasterComponent from "@/components/ui/Toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { LoaderProvider } from "@/components/providers/loader-provider";
 import { AuthProvider } from "@/lib/AuthProvider";
 import { RouteLoader } from "@/components/route-loader/RouteLoader";
+import ToasterComponent from "@/components/ui/toaster";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],

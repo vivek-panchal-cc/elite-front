@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, loginLabels, registrationLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";
@@ -13,6 +12,7 @@ import { AUTH_ENDPOINTS } from "@/constants/urls";
 import { resetPasswordSchema } from "@/lib/validations/resetPasswordSchema";
 import { apiRequest } from "@/lib/apiRequest";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Input } from "@/components/ui/input";
 
 interface FormValues {
   email: string;

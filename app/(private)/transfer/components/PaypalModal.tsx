@@ -1,12 +1,18 @@
 import { images } from "@/components/images";
 import { Button } from "@/components/ui/ButtonUI";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/Label";
 import Modal from "@/components/ui/Modal";
 import Image from "next/image";
 import React from "react";
 
-const PaypalModal = ({isOpen, handleClose}: {isOpen: boolean, handleClose: () => void}) => {
+const PaypalModal = ({
+  isOpen,
+  handleClose,
+}: {
+  isOpen: boolean;
+  handleClose: () => void;
+}) => {
   return (
     <Modal isOpen={isOpen} onClose={handleClose} classStyle="" isClose={false}>
       {/* border-[1.5px] border-[var(--color-red)] */}
@@ -23,7 +29,9 @@ const PaypalModal = ({isOpen, handleClose}: {isOpen: boolean, handleClose: () =>
         </Button>
       </div>
       <div className="p-5 md:px-13 md:py-8 max-w-[809px]">
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-4 md:gap-y-8`}>
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-4 md:gap-y-8`}
+        >
           <div className="space-y-1">
             <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
               Available Balance
@@ -112,16 +120,18 @@ const PaypalModal = ({isOpen, handleClose}: {isOpen: boolean, handleClose: () =>
         <div className="w-auto text-[12px] text-neutral-500 flex flex-col gap-2 mt-5">
           <p>Please note: </p>
           <p>
-            You must pay the PayPal charges at a rate of 3.4% of the transfer amount plus 30p per
-            transaction. All PayPal credits will be subject to eligibility checks before your
-            account will be credited.Once approved, transfers can take up to 3 days to complete and
-            will show as pending until we confirm or cancel your request to transfer your requested
-            amount to your PayPal account.
+            You must pay the PayPal charges at a rate of 3.4% of the transfer
+            amount plus 30p per transaction. All PayPal credits will be subject
+            to eligibility checks before your account will be credited.Once
+            approved, transfers can take up to 3 days to complete and will show
+            as pending until we confirm or cancel your request to transfer your
+            requested amount to your PayPal account.
           </p>
           <p>
-            By requesting the transfer below, you are confirming that you are happy for Elite Mobile
-            Limited to raise a Self Bill on your account. You will be responsible for any tax and
-            VAT amounts payable, you agree to notify HMRC of such income.
+            By requesting the transfer below, you are confirming that you are
+            happy for Elite Mobile Limited to raise a Self Bill on your account.
+            You will be responsible for any tax and VAT amounts payable, you
+            agree to notify HMRC of such income.
           </p>
         </div>
         <div className="text-center flex justify-center mt-3">
