@@ -10,6 +10,7 @@ import { dualUSB, searchIcon } from "@/components/images";
 import { CURRENCY_SYMBOL } from "@/lib/constants/all";
 import useCategoryTypeList, { TCategory } from "@/hooks/useCategoryType";
 import LoaderCategory from "@/components/loaders/LoaderCategory";
+import LoaderProduct from "@/components/loaders/LoaderProduct";
 import { cartLabels, commonLabels } from "@/lib/labels";
 import useProductList from "@/hooks/useProductList";
 import { Product, Category, SubCategory, CartItem } from "@/types/product";
@@ -31,10 +32,16 @@ export default function Orders() {
 
   const [subCategories, setSubCategories] = useState<any[]>([]);
   const [directProducts, setDirectProducts] = useState<any[]>([]);
+  const [categoryTypes, setCategoryTypes] = useState<
+    Record<number, "subcategories" | "products">
+  >({});
+  const [viewType, setViewType] = useState<"subcategories" | "products" | null>(
+    null
+  );
   const text: string = "";
 
   useEffect(() => {
-    if (products) {
+    if (products && catId !== null) {
       if (Array.isArray(products.category) && products.category.length > 0) {
         const categories = products.category
           .filter((cat: any) => cat.is_product === 1)
@@ -46,15 +53,20 @@ export default function Orders() {
           }));
         setSubCategories(categories);
         setDirectProducts([]);
+        setViewType("subcategories");
+        setCategoryTypes((prev) => ({ ...prev, [catId]: "subcategories" }));
       } else if (Array.isArray(products.productList)) {
         setDirectProducts(products.productList);
         setSubCategories([]);
+        setViewType("products");
+        setCategoryTypes((prev) => ({ ...prev, [catId]: "products" }));
       } else {
         setSubCategories([]);
         setDirectProducts([]);
+        setViewType(null);
       }
     }
-  }, [products]);
+  }, [products, catId]);
 
   const mainCategories: Category[] =
     categories
@@ -66,7 +78,15 @@ export default function Orders() {
       })) || [];
 
   const toggleMain = (id: number) => {
-    setCatId((prev) => (prev === id ? null : id));
+    // Check if we're closing the current category
+    if (id === catId) {
+      setViewType(null);
+      setCatId(null);
+    } else {
+      // Set the view type based on our stored category type
+      setViewType(categoryTypes[id] || "products"); // Default to products if unknown
+      setCatId(id);
+    }
     setOpenSub(null);
   };
 
@@ -164,7 +184,14 @@ export default function Orders() {
                 {isOpen && (
                   <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
                     {isProductLoading ? (
-                      <LoaderCategory count={5} />
+                      viewType === "subcategories" ? (
+                        <LoaderCategory
+                          count={2}
+                          bgColor="var(--color-white)"
+                        />
+                      ) : (
+                        <LoaderProduct count={5} />
+                      )
                     ) : subCategories.length > 0 ? (
                       subCategories.map((sub, sIdx) => {
                         const isSubOpen = openSub === sub.cat_id;
