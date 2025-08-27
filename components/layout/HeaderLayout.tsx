@@ -183,21 +183,23 @@ export function HeaderLayout() {
                 />
               </CustomLink>
             ))}
-            <nav className="flex-1 overflow-y-auto">
-              <CustomLink
-                key="profile"
-                href="/profile"
-                className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {profileLabels.myProfile}
-                <Image
-                  src={burgerMenuArrow}
-                  alt="Menu arrow"
-                  className="h-[15px] w-[10px]"
-                />
-              </CustomLink>
-            </nav>
+            {isAuthenticated && (
+              <nav className="flex-1 overflow-y-auto">
+                <CustomLink
+                  key="profile"
+                  href="/profile"
+                  className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {profileLabels.myProfile}
+                  <Image
+                    src={burgerMenuArrow}
+                    alt="Menu arrow"
+                    className="h-[15px] w-[10px]"
+                  />
+                </CustomLink>
+              </nav>
+            )}
           </nav>
 
           {/* Sticky button section */}

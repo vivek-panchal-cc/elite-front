@@ -11,6 +11,7 @@ import { Company } from "@/types/company";
 import { toast } from "sonner";
 import { companySchema } from "@/lib/validations/companySchema";
 import RoundedAdd from "@/components/images/svgs/RoundedAdd";
+import LoaderBranch from "@/components/loaders/LoaderBranch";
 
 interface ProfileCompanyProps {
   isMobile?: boolean;
@@ -84,7 +85,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
     formik.setValues({
       company_name: companyToEdit.company_name,
       address_line1: companyToEdit.address_line1,
-      address_line2: companyToEdit.address_line2 || "",
+      address_line2: companyToEdit.address_line2,
       country: companyToEdit.country,
       city: companyToEdit.city,
       postcode: companyToEdit.postcode,
@@ -125,7 +126,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
             className={`custom-scrollbar ${
               isMobile
                 ? "max-h-[480px]" //min-h-[480px]
-                : "max-h-[200px]" //min-h-[200px]
+                : "max-h-[250px]" //min-h-[250px]
             }`}
           >
             {isAdding ? (
@@ -279,7 +280,9 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
               </form>
             ) : (
               <div className="flex flex-col divide-y-[2px] divide-[var(--table-border)]">
-                {company.length <= 0 ? (
+                {loading ? (
+                  <LoaderBranch isMobile={isMobile} />
+                ) : company.length <= 0 ? (
                   <div className="flex flex-col items-center justify-center h-full w-full p-6 text-sm text-[var(--color-gray)]">
                     {profileLabels.profileCompanyLabel.noCompany}
                     {/* {isMobile && !isAdding && (
@@ -405,7 +408,9 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                               </p>
                             </div>
                             <div>
-                              <p className="font-semibold text-sm">City</p>
+                              <p className="font-semibold text-sm">
+                                {profileLabels.profileCompanyLabel.city}
+                              </p>
                               <p className="text-sm text-[var(--color-black)]">
                                 {co.city}
                               </p>
