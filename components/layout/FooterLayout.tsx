@@ -12,7 +12,7 @@ import {
   awardTwo,
   rightArrow,
 } from "../images";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 
 const footerSections = [
   {

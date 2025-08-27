@@ -27,6 +27,8 @@ export const PROFILE = {
   BRANCH_CREATE: "/branches/create",
   BRANCH_UPDATE: (id: string) => `/branches/edit/${id}`,
   BRANCH_DELETE: (id: string) => `/branches/delete/${id}`,
+  COMPANY: "/company",
+  COMPANY_ADD: "/company/add-company",
 };
 
 // Generate full URLs with base path

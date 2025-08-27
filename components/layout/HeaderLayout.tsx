@@ -31,7 +31,7 @@ import LoaderDiv from "../loaders/LoaderDiv";
 
 const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
-  { name: navigationLabels.vapeProducts, href: "/vape-products" },
+  // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   { name: navigationLabels.contactUs, href: "/contact" },
 ];
 
@@ -40,7 +40,7 @@ const privateNavigationItems = [
   { name: navigationLabels.orders, href: "/order" },
   { name: navigationLabels.claim, href: "/claim" },
   { name: navigationLabels.transfer, href: "/transfer" },
-  { name: navigationLabels.vapeProducts, href: "/vape-products" },
+  // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   { name: navigationLabels.reports, href: "/reports" },
   { name: navigationLabels.contactUs, href: "/contact" },
 ];

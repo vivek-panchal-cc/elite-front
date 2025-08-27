@@ -6,6 +6,7 @@ import {
   axiosProductInstance,
 } from "@/http/axios-interceptor";
 import { BranchAdd } from "@/types/branches";
+import { CompanyAdd } from "@/types/company";
 
 // Types
 interface LoginCredentials {
@@ -144,6 +145,14 @@ const deleteBranch = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.delete(apiUrl.PROFILE.BRANCH_DELETE(id));
 };
 
+const getCompany = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PROFILE.COMPANY);
+};
+
+const addCompany = (data: CompanyAdd): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.COMPANY_ADD, data);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -169,6 +178,8 @@ export const apiRequest = {
   addBranch,
   updateBranch,
   deleteBranch,
+  getCompany,
+  addCompany,
 } as const;
 
 // Export type for the apiRequest object
@@ -191,4 +202,6 @@ export {
   addBranch,
   updateBranch,
   deleteBranch,
+  getCompany,
+  addCompany,
 };

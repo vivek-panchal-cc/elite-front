@@ -12,7 +12,7 @@ import { AUTH_ENDPOINTS } from "@/constants/urls";
 import { resetPasswordSchema } from "@/lib/validations/resetPasswordSchema";
 import { apiRequest } from "@/lib/apiRequest";
 import ReCAPTCHA from "react-google-recaptcha";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 
 interface FormValues {
   email: string;

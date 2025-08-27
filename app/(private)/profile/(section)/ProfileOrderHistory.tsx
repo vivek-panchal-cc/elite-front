@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";

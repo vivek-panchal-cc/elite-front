@@ -7,6 +7,8 @@ import WrapAmount from "@/components/wrapper/WrapAmount";
 import { cartLabels } from "@/lib/labels";
 import Image from "next/image";
 
+const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
+
 const ProductCard = ({
   p,
   idx,
@@ -31,7 +33,7 @@ const ProductCard = ({
           }`}
         >
           <Image
-            src={productTwo || p.prod_image}
+            src={productTwo || `${imageBaseUrl}/product/medium/${p.prod_image}`}
             alt={p.prod_name}
             fill
             className="object-contain rounded p-4"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { Button } from "@/components/ui/ButtonUI";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import Edit from "@/components/images/svgs/Edit";
 import RoundedAdd from "@/components/images/svgs/RoundedAdd";
 import Delete from "@/components/images/svgs/Delete";
@@ -171,7 +171,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
                         setIsAdding(false);
                       }}
                     >
-                      Cancel
+                      {profileLabels.profileMyBranchesLabel.branchCancel}
                     </Button>
                   </div>
                   <div

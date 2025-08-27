@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, loginLabels } from "@/lib/labels";
 import { loginSchema } from "@/lib/validations/loginSchema";
@@ -118,7 +118,9 @@ const LoginForm = ({
       </div>
 
       <div className="text-xs text-left">
-        {loginLabels.forgotPassword}{" "}
+        <span className="text-[var(--color-black)]">
+          {loginLabels.forgotPassword}{" "}
+        </span>
         <a
           className="text-[var(--color-red)] cursor-pointer"
           onClick={() => {
@@ -139,7 +141,9 @@ const LoginForm = ({
       </Button>
 
       <div className="text-xs text-center mt-2 cursor-pointer">
-        {loginLabels.dontHaveAccount}{" "}
+        <span className="text-[var(--color-black)]">
+          {loginLabels.dontHaveAccount}
+        </span>{" "}
         <a
           className="text-[var(--color-red)]"
           onClick={() => {

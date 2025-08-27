@@ -1,62 +1,94 @@
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
+import React, { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
 import { profileLabels } from "@/lib/labels";
+import useCompany from "@/hooks/useCompany";
+import { addCompany } from "@/lib/apiRequest";
+import { Company } from "@/types/company";
+import { toast } from "sonner";
+import { companySchema } from "@/lib/validations/companySchema";
+import RoundedAdd from "@/components/images/svgs/RoundedAdd";
 
-interface Company {
-  companyName: string;
-  address1: string;
-  address2: string;
-  country: string;
-  city: string;
-  postcode: string;
-}
 interface ProfileCompanyProps {
   isMobile?: boolean;
 }
 
 export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
-  const [company, setCompany] = useState<Company[]>([
-    {
-      companyName: "Communication Crafts Pvt. Ltd.",
-      address1:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-      address2:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-      country: "India",
-      city: "Ahmedabad",
-      postcode: "382210",
-    },
-  ]);
-
+  const [loading, companyDetails, reloadCompany] = useCompany();
+  const [company, setCompany] = useState<Company[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [formCompany, setFormCompany] = useState<Company | null>(null);
+  const [editingCompanyId, setEditingCompanyId] = useState<number | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleInputChange = (field: keyof Company, value: string) => {
-    setFormCompany((prev) => (prev ? { ...prev, [field]: value } : null));
-  };
-
-  const handleSave = () => {
-    if (!formCompany) return;
-
-    if (editIndex !== null) {
-      const updated = [...company];
-      updated[editIndex] = formCompany;
-      setCompany(updated);
-      setEditIndex(null);
+  useEffect(() => {
+    if (companyDetails) {
+      if (
+        typeof companyDetails === "object" &&
+        !Array.isArray(companyDetails)
+      ) {
+        setCompany([companyDetails]);
+      } else if (Array.isArray(companyDetails)) {
+        setCompany(companyDetails);
+      }
     } else {
-      setCompany([...company, formCompany]);
-      setIsAdding(false);
+      setCompany([]);
     }
-    setFormCompany(null);
+    return () => {
+      setIsAdding(false);
+      setEditIndex(null);
+      setEditingCompanyId(null);
+    };
+  }, [companyDetails]);
+
+  const formik = useFormik({
+    initialValues: {
+      company_name: "",
+      address_line1: "",
+      address_line2: "",
+      country: "",
+      city: "",
+      postcode: "",
+    },
+    validationSchema: companySchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        const { data } = await addCompany(values);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        resetForm();
+        setIsAdding(false);
+        setEditIndex(null);
+        setEditingCompanyId(null);
+        reloadCompany();
+      } catch (error: any) {
+        if (typeof error === "string") return toast.error(error);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
+
+  const handleAdd = () => {
+    setIsAdding(true);
+    formik.resetForm();
   };
 
   const handleEdit = (idx: number) => {
     setEditIndex(idx);
-    setFormCompany({ ...company[idx] });
+    const companyToEdit = company[idx];
+    setEditingCompanyId(companyToEdit.id);
+    setIsAdding(true);
+    formik.setValues({
+      company_name: companyToEdit.company_name,
+      address_line1: companyToEdit.address_line1,
+      address_line2: companyToEdit.address_line2 || "",
+      country: companyToEdit.country,
+      city: companyToEdit.city,
+      postcode: companyToEdit.postcode,
+    });
   };
 
   return (
@@ -66,140 +98,199 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
       <div
         className={`border border-[var(--color-red)] ${
           isMobile
-            ? "max-h-[490px] min-h-[490px] border-t-0 rounded-t-none rounded-b-xl"
-            : "max-h-[290px] min-h-[280px] rounded-xl"
+            ? "max-h-[770px] border-t-0 rounded-t-none rounded-b-xl" //min-h-[770px]
+            : "max-h-[525px] rounded-xl" //min-h-[525px]
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {/* Header */}
-        {!isMobile && (
-          <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)]">
-            <h3 className="font-bold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
-              {profileLabels.myCompany}
-            </h3>
-          </div>
-        )}
+
+        <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)]">
+          <h3 className="font-bold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
+            {profileLabels.myCompany}
+          </h3>
+          {company.length === 0 && !isAdding && (
+            <Button
+              className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
+              onClick={handleAdd}
+            >
+              <RoundedAdd />
+              {profileLabels.profileCompanyLabel.companyAdd}
+            </Button>
+          )}
+        </div>
 
         {/* Add or Edit Form OR Company List */}
         <div className="overflow-hidden rounded-xl">
           <div
             className={`custom-scrollbar ${
               isMobile
-                ? "max-h-[480px] min-h-[480px]"
-                : "max-h-[200px] min-h-[200px]"
+                ? "max-h-[480px]" //min-h-[480px]
+                : "max-h-[200px]" //min-h-[200px]
             }`}
           >
-            {(isAdding || editIndex !== null) && formCompany ? (
-              <div className="p-6 bg-[var(--color-light-gray)]">
-                <div className="flex justify-end mb-6 gap-3">
-                  <Button
-                    className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
-                    onClick={handleSave}
+            {isAdding ? (
+              <form onSubmit={formik.handleSubmit}>
+                <div className="p-6 bg-[var(--color-light-gray)]">
+                  <div className="flex justify-end mb-6 gap-3">
+                    <Button
+                      type="submit"
+                      className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
+                      disabled={formik.isSubmitting}
+                    >
+                      {formik.isSubmitting
+                        ? editingCompanyId !== null
+                          ? profileLabels.profileCompanyLabel.companyUpdating
+                          : profileLabels.profileCompanyLabel.companySaving
+                        : editingCompanyId !== null
+                        ? profileLabels.profileCompanyLabel.companyUpdate
+                        : profileLabels.profileCompanyLabel.companySave}
+                    </Button>
+                    <Button
+                      type="button"
+                      className="min-w-[78px] max-h-[25px] bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-full px-5 py-2 text-sm"
+                      onClick={() => {
+                        formik.resetForm();
+                        setEditIndex(null);
+                        setIsAdding(false);
+                      }}
+                    >
+                      {profileLabels.profileCompanyLabel.companyCancel}
+                    </Button>
+                  </div>
+                  <div
+                    className={`grid grid-cols-1 md:grid-cols-3 gap-4 mt-[-20px] ${
+                      isMobile ? "px-0" : "px-10"
+                    }`}
                   >
-                    {profileLabels.profileCompanyLabel.companySave}
-                  </Button>
+                    {/* Company Name */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.companyName}
+                      </Label>
+                      <Input
+                        name="company_name"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.company_name}
+                        placeholder="Company Name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.company_name &&
+                            formik.errors.company_name) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Address 1 */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.addressLine1}
+                      </Label>
+                      <Input
+                        name="address_line1"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.address_line1}
+                        placeholder="Address Line 1"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.address_line1 &&
+                            formik.errors.address_line1) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Address 2 */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.addressLine2}
+                      </Label>
+                      <Input
+                        name="address_line2"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.address_line2}
+                        placeholder="Address Line 2"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.address_line2 &&
+                            formik.errors.address_line2) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Postcode */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.postCode}
+                      </Label>
+                      <Input
+                        name="postcode"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.postcode}
+                        placeholder="Post Code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.postcode &&
+                            formik.errors.postcode) as string
+                        }
+                      />
+                    </div>
+
+                    {/* Country */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.country}
+                      </Label>
+                      <Input
+                        name="country"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.country}
+                        placeholder="Country"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.country &&
+                            formik.errors.country) as string
+                        }
+                      />
+                    </div>
+
+                    {/* City */}
+                    <div className="space-y-1">
+                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                        {profileLabels.profileCompanyLabel.city}
+                      </Label>
+                      <Input
+                        name="city"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        value={formik.values.city}
+                        placeholder="City"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          (formik.touched.city && formik.errors.city) as string
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div
-                  className={`grid grid-cols-1 md:grid-cols-3 gap-4 mt-[-25px] ${
-                    isMobile ? "px-0" : "px-10"
-                  }`}
-                >
-                  {/* Company Name */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.companyName}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.companyName}
-                      placeholder="Company Name"
-                      onChange={(e) =>
-                        handleInputChange("companyName", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* Address 1 */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.addressLine1}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.address1}
-                      placeholder="Address Line 1"
-                      onChange={(e) =>
-                        handleInputChange("address1", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* Address 2 */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.addressLine2}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.address2}
-                      placeholder="Address Line 2"
-                      onChange={(e) =>
-                        handleInputChange("address2", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* Postcode */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.postCode}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.postcode}
-                      placeholder="Post Code"
-                      onChange={(e) =>
-                        handleInputChange("postcode", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* Country */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.country}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.country}
-                      placeholder="Country"
-                      onChange={(e) =>
-                        handleInputChange("country", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* City */}
-                  <div className="space-y-1">
-                    <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
-                      {profileLabels.profileCompanyLabel.city}
-                    </Label>
-                    <Input
-                      className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                      value={formCompany.city}
-                      placeholder="City"
-                      onChange={(e) =>
-                        handleInputChange("city", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
+              </form>
             ) : (
-              // COMPANY LIST (only visible when not editing/adding)
               <div className="flex flex-col divide-y-[2px] divide-[var(--table-border)]">
                 {company.length <= 0 ? (
-                  <div className="grid place-items-center h-full w-full p-6 text-sm text-[var(--color-gray)]">
+                  <div className="flex flex-col items-center justify-center h-full w-full p-6 text-sm text-[var(--color-gray)]">
                     {profileLabels.profileCompanyLabel.noCompany}
+                    {/* {isMobile && !isAdding && (
+                      <Button
+                        className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal mt-4"
+                        onClick={handleAdd}
+                      >
+                        <RoundedAdd />
+                        {profileLabels.profileCompanyLabel.companyAdd}
+                      </Button>
+                    )} */}
                   </div>
                 ) : (
                   company.map((co, idx) => (
@@ -221,7 +312,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                         {isMobile && (
                           <div className="flex gap-2 w-full justify-between mb-2">
                             <h4 className="font-semibold text-lg">
-                              {co.companyName}
+                              {co.company_name}
                             </h4>
                             <Button
                               className="min-w-[78px] max-h-[25px] flex items-center gap-1 h-8 bg-[var(--color-dark-blue)] text-[var(--color-white)] px-3 rounded-full text-[12px] font-normal"
@@ -240,7 +331,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                         {!isMobile && (
                           <div className="flex items-start justify-between w-full">
                             <h4 className="font-semibold text-lg">
-                              {co.companyName}
+                              {co.company_name}
                             </h4>
                             <div className="flex gap-2 ">
                               <Button
@@ -260,7 +351,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                         {/* Company name (mobile version) */}
                         {/* {isMobile && (
                           <h4 className="font-semibold text-lg">
-                            {co.companyName}
+                            {co.company_name}
                           </h4>
                         )} */}
                       </div>
@@ -285,7 +376,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                                   !isMobile ? "max-w-[200px]" : ""
                                 }`}
                               >
-                                {co.address1}
+                                {co.address_line1}
                               </p>
                             </div>
                             <div>
@@ -297,7 +388,7 @@ export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
                                   !isMobile ? "max-w-[200px]" : ""
                                 }`}
                               >
-                                {co.address2}
+                                {co.address_line2}
                               </p>
                             </div>
                           </div>

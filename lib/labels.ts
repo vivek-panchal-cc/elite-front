@@ -127,9 +127,14 @@ export const labels = {
       branchEdit: "Edit",
       branchDelete: "Delete",
       branchDeleting: "Deleting...",
+      branchCancel: "Cancel",
     },
     profileCompanyLabel: {
+      companyAdd: "Add Company",
       companySave: "Save",
+      companySaving: "Saving...",
+      companyUpdate: "Update",
+      companyUpdating: "Updating...",
       companyName: "Company Name",
       addressLine1: "Address Line 1",
       addressLine2: "Address Line 2",
@@ -138,6 +143,7 @@ export const labels = {
       city: "City",
       noCompany: "No company found",
       companyEdit: "Edit",
+      companyCancel: "Cancel",
     },
     profileRepLabel: {
       repName: "Rep Name",

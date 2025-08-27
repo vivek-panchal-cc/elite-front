@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import { commonLabels, changePassowrdLabels } from "@/lib/labels";
 import { toast } from "sonner";

@@ -1,6 +1,6 @@
 import { images } from "@/components/images";
 import { Button } from "@/components/ui/ButtonUI";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import Modal from "@/components/ui/Modal";
 import Image from "next/image";
