@@ -142,13 +142,13 @@ export default function Orders() {
                   }`}
                 >
                   <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                    <Image
+                    {/* <Image
                       src={dualUSB}
                       alt={cat.cat_name}
                       width={12}
                       height={12}
                       // className="w-3 h-3 sm:w-4 sm:h-4"
-                    />
+                    /> */}
                     <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
                       {cat.cat_name}
                     </span>
@@ -180,12 +180,12 @@ export default function Orders() {
                               }`}
                             >
                               <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                                <Image
+                                {/* <Image
                                   src={dualUSB}
                                   alt={sub.cat_name}
                                   width={12}
                                   height={12}
-                                />
+                                /> */}
                                 <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
                                   {sub.cat_name}
                                 </span>
