@@ -156,6 +156,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
                   onClick={() => {
                     setIsEditing(false);
                     formik.resetForm();
+                    setSameAsBilling(false);
                   }}
                 >
                   {commonLabels.cancel}
@@ -187,7 +188,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
                 onChange={formik.handleChange}
                 readOnly={!isEditing}
                 className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
-                  !isEditing ? "opacity-75" : ""
+                  !isEditing ? "opacity-75 cursor-not-allowed" : ""
                 }`}
                 error={
                   formik.touched[name as keyof typeof formik.values] &&
@@ -228,7 +229,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
                   onChange={formik.handleChange}
                   readOnly={!isEditing}
                   className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
-                    !isEditing ? "opacity-75" : ""
+                    !isEditing ? "opacity-75 cursor-not-allowed" : ""
                   }`}
                   error={
                     formik.touched.billing?.[
@@ -256,12 +257,16 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
                 id="sameAsBilling"
                 checked={sameAsBilling}
                 onChange={(e) => setSameAsBilling(e.target.checked)}
-                className="w-3 h-3 accent-[var(--color-red)] mr-2"
+                className={`w-3 h-3 accent-[var(--color-red)] mr-2 ${
+                  !isEditing ? "cursor-not-allowed" : ""
+                }`}
                 disabled={!isEditing}
               />
               <label
                 htmlFor="sameAsBilling"
-                className="text-xs sm:text-xs md:text-xs lg:text-xs font-medium cursor-pointer"
+                className={`text-xs sm:text-xs md:text-xs lg:text-xs font-medium ${
+                  !isEditing ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
               >
                 {profileLabels.shipping.sameAsBillingAdd}
               </label>
@@ -283,7 +288,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
                   onChange={formik.handleChange}
                   readOnly={!isEditing}
                   className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
-                    !isEditing ? "opacity-75" : ""
+                    !isEditing ? "opacity-75 cursor-not-allowed" : ""
                   }`}
                   error={
                     formik.touched.shipping?.[
