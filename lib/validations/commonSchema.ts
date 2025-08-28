@@ -5,7 +5,7 @@ export const commonValidations = {
   // Personal Information
   name: Yup.string()
     .required("Name is required")
-    .min(2, "Must be at least 2 characters")
+    .min(1, "Must be at least 1 characters")
     .matches(/^[a-zA-Z\s]*$/, "Name can only contain letters and spaces"),
 
   email: Yup.string()

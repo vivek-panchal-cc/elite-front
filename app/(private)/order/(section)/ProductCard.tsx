@@ -1,6 +1,7 @@
-import { productTwo } from "@/components/images";
+import { noProduct, productTwo } from "@/components/images";
 import Cart from "@/components/images/svgs/Cart";
 import Eye from "@/components/images/svgs/Eye";
+import FilledHeart from "@/components/images/svgs/FilledHeart";
 import Fire from "@/components/images/svgs/Fire";
 import Heart from "@/components/images/svgs/Heart";
 import WrapAmount from "@/components/wrapper/WrapAmount";
@@ -17,6 +18,7 @@ const ProductCard = ({
   quantities,
   handleQuantityChange,
   addToCart,
+  addOrRemoveFavourite,
 }: any) => (
   <div
     className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
@@ -33,8 +35,8 @@ const ProductCard = ({
           }`}
         >
           <Image
-            src={productTwo || `${imageBaseUrl}/product/medium/${p.prod_image}`}
-            alt={p.prod_name}
+            src={`${imageBaseUrl}/medium/${p.prod_image}` || noProduct}
+            alt={p.prod_name || p.prod_long_name}
             fill
             className="object-contain rounded p-4"
           />
@@ -63,7 +65,9 @@ const ProductCard = ({
         </div>
       </div>
       <div className="px-2 max-w-24 sm:max-w-32 md:max-w-30 lg:max-w-40">
-        <p className="text-xs sm:text-sm font-medium">{p.prod_name}</p>
+        <p className="text-xs sm:text-sm font-medium">
+          {p.prod_name || p.prod_long_name}
+        </p>
         {/* <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_id}</p> */}
       </div>
     </div>
@@ -83,10 +87,21 @@ const ProductCard = ({
         </span>
         <div className="flex items-center gap-1 sm:gap-2">
           {selectedProduct === idx ? (
-            <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
-          ) : (
-            <div className="w-3 sm:w-5" />
-          )}
+            <>
+              {p.is_favorite ? (
+                <FilledHeart
+                  className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--color-red)] cursor-pointer"
+                  fill=""
+                  onClick={() => addOrRemoveFavourite(p.prod_id, "remove")}
+                />
+              ) : (
+                <Heart
+                  className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--color-red)] cursor-pointer"
+                  onClick={() => addOrRemoveFavourite(p.prod_id, "add")}
+                />
+              )}
+            </>
+          ) : null}
         </div>
       </div>
     </div>

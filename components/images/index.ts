@@ -53,8 +53,9 @@ import vapePod from "./products/group_product.png";
 import transferHero from "./transfer/transfer-hero.png";
 import vapeJucceAc from "./transfer/vape-jucce-ac.png";
 import simplyElite from "./transfer/simply-elite-mobile.png";
-import paypal from './transfer/paypal.png';
+import paypal from "./transfer/paypal.png";
 import paypalButton from "./transfer/paypal-button.png";
+import noProduct from "./products/no_product.png";
 
 // Export all images as a single object
 export const images = {
@@ -110,10 +111,11 @@ export const images = {
   simCard,
   voucher,
   transferHero,
-  paypal, 
+  paypal,
   vapeJucceAc,
   simplyElite,
-  paypalButton
+  paypalButton,
+  noProduct,
 } as const;
 
 // Export individual images for direct import
@@ -161,6 +163,7 @@ export {
   mail,
   phone,
   profile,
+  noProduct,
 };
 
 // Type for the images object

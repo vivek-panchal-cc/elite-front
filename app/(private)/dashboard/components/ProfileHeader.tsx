@@ -82,9 +82,9 @@ export default function ProfileDashboard() {
         <Button className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
           {profileLabels.withdraw}
         </Button>
-        <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
+        {/* <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
           {profileLabels.deposite}
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
@@ -137,7 +137,7 @@ export default function ProfileDashboard() {
     </div>
   );
 
- const RewardGraphCard = (
+  const RewardGraphCard = (
     <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
         <h3 className="font-semibold text-[14px] sm:text-[16px]">
@@ -158,7 +158,6 @@ export default function ProfileDashboard() {
     </div>
   );
 
-
   return (
     <section className="profile-header-section">
       <div className="max-w-7xl mx-auto w-full">
@@ -174,9 +173,7 @@ export default function ProfileDashboard() {
                   pagination={{ clickable: true }}
                 >
                   <SwiperSlide>
-                    <div className="min-h-[215px]">
-                      {RewardBalanceCard}
-                    </div>
+                    <div className="min-h-[215px]">{RewardBalanceCard}</div>
                   </SwiperSlide>
                   <SwiperSlide>{OrderHistoryCard}</SwiperSlide>
                   <SwiperSlide>{RewardGraphCard}</SwiperSlide>

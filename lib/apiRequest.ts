@@ -7,6 +7,7 @@ import {
 } from "@/http/axios-interceptor";
 import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
+import { UserDetails } from "@/types/profile";
 
 // Types
 interface LoginCredentials {
@@ -105,7 +106,7 @@ const getProfile = (): Promise<AxiosResponse<ApiResponse>> => {
 };
 
 const updateProfile = (
-  data: Record<string, any>
+  data: UserDetails
 ): Promise<AxiosResponse<ApiResponse>> => {
   return axiosUserInstance.put(apiUrl.USER_ENDPOINTS.UPDATE_PROFILE, data);
 };
@@ -124,6 +125,22 @@ const getProducts = (
 
 const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.DETAILS(id));
+};
+
+const addOrRemoveFavourite = (data: {
+  prodId: number;
+  action: "add" | "remove";
+}): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(
+    apiUrl.PRODUCT_ENDPOINTS.ADD_OR_REMOVE_FAVOURITE,
+    data
+  );
+};
+
+const getFavouriteProduct = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(
+    apiUrl.PRODUCT_ENDPOINTS.FAVOURITE_PRODUCT_LIST
+  );
 };
 
 const getBranches = (): Promise<AxiosResponse<ApiResponse>> => {
@@ -172,6 +189,8 @@ export const apiRequest = {
   getProducts,
   getProductDetails,
   getCategory,
+  addOrRemoveFavourite,
+  getFavouriteProduct,
 
   // Profile
   getBranches,
@@ -197,6 +216,8 @@ export {
   updateProfile,
   getProducts,
   getProductDetails,
+  addOrRemoveFavourite,
+  getFavouriteProduct,
   getCategory,
   getBranches,
   addBranch,

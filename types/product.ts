@@ -56,3 +56,13 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface FavProduct {
+  prod_id: number;
+  prod_name: string;
+  cat_name: string;
+  fixed_price: number;
+  images_prod_image: string | null;
+  is_favourite?: boolean;
+  [key: string]: any;
+}

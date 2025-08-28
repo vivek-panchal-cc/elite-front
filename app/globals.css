@@ -175,7 +175,8 @@
 }
 
 .link-hover:hover {
-  color: #9333ea; /* purple-600 */
+  color: #9333ea;
+  color: var(--color-red);
 }
 
 /* Alternative class for different contexts */

@@ -41,7 +41,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   };
 
   return isAuthenticated ? (
-    <div className="relative hidden md:inline-block" ref={dropdownRef}>
+    <div
+      className="relative hidden md:inline-block"
+      style={{ margin: "0px" }}
+      ref={dropdownRef}
+    >
       {/* Profile Icon */}
       <button
         className="w-10 h-10 rounded-full bg-[var(--color-white)] border flex items-center justify-center cursor-pointer"

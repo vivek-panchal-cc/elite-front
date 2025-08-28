@@ -11,8 +11,8 @@ export const AUTH_ENDPOINTS = {
 
 // User endpoints
 export const USER_ENDPOINTS = {
-  PROFILE: "/profile",
-  UPDATE_PROFILE: "/update-profile",
+  PROFILE: "/dealer/get-user-details",
+  UPDATE_PROFILE: "/dealer/update-details",
   CHANGE_PASSWORD: "/change-password",
 } as const;
 
@@ -21,6 +21,8 @@ export const PRODUCT_ENDPOINTS = {
   PRODUCT_LIST: "orders/product-list",
   DETAILS: (id: string) => `/details/${id}`,
   CATEGORIES: "orders/cat-type-list",
+  ADD_OR_REMOVE_FAVOURITE: "/favorites/add-favorite",
+  FAVOURITE_PRODUCT_LIST: "/favorites/favorite-list",
 } as const;
 
 export const PROFILE = {

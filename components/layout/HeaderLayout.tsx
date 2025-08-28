@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/ButtonUI";
-import { Menu, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { CustomLink } from "@/components/ui/CustomLink";
 import Image from "next/image";
@@ -60,10 +59,10 @@ export function HeaderLayout() {
 
   return (
     <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
+      <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px] py-3">
         <div className="flex items-center h-16">
           {/* Logo */}
-          <div className="flex items-center mr-4 md:mr-0">
+          <div className="flex items-center mr-4 md:mr-0 md:justify-start justify-center flex-1">
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={images.elite_logo}
@@ -106,7 +105,10 @@ export function HeaderLayout() {
 
             {/* Cart Icon - Only show when NOT authenticated */}
             {isAuthenticated && (
-              <Link href="/cart" className="relative flex items-center">
+              <Link
+                href="/cart"
+                className="relative items-center hidden md:flex lg:flex xl:flex 2xl:flex"
+              >
                 <div className="flex items-center">
                   {/* Cart Icon Section */}
                   <div className="relative bg-[var(--color-blue)] w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-y border-l border-[var(--color-blue)]">
@@ -185,6 +187,19 @@ export function HeaderLayout() {
             ))}
             {isAuthenticated && (
               <nav className="flex-1 overflow-y-auto">
+                <CustomLink
+                  key="cart"
+                  href="/cart"
+                  className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {profileLabels.cart}
+                  <Image
+                    src={burgerMenuArrow}
+                    alt="Menu arrow"
+                    className="h-[15px] w-[10px]"
+                  />
+                </CustomLink>
                 <CustomLink
                   key="profile"
                   href="/profile"

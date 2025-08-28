@@ -15,6 +15,7 @@ import useProductList from "@/hooks/useProductList";
 import { Product, Category, SubCategory, CartItem } from "@/types/product";
 import ProductCard from "./(section)/ProductCard";
 import { Input } from "@/components/ui/Input";
+import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
@@ -29,7 +30,7 @@ export default function Orders() {
     cat_type_id: catId ?? undefined,
     title: searchText.trim(),
   });
-
+  const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const [subCategories, setSubCategories] = useState<any[]>([]);
   const [directProducts, setDirectProducts] = useState<any[]>([]);
   const [categoryTypes, setCategoryTypes] = useState<
@@ -114,6 +115,53 @@ export default function Orders() {
       }
       return [...prevCart, { product, quantity }];
     });
+  };
+
+  const handleFavourite = async (prodId: number, action: "add" | "remove") => {
+    // Optimistic update
+    const updateFav = (list: Product[]) =>
+      list.map((p) =>
+        p.prod_id === prodId ? { ...p, is_favorite: action === "add" } : p
+      );
+
+    // Update both subCategories and directProducts
+    setSubCategories((prev) =>
+      prev.map((sub) => ({
+        ...sub,
+        productList: updateFav(sub.productList),
+      }))
+    );
+
+    setDirectProducts((prev) => updateFav(prev));
+
+    // Call API in background
+    try {
+      await addOrRemoveFavourite(prodId, action);
+    } catch (err) {
+      console.error("Failed to update favourite:", err);
+
+      // Rollback if API fails
+      setSubCategories((prev) =>
+        prev.map((sub) => ({
+          ...sub,
+          productList: updateFav(
+            sub.productList.map((p: { prod_id: number }) =>
+              p.prod_id === prodId
+                ? { ...p, is_favorite: action !== "add" } // rollback
+                : p
+            )
+          ),
+        }))
+      );
+
+      setDirectProducts((prev) =>
+        prev.map((p) =>
+          p.prod_id === prodId
+            ? { ...p, is_favorite: action !== "add" } // rollback
+            : p
+        )
+      );
+    }
   };
 
   return (
@@ -266,6 +314,7 @@ export default function Orders() {
                                           handleQuantityChange
                                         }
                                         addToCart={addToCart}
+                                        addOrRemoveFavourite={handleFavourite}
                                       />
                                     )
                                   )}
@@ -288,6 +337,7 @@ export default function Orders() {
                             quantities={quantities}
                             handleQuantityChange={handleQuantityChange}
                             addToCart={addToCart}
+                            addOrRemoveFavourite={handleFavourite}
                           />
                         ))}
                       </div>

@@ -11,6 +11,7 @@ export const labels = {
     submit: "Submit",
     cancel: "Cancel",
     save: "Save",
+    update: "Update",
     delete: "Delete",
     edit: "Edit",
     view: "View",
@@ -32,10 +33,12 @@ export const labels = {
     notFound: "Data not found",
     notSubCategory: "No sub-categories found",
     viewCart: "View Cart",
+    noFavourites: "No favourites found",
   },
 
   // Profile
   profile: {
+    cart: "Cart",
     myProfile: "My Profile",
     myAccount: "My Account",
     hello: "Hello ",
