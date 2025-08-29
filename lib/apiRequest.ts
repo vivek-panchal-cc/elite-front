@@ -8,6 +8,7 @@ import {
 import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
+import { objectToFormData } from "./constants/all";
 
 // Types
 interface LoginCredentials {
@@ -25,6 +26,7 @@ interface ApiResponse<T = any> {
   status: boolean;
   message: string;
   data: T;
+  result?: T;
   statusCode?: number;
 }
 
@@ -79,6 +81,32 @@ const register = (
   data: DealerRegistrationData
 ): Promise<AxiosResponse<ApiResponse>> => {
   return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.REGISTER, data);
+};
+
+const checkDealerExists = (data: {
+  dealer_acc: string;
+}): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(
+    apiUrl.AUTH_ENDPOINTS.CHECK_DEALER_EXISTS,
+    data
+  );
+};
+
+const verifyDealer = (data: {
+  dealer_acc: string;
+  postcode: string;
+}): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosAuthInstance.post(apiUrl.AUTH_ENDPOINTS.VERIFY_DEALER, data);
+};
+
+const sendContactDetails = (
+  values: Record<string, any>
+): Promise<AxiosResponse<ApiResponse>> => {
+  const formData = objectToFormData(values);
+  return axiosAuthInstance.post(
+    apiUrl.AUTH_ENDPOINTS.RE_REGISTER_REQ_DEALER,
+    formData
+  );
 };
 
 const changePassword = (
@@ -177,6 +205,9 @@ export const apiRequest = {
   logout,
   loginOtp,
   register,
+  checkDealerExists,
+  verifyDealer,
+  sendContactDetails,
   changePassword,
   forgotPassword,
   resetPassword,
@@ -210,6 +241,9 @@ export {
   logout,
   loginOtp,
   register,
+  checkDealerExists,
+  verifyDealer,
+  sendContactDetails,
   forgotPassword,
   resetPassword,
   getProfile,

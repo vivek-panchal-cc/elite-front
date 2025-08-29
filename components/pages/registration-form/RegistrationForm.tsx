@@ -11,6 +11,10 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { apiRequest } from "@/lib/apiRequest";
 import { useLoader } from "@/components/providers/loader-provider";
 import { Label } from "@/components/ui/Label";
+import Modal from "@/components/ui/Modal";
+import ContactDetailsForm from "../contact-details/ContactDetailsForm";
+import AlertModal from "../AlertModal";
+import CheckCircle from "@/components/images/svgs/CheckCircle";
 
 interface FormValues {
   dealer_ref: string;
@@ -29,13 +33,26 @@ interface FormValues {
   g_recaptcha_token: string;
 }
 
+interface RegisteredDealer {
+  dealer_acc: string;
+  postcode: string;
+  msg: string;
+}
+
 interface RegistrationFormProps {
   setRegistrationClose: React.Dispatch<React.SetStateAction<boolean>>;
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
+// Wizard steps
+type Step = "verifyDealer" | "postcode" | "registration";
+
+const RegistrationForm = ({
+  setRegistrationClose,
+  setLogin,
+}: RegistrationFormProps) => {
   const { setIsLoading } = useLoader();
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const router = useRouter();
@@ -43,6 +60,12 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
     password: false,
     confirmPassword: false,
   });
+
+  const [step, setStep] = useState<Step>("verifyDealer");
+  const [registeredDealermsg, setRegisteredDealermsg] =
+    useState<RegisteredDealer | null>(null);
+  const [isContactDetailsOpen, setIsContactDetailsOpen] = useState(false);
+  const [alertModal, setAlertModal] = useState(false);
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -62,8 +85,7 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
       g_recaptcha_token: captchaToken ?? "",
     },
     validationSchema: registrationSchema,
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
-      // setIsLoading(true);
+    onSubmit: async (values, { setSubmitting }) => {
       try {
         const { data } = await apiRequest.register(values);
         if (!data.success) throw data.message;
@@ -74,10 +96,65 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
         if (typeof error === "string") return toast.error(error);
       } finally {
         setSubmitting(false);
-        // setIsLoading(false);
+        setIsContactDetailsOpen(false);
+        setStep("verifyDealer"); // reset flow after submit
+        setRegisteredDealermsg(null);
       }
     },
   });
+
+  const handleDealerExists = async () => {
+    if (!formik.values.dealer_ref.trim()) {
+      formik.setFieldTouched("dealer_ref", true);
+      return;
+    }
+    try {
+      const { data } = await apiRequest.checkDealerExists({
+        dealer_acc: formik.values.dealer_ref,
+      });
+      if (!data.success) throw data.message;
+      setStep("postcode");
+    } catch {
+      setStep("registration");
+    }
+  };
+
+  const handleDealerVerify = async () => {
+    if (!formik.values.dealer_ref.trim()) {
+      formik.setFieldTouched("dealer_ref", true);
+      return;
+    }
+    if (!formik.values.postcode.trim()) {
+      formik.setFieldTouched("postcode", true);
+      return;
+    }
+    try {
+      const { data } = await apiRequest.verifyDealer({
+        dealer_acc: formik.values.dealer_ref,
+        postcode: formik.values.postcode,
+      });
+      if (!data.success) throw data.message;
+      setRegisteredDealermsg(data.data.result);
+      formik.setStatus("");
+    } catch (error: any) {
+      formik.setStatus(error);
+      setRegisteredDealermsg(null);
+    }
+  };
+
+  const handleDataNull = () => {
+    setRegistrationClose(false);
+    setRegisteredDealermsg(null);
+    setIsContactDetailsOpen(false);
+    setRegisteredDealermsg(null);
+    setAlertModal(false);
+    setLogin(true);
+  };
+
+  const handleLogin = () => {
+    setRegistrationClose(false);
+    setLogin(true);
+  };
 
   // Scroll to first error when form is submitted with errors
   useEffect(() => {
@@ -89,311 +166,432 @@ const RegistrationForm = ({ setRegistrationClose }: RegistrationFormProps) => {
     }
   }, [formik.isSubmitting]);
 
-  const handleSubmit = async (values: FormValues) => {
-    try {
-      // Transform the data to match the API format
-      const formData = {
-        dealer_ref: values.dealer_ref,
-        dealer_name: values.dealer_name,
-        dealer_email: values.dealer_email,
-        dealer_password: values.dealer_password,
-        dealer_address1: values.dealer_address1,
-        dealer_address2: values.dealer_address2 || "",
-        dealer_city: values.dealer_city,
-        postcode: values.postcode,
-        dealer_mobile: values.dealer_mobile,
-        captcha: values.captcha,
-        marketing: values.marketing,
-        term_and_condition: values.term_and_condition,
-        g_recaptcha_token: values.g_recaptcha_token,
-      };
-
-      // Call the registration API
-      const response = await apiRequest.register(formData);
-
-      if (response.data.status) {
-        toast.success(response.data.message || "Registration successful!");
-        router.push("/");
-      } else {
-        throw new Error(response.data.message || "Registration failed");
-      }
-    } catch (error: any) {
-      const errorMessage =
-        error?.response?.data?.message ||
-        error.message ||
-        "Registration failed";
-      toast.error(errorMessage);
-      return { error: errorMessage };
-    }
-  };
-
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
-    >
-      <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
-        {registrationLabels.dealerRegistration}
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.dealerAccountRef}
-          </Label>
-          <Input
-            type="text"
-            name="dealer_ref"
-            placeholder="Enter Dealer Account/Reference Number"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_ref}
-            error={formik.touched.dealer_ref && formik.errors.dealer_ref}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.dealerName}
-          </Label>
-          <Input
-            type="text"
-            name="dealer_name"
-            placeholder="Enter Dealer Name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_name}
-            error={formik.touched.dealer_name && formik.errors.dealer_name}
-          />
-        </div>
-
-        <div className="space-y-1 relative">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.password}
-          </Label>
-          <Input
-            type={showPassword.password ? "text" : "password"}
-            name="dealer_password"
-            placeholder="Enter Password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_password}
-            autoComplete={"new-password"}
-            onCopy={(e) => e.preventDefault()}
-            onPaste={(e) => e.preventDefault()}
-            error={
-              formik.touched.dealer_password && formik.errors.dealer_password
-            }
-          />
-          <span
-            className="absolute right-3 top-9 cursor-pointer"
-            onClick={() =>
-              setShowPassword((prev) => ({ ...prev, password: !prev.password }))
-            }
-          >
-            {showPassword.password ? <IconEyeClose /> : <IconEyeOpen />}
-          </span>
-        </div>
-
-        <div className="space-y-1 relative">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.confirmPassword}
-          </Label>
-          <Input
-            type={showPassword.confirmPassword ? "text" : "password"}
-            name="confirm_password"
-            placeholder="Enter Confirm Password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.confirm_password}
-            onCopy={(e) => e.preventDefault()}
-            onPaste={(e) => e.preventDefault()}
-            error={
-              formik.touched.confirm_password && formik.errors.confirm_password
-            }
-          />
-          <span
-            className="absolute right-3 top-9 cursor-pointer"
-            onClick={() =>
-              setShowPassword((prev) => ({
-                ...prev,
-                confirmPassword: !prev.confirmPassword,
-              }))
-            }
-          >
-            {showPassword.confirmPassword ? <IconEyeClose /> : <IconEyeOpen />}
-          </span>
-        </div>
-
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.email}
-          </Label>
-          <Input
-            type="text"
-            name="dealer_email"
-            placeholder="Enter Email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_email}
-            error={formik.touched.dealer_email && formik.errors.dealer_email}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.mobileNumber}
-          </Label>
-          <Input
-            type="tel"
-            name="dealer_mobile"
-            placeholder="Enter Mobile Number"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_mobile}
-            error={formik.touched.dealer_mobile && formik.errors.dealer_mobile}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.postCode}
-          </Label>
-          <Input
-            type="text"
-            name="postcode"
-            placeholder="Enter Postcode"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.postcode}
-            error={formik.touched.postcode && formik.errors.postcode}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.city}
-          </Label>
-          <Input
-            type="text"
-            name="dealer_city"
-            placeholder="Enter City"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_city}
-            error={formik.touched.dealer_city && formik.errors.dealer_city}
-          />
-        </div>
-      </div>
-
-      {/* Address Fields */}
-      <div className="grid grid-cols-1 gap-4">
-        <div className="space-y-1">
-          <Label className="font-medium leading-[24.42px] tracking-[0px]">
-            {registrationLabels.address}
-          </Label>
-          <Input
-            type="text"
-            name="dealer_address1"
-            placeholder="Address Line 1"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_address1}
-            error={
-              formik.touched.dealer_address1 && formik.errors.dealer_address1
-            }
-          />
-        </div>
-        <div className="space-y-1">
-          <Input
-            type="text"
-            name="dealer_address2"
-            placeholder="Address Line 2 (Optional)"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dealer_address2}
-            error={
-              formik.touched.dealer_address2 && formik.errors.dealer_address2
-            }
-          />
-        </div>
-      </div>
-
-      {/* reCAPTCHA */}
-      <div className="flex justify-left">
-        {SITE_KEY ? (
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={(token: string | null) => {
-              setCaptchaToken(token);
-              formik.setFieldValue("captcha", Boolean(token));
-              formik.setFieldValue("g_recaptcha_token", token || "");
-            }}
-            onExpired={() => {
-              setCaptchaToken(null);
-              formik.setFieldValue("captcha", false);
-              formik.setFieldValue("g_recaptcha_token", "");
-            }}
-          />
-        ) : (
-          <div className="text-[var(--color-red)] text-sm">
-            {registrationLabels.reCaptchaMissing}
-          </div>
+    <>
+      <form
+        onSubmit={formik.handleSubmit}
+        className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
+      >
+        {/* Step 1: Verify Dealer */}
+        {step === "verifyDealer" && (
+          <>
+            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+              {registrationLabels.verifyDealer}
+            </h2>
+            <div className="space-y-1">
+              <Label className="font-medium">
+                {registrationLabels.dealerAccountRef}
+              </Label>
+              <Input
+                type="text"
+                name="dealer_ref"
+                placeholder="Enter Dealer Account/Reference Number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.dealer_ref}
+                error={formik.touched.dealer_ref && formik.errors.dealer_ref}
+              />
+              <Button
+                type="button"
+                className="w-full mt-4 rounded-[50px]"
+                onClick={handleDealerExists}
+              >
+                {registrationLabels.submit}
+              </Button>
+              <Button
+                type="button"
+                className="w-full mt-2 rounded-[50px] bg-transparent text-[var(--color-blue)] border border-[var(--color-blue)] hover:bg-[var(--color-blue)] hover:text-[var(--color-white)]"
+                onClick={handleLogin}
+              >
+                {commonLabels.login}
+              </Button>
+            </div>
+          </>
         )}
-      </div>
-      {formik.touched.captcha && formik.errors.captcha && (
-        <div className="text-[var(--color-red)] text-sm mt-2">
-          {formik.errors.captcha}
-        </div>
-      )}
 
-      {/* Checkboxes */}
-      <div className="space-y-2 text-sm text-[var(--color-gray)]">
-        <div className="flex items-start gap-2">
-          <input
-            type="checkbox"
-            id="marketing"
-            name="marketing"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            checked={formik.values.marketing}
-            className="mt-1"
-          />
-          <label htmlFor="marketing">{registrationLabels.receiveOffer}</label>
-        </div>
+        {/* Step 2: Postcode verification */}
+        {step === "postcode" && (
+          <>
+            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+              {registrationLabels.verifyDealer}
+            </h2>
+            {formik.status && (
+              <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
+                {formik.status}
+              </div>
+            )}
+            {registeredDealermsg?.msg && (
+              <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
+                <p>{registeredDealermsg.msg}</p>
+                <a
+                  className="mt-1 text-[var(--color-blue)] font-bold cursor-pointer hover:underline"
+                  onClick={() => setIsContactDetailsOpen(true)}
+                >
+                  {registrationLabels.notYourEmail}
+                </a>
+              </div>
+            )}
+            <div className="space-y-1">
+              <Label className="font-medium">
+                {registrationLabels.dealerAccountRef}
+              </Label>
+              <Input
+                type="text"
+                name="dealer_ref"
+                placeholder="Enter Dealer Account/Reference Number"
+                disabled
+                onBlur={formik.handleBlur}
+                value={formik.values.dealer_ref}
+                error={formik.touched.dealer_ref && formik.errors.dealer_ref}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="font-medium">
+                {registrationLabels.postCode}
+              </Label>
+              <Input
+                type="text"
+                name="postcode"
+                placeholder="Enter Postcode"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.postcode}
+                error={formik.touched.postcode && formik.errors.postcode}
+              />
+            </div>
+            <Button
+              type="button"
+              className="w-full mt-4 rounded-[50px] m-0"
+              onClick={handleDealerVerify}
+            >
+              {registrationLabels.submit}
+            </Button>
+            <Button
+              type="button"
+              className="w-full mt-2 rounded-[50px] bg-transparent text-[var(--color-blue)] border border-[var(--color-blue)] hover:bg-[var(--color-blue)] hover:text-[var(--color-white)]"
+              onClick={handleLogin}
+            >
+              {commonLabels.login}
+            </Button>
+          </>
+        )}
 
-        <div className="flex items-start gap-2">
-          <input
-            type="checkbox"
-            id="term_and_condition"
-            name="term_and_condition"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            checked={formik.values.term_and_condition}
-            className="mt-1"
-          />
-          <div className="flex flex-col">
-            <label htmlFor="term_and_condition">
-              {registrationLabels.iConfirm}
-            </label>
-            {formik.touched.term_and_condition &&
-              formik.errors.term_and_condition && (
+        {/* Step 3: Registration */}
+        {step === "registration" && (
+          <>
+            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+              {registrationLabels.dealerRegistration}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.dealerAccountRef}
+                </Label>
+                <Input
+                  type="text"
+                  name="dealer_ref"
+                  placeholder="Enter Dealer Account/Reference Number"
+                  // onChange={formik.handleChange}
+                  disabled
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_ref}
+                  error={formik.touched.dealer_ref && formik.errors.dealer_ref}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.dealerName}
+                </Label>
+                <Input
+                  type="text"
+                  name="dealer_name"
+                  placeholder="Enter Dealer Name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_name}
+                  error={
+                    formik.touched.dealer_name && formik.errors.dealer_name
+                  }
+                />
+              </div>
+
+              <div className="space-y-1 relative">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.password}
+                </Label>
+                <Input
+                  type={showPassword.password ? "text" : "password"}
+                  name="dealer_password"
+                  placeholder="Enter Password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_password}
+                  autoComplete={"new-password"}
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
+                  error={
+                    formik.touched.dealer_password &&
+                    formik.errors.dealer_password
+                  }
+                />
+                <span
+                  className="absolute right-3 top-9 cursor-pointer"
+                  onClick={() =>
+                    setShowPassword((prev) => ({
+                      ...prev,
+                      password: !prev.password,
+                    }))
+                  }
+                >
+                  {showPassword.password ? <IconEyeClose /> : <IconEyeOpen />}
+                </span>
+              </div>
+
+              <div className="space-y-1 relative">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.confirmPassword}
+                </Label>
+                <Input
+                  type={showPassword.confirmPassword ? "text" : "password"}
+                  name="confirm_password"
+                  placeholder="Enter Confirm Password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.confirm_password}
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
+                  error={
+                    formik.touched.confirm_password &&
+                    formik.errors.confirm_password
+                  }
+                />
+                <span
+                  className="absolute right-3 top-9 cursor-pointer"
+                  onClick={() =>
+                    setShowPassword((prev) => ({
+                      ...prev,
+                      confirmPassword: !prev.confirmPassword,
+                    }))
+                  }
+                >
+                  {showPassword.confirmPassword ? (
+                    <IconEyeClose />
+                  ) : (
+                    <IconEyeOpen />
+                  )}
+                </span>
+              </div>
+
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.email}
+                </Label>
+                <Input
+                  type="text"
+                  name="dealer_email"
+                  placeholder="Enter Email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_email}
+                  error={
+                    formik.touched.dealer_email && formik.errors.dealer_email
+                  }
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.mobileNumber}
+                </Label>
+                <Input
+                  type="tel"
+                  name="dealer_mobile"
+                  placeholder="Enter Mobile Number"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_mobile}
+                  error={
+                    formik.touched.dealer_mobile && formik.errors.dealer_mobile
+                  }
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.postCode}
+                </Label>
+                <Input
+                  type="text"
+                  name="postcode"
+                  placeholder="Enter Postcode"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.postcode}
+                  error={formik.touched.postcode && formik.errors.postcode}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.city}
+                </Label>
+                <Input
+                  type="text"
+                  name="dealer_city"
+                  placeholder="Enter City"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_city}
+                  error={
+                    formik.touched.dealer_city && formik.errors.dealer_city
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Address Fields */}
+            <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-1">
+                <Label className="font-medium leading-[24.42px] tracking-[0px]">
+                  {registrationLabels.address}
+                </Label>
+                <Input
+                  type="text"
+                  name="dealer_address1"
+                  placeholder="Address Line 1"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_address1}
+                  error={
+                    formik.touched.dealer_address1 &&
+                    formik.errors.dealer_address1
+                  }
+                />
+              </div>
+              <div className="space-y-1">
+                <Input
+                  type="text"
+                  name="dealer_address2"
+                  placeholder="Address Line 2 (Optional)"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dealer_address2}
+                  error={
+                    formik.touched.dealer_address2 &&
+                    formik.errors.dealer_address2
+                  }
+                />
+              </div>
+            </div>
+
+            {/* reCAPTCHA */}
+            <div className="flex justify-left">
+              {SITE_KEY ? (
+                <ReCAPTCHA
+                  sitekey={SITE_KEY}
+                  onChange={(token: string | null) => {
+                    setCaptchaToken(token);
+                    formik.setFieldValue("captcha", Boolean(token));
+                    formik.setFieldValue("g_recaptcha_token", token || "");
+                  }}
+                  onExpired={() => {
+                    setCaptchaToken(null);
+                    formik.setFieldValue("captcha", false);
+                    formik.setFieldValue("g_recaptcha_token", "");
+                  }}
+                />
+              ) : (
                 <div className="text-[var(--color-red)] text-sm">
-                  {formik.errors.term_and_condition}
+                  {registrationLabels.reCaptchaMissing}
                 </div>
               )}
-          </div>
-        </div>
-      </div>
+            </div>
+            {formik.touched.captcha && formik.errors.captcha && (
+              <div className="text-[var(--color-red)] text-sm mt-2">
+                {formik.errors.captcha}
+              </div>
+            )}
 
-      <Button
-        type="submit"
-        className="w-full mt-4 rounded-[50px]"
-        disabled={formik.isSubmitting}
+            {/* Checkboxes */}
+            <div className="space-y-2 text-sm text-[var(--color-gray)]">
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  id="marketing"
+                  name="marketing"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.marketing}
+                  className="mt-1"
+                />
+                <label htmlFor="marketing">
+                  {registrationLabels.receiveOffer}
+                </label>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  id="term_and_condition"
+                  name="term_and_condition"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.term_and_condition}
+                  className="mt-1"
+                />
+                <div className="flex flex-col">
+                  <label htmlFor="term_and_condition">
+                    {registrationLabels.iConfirm}
+                  </label>
+                  {formik.touched.term_and_condition &&
+                    formik.errors.term_and_condition && (
+                      <div className="text-[var(--color-red)] text-sm">
+                        {formik.errors.term_and_condition}
+                      </div>
+                    )}
+                </div>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full mt-4 rounded-[50px]"
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? "Submitting..." : commonLabels.submit}
+            </Button>
+          </>
+        )}
+      </form>
+      <Modal
+        isOpen={isContactDetailsOpen}
+        onClose={() => setIsContactDetailsOpen(false)}
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        isClose={true}
       >
-        {formik.isSubmitting ? "Submitting..." : commonLabels.submit}
-      </Button>
-    </form>
+        <ContactDetailsForm
+          setContactClose={setIsContactDetailsOpen}
+          details={formik.values}
+          handleDataNull={() => setAlertModal(true)}
+        />
+      </Modal>
+      <Modal
+        isOpen={alertModal}
+        onClose={handleDataNull}
+        classStyle="sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px]"
+        isClose={false}
+      >
+        <AlertModal
+          setModalClose={setAlertModal}
+          headerMsg={registrationLabels.thankYou}
+          message={registrationLabels.thankYouMsg}
+          btnLabel={commonLabels.okay}
+          handleCallback={handleDataNull}
+          icon={<CheckCircle />}
+        />
+      </Modal>
+    </>
   );
 };
 

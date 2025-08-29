@@ -21,3 +21,19 @@ export const registrationSchema = createSchema({
     "You must agree to the terms and conditions"
   ),
 });
+
+export const contactDetailsSchema = createSchema({
+  email: commonValidations.email,
+  contact_name: Yup.string()
+    .required("Name is required")
+    .min(1, "Name must be at least 1 characters"),
+  mobile_number: commonValidations.mobileNumber,
+  document: Yup.mixed<File>()
+    .required("Utility Bill is required")
+    .test(
+      "fileType",
+      "Only jpeg, png, and gif are allowed",
+      (value) =>
+        !value || ["image/jpeg", "image/png", "image/gif"].includes(value.type)
+    ),
+});

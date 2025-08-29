@@ -262,10 +262,13 @@ export function HeaderLayout() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle=""
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
         isClose={true}
       >
-        <RegistrationForm setRegistrationClose={setSignUpOpen} />
+        <RegistrationForm
+          setRegistrationClose={setSignUpOpen}
+          setLogin={setLoginOpen}
+        />
       </Modal>
 
       {/* Logout Modal */}

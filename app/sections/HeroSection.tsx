@@ -205,11 +205,14 @@ export default function HeroSection() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle=""
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
         isClose={true}
       >
         <div style={{ color: "red", fontWeight: "bold" }}></div>
-        <RegistrationForm setRegistrationClose={setSignUpOpen} />
+        <RegistrationForm
+          setRegistrationClose={setSignUpOpen}
+          setLogin={setLoginOpen}
+        />
       </Modal>
       <Modal
         isOpen={resetPasswordOpen}

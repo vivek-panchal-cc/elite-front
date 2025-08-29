@@ -2,6 +2,9 @@
 export const AUTH_ENDPOINTS = {
   LOGIN: "/dealer/login",
   REGISTER: "/dealer/register",
+  CHECK_DEALER_EXISTS: "dealer/check-dealer-exist",
+  VERIFY_DEALER: "/dealer/verify-dealer",
+  RE_REGISTER_REQ_DEALER: "/dealer/re-register-req",
   LOGOUT: "/dealer/logout",
   REFRESH_TOKEN: "/refresh-token",
   FORGOT_PASSWORD: "/dealer/forgot-password",

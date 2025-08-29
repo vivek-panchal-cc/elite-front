@@ -26,11 +26,23 @@ export const commonValidations = {
       .oneOf([Yup.ref(fieldName)], "Passwords must match"),
 
   // Contact Information
+  // mobileNumber: Yup.string()
+  //   .required("Mobile Number is required")
+  //   .matches(/^[0-9]+$/, "Must be only digits")
+  //   .min(10, "Must be exactly 10 digits")
+  //   .max(10, "Must be exactly 10 digits"),
+
   mobileNumber: Yup.string()
     .required("Mobile Number is required")
-    .matches(/^[0-9]+$/, "Must be only digits")
-    .min(10, "Must be exactly 10 digits")
-    .max(10, "Must be exactly 10 digits"),
+    .test("is-valid-uk-number", "Enter a valid mobile number", (value) => {
+      if (!value) return false;
+      // Local format: 07xxxxxxxxx (11 digits)
+      const localRegex = /^07\d{9}$/;
+
+      // International format: +44xxxxxxxxxx (12 digits total after +)
+      const intlRegex = /^\+44\d{10}$/;
+      return localRegex.test(value) || intlRegex.test(value);
+    }),
 
   phoneNumber: Yup.string()
     .matches(/^[0-9]*$/, "Must be only digits")
@@ -59,7 +71,8 @@ export const commonValidations = {
   // Reference Numbers and IDs
   referenceNumber: Yup.string()
     .required("Reference number is required")
-    .min(3, "Must be at least 3 characters")
+    .min(1, "Must be at least 1 characters")
+    .max(25, "Must not exceed 25 characters")
     .matches(
       /^[A-Za-z0-9-]+$/,
       "Can only contain letters, numbers, and hyphens"
