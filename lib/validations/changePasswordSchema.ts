@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { commonValidations, createSchema } from "./commonSchema";
 
 export const changePasswordSchema = createSchema({
-  email: commonValidations.email,
+  // email: commonValidations.email,
   old_password: Yup.string().required("Old password is required"),
   new_password: Yup.string()
     .required("New password is required")

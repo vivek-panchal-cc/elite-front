@@ -16,7 +16,7 @@ export const AUTH_ENDPOINTS = {
 export const USER_ENDPOINTS = {
   PROFILE: "/dealer/get-user-details",
   UPDATE_PROFILE: "/dealer/update-details",
-  CHANGE_PASSWORD: "/change-password",
+  CHANGE_PASSWORD: "/dealer/change-password",
 } as const;
 
 // Product endpoints

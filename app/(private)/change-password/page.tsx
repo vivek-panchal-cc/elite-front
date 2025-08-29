@@ -14,7 +14,7 @@ import { apiRequest } from "@/lib/apiRequest";
 import { changePasswordSchema } from "@/lib/validations/changePasswordSchema";
 
 interface FormValues {
-  email: string;
+  // email: string;
   old_password: string;
   new_password: string;
   confirm_password: string;
@@ -30,7 +30,7 @@ const ChangePassword = () => {
 
   const formik = useFormik<FormValues>({
     initialValues: {
-      email: "",
+      // email: "",
       old_password: "",
       new_password: "",
       confirm_password: "",
@@ -39,7 +39,8 @@ const ChangePassword = () => {
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       setIsLoading(true);
       try {
-        const { data } = await apiRequest.changePassword(values);
+        const { confirm_password, ...payload } = values;
+        const { data } = await apiRequest.changePassword(payload);
         if (!data.success) throw data.message;
         toast.success(data.message);
         router.push("/profile");
@@ -68,7 +69,7 @@ const ChangePassword = () => {
           </div>
         )}
 
-        <div className="space-y-1">
+        {/* <div className="space-y-1">
           <Label className="font-medium leading-[24.42px] tracking-[0px]">
             {changePassowrdLabels.email}
           </Label>
@@ -84,7 +85,7 @@ const ChangePassword = () => {
             error={formik.touched.email && formik.errors.email}
             aria-label="Email"
           />
-        </div>
+        </div> */}
 
         <div className="space-y-1 relative">
           <Label className="font-medium leading-[24.42px] tracking-[0px]">

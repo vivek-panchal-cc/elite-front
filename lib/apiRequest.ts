@@ -66,10 +66,8 @@ interface ForgotPasswordData {
   email: string;
 }
 interface DealerChangePassword {
-  email: string;
   old_password: string;
   new_password: string;
-  confirm_password: string;
 }
 
 interface ProductGetParams {
@@ -112,7 +110,7 @@ const sendContactDetails = (
 const changePassword = (
   data: DealerChangePassword
 ): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosAuthInstance.post(apiUrl.USER_ENDPOINTS.CHANGE_PASSWORD, data);
+  return axiosAuthInstance.put(apiUrl.USER_ENDPOINTS.CHANGE_PASSWORD, data);
 };
 
 const forgotPassword = (
