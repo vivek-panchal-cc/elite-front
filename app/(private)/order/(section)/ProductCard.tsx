@@ -78,9 +78,7 @@ const ProductCard = ({
         <div className="flex items-center gap-1 sm:gap-2">
           {selectedProduct === idx ? (
             <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-          ) : (
-            <div className="w-3 sm:w-5" />
-          )}
+          ) : null}
         </div>
         <span className="text-base sm:text-lg md:text-[19px]">
           <WrapAmount value={p.prod_original_price} />
