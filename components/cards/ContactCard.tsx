@@ -1,7 +1,4 @@
 import { profileLabels } from "@/lib/labels";
-import WrapAmount from "../wrapper/WrapAmount";
-import useRewards from "@/hooks/useRewards";
-import { formatDate } from "@/lib/constants/all";
 import Phone from "../images/svgs/Phone";
 import Mail from "../images/svgs/Mail";
 
