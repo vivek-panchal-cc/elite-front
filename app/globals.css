@@ -16,6 +16,7 @@
   --color-light-gray: #f6f6f6;
   --color-side-bar: #d4d4d4;
   --table-border: #0000001a;
+  --color-disabled: #b9b9b9;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -281,4 +282,14 @@
 }
 .latest-offer-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--primary) !important;
+}
+
+.dashboard-footer-brands {
+  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
+  background-image: url("../components/images/imgs/dashboard_brand_footer.png");
+  background-repeat: repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 100%;
 }

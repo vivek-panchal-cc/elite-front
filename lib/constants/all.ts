@@ -21,4 +21,23 @@ const objectToFormData = (values: Record<string, any>): FormData => {
   return formData;
 };
 
-export { ELITE_LOGO, ELITE_WALLET, CURRENCY_SYMBOL, objectToFormData };
+function formatDate(dateString: string): string {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString; // fallback if invalid
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // months are 0-based
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
+export {
+  ELITE_LOGO,
+  ELITE_WALLET,
+  CURRENCY_SYMBOL,
+  objectToFormData,
+  formatDate,
+};

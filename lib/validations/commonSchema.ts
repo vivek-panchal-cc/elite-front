@@ -26,23 +26,29 @@ export const commonValidations = {
       .oneOf([Yup.ref(fieldName)], "Passwords must match"),
 
   // Contact Information
+  mobileNumber: Yup.string()
+    .required("Mobile Number is required")
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(7, "Minimum 7 digits required")
+    .max(15, "Maximum 15 digits required"),
+
   // mobileNumber: Yup.string()
   //   .required("Mobile Number is required")
   //   .matches(/^[0-9]+$/, "Must be only digits")
   //   .min(10, "Must be exactly 10 digits")
   //   .max(10, "Must be exactly 10 digits"),
 
-  mobileNumber: Yup.string()
-    .required("Mobile Number is required")
-    .test("is-valid-uk-number", "Enter a valid mobile number", (value) => {
-      if (!value) return false;
-      // Local format: 07xxxxxxxxx (11 digits)
-      const localRegex = /^07\d{9}$/;
+  // mobileNumber: Yup.string()
+  //   .required("Mobile Number is required")
+  //   .test("is-valid-uk-number", "Enter a valid mobile number", (value) => {
+  //     if (!value) return false;
+  //     // Local format: 07xxxxxxxxx (11 digits)
+  //     const localRegex = /^07\d{9}$/;
 
-      // International format: +44xxxxxxxxxx (12 digits total after +)
-      const intlRegex = /^\+44\d{10}$/;
-      return localRegex.test(value) || intlRegex.test(value);
-    }),
+  //     // International format: +44xxxxxxxxxx (12 digits total after +)
+  //     const intlRegex = /^\+44\d{10}$/;
+  //     return localRegex.test(value) || intlRegex.test(value);
+  //   }),
 
   phoneNumber: Yup.string()
     .matches(/^[0-9]*$/, "Must be only digits")

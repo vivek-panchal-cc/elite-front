@@ -56,6 +56,8 @@ import simplyElite from "./transfer/simply-elite-mobile.png";
 import paypal from "./transfer/paypal.png";
 import paypalButton from "./transfer/paypal-button.png";
 import noProduct from "./products/no_product.png";
+import outOfStock from "./products/out-of-stock.png";
+import brandsFooter from "./imgs/dashboard_brand_footer.png";
 
 // Export all images as a single object
 export const images = {
@@ -116,6 +118,8 @@ export const images = {
   simplyElite,
   paypalButton,
   noProduct,
+  outOfStock,
+  brandsFooter,
 } as const;
 
 // Export individual images for direct import
@@ -164,6 +168,8 @@ export {
   phone,
   profile,
   noProduct,
+  outOfStock,
+  brandsFooter,
 };
 
 // Type for the images object

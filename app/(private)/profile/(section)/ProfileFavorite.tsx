@@ -3,7 +3,7 @@ import { commonLabels, profileLabels } from "@/lib/labels";
 import Fire from "@/components/images/svgs/Fire";
 import Heart from "@/components/images/svgs/Heart";
 import Image from "next/image";
-import { noProduct } from "@/components/images";
+import { noProduct, outOfStock } from "@/components/images";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import FilledHeart from "@/components/images/svgs/FilledHeart";
 import useFavouriteProductList from "@/hooks/useFavourite";
@@ -98,10 +98,17 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                     <div className="relative mb-1 sm:mb-2 w-full">
                       <div className="relative h-24 w-full sm:h-32 md:h-40 rounded-md border border-[var(--color-red)] overflow-hidden">
                         <Image
+                          // src={
+                          //   p.images_prod_image
+                          //     ? `${imageBaseUrl}/medium/${p.images_prod_image}`
+                          //     : noProduct
+                          // }
                           src={
-                            p.images_prod_image
-                              ? `${imageBaseUrl}/medium/${p.images_prod_image}`
-                              : noProduct
+                            p.gcerp_product_status
+                              ? p.default_image
+                                ? `${imageBaseUrl}/medium/${p.default_image}`
+                                : noProduct
+                              : outOfStock
                           }
                           alt={p.prod_name}
                           fill
@@ -114,25 +121,35 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                           <div className="relative w-16 h-5 flex items-center justify-center overflow-hidden">
                             {/* Single + Button (quantity 0) */}
                             <button
-                              className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out ${
+                              className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out ${
                                 quantities[idx] === 0
                                   ? "opacity-100 scale-100"
                                   : "opacity-0 scale-90 pointer-events-none"
+                              }
+                              ${
+                                !p.gcerp_product_status
+                                  ? "opacity-50 cursor-not-allowed bg-[var(--color-disabled)]"
+                                  : "bg-[var(--color-red)]"
                               }`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleQuantityChange(idx, 1);
                               }}
+                              disabled={!p.gcerp_product_status}
                             >
                               +
                             </button>
 
                             {/* Full Counter (quantity > 0) */}
                             <div
-                              className={`absolute left-0 flex items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden ${
+                              className={`absolute left-0 flex items-center rounded-full text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden ${
                                 quantities[idx] > 0
                                   ? "opacity-100 px-1 sm:px-1 scale-x-100"
                                   : "opacity-0 px-0 scale-x-0 pointer-events-none"
+                              } ${
+                                !p.gcerp_product_status
+                                  ? "opacity-50 cursor-not-allowed bg-[var(--color-disabled)]"
+                                  : "bg-[var(--color-red)]"
                               }`}
                               style={{ transformOrigin: "left" }}
                             >
@@ -145,6 +162,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                                     quantities[idx] - 1
                                   );
                                 }}
+                                disabled={!p.gcerp_product_status}
                               >
                                 -
                               </button>
@@ -160,6 +178,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                                     quantities[idx] + 1
                                   );
                                 }}
+                                disabled={!p.gcerp_product_status}
                               >
                                 +
                               </button>

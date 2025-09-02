@@ -26,6 +26,7 @@ export const PRODUCT_ENDPOINTS = {
   CATEGORIES: "orders/cat-type-list",
   ADD_OR_REMOVE_FAVOURITE: "/favorites/add-favorite",
   FAVOURITE_PRODUCT_LIST: "/favorites/favorite-list",
+  TOP_PRODUCTS_OF_WEEK: "/orders/top-products-of-week",
 } as const;
 
 export const PROFILE = {
@@ -35,6 +36,10 @@ export const PROFILE = {
   BRANCH_DELETE: (id: string) => `/branches/delete/${id}`,
   COMPANY: "/company",
   COMPANY_ADD: "/company/add-company",
+  MY_REWARDS: "/dealer/my-rewards",
+  DEALER_SUMMARY: (id: number) => `/dealer/dealer-summary/${id}`,
+  DEALER_GRAPH: "/dealer/get-rewards",
+  DEALER_LATEST_OFFER: "/dealer/get-latest-offers",
 };
 
 // Generate full URLs with base path

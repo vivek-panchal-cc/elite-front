@@ -12,6 +12,7 @@ import { useLoader } from "@/components/providers/loader-provider";
 import PrivateLayout from "../PrivateLayout";
 import { apiRequest } from "@/lib/apiRequest";
 import { changePasswordSchema } from "@/lib/validations/changePasswordSchema";
+import Breadcrumb from "@/components/ui/Breadrumb";
 
 interface FormValues {
   // email: string;
@@ -55,6 +56,11 @@ const ChangePassword = () => {
 
   return (
     <PrivateLayout>
+      {/* <div className="flex items-center justify-between w-full max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold">
+          <Breadcrumb />
+        </h2>
+      </div> */}
       <form
         onSubmit={formik.handleSubmit}
         className="w-full max-w-2xl bg-[var(--color-light-gray)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"

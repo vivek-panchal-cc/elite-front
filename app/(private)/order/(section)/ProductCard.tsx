@@ -1,4 +1,4 @@
-import { noProduct, productTwo } from "@/components/images";
+import { noProduct, outOfStock } from "@/components/images";
 import Cart from "@/components/images/svgs/Cart";
 import Eye from "@/components/images/svgs/Eye";
 import FilledHeart from "@/components/images/svgs/FilledHeart";
@@ -35,7 +35,14 @@ const ProductCard = ({
           }`}
         >
           <Image
-            src={`${imageBaseUrl}/medium/${p.prod_image}` || noProduct}
+            // src={`${imageBaseUrl}/medium/${p.prod_image}` || noProduct}
+            src={
+              p.gcerp_product_status
+                ? p.prod_image
+                  ? `${imageBaseUrl}/medium/${p.prod_image}`
+                  : noProduct
+                : outOfStock
+            }
             alt={p.prod_name || p.prod_long_name}
             fill
             className="object-contain rounded p-4"
@@ -68,7 +75,9 @@ const ProductCard = ({
         <p className="text-xs sm:text-sm font-medium">
           {p.prod_name || p.prod_long_name}
         </p>
-        {/* <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_id}</p> */}
+        {p.cat_name && (
+          <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_name}</p>
+        )}
       </div>
     </div>
 
@@ -120,6 +129,7 @@ const ProductCard = ({
                 e.stopPropagation();
                 handleQuantityChange(p.prod_id, 1);
               }}
+              disabled={!p.gcerp_product_status}
             >
               +
             </button>
@@ -141,6 +151,7 @@ const ProductCard = ({
                     (quantities[p.prod_id] || 0) - 1
                   );
                 }}
+                disabled={!p.gcerp_product_status}
               >
                 -
               </button>
@@ -156,6 +167,7 @@ const ProductCard = ({
                     (quantities[p.prod_id] || 0) + 1
                   );
                 }}
+                disabled={!p.gcerp_product_status}
               >
                 +
               </button>
@@ -172,6 +184,7 @@ const ProductCard = ({
                     (quantities[p.prod_id] || 0) - 1
                   );
                 }}
+                disabled={!p.gcerp_product_status}
               >
                 -
               </button>
@@ -187,6 +200,7 @@ const ProductCard = ({
                     (quantities[p.prod_id] || 0) + 1
                   );
                 }}
+                disabled={!p.gcerp_product_status}
               >
                 +
               </button>
@@ -199,7 +213,11 @@ const ProductCard = ({
                 ? "opacity-50 cursor-not-allowed"
                 : "cursor-pointer hover:bg-[var(--color-red-hover)]"
             }`}
-            disabled={!quantities[p.prod_id] || quantities[p.prod_id] <= 0}
+            disabled={
+              !quantities[p.prod_id] ||
+              quantities[p.prod_id] <= 0 ||
+              !p.gcerp_product_status
+            }
             onClick={(e) => {
               e.stopPropagation();
               addToCart(p, quantities[p.prod_id]);

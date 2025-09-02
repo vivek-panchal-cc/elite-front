@@ -149,6 +149,12 @@ const getProducts = (
   return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.PRODUCT_LIST, data);
 };
 
+const topProductsOfTheWeek = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(
+    apiUrl.PRODUCT_ENDPOINTS.TOP_PRODUCTS_OF_WEEK
+  );
+};
+
 const getProductDetails = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PRODUCT_ENDPOINTS.DETAILS(id));
 };
@@ -196,6 +202,22 @@ const addCompany = (data: CompanyAdd): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.PROFILE.COMPANY_ADD, data);
 };
 
+const getRewards = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.MY_REWARDS);
+};
+
+const getDealerSummary = (id: number): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PROFILE.DEALER_SUMMARY(id));
+};
+
+const getDealerGraph = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.DEALER_GRAPH);
+};
+
+const getDealerLatestOffer = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PROFILE.DEALER_LATEST_OFFER);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -228,6 +250,11 @@ export const apiRequest = {
   deleteBranch,
   getCompany,
   addCompany,
+  getRewards,
+  getDealerSummary,
+  topProductsOfTheWeek,
+  getDealerGraph,
+  getDealerLatestOffer,
 } as const;
 
 // Export type for the apiRequest object
@@ -257,4 +284,9 @@ export {
   deleteBranch,
   getCompany,
   addCompany,
+  getRewards,
+  getDealerSummary,
+  topProductsOfTheWeek,
+  getDealerGraph,
+  getDealerLatestOffer,
 };

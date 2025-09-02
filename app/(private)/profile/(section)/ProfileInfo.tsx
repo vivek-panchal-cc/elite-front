@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
@@ -100,6 +100,27 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
       formik.setFieldValue("shipping", { ...formik.values.billing });
     }
   }, [sameAsBilling, formik.values.billing]);
+
+  const prevSameAsBilling = useRef(sameAsBilling);
+
+  useEffect(() => {
+    if (prevSameAsBilling.current && !sameAsBilling) {
+      // Clear only when it changes from true → false
+      formik.setFieldValue("shipping", {
+        firstName: "",
+        telephone: "",
+        lastName: "",
+        cityOrTown: "",
+        companyName: "",
+        countryOrState: "",
+        address1: "",
+        postcode: "",
+        address2: "",
+        country: "",
+      });
+    }
+    prevSameAsBilling.current = sameAsBilling;
+  }, [sameAsBilling]);
 
   return (
     <div className={`${isMobile ? "w-[95%] mx-auto" : "w-3/4"}`}>

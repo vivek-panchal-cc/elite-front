@@ -66,3 +66,19 @@ export interface FavProduct {
   is_favourite?: boolean;
   [key: string]: any;
 }
+
+export interface TopProduct {
+  prod_id: number;
+  prod_long_name: string;
+  prod_name: string;
+  prod_purchase_price: number;
+  prod_retail_price: number;
+  prod_sp_offer_price: number;
+  prod_image: string;
+  prod_original_price: number;
+  total_sold: string;
+}
+export interface OfferResponse {
+  image: string;
+  title: string;
+}
