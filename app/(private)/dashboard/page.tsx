@@ -12,7 +12,7 @@ const Dashboard = () => {
       <ProfileDashboard />
       <LatestOffer />
 
-      <div className="bg-[#D9D9D9] flex flex-wrap items-center justify-center p-3 gap-2">
+      <div className="bg-[#D9D9D9] flex flex-wrap items-center justify-center p-3 gap-4 min-h-[114px]">
         {[
           images.dashFoot1,
           images.dashFoot2,
@@ -25,7 +25,7 @@ const Dashboard = () => {
         ].map((src, idx) => (
           <div
             key={idx}
-            className="relative h-[28px] sm:h-[36px] md:h-[48px] lg:h-[65px] w-[40px] sm:w-[60px] md:w-[80px] lg:w-[100px]"
+            className="relative h-[28px] sm:h-[36px] md:h-[33px] lg:h-[50px] w-[40px] sm:w-[60px] md:w-[80px] lg:w-[100px]"
           >
             <Image
               src={src}

@@ -283,13 +283,3 @@
 .latest-offer-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--primary) !important;
 }
-
-.dashboard-footer-brands {
-  @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
-  background-image: url("../components/images/imgs/dashboard_brand_footer.png");
-  background-repeat: repeat;
-  background-position: center center;
-  background-blend-mode: multiply;
-  position: relative;
-  min-height: 100%;
-}
