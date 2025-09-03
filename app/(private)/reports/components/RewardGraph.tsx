@@ -1,0 +1,129 @@
+'use client';
+import React from 'react';
+import { profileLabels } from '@/lib/labels';
+import { Line } from 'react-chartjs-2';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import Image from 'next/image';
+import { images } from '@/components/images';
+
+const RewardGraph = () => {
+  const rewardGraphData = {
+    labels: ['February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: profileLabels.received,
+        data: [30, 50, 40, 70, 60, 50],
+        borderColor: '#ff3e00',
+        backgroundColor: 'rgba(255, 75, 110, 0.2)',
+        tension: 0.4,
+      },
+      {
+        label: profileLabels.withdrawal,
+        data: [20, 30, 50, 60, 70, 55],
+        borderColor: '#10499e',
+        backgroundColor: 'rgba(31, 111, 235, 0.2)',
+        tension: 0.4,
+      },
+    ],
+  };
+  const rewardGraphOptions = {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+      },
+      y: { display: false, grid: { display: false } },
+    },
+  };
+
+  const RewardGraphCard = (
+    <div className="bg-[var(--color-white)]   ">
+      <div className="flex flex-row sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-30 sm:gap-0">
+        <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[16px]">
+          {profileLabels.rewardGraph}
+        </h3>
+        <div className="flex gap-3 text-[11px] sm:text-[12px] text-[var(--color-gray)] font-semibold">
+          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)]">
+            {profileLabels.received}
+          </p>
+          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-dark-blue)]">
+            {profileLabels.withdrawal}
+          </p>
+        </div>
+      </div>
+      <div className="mt-3">
+        <Line data={rewardGraphData} options={rewardGraphOptions} />
+      </div>
+    </div>
+  );
+
+  const RewardGraphItems = (
+    <div className="flex gap-3 md:flex-col md:gap-3 md:items-center lg:items-center justify-center">
+      <div
+        className="border-0 rounded-xl  p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
+        style={{
+          background: ' linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)',
+        }}
+      >
+        <Image
+          className="h-[39px] md:h-[68px] w-auto "
+          src={images.redeemsPoints}
+          alt="transfer-img"
+        />
+        <div className=" flex flex-col md:justify-center md:items-center">
+          <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
+            £451.40
+          </p>
+          <p className="font-medium text-[10px] md:text-[18px] text-[var(--color-white)] ">
+            Redeems Points
+          </p>
+        </div>
+      </div>
+      <div
+        className="border rounded-xl p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
+        style={{
+          background: ' linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)',
+        }}
+      >
+        <Image
+          className="h-[39px] md:h-[68px] w-auto"
+          src={images.availablePoints}
+          alt="transfer-img"
+        />
+        <div className=" flex flex-col md:justify-center md:items-center">
+          <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
+            £451.40
+          </p>
+          <p className="font-medium text-[10px] md:text-[18px]  text-[var(--color-white)]">
+            Available Points
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <section>
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-4 sm:px-5 md:px-8 lg:px-[60px]">
+            <div className="gap-4 md:grid grid-cols-1 md:grid-cols-[459px_1fr] xl:grid-cols-[799px_1fr] ">
+              <div className="p-4 border-1 border-[var(--color-red)] rounded-xl">
+                {RewardGraphCard}
+              </div>
+
+              <div className="mt-3 md:mt-0 md:grid md:grid-cols-1 md:gap-2 ">
+                {RewardGraphItems}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default RewardGraph;
