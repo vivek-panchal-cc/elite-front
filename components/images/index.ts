@@ -66,6 +66,8 @@ import dashFoot5 from "./dashboard-footer/dashboard_footer_5.png";
 import dashFoot6 from "./dashboard-footer/dashboard_footer_6.png";
 import dashFoot7 from "./dashboard-footer/dashboard_footer_7.png";
 import dashFoot8 from "./dashboard-footer/dashboard_footer_8.png";
+import offerImg from "./imgs/offer_img.png";
+import bestWeekImg from "./imgs/best_week.png";
 
 // Export all images as a single object
 export const images = {
@@ -136,6 +138,8 @@ export const images = {
   dashFoot6,
   dashFoot7,
   dashFoot8,
+  offerImg,
+  bestWeekImg,
 } as const;
 
 // Export individual images for direct import
@@ -194,6 +198,8 @@ export {
   dashFoot6,
   dashFoot7,
   dashFoot8,
+  offerImg,
+  bestWeekImg,
 };
 
 // Type for the images object

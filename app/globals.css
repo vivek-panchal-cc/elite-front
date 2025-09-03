@@ -17,6 +17,7 @@
   --color-side-bar: #d4d4d4;
   --table-border: #0000001a;
   --color-disabled: #b9b9b9;
+  --color-smooth-gray: #d9d9d9;
 }
 
 @custom-variant dark (&:is(.dark *));

@@ -40,6 +40,7 @@ export const PROFILE = {
   DEALER_SUMMARY: (id: number) => `/dealer/dealer-summary/${id}`,
   DEALER_GRAPH: "/dealer/get-rewards",
   DEALER_LATEST_OFFER: "/dealer/get-latest-offers",
+  DEALER_TOP_CATEGORY: "/dealer/top-categories",
 };
 
 // Generate full URLs with base path

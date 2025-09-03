@@ -218,6 +218,10 @@ const getDealerLatestOffer = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PROFILE.DEALER_LATEST_OFFER);
 };
 
+const getTopCategory = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.DEALER_TOP_CATEGORY);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -255,6 +259,7 @@ export const apiRequest = {
   topProductsOfTheWeek,
   getDealerGraph,
   getDealerLatestOffer,
+  getTopCategory,
 } as const;
 
 // Export type for the apiRequest object
@@ -289,4 +294,5 @@ export {
   topProductsOfTheWeek,
   getDealerGraph,
   getDealerLatestOffer,
+  getTopCategory,
 };

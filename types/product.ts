@@ -82,3 +82,14 @@ export interface OfferResponse {
   image: string;
   title: string;
 }
+
+export interface TopCategory {
+  cat_id: number;
+  cat_name: string;
+  cat_image: string;
+  badge_name: string | null;
+  badge_color: string | null;
+  display_order: number;
+  order_count: number;
+  total_quantity: number;
+}

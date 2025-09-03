@@ -12,7 +12,7 @@ const Dashboard = () => {
       <ProfileDashboard />
       <LatestOffer />
 
-      <div className="bg-[#D9D9D9] flex flex-wrap items-center justify-center p-3 gap-4 min-h-[114px]">
+      <div className="bg-[var(--color-smooth-gray)] flex flex-wrap items-center justify-center p-3 gap-4 min-h-[114px]">
         {[
           images.dashFoot1,
           images.dashFoot2,

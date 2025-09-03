@@ -1,104 +1,32 @@
 import OfferCard from "@/components/cards/OfferCard";
-import { images, noProduct } from "@/components/images";
+import { ProductOfferCard } from "@/components/cards/ProductOfferCard";
+import { bestWeekImg, images, noProduct } from "@/components/images";
+import LoaderTopCategory from "@/components/loaders/LoaderTopCategory";
 import LoaderTopProduct from "@/components/loaders/LoaderTopProducts";
 import WrapAmount from "@/components/wrapper/WrapAmount";
+import useTopCategories from "@/hooks/useTopCategories";
 import useTopProductsList from "@/hooks/useTopProductsList";
 import { homepageLabels } from "@/lib/labels";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
-
-const ProductOfferSlider = () => {
-  return (
-    <div
-      className="rounded-[24px] flex justify-center text-white flex-col items-center"
-      style={{
-        background: "linear-gradient(180deg, #C297FF 0%, #8733FF 134.98%)",
-      }}
-    >
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={16}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-        className="latest-offer-slider"
-      >
-        <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
-            <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
-            <Image
-              alt="offer"
-              className="h-[325px] w-auto"
-              src={images.productOfferOne}
-            ></Image>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
-            <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
-            <Image
-              alt="offer"
-              className="h-[325px] w-auto"
-              src={images.productOfferOne}
-            ></Image>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
-            <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
-            <Image
-              alt="offer"
-              className="h-[325px] w-auto"
-              src={images.productOfferOne}
-            ></Image>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-    </div>
-  );
-};
+const imageCategoryBaseUrl = process.env.NEXT_PUBLIC_CATEGORY_IMAGE_URL || "";
 
 const LatestOffer = () => {
   const [loading, topProductList, reload] = useTopProductsList();
-  const categoriesProducts = [
-    {
-      image: images.mobile,
-      title: "Mobile",
-    },
-    {
-      image: images.simCard,
-      title: "SIM Cards",
-    },
-    {
-      image: images.vapeDevice,
-      title: "Vape devices",
-    },
-    {
-      image: images.laptop,
-      title: "Laptops",
-    },
-    {
-      image: images.voucher,
-      title: "Vouchers",
-    },
-    {
-      image: images.vapePod,
-      title: "Vape Pods",
-    },
-  ];
+  const [loadingTopCategory, topCategoryList, reloadTopCategory] =
+    useTopCategories();
+  const router = useRouter();
+
   return (
-    <div className="py-10 px-4 sm:px-5 md:px-8 lg:px-[60px] bg-white rounded-tl-[40px] rounded-tr-[40px] lg:rounded-tl-[80px] lg:rounded-tr-[80px] mt-[-80px] relative">
+    <div className="py-10 px-4 sm:px-5 md:px-8 lg:px-[60px] bg-[var(--color-white)] rounded-tl-[40px] rounded-tr-[40px] lg:rounded-tl-[80px] lg:rounded-tr-[80px] mt-[-80px] relative">
       <div className="mx-auto max-w-7xl">
         <h4 className="font-bold text-[22px] mb-3">
           {homepageLabels.topProductList.popularOffer}
         </h4>
         <div className="gap-4 grid grid-cols-1 lg:grid-cols-[462px_1fr]">
-          <ProductOfferSlider />
+          <ProductOfferCard />
           <div className="grid gap-7">
             {/* First row: two columns */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[287px]">
@@ -108,23 +36,46 @@ const LatestOffer = () => {
                   {homepageLabels.topProductList.topCategories}
                 </h5>
                 <div className="grid grid-cols-3 lg:grid-cols-3 gap-y-3">
-                  {categoriesProducts?.map((item) => (
-                    <div
-                      key={item.title}
-                      className="text-center flex items-center flex-col"
-                    >
-                      <div className="bg-[#D9D9D9] h-[90px] w-[90px] rounded-[100%] flex items-center justify-center">
-                        <Image
-                          alt="offer"
-                          className="w-auto"
-                          src={item.image}
-                        ></Image>
+                  {loadingTopCategory ? (
+                    [...Array(6)].map((_, idx) => (
+                      <div
+                        key={idx}
+                        className="text-center flex items-center flex-col"
+                      >
+                        <LoaderTopCategory />
                       </div>
-                      <p className="text-[12px] font-semibold mt-1">
-                        {item.title}
+                    ))
+                  ) : topCategoryList && topCategoryList.length > 0 ? (
+                    topCategoryList.slice(0, 6).map((item) => (
+                      <div
+                        key={item.cat_id}
+                        className="text-center flex items-center flex-col"
+                      >
+                        <div className="relative bg-[var(--color-smooth-gray)] h-[90px] w-[90px] rounded-[100%] flex items-center justify-center">
+                          <Image
+                            alt="offer"
+                            className="w-auto"
+                            src={
+                              item.cat_image
+                                ? `${imageCategoryBaseUrl}${item.cat_image}`
+                                : bestWeekImg
+                            }
+                            height={50}
+                            width={50}
+                          />
+                        </div>
+                        <p className="text-[12px] font-semibold mt-1">
+                          {item.cat_name}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="col-span-3 flex justify-center">
+                      <p className="text-sm text-gray-500 mt-4">
+                        {homepageLabels.topProductList.noCatFound}
                       </p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
@@ -135,47 +86,60 @@ const LatestOffer = () => {
                 <p className="text-center text-[12px] font-bold">
                   {homepageLabels.topProductList.bestPick}
                 </p>
-                <button className="absolute right-0 text-[12px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] cursor-pointer">
-                  {homepageLabels.topProductList.viewMore}
-                </button>
+                {!loading && topProductList.length > 0 && (
+                  <button
+                    className="absolute right-0 text-[12px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] cursor-pointer"
+                    onClick={() => router.push("/order")}
+                  >
+                    {homepageLabels.topProductList.viewMore}
+                  </button>
+                )}
               </div>
 
               {/* Products */}
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                {loading
-                  ? [...Array(4)].map((_, idx) => (
-                      <div key={idx} className="rounded-[10px] p-2">
-                        <LoaderTopProduct />
+                {loading ? (
+                  [...Array(4)].map((_, idx) => (
+                    <div key={idx} className="rounded-[10px] p-2">
+                      <LoaderTopProduct />
+                    </div>
+                  ))
+                ) : topProductList && topProductList.length > 0 ? (
+                  topProductList.slice(0, 4).map((product) => (
+                    <div
+                      key={product.prod_id}
+                      className="flex items-center gap-2 rounded-[10px] p-2"
+                      title={product.prod_name || product.prod_long_name}
+                    >
+                      <div className="relative min-h-[60px] min-w-[60px] rounded-[10px] bg-[var(--color-white)] flex items-center justify-center">
+                        <Image
+                          src={
+                            product.prod_image
+                              ? `${imageBaseUrl}/medium/${product.prod_image}`
+                              : bestWeekImg
+                          }
+                          alt="product"
+                          fill
+                          className="object-contain rounded p-4"
+                        />
                       </div>
-                    ))
-                  : topProductList.slice(0, 4).map((product) => (
-                      <div
-                        key={product.prod_id}
-                        className="flex items-center gap-2 rounded-[10px] p-2"
-                        title={product.prod_name || product.prod_long_name}
-                      >
-                        <div className="min-h-[60px] min-w-[60px] rounded-[10px] bg-white flex items-center justify-center">
-                          <Image
-                            src={
-                              `${imageBaseUrl}/medium/${product.prod_image}` ||
-                              noProduct
-                            }
-                            alt="product"
-                            height={60}
-                            width={60}
-                            className="object-contain rounded p-4"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[12px] truncate">
-                            {product.prod_name || product.prod_long_name}
-                          </p>
-                          <p className="text-[12px] text-[var(--color-red)]">
-                            <WrapAmount value={product.prod_original_price} />
-                          </p>
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] truncate">
+                          {product.prod_name || product.prod_long_name}
+                        </p>
+                        <p className="text-[12px] text-[var(--color-red)]">
+                          <WrapAmount value={product.prod_original_price} />
+                        </p>
                       </div>
-                    ))}
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-6 flex justify-center">
+                    <p className="text-sm text-gray-500 mt-4">
+                      {homepageLabels.topProductList.noMatchFound}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

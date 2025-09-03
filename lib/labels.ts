@@ -301,6 +301,8 @@ export const labels = {
       topCategories: "Top Categories",
       bestPick: "Best pick of the week",
       viewMore: "Show More",
+      noCatFound: "No category found",
+      noMatchFound: "No match found",
     },
   },
 

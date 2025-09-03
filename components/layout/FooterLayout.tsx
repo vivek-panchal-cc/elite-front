@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/ButtonUI";
 import Link from "next/link";
 import { CustomLink } from "@/components/ui/CustomLink";
@@ -13,6 +15,7 @@ import {
   rightArrow,
 } from "../images";
 import { Input } from "@/components/ui/Input";
+import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
 
 const footerSections = [
   {
@@ -78,6 +81,7 @@ const awards = [
 ];
 
 export function FooterLayout() {
+  const { dealer } = useAuthStoreWithAutoRefresh();
   return (
     <footer className="bg-[var(--color-soft-white)] border-t">
       <div className="max-w-7xl mx-auto px-[40px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
@@ -174,7 +178,7 @@ export function FooterLayout() {
 
         {/* Newsletter for Desktop (top-right) */}
         <div className="hidden lg:flex border-t border-gray-200 mb-6 sm:mb-8">
-          <div className="w-full flex flex-col md:flex-row md:items-center md:justify-end gap-4 lg:mt-[-50px] lg:ml-[-50px] md:mt-[-100px] md:ml-[-60px]">
+          <div className="w-full flex flex-col md:flex-row md:items-center md:justify-end gap-4 lg:mt-[-40px] lg:ml-[-50px] md:mt-[-100px] md:ml-[-60px]">
             <div className="w-full md:w-auto">
               <label
                 htmlFor="newsletter"

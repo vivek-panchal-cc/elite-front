@@ -2,14 +2,14 @@ import useLatestOffer from "@/hooks/useLatestOffer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import Image from "next/image";
-import { noProduct } from "../images";
-const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
+import { offerImg } from "../images";
+const imageLatestOfferBaseUrl = process.env.NEXT_PUBLIC_LATEST_IMAGE_URL || "";
 
 export default function OfferCard() {
   const [loadingLatestOffer, latestOfferList, reloadLatestOffer] =
     useLatestOffer();
   return (
-    <div className="rounded-[14px] flex justify-center text-white flex-col items-center bg-[#124A9F]">
+    <div className="rounded-[14px] flex justify-center text-white flex-col items-center bg-[var(--color-blue)]">
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}
@@ -25,11 +25,11 @@ export default function OfferCard() {
                 className=""
                 src={
                   offer.image
-                    ? `${imageBaseUrl}/medium/${offer.image}`
-                    : noProduct
+                    ? `${imageLatestOfferBaseUrl}${offer.image}`
+                    : offerImg
                 }
-                width={200}
-                height={100}
+                width={offer.image ? 200 : 65}
+                height={offer.image ? 100 : 80}
               />
             </div>
           </SwiperSlide>
