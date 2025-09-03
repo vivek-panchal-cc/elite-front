@@ -58,6 +58,14 @@ import paypalButton from "./transfer/paypal-button.png";
 import noProduct from "./products/no_product.png";
 import outOfStock from "./products/out-of-stock.png";
 import brandsFooter from "./imgs/dashboard_brand_footer.png";
+import dashFoot1 from "./dashboard-footer/dashboard_footer_1.png";
+import dashFoot2 from "./dashboard-footer/dashboard_footer_2.png";
+import dashFoot3 from "./dashboard-footer/dashboard_footer_3.png";
+import dashFoot4 from "./dashboard-footer/dashboard_footer_4.png";
+import dashFoot5 from "./dashboard-footer/dashboard_footer_5.png";
+import dashFoot6 from "./dashboard-footer/dashboard_footer_6.png";
+import dashFoot7 from "./dashboard-footer/dashboard_footer_7.png";
+import dashFoot8 from "./dashboard-footer/dashboard_footer_8.png";
 
 // Export all images as a single object
 export const images = {
@@ -120,6 +128,14 @@ export const images = {
   noProduct,
   outOfStock,
   brandsFooter,
+  dashFoot1,
+  dashFoot2,
+  dashFoot3,
+  dashFoot4,
+  dashFoot5,
+  dashFoot6,
+  dashFoot7,
+  dashFoot8,
 } as const;
 
 // Export individual images for direct import
@@ -170,6 +186,14 @@ export {
   noProduct,
   outOfStock,
   brandsFooter,
+  dashFoot1,
+  dashFoot2,
+  dashFoot3,
+  dashFoot4,
+  dashFoot5,
+  dashFoot6,
+  dashFoot7,
+  dashFoot8,
 };
 
 // Type for the images object

@@ -4,17 +4,39 @@ import Image from "next/image";
 import LatestOffer from "./components/LatestOffer";
 // import PrivateLayout from "../PrivateLayout";
 import ProfileDashboard from "./components/ProfileHeader";
-import { brandsFooter, images } from "@/components/images";
+import { images } from "@/components/images";
+
 const Dashboard = () => {
   return (
     <>
       <ProfileDashboard />
       <LatestOffer />
-      <div className="flex-wrap lg:h-[114px] flex items-center justify-center p-3 gap-6 dashboard-footer-brands">
-        {/* <Image src={brandsFooter} alt="img" className="lg:h-[114px]" /> */}
+
+      <div className="bg-[#D9D9D9] flex flex-wrap items-center justify-center p-3 gap-2">
+        {[
+          images.dashFoot1,
+          images.dashFoot2,
+          images.dashFoot3,
+          images.dashFoot4,
+          images.dashFoot5,
+          images.dashFoot6,
+          images.dashFoot7,
+          images.dashFoot8,
+        ].map((src, idx) => (
+          <div
+            key={idx}
+            className="relative h-[28px] sm:h-[36px] md:h-[48px] lg:h-[65px] w-[40px] sm:w-[60px] md:w-[80px] lg:w-[100px]"
+          >
+            <Image
+              src={src}
+              alt={`logo-${idx}`}
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        ))}
       </div>
-      {/* <PrivateLayout>
-      </PrivateLayout> */}
     </>
   );
 };

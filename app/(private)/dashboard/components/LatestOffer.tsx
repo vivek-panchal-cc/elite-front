@@ -152,6 +152,7 @@ const LatestOffer = () => {
                       <div
                         key={product.prod_id}
                         className="flex items-center gap-2 rounded-[10px] p-2"
+                        title={product.prod_name || product.prod_long_name}
                       >
                         <div className="min-h-[60px] min-w-[60px] rounded-[10px] bg-white flex items-center justify-center">
                           <Image
@@ -160,13 +161,13 @@ const LatestOffer = () => {
                               noProduct
                             }
                             alt="product"
-                            height={100}
-                            width={100}
+                            height={60}
+                            width={60}
                             className="object-contain rounded p-4"
                           />
                         </div>
-                        <div>
-                          <p className="text-[12px] truncate max-w-[100px]">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[12px] truncate">
                             {product.prod_name || product.prod_long_name}
                           </p>
                           <p className="text-[12px] text-[var(--color-red)]">
