@@ -89,12 +89,12 @@ export default function HeroSection() {
                       {
                         icon: images.broucher,
                         title: homepageLabels.hero.latestBrochure,
-                        link: "/brochure",
+                        link: "#",
                       },
                       {
                         icon: images.contactUs,
                         title: homepageLabels.hero.contactUs,
-                        link: "/contact",
+                        link: "#",
                       },
                     ].map(({ icon, title, link }, index) => (
                       <Link

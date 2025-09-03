@@ -37,12 +37,11 @@ export const getUser = async ({
   } catch (error) {
     console.log(error);
     const err = error as ErrorResponse;
-    const errMsg = err.response?.data?.msg ?? err.message;
+    const errMsg = err.response?.data?.message ?? err.message;
     // toast.error(errMsg);
     throw new Error(errMsg);
   }
 };
-
 
 /**
  * TODO: Call this hook in component 

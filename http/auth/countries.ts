@@ -26,7 +26,7 @@ export const countries = async ({
   } catch (error) {
     console.log(error);
     const err = error as ErrorResponse;
-    const errMsg = err.response?.data?.msg ?? err.message;
+    const errMsg = err.response?.data?.message ?? err.message;
     throw new Error(errMsg);
   }
 };

@@ -158,13 +158,12 @@ const RegistrationForm = ({
 
   // Scroll to first error when form is submitted with errors
   useEffect(() => {
-    const { errors, isSubmitting } = formik;
-    if (isSubmitting && Object.keys(errors).length > 0) {
-      const firstError = Object.keys(errors)[0];
+    if (formik.isSubmitting && Object.keys(formik.errors).length > 0) {
+      const firstError = Object.keys(formik.errors)[0];
       const element = document.querySelector(`[name="${firstError}"]`);
       element?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-  }, [formik.isSubmitting]);
+  }, [formik.errors, formik.isSubmitting]);
 
   return (
     <>

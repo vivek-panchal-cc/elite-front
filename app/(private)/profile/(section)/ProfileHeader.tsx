@@ -74,10 +74,10 @@ export default function ProfileDashboard() {
         )}
       </p>
       <div className="flex flex-row lg:flex-col gap-3 w-full">
-        <Button className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
+        <Button className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]">
           {profileLabels.withdraw}
         </Button>
-        {/* <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
+        {/* <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]">
           {profileLabels.deposite}
         </Button> */}
       </div>
@@ -87,12 +87,13 @@ export default function ProfileDashboard() {
   const OrderHistoryCard = (
     <div className="overflow-hidden rounded-xl">
       <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-        <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
+        <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
           {profileLabels.orderHistory}
         </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
+          {/* min-w-[349px] */}
           <thead>
-            <tr className="text-left text-[var(--color-black)]">
+            <tr className="text-left text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.orderNo}</th>
               <th>{profileLabels.orderDate}</th>
               <th>{profileLabels.total}</th>
@@ -106,7 +107,10 @@ export default function ProfileDashboard() {
               </td>
             </tr>
             {orderHistory.map((o, idx) => (
-              <tr key={idx} className="text-[var(--color-black)] rounded-lg">
+              <tr
+                key={idx}
+                className="text-[var(--color-black)] rounded-lg text-[10px]"
+              >
                 <td>{o.orderNumber}</td>
                 <td>{o.date}</td>
                 <td>{o.total}</td>
@@ -124,12 +128,13 @@ export default function ProfileDashboard() {
   const WalletTransactionsCard = (
     <div className="overflow-hidden rounded-xl">
       <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-        <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
+        <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
           {profileLabels.eliteWalletTrans}
         </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
+          {/* min-w-[349px] */}
           <thead>
-            <tr className="text-left text-[var(--color-black)]">
+            <tr className="text-left text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.id}</th>
               <th>{profileLabels.amount}</th>
               <th>{profileLabels.units}</th>
@@ -143,7 +148,10 @@ export default function ProfileDashboard() {
               </td>
             </tr>
             {walletTransactions.map((w, idx) => (
-              <tr key={idx} className="text-left text-[var(--color-black)]">
+              <tr
+                key={idx}
+                className="text-left text-[var(--color-black)] text-[10px]"
+              >
                 <td>{w.id}</td>
                 <td className="text-[var(--color-red)]">{w.amount}</td>
                 <td>{w.units}</td>

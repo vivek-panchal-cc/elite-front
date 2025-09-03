@@ -10,8 +10,8 @@ export default function TestImage() {
             src="/elite_logo.png"
             alt="Test 1"
             className="w-20 h-20 border"
-            onError={(e) => console.error("Test 1 failed:", e)}
-            onLoad={() => console.log("Test 1 succeeded")}
+            // onError={(e) => console.error("Test 1 failed:", e)}
+            // onLoad={() => console.log("Test 1 succeeded")}
           />
         </div>
 
@@ -21,8 +21,8 @@ export default function TestImage() {
             src="/imgs/elite_logo.png"
             alt="Test 2"
             className="w-20 h-20 border"
-            onError={(e) => console.error("Test 2 failed:", e)}
-            onLoad={() => console.log("Test 2 succeeded")}
+            // onError={(e) => console.error("Test 2 failed:", e)}
+            // onLoad={() => console.log("Test 2 succeeded")}
           />
         </div>
 
@@ -32,8 +32,8 @@ export default function TestImage() {
             src="./elite_logo.png"
             alt="Test 3"
             className="w-20 h-20 border"
-            onError={(e) => console.error("Test 3 failed:", e)}
-            onLoad={() => console.log("Test 3 succeeded")}
+            // onError={(e) => console.error("Test 3 failed:", e)}
+            // onLoad={() => console.log("Test 3 succeeded")}
           />
         </div>
 
@@ -45,8 +45,8 @@ export default function TestImage() {
             src="/placeholder.svg"
             alt="Test 4"
             className="w-20 h-20 border"
-            onError={(e) => console.error("Test 4 failed:", e)}
-            onLoad={() => console.log("Test 4 succeeded")}
+            // onError={(e) => console.error("Test 4 failed:", e)}
+            // onLoad={() => console.log("Test 4 succeeded")}
           />
         </div>
       </div>

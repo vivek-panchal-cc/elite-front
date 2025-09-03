@@ -34,12 +34,18 @@ export const handleError = (err: unknown) => {
   };
 };
 
-export const asyncHandler = (fn: Function) => {
-  return async (...args: any[]) => {
+type ErrorResponse =
+  | { status: number; message: string; stack?: string }
+  | { status: number; message: string; originalError?: string };
+
+export const asyncHandler =
+  <T extends (...args: any[]) => Promise<any>>(fn: T) =>
+  async (
+    ...args: Parameters<T>
+  ): Promise<Awaited<ReturnType<T>> | ErrorResponse> => {
     try {
       return await fn(...args);
     } catch (error) {
       return handleError(error);
     }
   };
-};

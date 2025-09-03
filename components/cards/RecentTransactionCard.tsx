@@ -8,13 +8,14 @@ export default function RecentTransactionCard() {
 
   return (
     <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] min-h-[242px]">
-        <h3 className="font-semibold text-[14px] sm:text-[15px] md:text-[16px] mb-2">
+      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] min-h-[239px]">
+        <h3 className="font-semibold text-[12px] sm:text-[14px] md:text-[14px] mb-2">
           {profileLabels.recentTransaction}
         </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
+          {/* min-w-[349px] */}
           <thead>
-            <tr className="text-left text-[var(--color-black)]">
+            <tr className="text-left text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.orderDate}</th>
               <th>{profileLabels.amount}</th>
               <th>{profileLabels.creditOrDebit}</th>
@@ -29,7 +30,10 @@ export default function RecentTransactionCard() {
             </tr>
             {transactionList.length > 0 ? (
               transactionList.map((o, idx) => (
-                <tr key={idx} className="text-[var(--color-black)] rounded-lg">
+                <tr
+                  key={idx}
+                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                >
                   <td>{formatDate(o.redeem_date)}</td>
                   <td>
                     <WrapAmount value={o.redeem_amount} />
@@ -48,7 +52,10 @@ export default function RecentTransactionCard() {
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="text-center py-4 text-gray-500">
+                <td
+                  colSpan={4}
+                  className="text-center py-4 text-gray-500 text-[10px]"
+                >
                   {profileLabels.noTrans}
                 </td>
               </tr>

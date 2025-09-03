@@ -29,9 +29,9 @@ import WrapAmount from "../wrapper/WrapAmount";
 import LoaderDiv from "../loaders/LoaderDiv";
 
 const publicNavigationItems = [
-  { name: navigationLabels.offers, href: "/offers" },
+  { name: navigationLabels.offers, href: "#" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
-  { name: navigationLabels.contactUs, href: "/contact" },
+  { name: navigationLabels.contactUs, href: "#" },
 ];
 
 const privateNavigationItems = [
@@ -41,7 +41,7 @@ const privateNavigationItems = [
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   { name: navigationLabels.reports, href: "/reports" },
-  { name: navigationLabels.contactUs, href: "/contact" },
+  { name: navigationLabels.contactUs, href: "#" },
 ];
 
 export function HeaderLayout() {

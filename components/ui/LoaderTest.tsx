@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-import { DefaultLoader } from "@/components/ui/loader";
+import { DefaultLoader } from "@/components/ui/Loader";
 import { useLoader } from "@/components/providers/loader-provider";
 import { useApiWithLoader } from "@/lib/useApiWithLoader";
 import { loaderLabels } from "@/lib/labels";

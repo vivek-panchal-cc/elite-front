@@ -45,7 +45,7 @@ export default function GraphCard() {
   return (
     <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
-        <h3 className="font-semibold text-[14px] sm:text-[16px]">
+        <h3 className="font-semibold text-[12px] sm:text-[14px]">
           {profileLabels.rewardGraph}
         </h3>
         <div className="flex gap-3 text-[11px] sm:text-[12px] text-[var(--color-gray)] font-semibold">

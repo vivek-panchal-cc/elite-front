@@ -66,7 +66,7 @@ export default function MidPageSection() {
                     {homepageLabels.platform.directTopUp}
                   </h3>
                   <Link
-                    href="/top-up"
+                    href="#"
                     className="text-[#10499E] hover:underline sm:text-[15px] md:text-[20px] font-medium"
                   >
                     {homepageLabels.platform.clickForMoreInfo}

@@ -21,19 +21,19 @@ const footerSections = [
   {
     title: footerLabels.sections.getStarted,
     links: [
-      { name: "Home", href: "/" },
-      { name: "About Elite Galaxy", href: "/about" },
-      { name: "Careers", href: "/careers" },
-      { name: "Contact", href: "/contact" },
+      { name: "Home", href: "/dashboard" },
+      { name: "About Elite Galaxy", href: "#" },
+      { name: "Careers", href: "#" },
+      { name: "Contact", href: "#" },
     ],
   },
   {
     title: footerLabels.sections.legals,
     links: [
-      { name: footerLabels.sections.terms, href: "/terms" },
+      { name: footerLabels.sections.terms, href: "#" },
       { name: footerLabels.sections.privacy, href: "/privacy-policy" },
-      { name: footerLabels.sections.cookies, href: "/cookies" },
-      { name: footerLabels.sections.gdpr, href: "/gdpr" },
+      { name: footerLabels.sections.cookies, href: "#" },
+      { name: footerLabels.sections.gdpr, href: "#" },
     ],
   },
   {
@@ -51,7 +51,7 @@ const footerSections = [
     links: [
       {
         name: footerLabels.sections.dealerRegistration,
-        href: "/dealer-registration",
+        href: "tel:+44(0)1785216850",
       },
       {
         name: footerLabels.contact.dealerEmail,
