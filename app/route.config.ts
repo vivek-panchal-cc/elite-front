@@ -9,7 +9,7 @@ export const routeConfig = {
   private: [
     "/dashboard",
     "/order",
-    "/claim",
+    // "/claim",
     "/transfer",
     "/cart",
     // "/vape-products",
