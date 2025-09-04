@@ -23,21 +23,20 @@ export default function OfferCard() {
               href={offer.url || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-[287px] flex items-center justify-center w-full object-scale-down"
+              className="h-[287px] flex items-center justify-center w-full"
             >
-              {/* <div className="h-full flex items-center justify-center"> */}
-              <Image
-                alt={offer.title || "offer"}
-                className=""
-                src={
-                  offer.image
-                    ? `${imageLatestOfferBaseUrl}${offer.image}`
-                    : offerImg
-                }
-                width={offer.image ? 200 : 65}
-                height={offer.image ? 100 : 80}
-              />
-              {/* </div> */}
+              <div className="relative h-full w-full flex items-center justify-center">
+                <Image
+                  alt={offer.title || "offer"}
+                  src={
+                    offer.image
+                      ? `${imageLatestOfferBaseUrl}${offer.image}`
+                      : offerImg
+                  }
+                  fill
+                  className="object-contain p-8"
+                />
+              </div>
             </a>
           </SwiperSlide>
         ))}
