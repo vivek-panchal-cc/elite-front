@@ -189,6 +189,7 @@ const RegistrationForm = ({
               <Input
                 type="text"
                 name="dealer_ref"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                 placeholder="Enter Dealer Account/Reference Number"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -243,6 +244,7 @@ const RegistrationForm = ({
                 type="text"
                 name="dealer_ref"
                 placeholder="Enter Dealer Account/Reference Number"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                 disabled
                 onBlur={formik.handleBlur}
                 value={formik.values.dealer_ref}
@@ -257,6 +259,7 @@ const RegistrationForm = ({
                 type="text"
                 name="postcode"
                 placeholder="Enter Postcode"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.postcode}
@@ -295,6 +298,7 @@ const RegistrationForm = ({
                   type="text"
                   name="dealer_ref"
                   placeholder="Enter Dealer Account/Reference Number"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   // onChange={formik.handleChange}
                   disabled
                   onBlur={formik.handleBlur}
@@ -311,6 +315,7 @@ const RegistrationForm = ({
                   type="text"
                   name="dealer_name"
                   placeholder="Enter Dealer Name"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_name}
@@ -328,6 +333,7 @@ const RegistrationForm = ({
                   type={showPassword.password ? "text" : "password"}
                   name="dealer_password"
                   placeholder="Enter Password"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_password}
@@ -360,6 +366,7 @@ const RegistrationForm = ({
                   type={showPassword.confirmPassword ? "text" : "password"}
                   name="confirm_password"
                   placeholder="Enter Confirm Password"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.confirm_password}
@@ -395,6 +402,7 @@ const RegistrationForm = ({
                   type="text"
                   name="dealer_email"
                   placeholder="Enter Email"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_email}
@@ -412,6 +420,7 @@ const RegistrationForm = ({
                   type="tel"
                   name="dealer_mobile"
                   placeholder="Enter Mobile Number"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_mobile}
@@ -429,6 +438,7 @@ const RegistrationForm = ({
                   type="text"
                   name="postcode"
                   placeholder="Enter Postcode"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.postcode}
@@ -444,6 +454,7 @@ const RegistrationForm = ({
                   type="text"
                   name="dealer_city"
                   placeholder="Enter City"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_city}
@@ -464,6 +475,7 @@ const RegistrationForm = ({
                   type="text"
                   name="dealer_address1"
                   placeholder="Address Line 1"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_address1}
@@ -477,6 +489,7 @@ const RegistrationForm = ({
                 <Input
                   type="text"
                   name="dealer_address2"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
                   placeholder="Address Line 2 (Optional)"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -529,7 +542,10 @@ const RegistrationForm = ({
                   checked={formik.values.marketing}
                   className="mt-1"
                 />
-                <label htmlFor="marketing">
+                <label
+                  htmlFor="marketing"
+                  className="mt-1 text-[12px] sm:text-[14px]"
+                >
                   {registrationLabels.receiveOffer}
                 </label>
               </div>
@@ -545,7 +561,10 @@ const RegistrationForm = ({
                   className="mt-1"
                 />
                 <div className="flex flex-col">
-                  <label htmlFor="term_and_condition">
+                  <label
+                    htmlFor="term_and_condition"
+                    className="mt-1 text-[12px] sm:text-[14px]"
+                  >
                     {registrationLabels.iConfirm}
                   </label>
                   {formik.touched.term_and_condition &&
