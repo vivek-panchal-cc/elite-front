@@ -26,48 +26,28 @@ export default function Orders() {
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isProductLoading, products, reloadProduct] = useProductList({
+  const [isProductLoading, products] = useProductList({
     cat_type_id: catId ?? undefined,
     title: searchText.trim(),
   });
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
-  const [subCategories, setSubCategories] = useState<any[]>([]);
-  const [directProducts, setDirectProducts] = useState<any[]>([]);
-  const [categoryTypes, setCategoryTypes] = useState<
-    Record<number, "subcategories" | "products">
-  >({});
-  const [viewType, setViewType] = useState<"subcategories" | "products" | null>(
-    null
-  );
+  const [favourites, setFavourites] = useState<Record<number, boolean>>({});
   const text: string = "";
 
-  useEffect(() => {
-    if (products && catId !== null) {
-      if (Array.isArray(products.category) && products.category.length > 0) {
-        const categories = products.category
+  const subCategories =
+    products && Array.isArray(products.category) && products.category.length > 0
+      ? products.category
           .filter((cat: any) => cat.is_product === 1)
           .map((cat: any) => ({
             cat_id: cat.cat_id,
             cat_name: cat.cat_name,
             is_product: cat.is_product,
             productList: Array.isArray(cat.productList) ? cat.productList : [],
-          }));
-        setSubCategories(categories);
-        setDirectProducts([]);
-        setViewType("subcategories");
-        setCategoryTypes((prev) => ({ ...prev, [catId]: "subcategories" }));
-      } else if (Array.isArray(products.productList)) {
-        setDirectProducts(products.productList);
-        setSubCategories([]);
-        setViewType("products");
-        setCategoryTypes((prev) => ({ ...prev, [catId]: "products" }));
-      } else {
-        setSubCategories([]);
-        setDirectProducts([]);
-        setViewType(null);
-      }
-    }
-  }, [products, catId]);
+          }))
+      : [];
+
+  const directProducts =
+    products && Array.isArray(products.productList) ? products.productList : [];
 
   const mainCategories: Category[] =
     categories
@@ -79,16 +59,15 @@ export default function Orders() {
       })) || [];
 
   const toggleMain = (id: number) => {
-    // Check if we're closing the current category
-    if (id === catId) {
-      setViewType(null);
-      setCatId(null);
-    } else {
-      // Set the view type based on our stored category type
-      setViewType(categoryTypes[id] || "products"); // Default to products if unknown
-      setCatId(id);
-    }
     setOpenSub(null);
+    setCatId((prev) => {
+      if (prev === id) {
+        return null;
+      } else {
+        setTimeout(() => setCatId(id), 500);
+        return prev;
+      }
+    });
   };
 
   const toggleSub = (id: number) => {
@@ -118,51 +97,21 @@ export default function Orders() {
   };
 
   const handleFavourite = async (prodId: number, action: "add" | "remove") => {
-    // Optimistic update
-    const updateFav = (list: Product[]) =>
-      list.map((p) =>
-        p.prod_id === prodId ? { ...p, is_favorite: action === "add" } : p
-      );
+    setFavourites((prev) => ({
+      ...prev,
+      [prodId]: action === "add",
+    }));
 
-    // Update both subCategories and directProducts
-    setSubCategories((prev) =>
-      prev.map((sub) => ({
-        ...sub,
-        productList: updateFav(sub.productList),
-      }))
-    );
-
-    setDirectProducts((prev) => updateFav(prev));
-
-    // Call API in background
     try {
       await addOrRemoveFavourite(prodId, action);
     } catch (err) {
       console.error("Failed to update favourite:", err);
-
-      // Rollback if API fails
-      setSubCategories((prev) =>
-        prev.map((sub) => ({
-          ...sub,
-          productList: updateFav(
-            sub.productList.map((p: { prod_id: number }) =>
-              p.prod_id === prodId
-                ? { ...p, is_favorite: action !== "add" } // rollback
-                : p
-            )
-          ),
-        }))
-      );
-
-      setDirectProducts((prev) =>
-        prev.map((p) =>
-          p.prod_id === prodId
-            ? { ...p, is_favorite: action !== "add" } // rollback
-            : p
-        )
-      );
     }
   };
+
+  // useEffect(() => {
+  //   setSelectedProduct(null);
+  // }, [catId]);
 
   return (
     <PrivateLayout>
@@ -210,13 +159,6 @@ export default function Orders() {
                   }`}
                 >
                   <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                    {/* <Image
-                      src={dualUSB}
-                      alt={cat.cat_name}
-                      width={12}
-                      height={12}
-                      // className="w-3 h-3 sm:w-4 sm:h-4"
-                    /> */}
                     <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
                       {cat.cat_name}
                     </span>
@@ -228,18 +170,14 @@ export default function Orders() {
                   )}
                 </button>
 
-                {/* Subcategories */}
+                {/* Subcategories / Products */}
                 {isOpen && (
                   <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
                     {isProductLoading ? (
-                      viewType === "subcategories" ? (
-                        <LoaderCategory
-                          count={2}
-                          bgColor="var(--color-white)"
-                        />
-                      ) : (
-                        <LoaderProduct count={5} />
-                      )
+                      <LoaderProduct count={5} />
+                    ) : !products ||
+                      (!subCategories.length && !directProducts.length) ? (
+                      <LoaderProduct count={5} />
                     ) : subCategories.length > 0 ? (
                       subCategories.map((sub, sIdx) => {
                         const isSubOpen = openSub === sub.cat_id;
@@ -255,12 +193,6 @@ export default function Orders() {
                               }`}
                             >
                               <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                                {/* <Image
-                                  src={dualUSB}
-                                  alt={sub.cat_name}
-                                  width={12}
-                                  height={12}
-                                /> */}
                                 <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
                                   {sub.cat_name}
                                 </span>
@@ -305,7 +237,12 @@ export default function Orders() {
                                     (p: Product, idx: number) => (
                                       <ProductCard
                                         key={p.prod_id}
-                                        p={p}
+                                        p={{
+                                          ...p,
+                                          is_favorite:
+                                            favourites[p.prod_id] ??
+                                            p.is_favorite,
+                                        }}
                                         idx={idx}
                                         selectedProduct={selectedProduct}
                                         setSelectedProduct={setSelectedProduct}
@@ -330,7 +267,11 @@ export default function Orders() {
                         {directProducts.map((p: Product, idx: number) => (
                           <ProductCard
                             key={p.prod_id}
-                            p={p}
+                            p={{
+                              ...p,
+                              is_favorite:
+                                favourites[p.prod_id] ?? p.is_favorite,
+                            }}
                             idx={idx}
                             selectedProduct={selectedProduct}
                             setSelectedProduct={setSelectedProduct}
@@ -353,6 +294,8 @@ export default function Orders() {
           })
         )}
       </section>
+
+      {/* Bottom Cart */}
       {cart?.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-white)] shadow-lg border-t-[2px] border-[var(--color-red)] p-3 sm:p-4 z-11">
           <div className="max-w-7xl mx-auto flex flex-col">

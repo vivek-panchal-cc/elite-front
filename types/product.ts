@@ -21,6 +21,7 @@ export interface Product {
   upload_prod_sku: string;
   prod_original_price: number;
   prod_image?: string | null;
+  is_favorite?: number | null;
   category: Category[];
 }
 

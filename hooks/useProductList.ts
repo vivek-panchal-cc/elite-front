@@ -7,54 +7,47 @@ interface ProductListParams {
   title?: string;
 }
 
-type UseProductListReturn = [boolean, Product, () => void];
+type UseProductListReturn = [boolean, Product];
 
 const useProductList = ({
   cat_type_id,
   title = "",
 }: ProductListParams): UseProductListReturn => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState<Product>({} as Product);
-  const [reloadFlag, setReloadFlag] = useState<boolean>(false);
-
-  const reload = () => {
-    setReloadFlag((cs) => !cs);
-  };
-
-  const retrieveProductList = async (cat_type_id: number, title: string) => {
-    setLoading(true);
-    try {
-      const { data } = await apiRequest.getProducts({
-        cat_type_id,
-        title,
-      });
-
-      if (!data.success) throw new Error(data.message);
-      setProductList(data.data || {});
-    } catch (error) {
-      console.error(error);
-      setProductList({} as Product);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    if (cat_type_id == null && title.trim() === "") return;
+    setProductList({} as Product);
 
-    const timeOut = setTimeout(
-      () => {
-        if (typeof cat_type_id === "number") {
-          retrieveProductList(cat_type_id, title.trim());
+    if (cat_type_id == null && title.trim() === "") {
+      return;
+    }
+
+    const handler = setTimeout(
+      async () => {
+        setLoading(true);
+        try {
+          const { data } = await apiRequest.getProducts({
+            cat_type_id: cat_type_id ?? 0,
+            title: title.trim(),
+          });
+
+          if (!data.success) throw new Error(data.message);
+          setProductList(data.data || ({} as Product));
+        } catch (error) {
+          console.error(error);
+          setProductList({} as Product);
+        } finally {
+          setLoading(false);
         }
       },
-      title ? 1000 : 0
+      title ? 500 : 0
     );
 
-    return () => clearTimeout(timeOut);
-  }, [cat_type_id, title?.trim(), reloadFlag]);
+    return () => clearTimeout(handler);
+  }, [cat_type_id, title]);
 
-  return [loading, productList, reload];
+  return [loading, productList];
 };
 
 export default useProductList;

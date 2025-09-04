@@ -108,14 +108,16 @@ const RegistrationForm = ({
       formik.setFieldTouched("dealer_ref", true);
       return;
     }
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.checkDealerExists({
         dealer_acc: formik.values.dealer_ref,
       });
-      if (!data.success) throw data.message;
-      setStep("postcode");
-    } catch {
-      setStep("registration");
+      setStep(data.success ? "postcode" : "registration");
+    } catch (error: any) {
+      if (typeof error === "string") return toast.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -128,6 +130,7 @@ const RegistrationForm = ({
       formik.setFieldTouched("postcode", true);
       return;
     }
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.verifyDealer({
         dealer_acc: formik.values.dealer_ref,
@@ -139,6 +142,8 @@ const RegistrationForm = ({
     } catch (error: any) {
       formik.setStatus(error);
       setRegisteredDealermsg(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
