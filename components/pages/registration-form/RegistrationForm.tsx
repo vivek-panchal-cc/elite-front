@@ -86,6 +86,7 @@ const RegistrationForm = ({
     },
     validationSchema: registrationSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.register(values);
         if (!data.success) throw data.message;
@@ -99,6 +100,7 @@ const RegistrationForm = ({
         setIsContactDetailsOpen(false);
         setStep("verifyDealer"); // reset flow after submit
         setRegisteredDealermsg(null);
+        setIsLoading(false);
       }
     },
   });
