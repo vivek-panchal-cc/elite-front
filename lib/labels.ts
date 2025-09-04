@@ -297,7 +297,7 @@ export const labels = {
     },
     topProductList: {
       getCrystalPro: "Get your crystal pro stand for only",
-      popularOffer: "Our popular and latest Offers",
+      popularOffer: "Our popular and latest offers",
       topCategories: "Top Categories",
       bestPick: "Best pick of the week",
       viewMore: "Show More",

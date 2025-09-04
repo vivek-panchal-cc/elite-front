@@ -82,6 +82,7 @@ export interface TopProduct {
 export interface OfferResponse {
   image: string;
   title: string;
+  url: string;
 }
 
 export interface TopCategory {

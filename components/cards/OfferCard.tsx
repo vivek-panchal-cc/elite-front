@@ -9,7 +9,7 @@ export default function OfferCard() {
   const [loadingLatestOffer, latestOfferList, reloadLatestOffer] =
     useLatestOffer();
   return (
-    <div className="rounded-[14px] flex justify-center text-white flex-col items-center bg-[var(--color-blue)]">
+    <div className="rounded-[14px] flex justify-center text-[var(--color-white)] flex-col items-center bg-[var(--color-blue)]">
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}
@@ -19,7 +19,13 @@ export default function OfferCard() {
       >
         {latestOfferList.map((offer, idx) => (
           <SwiperSlide key={idx}>
-            <div className="h-full flex items-center justify-center">
+            <a
+              href={offer.url || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-[287px] flex items-center justify-center w-full object-scale-down"
+            >
+              {/* <div className="h-full flex items-center justify-center"> */}
               <Image
                 alt={offer.title || "offer"}
                 className=""
@@ -31,7 +37,8 @@ export default function OfferCard() {
                 width={offer.image ? 200 : 65}
                 height={offer.image ? 100 : 80}
               />
-            </div>
+              {/* </div> */}
+            </a>
           </SwiperSlide>
         ))}
       </Swiper>

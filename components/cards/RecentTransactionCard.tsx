@@ -17,8 +17,8 @@ export default function RecentTransactionCard() {
           <thead>
             <tr className="text-left text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.orderDate}</th>
-              <th>{profileLabels.amount}</th>
               <th>{profileLabels.creditOrDebit}</th>
+              <th>{profileLabels.amount}</th>
               <th>{profileLabels.desc}</th>
             </tr>
           </thead>
@@ -35,9 +35,6 @@ export default function RecentTransactionCard() {
                   className="text-[var(--color-black)] rounded-lg text-[10px]"
                 >
                   <td>{formatDate(o.redeem_date)}</td>
-                  <td>
-                    <WrapAmount value={o.redeem_amount} />
-                  </td>
                   <td
                     className={
                       o.cr_dr === "C"
@@ -45,6 +42,9 @@ export default function RecentTransactionCard() {
                         : "text-[var(--color-red)]"
                     }
                   >
+                    <WrapAmount value={o.redeem_amount} />
+                  </td>
+                  <td>
                     <WrapAmount value={o.amount_balance} />
                   </td>
                   <td>{o.description}</td>
