@@ -47,7 +47,9 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         const { data } = await apiRequest.changePassword(payload);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        router.push("/profile");
+        formik.resetForm();
+        onBack?.();
+        // router.push("/profile");
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);
       } finally {
@@ -100,8 +102,8 @@ const ChangePassword = ({ onBack }: onBackProps) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.old_password}
-          onCopy={(e) => e.preventDefault()}
-          onPaste={(e) => e.preventDefault()}
+          //   onCopy={(e) => e.preventDefault()}
+          //   onPaste={(e) => e.preventDefault()}
           error={formik.touched.old_password && formik.errors.old_password}
           aria-label="Password"
         />
@@ -126,8 +128,8 @@ const ChangePassword = ({ onBack }: onBackProps) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.new_password}
-          onCopy={(e) => e.preventDefault()}
-          onPaste={(e) => e.preventDefault()}
+          //   onCopy={(e) => e.preventDefault()}
+          //   onPaste={(e) => e.preventDefault()}
           error={formik.touched.new_password && formik.errors.new_password}
           aria-label="Password"
         />
@@ -183,7 +185,10 @@ const ChangePassword = ({ onBack }: onBackProps) => {
             type="button"
             className="w-full sm:w-fit bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-[50px] px-5 py-2 text-[12px]"
             disabled={formik.isSubmitting}
-            onClick={() => onBack?.()}
+            onClick={() => {
+              formik.resetForm();
+              onBack?.();
+            }}
           >
             {commonLabels.cancel}
           </Button>

@@ -106,8 +106,8 @@ const ChangePassword = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.old_password}
-            onCopy={(e) => e.preventDefault()}
-            onPaste={(e) => e.preventDefault()}
+            // onCopy={(e) => e.preventDefault()}
+            // onPaste={(e) => e.preventDefault()}
             error={formik.touched.old_password && formik.errors.old_password}
             aria-label="Password"
           />
@@ -132,8 +132,8 @@ const ChangePassword = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.new_password}
-            onCopy={(e) => e.preventDefault()}
-            onPaste={(e) => e.preventDefault()}
+            // onCopy={(e) => e.preventDefault()}
+            // onPaste={(e) => e.preventDefault()}
             error={formik.touched.new_password && formik.errors.new_password}
             aria-label="Password"
           />

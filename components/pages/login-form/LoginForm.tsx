@@ -104,8 +104,8 @@ const LoginForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
-          onCopy={(e) => e.preventDefault()}
-          onPaste={(e) => e.preventDefault()}
+          // onCopy={(e) => e.preventDefault()}
+          // onPaste={(e) => e.preventDefault()}
           error={formik.touched.password && formik.errors.password}
           aria-label="Password"
         />

@@ -151,6 +151,10 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
     }
   }, [sameAsBilling, formik.values.billing]);
 
+  const handlePasswordChange = () => {
+    setShowChangePassword(false);
+  };
+
   return (
     <div className={`${isMobile ? "w-[95%] mx-auto" : "w-3/4"}`}>
       {!showChangePassword ? (
@@ -366,7 +370,7 @@ export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
             isMobile ? "border-t-0 rounded-t-none rounded-b-xl" : "rounded-xl"
           } px-6 py-6 sm:py-8 md:py-10 bg-[var(--color-light-gray)] shadow-sm`}
         >
-          <ChangePassword onBack={() => setShowChangePassword(false)} />
+          <ChangePassword onBack={handlePasswordChange} />
         </div>
       )}
     </div>

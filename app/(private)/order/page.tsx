@@ -30,9 +30,14 @@ export default function Orders() {
     cat_type_id: catId ?? undefined,
     title: searchText.trim(),
   });
+  const [visibleProducts, setVisibleProducts] = useState<any>(null);
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const [favourites, setFavourites] = useState<Record<number, boolean>>({});
   const text: string = "";
+
+  useEffect(() => {
+    setVisibleProducts(products);
+  }, [products]);
 
   const subCategories =
     products && Array.isArray(products.category) && products.category.length > 0
@@ -60,15 +65,39 @@ export default function Orders() {
 
   const toggleMain = (id: number) => {
     setOpenSub(null);
-    setCatId((prev) => {
-      if (prev === id) {
-        return null;
-      } else {
-        setTimeout(() => setCatId(id), 500);
-        return prev;
-      }
-    });
+    if (catId === id) {
+      setCatId(null);
+      setVisibleProducts(null); // clear when closing
+    } else {
+      setCatId(id);
+      setVisibleProducts(null); // clear immediately so old list doesn't show
+    }
   };
+
+  // const toggleMain = (id: number) => {
+  //   setOpenSub(null);
+  //   setCatId((prev) => {
+  //     if (prev === id) {
+  //       return null;
+  //     } else {
+  //       setTimeout(() => setCatId(id), 800);
+  //       return prev;
+  //     }
+  //   });
+  // };
+
+  // const toggleMain = (id: number) => {
+  //   setOpenSub(null);
+  //   setCatId((prev) => {
+  //     if (prev === id) {
+  //       return null;
+  //     } else {
+  //       setCatId(id);
+  //       setTimeout(() => {}, 800);
+  //       return prev;
+  //     }
+  //   });
+  // };
 
   const toggleSub = (id: number) => {
     setOpenSub((prev) => (prev === id ? null : id));
@@ -175,7 +204,7 @@ export default function Orders() {
                   <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
                     {isProductLoading ? (
                       <LoaderProduct count={5} />
-                    ) : !products ||
+                    ) : !visibleProducts ||
                       (!subCategories.length && !directProducts.length) ? (
                       <LoaderProduct count={5} />
                     ) : subCategories.length > 0 ? (
