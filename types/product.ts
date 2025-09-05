@@ -16,7 +16,7 @@ export interface Product {
   prod_sp_offer_price: number;
   prod_stock_qty: number;
   network_id: number;
-  box_size: number;
+  box_size: number | null;
   prod_stock: number;
   upload_prod_sku: string;
   prod_original_price: number;
@@ -61,6 +61,7 @@ export interface CartItem {
 export interface FavProduct {
   prod_id: number;
   prod_name: string;
+  prod_box_size: number | null;
   cat_name: string;
   fixed_price: number;
   images_prod_image: string | null;
@@ -94,4 +95,12 @@ export interface TopCategory {
   display_order: number;
   order_count: number;
   total_quantity: number;
+}
+
+export interface OrderHistory {
+  o_ord_id: number;
+  o_ord_datetime: string;
+  o_userId: number;
+  o_total: number;
+  status: "processing" | "completed" | "cancelled" | string;
 }

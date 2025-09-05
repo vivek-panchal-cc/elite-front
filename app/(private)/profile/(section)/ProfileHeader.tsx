@@ -20,6 +20,7 @@ import useDealerSummary from "@/hooks/useDealerSummary";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 import GraphCard from "@/components/cards/GraphCard";
 import ContactCard from "@/components/cards/ContactCard";
+import OrderHistoryCard from "@/components/cards/OrderHistoryCard";
 
 ChartJS.register(
   CategoryScale,
@@ -84,47 +85,6 @@ export default function ProfileDashboard() {
     </div>
   );
 
-  const OrderHistoryCard = (
-    <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-        <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
-          {profileLabels.orderHistory}
-        </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
-          {/* min-w-[349px] */}
-          <thead>
-            <tr className="text-left text-[var(--color-black)] text-[10px]">
-              <th>{profileLabels.orderNo}</th>
-              <th>{profileLabels.orderDate}</th>
-              <th>{profileLabels.total}</th>
-              <th>{profileLabels.action}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colSpan={4} className="p-0">
-                <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
-              </td>
-            </tr>
-            {orderHistory.map((o, idx) => (
-              <tr
-                key={idx}
-                className="text-[var(--color-black)] rounded-lg text-[10px]"
-              >
-                <td>{o.orderNumber}</td>
-                <td>{o.date}</td>
-                <td>{o.total}</td>
-                <td className="text-[var(--color-red)] cursor-pointer">
-                  {profileLabels.reorder}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-
   const WalletTransactionsCard = (
     <div className="overflow-hidden rounded-xl">
       <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
@@ -179,7 +139,7 @@ export default function ProfileDashboard() {
                   pagination={{ clickable: true }}
                 >
                   <SwiperSlide>{RewardBalanceCard}</SwiperSlide>
-                  <SwiperSlide>{OrderHistoryCard}</SwiperSlide>
+                  <SwiperSlide>{<OrderHistoryCard />}</SwiperSlide>
                   <SwiperSlide>{WalletTransactionsCard}</SwiperSlide>
                   <SwiperSlide>
                     <GraphCard />
@@ -193,7 +153,7 @@ export default function ProfileDashboard() {
             <div className="hidden gap-6 lg:grid grid-cols-1 lg:grid-cols-[350px_1fr]">
               {RewardBalanceCard}
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
-                {OrderHistoryCard}
+                {<OrderHistoryCard />}
                 {WalletTransactionsCard}
                 <GraphCard />
                 {<ContactCard />}

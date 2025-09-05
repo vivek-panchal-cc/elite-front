@@ -75,6 +75,13 @@ interface ProductGetParams {
   title: string;
 }
 
+export interface OrderHistoryReqParams {
+  limit?: number;
+  orderBy?: "ASC" | "DESC";
+  page?: number;
+  sortBy?: string;
+}
+
 const register = (
   data: DealerRegistrationData
 ): Promise<AxiosResponse<ApiResponse>> => {
@@ -222,6 +229,15 @@ const getTopCategory = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.PROFILE.DEALER_TOP_CATEGORY);
 };
 
+const getOrderHistory = (
+  data: OrderHistoryReqParams
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(
+    apiUrl.PRODUCT_ENDPOINTS.ORDER_HISTORY,
+    data
+  );
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -260,6 +276,7 @@ export const apiRequest = {
   getDealerGraph,
   getDealerLatestOffer,
   getTopCategory,
+  getOrderHistory,
 } as const;
 
 // Export type for the apiRequest object
@@ -295,4 +312,5 @@ export {
   getDealerGraph,
   getDealerLatestOffer,
   getTopCategory,
+  getOrderHistory,
 };

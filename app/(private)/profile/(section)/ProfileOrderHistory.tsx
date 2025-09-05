@@ -5,6 +5,10 @@ import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
 import { MoreVertical } from "lucide-react";
 import { profileLabels } from "@/lib/labels";
+import useOrderHistory from "@/hooks/useOrderHistory";
+import WrapAmount from "@/components/wrapper/WrapAmount";
+import { formatDate } from "@/lib/constants/all";
+import LoaderDiv from "@/components/loaders/LoaderDiv";
 
 interface ProfileOrderHistoryProps {
   isMobile?: boolean;
@@ -13,53 +17,14 @@ interface ProfileOrderHistoryProps {
 export default function ProfileOrderHistory({
   isMobile,
 }: ProfileOrderHistoryProps) {
+  const [loading, orderHistory, reload] = useOrderHistory({
+    limit: 10,
+    orderBy: "DESC",
+    page: 1,
+    sortBy: "ord_id",
+  });
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const orders = [
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Cancelled",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Pending",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Completed",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Pending",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Cancelled",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Pending",
-      total: "£450",
-    },
-    {
-      date: "03-07-25",
-      orderNumber: "8080806291318",
-      status: "Completed",
-      total: "£450",
-    },
-  ];
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -101,7 +66,7 @@ export default function ProfileOrderHistory({
 
         {isMobile ? (
           // Mobile table
-          <div className="overflow-visible rounded-xl">
+          <div className="overflow-hidden rounded-xl">
             <div className="pt-4 custom-scrollbar max-h-[300px] min-h-[300px] overflow-visible">
               <table className="w-full text-[12px]">
                 <thead className="w-full text-[12px]">
@@ -121,46 +86,70 @@ export default function ProfileOrderHistory({
                 </thead>
 
                 <tbody>
-                  {orders.map((order, idx) => (
-                    <tr
-                      key={idx}
-                      className="border-t border-[var(--table-border)]"
-                    >
-                      <td className="px-4 py-2">{order.date}</td>
-                      <td className="px-4 py-2">{order.orderNumber}</td>
-                      <td className="px-4 py-2">{order.total}</td>
-                      <td className="px-2 py-2 text-right relative">
-                        <div ref={menuRef} className="inline-block">
-                          <button
-                            onClick={() =>
-                              setOpenMenuIndex(
-                                openMenuIndex === idx ? null : idx
-                              )
-                            }
-                            className="p-1"
-                          >
-                            <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
-                          </button>
-                        </div>
-                        {openMenuIndex === idx && (
-                          <div className="overflow-hidden absolute right-0 mt-1 w-25 bg-[var(--color-white)] border border-[var(--color-red)] rounded-xl shadow-md z-10">
-                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                  {loading
+                    ? Array.from({ length: 5 }).map((_, rowIdx) => (
+                        <tr
+                          key={rowIdx}
+                          className="border-t border-[var(--table-border)]"
+                        >
+                          {Array.from({ length: 4 }).map((_, colIdx) => (
+                            <td key={colIdx} className="px-4 py-2">
+                              <LoaderDiv
+                                width={colIdx === 3 ? 20 : 50}
+                                height={colIdx === 3 ? 20 : 15}
+                                backgroundColor="#C7C7C7"
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      ))
+                    : orderHistory.map((order, idx) => (
+                        <tr
+                          key={idx}
+                          className="border-t border-[var(--table-border)]"
+                        >
+                          <td className="px-4 py-2">
+                            {formatDate(order.o_ord_datetime)}
+                          </td>
+                          <td className="px-4 py-2">{order.o_ord_id}</td>
+                          <td className="px-4 py-2">
+                            <WrapAmount value={order.o_total} />
+                          </td>
+                          <td className="px-2 py-2 text-right relative">
+                            <div ref={menuRef} className="inline-block">
+                              <button
+                                onClick={() =>
+                                  setOpenMenuIndex(
+                                    openMenuIndex === idx ? null : idx
+                                  )
+                                }
+                                className="p-1"
+                              >
+                                <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
+                              </button>
+                            </div>
+                            {openMenuIndex === idx && (
+                              <div className="overflow-hidden absolute right-0 mt-1 w-25 bg-[var(--color-white)] border border-[var(--color-red)] rounded-xl shadow-md z-10">
+                                {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {
                                 profileLabels.profileOrderHistoryLabel
                                   .viewReceipt
                               }
-                            </button>
-                            <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
-                              {profileLabels.profileOrderHistoryLabel.viewOrder}
-                            </button>
-                            <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                            </button> */}
+                                <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                                  {
+                                    profileLabels.profileOrderHistoryLabel
+                                      .viewOrder
+                                  }
+                                  {/* <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.reOrder}
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                            </button> */}
+                                </button>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
                 </tbody>
               </table>
             </div>
@@ -190,36 +179,58 @@ export default function ProfileOrderHistory({
                   </tr>
                 </thead>
                 <tbody className="text-[10px] md:text-[12px]">
-                  {orders.map((order, idx) => (
-                    <tr
-                      key={idx}
-                      className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
-                    >
-                      <td className="px-4 py-6 whitespace-nowrap">
-                        {order.date}
-                      </td>
-                      <td className="px-4 py-6 whitespace-nowrap">
-                        {order.orderNumber}
-                      </td>
-                      <td className="px-4 py-6 whitespace-nowrap">
-                        {order.status}
-                      </td>
-                      <td className="px-4 py-6 whitespace-nowrap">
-                        {order.total}
-                      </td>
-                      <td className="px-2 py-3 whitespace-nowrap flex gap-2">
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                  {loading
+                    ? Array.from({ length: 5 }).map((_, idx) => (
+                        <tr
+                          key={idx}
+                          className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
+                        >
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <td key={i} className="px-4 py-6 whitespace-nowrap">
+                              <LoaderDiv
+                                width={100}
+                                height={25}
+                                backgroundColor="#C7C7C7"
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      ))
+                    : orderHistory.map((order, idx) => (
+                        <tr
+                          key={idx}
+                          className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
+                        >
+                          <td className="px-4 py-6 whitespace-nowrap">
+                            {formatDate(order.o_ord_datetime)}
+                          </td>
+                          <td className="px-4 py-6 whitespace-nowrap">
+                            {order.o_ord_id}
+                          </td>
+                          <td className="px-4 py-6 whitespace-nowrap capitalize">
+                            {order.status}
+                          </td>
+                          <td className="px-4 py-6 whitespace-nowrap">
+                            <WrapAmount value={order.o_total} />
+                          </td>
+                          <td className="px-2 py-6 whitespace-nowrap flex gap-2">
+                            <>
+                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
-                        </Button>
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
-                          {profileLabels.profileOrderHistoryLabel.viewOrder}
-                        </Button>
-                        <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                        </Button> */}
+                              <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                                {
+                                  profileLabels.profileOrderHistoryLabel
+                                    .viewOrder
+                                }
+                              </Button>
+                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                        </Button> */}
+                            </>
+                          </td>
+                        </tr>
+                      ))}
                 </tbody>
               </table>
             </div>
