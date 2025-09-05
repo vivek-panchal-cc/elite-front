@@ -27,7 +27,9 @@ const ProductCard = ({
           ? "ring-1 sm:ring-2 ring-[var(--color-red)]"
           : ""
       }`}
-      onClick={() => setSelectedProduct(idx)}
+      // onClick={() => setSelectedProduct(idx)}
+      onMouseEnter={() => setSelectedProduct(idx)}
+      onMouseLeave={() => setSelectedProduct(null)}
     >
       {/* Product Image + Info */}
       <div className="relative mb-1 sm:mb-2">
