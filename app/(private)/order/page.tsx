@@ -16,9 +16,11 @@ import { Product, Category, SubCategory, CartItem } from "@/types/product";
 import ProductCard from "./(section)/ProductCard";
 import { Input } from "@/components/ui/Input";
 import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
+import { useBasket } from "@/components/context/BasketContext";
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
+  const { addToBasketHandler, isLoading } = useBasket();
   const [loading, categories] = useCategoryTypeList({ title: searchText });
   const [catId, setCatId] = useState<number | null>(null);
   const [openSub, setOpenSub] = useState<number | null>(null);
@@ -103,9 +105,41 @@ export default function Orders() {
     setOpenSub((prev) => (prev === id ? null : id));
   };
 
-  const handleQuantityChange = (prodId: number, newQuantity: number) => {
+  // const handleQuantityChange = (prodId: number, newQuantity: number) => {
+  //   if (newQuantity < 0) return;
+  //   setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+  // };
+
+  const handleQuantityChange = async (
+    prodId: number,
+    newQuantity: number,
+    step: number
+  ) => {
     if (newQuantity < 0) return;
-    setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+    setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
+
+    if (newQuantity === 0) {
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "product-remove",
+        quantity: 0,
+        only_free_prod: 0,
+      });
+    } else if (newQuantity > (quantities[prodId] || 0)) {
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "add",
+        flag: "add",
+        quantity: newQuantity,
+      });
+    } else {
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "add",
+        flag: "remove",
+        quantity: newQuantity,
+      });
+    }
   };
 
   const addToCart = (product: Product, quantity: number) => {

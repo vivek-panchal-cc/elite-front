@@ -35,6 +35,7 @@ export const labels = {
     viewCart: "View Cart",
     noFavourites: "No favourites found",
     uploadDoc: "Upload Utility Bill",
+    remove: "Remove",
   },
 
   // Profile

@@ -28,6 +28,7 @@ export const PRODUCT_ENDPOINTS = {
   FAVOURITE_PRODUCT_LIST: "/favorites/favorite-list",
   TOP_PRODUCTS_OF_WEEK: "/orders/top-products-of-week",
   ORDER_HISTORY: "/orders/order-history",
+  ORDER_ADD_TO_BASKET: "/orders/add-to-basket",
 } as const;
 
 export const PROFILE = {

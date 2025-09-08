@@ -8,6 +8,7 @@ import { LoaderProvider } from "@/components/providers/loader-provider";
 import { AuthProvider } from "@/lib/AuthProvider";
 import { RouteLoader } from "@/components/route-loader/RouteLoader";
 import ToasterComponent from "@/components/ui/toaster";
+import { BasketProvider } from "@/components/context/BasketContext";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
@@ -62,15 +63,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${robotoFlex.variable} font-sans antialiased`}>
         <AuthProvider>
-          <QueryProvider>
-            <LoaderProvider>
-              <RouteLoader />
-              <ToasterComponent />
-              <HeaderLayout />
-              {children}
-              <FooterLayout />
-            </LoaderProvider>
-          </QueryProvider>
+          <BasketProvider>
+            <QueryProvider>
+              <LoaderProvider>
+                <RouteLoader />
+                <ToasterComponent />
+                <HeaderLayout />
+                {children}
+                <FooterLayout />
+              </LoaderProvider>
+            </QueryProvider>
+          </BasketProvider>
         </AuthProvider>
       </body>
     </html>

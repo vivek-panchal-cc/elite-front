@@ -124,7 +124,7 @@ const ProductCard = ({
       {selectedProduct === idx && (
         <div className="w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between w-full">
-            <div className="relative w-16 h-5 flex items-center justify-center overflow-hidden lg:w-auto lg:h-auto lg:overflow-visible">
+            <div className="relative w-full h-5 items-center overflow-hidden lg:h-auto lg:overflow-visible">
               {/* --- Mobile & Tablet Transition Counter --- */}
               <button
                 className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out lg:hidden ${
@@ -134,7 +134,8 @@ const ProductCard = ({
                 }`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleQuantityChange(p.prod_id, step);
+                  const newQty = (quantities[p.prod_id] || 0) + step;
+                  handleQuantityChange(p.prod_id, Math.max(newQty, 0));
                 }}
                 disabled={!p.gcerp_product_status}
               >
@@ -142,7 +143,7 @@ const ProductCard = ({
               </button>
 
               <div
-                className={`absolute left-0 flex items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden lg:hidden ${
+                className={`absolute left-0 flex w-full items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden lg:hidden ${
                   (quantities[p.prod_id] || 0) > 0
                     ? "opacity-100 px-1 scale-x-100"
                     : "opacity-0 px-0 scale-x-0 pointer-events-none"
@@ -150,21 +151,23 @@ const ProductCard = ({
                 style={{ transformOrigin: "left" }}
               >
                 <button
-                  className="w-4 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                  className="w-1/3 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) - step;
                     handleQuantityChange(p.prod_id, Math.max(newQty, 0));
                   }}
-                  disabled={!p.gcerp_product_status}
+                  disabled={
+                    !p.gcerp_product_status || (quantities[p.prod_id] || 0) <= 0
+                  }
                 >
                   -
                 </button>
-                <span className="px-0 text-[10px] sm:text-xs w-5 text-center">
+                <span className="w-1/3 px-0 text-[10px] sm:text-xs text-center">
                   {quantities[p.prod_id] || 0}
                 </span>
                 <button
-                  className="w-4 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                  className="w-1/3 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) + step;
@@ -179,21 +182,23 @@ const ProductCard = ({
               {/* --- Desktop Version (No Transition) --- */}
               <div className="hidden lg:flex items-center border rounded-full px-1 bg-transparent">
                 <button
-                  className="w-4 h-6 flex items-center justify-center cursor-pointer lg:border-r text-[#888888]"
+                  className="w-1/3 h-6 flex items-center justify-center cursor-pointer lg:border-r text-[#888888]"
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) - step;
                     handleQuantityChange(p.prod_id, Math.max(newQty, 0));
                   }}
-                  disabled={!p.gcerp_product_status}
+                  disabled={
+                    !p.gcerp_product_status || (quantities[p.prod_id] || 0) <= 0
+                  }
                 >
                   -
                 </button>
-                <span className="px-0 text-sm w-6 text-center text-[var(--color-black)]">
+                <span className="w-1/3 px-0 text-sm text-center text-[var(--color-black)]">
                   {quantities[p.prod_id] || 0}
                 </span>
                 <button
-                  className="w-4 h-6 flex items-center justify-center cursor-pointer lg:border-l text-[#888888]"
+                  className="w-1/3 h-6 flex items-center justify-center cursor-pointer lg:border-l text-[#888888]"
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) + step;
@@ -206,7 +211,7 @@ const ProductCard = ({
               </div>
             </div>
 
-            <button
+            {/* <button
               className={`bg-[var(--color-red)] text-[var(--color-white)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ml-1 transition-colors flex items-center justify-center gap-1 text-xs sm:text-[8px] md:text-[10px] lg:text-[8px] xl:text-[12px] ${
                 !quantities[p.prod_id] || quantities[p.prod_id] <= 0
                   ? "opacity-50 cursor-not-allowed"
@@ -224,7 +229,7 @@ const ProductCard = ({
             >
               <Cart className="h-4 w-4 sm:hidden" />
               <span className="hidden sm:inline">{cartLabels.addToCart}</span>
-            </button>
+            </button> */}
           </div>
         </div>
       )}

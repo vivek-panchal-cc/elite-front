@@ -20,9 +20,10 @@ export default function OfferCard() {
         {latestOfferList.map((offer, idx) => (
           <SwiperSlide key={idx}>
             <a
-              href={offer.url || "#"}
+              href={offer.url || undefined}
               target="_blank"
               rel="noopener noreferrer"
+              title={offer.url}
               className="h-[287px] flex items-center justify-center w-full"
             >
               <div className="relative h-full w-full flex items-center justify-center">

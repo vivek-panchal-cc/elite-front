@@ -9,6 +9,7 @@ import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
 import { objectToFormData } from "./constants/all";
+import { ProductAddToBasketParams } from "@/types/product";
 
 // Types
 interface LoginCredentials {
@@ -21,7 +22,7 @@ interface LoginOtpParams {
   country_code: string;
 }
 
-interface ApiResponse<T = any> {
+export interface ApiResponse<T = any> {
   success: any;
   status: boolean;
   message: string;
@@ -156,6 +157,15 @@ const getProducts = (
   return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.PRODUCT_LIST, data);
 };
 
+const addToBasket = (
+  data: ProductAddToBasketParams
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(
+    apiUrl.PRODUCT_ENDPOINTS.ORDER_ADD_TO_BASKET,
+    data
+  );
+};
+
 const topProductsOfTheWeek = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(
     apiUrl.PRODUCT_ENDPOINTS.TOP_PRODUCTS_OF_WEEK
@@ -258,6 +268,7 @@ export const apiRequest = {
 
   // Products
   getProducts,
+  addToBasket,
   getProductDetails,
   getCategory,
   addOrRemoveFavourite,
@@ -296,6 +307,7 @@ export {
   getProfile,
   updateProfile,
   getProducts,
+  addToBasket,
   getProductDetails,
   addOrRemoveFavourite,
   getFavouriteProduct,

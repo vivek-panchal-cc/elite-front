@@ -219,7 +219,7 @@ export default function ProfileReward({ isMobile }: ProfileRewardProps) {
           </div>
         )}
         <div className="p-6">
-          <Button className="w-full text-[var(--color-white)] rounded-[50px]">
+          <Button className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]">
             {profileLabels.rewardWalletLabel.viewStatement}
           </Button>
         </div>

@@ -104,3 +104,11 @@ export interface OrderHistory {
   o_total: number;
   status: "processing" | "completed" | "cancelled" | string;
 }
+
+export interface ProductAddToBasketParams {
+  prod_id: number;
+  action: "add" | "product-remove" | "remove";
+  flag?: "add" | "remove";
+  quantity: number;
+  only_free_prod?: number;
+}

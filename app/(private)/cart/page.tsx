@@ -5,23 +5,26 @@ import Image from "next/image";
 import { Button } from "@/components/ui/ButtonUI";
 import { X } from "lucide-react";
 import { productTwo } from "@/components/images";
-import { altTextLabels, cartLabels } from "@/lib/labels";
+import { altTextLabels, cartLabels, commonLabels } from "@/lib/labels";
 import { ELITE_WALLET } from "@/lib/constants/all";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import LoaderDiv from "@/components/loaders/LoaderDiv";
 
 const Cart = () => {
+  const router = useRouter();
   const [cartItems, setCartItems] = useState([
-    { qty: 10 },
-    { qty: 1 },
-    { qty: 100 },
-    { qty: 1 },
-    { qty: 8 },
-    { qty: 4 },
-    { qty: 3 },
-    { qty: 2 },
-    { qty: 7 },
+    { qty: 10, name: "Jucce Bar Raspberry Edition" },
+    { qty: 1, name: "Jucce Bar" },
+    { qty: 100, name: "Raspberry Edition" },
+    { qty: 1, name: "Jucce Edition" },
+    { qty: 8, name: "Jucce Bar Raspberry" },
+    { qty: 4, name: "Jucce" },
+    { qty: 3, name: "Bar" },
+    { qty: 2, name: "Edition" },
+    { qty: 7, name: "Raspberry" },
   ]);
 
   const handleQtyChange = (index: number, change: number) => {
@@ -46,22 +49,22 @@ const Cart = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Product Table - spans 2 columns */}
         <div className="lg:col-span-2 w-full overflow-x-auto custom-scrollbar">
-          <div className="min-w-[700px]">
+          <div className="md:min-w-[700px]">
             {/* Table Header */}
-            <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2">
+            <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2">
               <span>{cartLabels.products}</span>
               <span className="text-center">{cartLabels.price}</span>
-              <span className="text-center">{cartLabels.sku}</span>
+              <span className="text-left">{cartLabels.sku}</span>
               <span className="text-center">{cartLabels.quantity}</span>
               <span className="text-right">{cartLabels.subtotal}</span>
-              <span className="ml-5 flex justify-center">
+              <span className="flex justify-center">
                 <Button
                   variant="destructive"
                   size="sm"
-                  className="rounded-[50px] px-4 py-2 text-sm lg:px-4 lg:py-2 lg:text-sm md:px-3 md:py-1.5 md:text-xs sm:px-2 sm:py-1 sm:text-[10px]"
+                  className="rounded-[50px] h-7 w-20 hover:bg-red-700 flex items-center justify-center gap-1"
                 >
-                  <X className="lg:w-4 lg:h-4 md:w-3.5 md:h-3.5 sm:w-3 sm:h-3" />
-                  <span className="">{cartLabels.clearCart}</span>
+                  <X className="w-3.5 h-3.5" />
+                  <span className="text-[10px]">{cartLabels.clearCart}</span>
                 </Button>
               </span>
             </div>
@@ -71,49 +74,110 @@ const Cart = () => {
               {cartItems.map((item, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b py-4 text-sm px-2"
+                  className="flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center"
                 >
-                  <div className="flex items-center gap-4">
-                    <Image
-                      src={productTwo}
-                      alt="Product"
-                      width={25}
-                      height={25}
-                      className="rounded"
-                    />
-                    <span className="font-medium">
-                      {cartLabels.juceBarRaspberryEdition}
-                    </span>
+                  {/* Product image + name + (Price + SKU on mobile) */}
+                  <div className="flex flex-col">
+                    {/* Product image + name + details */}
+                    <div className="flex gap-4">
+                      {/* Product Image */}
+                      <div className="flex-shrink-0 self-start md:self-center">
+                        <Image
+                          src={productTwo}
+                          alt="Product"
+                          width={60}
+                          height={60}
+                          className="rounded md:w-[60px] md:h-[60px] object-contain"
+                        />
+                      </div>
+
+                      {/* Name + price + sku */}
+                      <div className="flex flex-col justify-center">
+                        <span className="font-medium">{item.name}</span>
+
+                        {/* Mobile-only price + sku */}
+                        <div className="md:hidden flex flex-col mt-1 gap-1">
+                          <span className="text-[#888888]">
+                            <WrapAmount value={6.6} />
+                          </span>
+                          <span className="text-[#444444]">8000806291318</span>
+                          <div className="flex items-center justify-start gap-2">
+                            <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
+                              <button
+                                onClick={() => handleQtyChange(i, -1)}
+                                className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                              >
+                                –
+                              </button>
+                              <input
+                                type="text"
+                                className="w-8 h-full text-center border-x text-xs"
+                                value={item.qty}
+                                readOnly
+                              />
+                              <button
+                                onClick={() => handleQtyChange(i, 1)}
+                                className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                              >
+                                +
+                              </button>
+                            </div>
+                            <div className="text-left md:text-right text-[#888888]">
+                              <WrapAmount value={6.6 * item.qty} />
+                            </div>
+                          </div>
+                          <div className="flex justify-start md:justify-center">
+                            <button className="text-[var(--color-red)] hover:text-red-700 cursor-pointer">
+                              {commonLabels.remove}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-center">
+
+                  {/* Price (desktop only) */}
+                  <div className="hidden md:block text-center text-[#888888]">
                     <WrapAmount value={6.6} />
                   </div>
-                  <div className="text-center">8000806291318</div>
-                  <div className="text-center flex items-center justify-center">
-                    <button
-                      onClick={() => handleQtyChange(i, -1)}
-                      className="px-2 py-1 border rounded-tl-full rounded-bl-full cursor-pointer text-[var(--color-gray)]"
-                    >
-                      –
-                    </button>
-                    <input
-                      type="number"
-                      className="w-10 py-1 border-t border-b text-center"
-                      value={item.qty}
-                      readOnly
-                    />
-                    <button
-                      onClick={() => handleQtyChange(i, 1)}
-                      className="px-2 py-1 border rounded-tr-full rounded-br-full cursor-pointer text-[var(--color-gray)]"
-                    >
-                      +
-                    </button>
+
+                  {/* SKU (desktop only) */}
+                  <div className="hidden md:block text-left text-[#444444]">
+                    8000806291318
                   </div>
-                  <div className="text-right font-semibold">
+
+                  {/* Quantity */}
+                  <div className="hidden md:flex items-center justify-start md:justify-center">
+                    <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
+                      <button
+                        onClick={() => handleQtyChange(i, -1)}
+                        className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                      >
+                        –
+                      </button>
+                      <input
+                        type="text"
+                        className="w-8 h-full text-center border-x text-xs"
+                        value={item.qty}
+                        readOnly
+                      />
+                      <button
+                        onClick={() => handleQtyChange(i, 1)}
+                        className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Subtotal */}
+                  <div className="hidden md:block text-left md:text-right text-[#888888]">
                     <WrapAmount value={6.6 * item.qty} />
                   </div>
-                  <div className="ml-5 flex justify-center">
-                    <button className="text-[var(--color-red)] hover:text-red-700">
+
+                  {/* Remove button */}
+                  <div className="hidden md:flex justify-start md:justify-center">
+                    <button className="text-[var(--color-red)] hover:text-red-700 cursor-pointer">
                       <X size={18} />
                     </button>
                   </div>
@@ -149,7 +213,7 @@ const Cart = () => {
             <div className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center">
               <WrapAmount value={60} />
             </div>
-            <Button className="w-full text-[var(--color-white)] rounded-[50px]">
+            <Button className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]">
               {cartLabels.redeemEliteWalletRewards}
             </Button>
           </div>
@@ -162,7 +226,9 @@ const Cart = () => {
             <div className="text-sm text-[#444444] p-2 pb-0">
               <div className="flex justify-between">
                 <span>{cartLabels.totalUnits}</span>
-                <span>120</span>
+                <span>
+                  {false ? <LoaderDiv height={20} width={50} /> : "120"}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.totalSKUs}</span>
@@ -222,7 +288,11 @@ const Cart = () => {
               <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]">
                 {cartLabels.proceedToPayment}
               </Button>
-              <Button variant="outline" className="w-full rounded-[50px]">
+              <Button
+                variant="outline"
+                className="w-full rounded-[50px]"
+                onClick={() => router.push("/order")}
+              >
                 {cartLabels.continueShopping}
               </Button>
             </div>
