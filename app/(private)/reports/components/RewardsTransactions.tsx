@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/DropdownMenu";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { Checkbox } from "@/components/ui/Checkbox";
 
 const RewardsTransactions = () => {
   const [active, setActive] = useState("All");
@@ -35,7 +35,9 @@ const RewardsTransactions = () => {
           <div className="hidden md:flex relative items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] ">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-6 focus:outline-none">
-                <span className="text-[12px] font-semibold">Sort by popularity</span>
+                <span className="text-[12px] font-semibold">
+                  Sort by popularity
+                </span>
                 <IconDownArrow className="h-3 w-3 text-muted-foreground" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -78,7 +80,9 @@ const RewardsTransactions = () => {
           <div className="relative inline-flex items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] ">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 focus:outline-none">
-                <span className="text-[12px] font-medium">Sort by popularity</span>
+                <span className="text-[12px] font-medium">
+                  Sort by popularity
+                </span>
                 <IconDownArrow className="h-2.5 w-2.5 text-muted-foreground" />
               </DropdownMenuTrigger>
 
