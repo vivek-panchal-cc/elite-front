@@ -4,12 +4,14 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import { AxiosResponse } from "axios";
 import { apiRequest, ApiResponse } from "@/lib/apiRequest";
 import { ProductAddToBasketParams } from "@/types/product";
+import { toast } from "sonner";
 
 interface BasketContextType {
   isLoading: boolean;
   addToBasketHandler: (
     params: ProductAddToBasketParams
   ) => Promise<ApiResponse | null>;
+  clearCart: () => Promise<ApiResponse | null>;
 }
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
@@ -33,8 +35,29 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const clearCart = async (): Promise<ApiResponse | null> => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.clearCart();
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      return data;
+    } catch (error: any) {
+      if (typeof error === "string") {
+        toast.error(error);
+      } else {
+        console.error(error);
+      }
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <BasketContext.Provider value={{ isLoading, addToBasketHandler }}>
+    <BasketContext.Provider
+      value={{ isLoading, addToBasketHandler, clearCart }}
+    >
       {children}
     </BasketContext.Provider>
   );

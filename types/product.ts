@@ -22,6 +22,7 @@ export interface Product {
   prod_original_price: number;
   prod_image?: string | null;
   is_favorite?: number | null;
+  basket_quantity: number | null;
   category: Category[];
 }
 
@@ -66,6 +67,8 @@ export interface FavProduct {
   fixed_price: number;
   images_prod_image: string | null;
   is_favourite?: boolean;
+  basket_quantity: number | null;
+  prod_sku: string;
   [key: string]: any;
 }
 
@@ -111,4 +114,5 @@ export interface ProductAddToBasketParams {
   flag?: "add" | "remove";
   quantity: number;
   only_free_prod?: number;
+  prod_sku?: string;
 }

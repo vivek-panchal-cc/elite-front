@@ -9,6 +9,7 @@ import FilledHeart from "@/components/images/svgs/FilledHeart";
 import useFavouriteProductList from "@/hooks/useFavourite";
 import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 import LoaderProduct from "@/components/loaders/LoaderProduct";
+import { useBasket } from "@/components/context/BasketContext";
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 interface ProfileFavouriteProps {
@@ -17,26 +18,71 @@ interface ProfileFavouriteProps {
 
 export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
+  const { addToBasketHandler, isLoading } = useBasket();
   const [loading, favouriteProduct, reload] = useFavouriteProductList();
   const [liked, setLiked] = useState<boolean[]>(
     Array(favouriteProduct.length).fill(true)
   );
-  const [quantities, setQuantities] = useState<number[]>([]);
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   useEffect(() => {
     if (favouriteProduct.length > 0) {
-      setQuantities(Array(favouriteProduct.length).fill(0));
+      const initialQuantities = favouriteProduct.reduce((acc, p) => {
+        acc[p.prod_id] = p.basket_quantity ?? 0;
+        return acc;
+      }, {} as { [key: number]: number });
+
+      setQuantities(initialQuantities);
     }
   }, [favouriteProduct]);
 
-  const handleQuantityChange = (index: number, newQuantity: number) => {
+  // const handleQuantityChange = (index: number, newQuantity: number) => {
+  //   if (newQuantity < 0) return;
+  //   setQuantities((prev) => {
+  //     const newQuantities = [...prev];
+  //     if (index >= newQuantities.length) return prev;
+  //     newQuantities[index] = newQuantity;
+  //     return newQuantities;
+  //   });
+  // };
+
+  const handleQuantityChange = async (
+    prodId: number,
+    newQuantity: number,
+    step: number,
+    sku: string
+  ) => {
     if (newQuantity < 0) return;
-    setQuantities((prev) => {
-      const newQuantities = [...prev];
-      if (index >= newQuantities.length) return prev;
-      newQuantities[index] = newQuantity;
-      return newQuantities;
-    });
+
+    setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+
+    if (newQuantity === 0) {
+      // Remove from basket
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "product-remove",
+        quantity: 0,
+        only_free_prod: 0,
+      });
+    } else if (newQuantity > (quantities[prodId] || 0)) {
+      // Increment
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "add",
+        flag: "add",
+        quantity: newQuantity,
+        prod_sku: sku,
+      });
+    } else {
+      // Decrement
+      await addToBasketHandler({
+        prod_id: prodId,
+        action: "add",
+        flag: "remove",
+        quantity: newQuantity,
+        prod_sku: sku,
+      });
+    }
   };
 
   const handleLikeToggle = (index: number) => {
@@ -127,7 +173,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                               {/* Single + Button (quantity 0) */}
                               <button
                                 className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out ${
-                                  quantities[idx] === 0
+                                  (quantities[p.prod_id] || 0) === 0
                                     ? "opacity-100 scale-100"
                                     : "opacity-0 scale-90 pointer-events-none"
                                 }
@@ -138,7 +184,12 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                               }`}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleQuantityChange(idx, step);
+                                  handleQuantityChange(
+                                    p.prod_id,
+                                    (quantities[p.prod_id] || 0) + step,
+                                    step,
+                                    p.prod_sku
+                                  );
                                 }}
                                 disabled={!p.gcerp_product_status}
                               >
@@ -148,7 +199,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                               {/* Full Counter (quantity > 0) */}
                               <div
                                 className={`absolute left-0 flex items-center rounded-full text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden ${
-                                  quantities[idx] > 0
+                                  (quantities[p.prod_id] || 0) > 0
                                     ? "opacity-100 px-1 sm:px-1 scale-x-100"
                                     : "opacity-0 px-0 scale-x-0 pointer-events-none"
                                 } ${
@@ -163,8 +214,10 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleQuantityChange(
-                                      idx,
-                                      quantities[idx] - step
+                                      p.prod_id,
+                                      (quantities[p.prod_id] || 0) - step,
+                                      step,
+                                      p.prod_sku
                                     );
                                   }}
                                   disabled={!p.gcerp_product_status}
@@ -172,15 +225,17 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                                   -
                                 </button>
                                 <span className="px-0 text-[10px] sm:text-xs w-5 text-center">
-                                  {quantities[idx]}
+                                  {quantities[p.prod_id] || 0}
                                 </span>
                                 <button
                                   className="w-4 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleQuantityChange(
-                                      idx,
-                                      quantities[idx] + step
+                                      p.prod_id,
+                                      (quantities[p.prod_id] || 0) + step,
+                                      step,
+                                      p.prod_sku
                                     );
                                   }}
                                   disabled={!p.gcerp_product_status}

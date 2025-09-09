@@ -248,6 +248,10 @@ const getOrderHistory = (
   );
 };
 
+const clearCart = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.delete(apiUrl.PRODUCT_ENDPOINTS.CLEAR_CART);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -288,6 +292,7 @@ export const apiRequest = {
   getDealerLatestOffer,
   getTopCategory,
   getOrderHistory,
+  clearCart,
 } as const;
 
 // Export type for the apiRequest object
@@ -325,4 +330,5 @@ export {
   getDealerLatestOffer,
   getTopCategory,
   getOrderHistory,
+  clearCart,
 };

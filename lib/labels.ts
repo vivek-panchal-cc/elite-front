@@ -355,6 +355,38 @@ export const labels = {
       privacyFooterMobile: "020 8799 8043",
       privacyFooterEmail: "Email Us",
     },
+    offers: {
+      exclusiveOffersFor: "Exclusive Offers for",
+      eliteMobileRetailer: "Elite Mobile Retailers",
+      secondFooterMsg:
+        "From SIM bundles to handset savings or vape products, our offers change often, so there’s always something new to boost your business.",
+      secondFooterHeader: "LOG IN TO SEE THIS WEEK'S OFFERS",
+      secondFooterButton: "LOG IN NOW",
+      footerHeader: "Why Retailers Choose Elite Mobile",
+      secondFooterHead: "Ready to See What's New?",
+      secondFooterLogin: "Log in",
+      secondFooterLoginMsg:
+        "today to explore current offers and secure your advantage.",
+      contentHeader: "Why Check Back Often?",
+      contentHeaderDetails:
+        "Our offers are updated regularly to give retailers the best possible value. By logging into your dealer portal, you'll always see the latest:",
+      contentWholesalePrice: "Exclusive wholesale pricing",
+      contentLimited: "Limited-time promotions",
+      contentLoyalty: "Loyalty and reward opportunities",
+      contentPOS: "Marketing & POS support packages",
+      contentCenterDesc:
+        "We keep our deals fresh—so you can keep your customers happy and your margins healthy.",
+      contentHowToAccess: "How to Access Your Offers",
+      dealerPortal: "Log in",
+      dealerPortalMsg: "Sign in via the",
+      dealerPortalHighlight: "Dealer Portal",
+      dealerViewLatest: "View the Latest Promotions",
+      dealerViewLatestMsg: "New deals are posted frequently",
+      dealerPlaceOrder: "Place Your Order",
+      dealerPlaceOrderMsg: "Secure your stock before offers change",
+      dealerSellEarn: "Sell & Earn More",
+      dealerSellEarnMsg: "Maximise sales with exclusive margins",
+    },
   },
 
   // Dashboard and analytics
@@ -456,6 +488,7 @@ export const labels = {
     viewCart: "View Cart",
     units: "Units",
     items: "Items",
+    cartEmpty: "Your cart is empty",
   },
 
   // Months for charts and date displays

@@ -29,7 +29,7 @@ import WrapAmount from "../wrapper/WrapAmount";
 import LoaderDiv from "../loaders/LoaderDiv";
 
 const publicNavigationItems = [
-  { name: navigationLabels.offers, href: "#" },
+  { name: navigationLabels.offers, href: "/offers" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   { name: navigationLabels.contactUs, href: "#" },
 ];

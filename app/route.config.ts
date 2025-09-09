@@ -3,7 +3,7 @@
 
 export const routeConfig = {
   // Public routes - accessible without authentication
-  public: ["/"],
+  public: ["/", "offers"],
 
   // Private routes - require authentication
   private: [
@@ -14,7 +14,6 @@ export const routeConfig = {
     "/cart",
     // "/vape-products",
     // "/contact",
-    // "/offers",
     "/logout",
     "/profile",
     // "/change-password",

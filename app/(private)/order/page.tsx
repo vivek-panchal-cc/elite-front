@@ -26,12 +26,12 @@ export default function Orders() {
   const [openSub, setOpenSub] = useState<number | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
-  const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isProductLoading, products] = useProductList({
     cat_type_id: catId ?? undefined,
     title: searchText.trim(),
   });
+  const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [visibleProducts, setVisibleProducts] = useState<any>(null);
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const [favourites, setFavourites] = useState<Record<number, boolean>>({});
@@ -39,6 +39,33 @@ export default function Orders() {
 
   useEffect(() => {
     setVisibleProducts(products);
+  }, [products]);
+
+  // ------------------- Initialize quantities from products -------------------
+  useEffect(() => {
+    if (!products) return;
+
+    const initialQuantities: Record<number, number> = {};
+
+    // Direct products
+    if (Array.isArray(products.productList)) {
+      products.productList.forEach((p: Product) => {
+        initialQuantities[p.prod_id] = p.basket_quantity ?? 0;
+      });
+    }
+
+    // Subcategory products
+    if (Array.isArray(products.category)) {
+      products.category.forEach((cat: any) => {
+        if (Array.isArray(cat.productList)) {
+          cat.productList.forEach((p: Product) => {
+            initialQuantities[p.prod_id] = p.basket_quantity ?? 0;
+          });
+        }
+      });
+    }
+
+    setQuantities(initialQuantities);
   }, [products]);
 
   const subCategories =
@@ -113,7 +140,7 @@ export default function Orders() {
   const handleQuantityChange = async (
     prodId: number,
     newQuantity: number,
-    step: number
+    sku: string
   ) => {
     if (newQuantity < 0) return;
     setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
@@ -131,6 +158,7 @@ export default function Orders() {
         action: "add",
         flag: "add",
         quantity: newQuantity,
+        prod_sku: sku,
       });
     } else {
       await addToBasketHandler({
@@ -138,6 +166,7 @@ export default function Orders() {
         action: "add",
         flag: "remove",
         quantity: newQuantity,
+        prod_sku: sku,
       });
     }
   };
@@ -240,7 +269,9 @@ export default function Orders() {
                       <LoaderProduct count={5} />
                     ) : !visibleProducts ||
                       (!subCategories.length && !directProducts.length) ? (
-                      <LoaderProduct count={5} />
+                      <p className="text-center text-gray-500">
+                        {commonLabels.notFound}
+                      </p>
                     ) : subCategories.length > 0 ? (
                       subCategories.map((sub, sIdx) => {
                         const isSubOpen = openSub === sub.cat_id;

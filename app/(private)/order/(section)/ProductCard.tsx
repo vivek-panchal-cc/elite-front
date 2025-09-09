@@ -135,7 +135,11 @@ const ProductCard = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   const newQty = (quantities[p.prod_id] || 0) + step;
-                  handleQuantityChange(p.prod_id, Math.max(newQty, 0));
+                  handleQuantityChange(
+                    p.prod_id,
+                    Math.max(newQty, 0),
+                    p.prod_sku
+                  );
                 }}
                 disabled={!p.gcerp_product_status}
               >
@@ -155,7 +159,11 @@ const ProductCard = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) - step;
-                    handleQuantityChange(p.prod_id, Math.max(newQty, 0));
+                    handleQuantityChange(
+                      p.prod_id,
+                      Math.max(newQty, 0),
+                      p.prod_sku
+                    );
                   }}
                   disabled={
                     !p.gcerp_product_status || (quantities[p.prod_id] || 0) <= 0
@@ -171,7 +179,7 @@ const ProductCard = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) + step;
-                    handleQuantityChange(p.prod_id, newQty);
+                    handleQuantityChange(p.prod_id, newQty, p.prod_sku);
                   }}
                   disabled={!p.gcerp_product_status}
                 >
@@ -186,7 +194,11 @@ const ProductCard = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) - step;
-                    handleQuantityChange(p.prod_id, Math.max(newQty, 0));
+                    handleQuantityChange(
+                      p.prod_id,
+                      Math.max(newQty, 0),
+                      p.prod_sku
+                    );
                   }}
                   disabled={
                     !p.gcerp_product_status || (quantities[p.prod_id] || 0) <= 0
@@ -202,7 +214,7 @@ const ProductCard = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     const newQty = (quantities[p.prod_id] || 0) + step;
-                    handleQuantityChange(p.prod_id, newQty);
+                    handleQuantityChange(p.prod_id, newQty, p.prod_sku);
                   }}
                   disabled={!p.gcerp_product_status}
                 >

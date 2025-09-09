@@ -284,3 +284,31 @@
 .latest-offer-slider .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--primary) !important;
 }
+
+.offers-header-section {
+  @apply bg-cover text-white min-h-screen flex items-center justify-center;
+  background-image: url("../components/images/offers_header.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 500px;
+}
+.offers-header-section-mobile {
+  @apply bg-cover text-white min-h-screen flex justify-center;
+  background-image: url("../components/images/offers_header_mobile.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  position: relative;
+  min-height: 500px;
+}
+
+.number-stroke {
+  color: white; /* Fill color inside the stroke */
+  -webkit-text-stroke: 2px #004aad; /* Stroke thickness and color */
+  paint-order: stroke fill; /* Ensures stroke is visible outside */
+  text-shadow: 2px 0px rgba(45, 15, 155, 1.3); /* Optional shadow */
+}

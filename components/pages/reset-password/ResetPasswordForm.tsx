@@ -73,6 +73,7 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
         <Input
           type="text"
           name="email"
+          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
           placeholder="Enter Email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
