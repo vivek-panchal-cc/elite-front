@@ -16,6 +16,7 @@ export const routeConfig = {
     // "/contact",
     "/logout",
     "/profile",
+    "/reports",
     // "/change-password",
   ],
 
