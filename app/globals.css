@@ -307,8 +307,6 @@
 }
 
 .number-stroke {
-  color: white; /* Fill color inside the stroke */
-  -webkit-text-stroke: 2px #004aad; /* Stroke thickness and color */
-  paint-order: stroke fill; /* Ensures stroke is visible outside */
-  text-shadow: 2px 0px rgba(45, 15, 155, 1.3); /* Optional shadow */
+  /* text-shadow: 1px 1px var(--color-blue), 1.5px 1.5px var(--color-white); */
+  text-shadow: 1.6px 0.5px var(--color-blue), 2px 0.5px var(--color-white);
 }

@@ -6,6 +6,7 @@ interface Dealer {
   dealer_name: string;
   dealer_email: string;
   dealer_ref: string;
+  current_amount_bal: number;
   // Add other fields you use as needed
 }
 
@@ -52,7 +53,7 @@ interface AuthState {
 
 import { getToken } from "@/lib/utils";
 import { apiRequest } from "@/lib/apiRequest";
-import { mapProfileToUser } from "@/types/profile";
+import { mapProfileToDealer, mapProfileToUser } from "@/types/profile";
 
 // Get initial state from storage and cookies
 const getStoredAuthData = () => {
@@ -91,7 +92,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       if (response.data?.data) {
         const profileData = mapProfileToUser(response.data.data.user);
-        set({ user: profileData });
+        const profileDataDealer = mapProfileToDealer(response.data.data.dealer);
+        set({ user: profileData, dealer: profileDataDealer });
+        localStorage.setItem("user", JSON.stringify(profileData));
+        localStorage.setItem("dealer", JSON.stringify(profileDataDealer));
       }
     } catch (error) {
       console.error("Failed to fetch user profile:", error);

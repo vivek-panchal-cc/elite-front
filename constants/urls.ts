@@ -30,6 +30,8 @@ export const PRODUCT_ENDPOINTS = {
   ORDER_HISTORY: "/orders/order-history",
   ORDER_ADD_TO_BASKET: "/orders/add-to-basket",
   CLEAR_CART: "/orders/cart",
+  CART_LIST: "/orders/cart-list",
+  UPDATE_REDEEM_AMOUNT: "orders/update-redeem-amount",
 } as const;
 
 export const PROFILE = {

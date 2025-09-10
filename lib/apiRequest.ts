@@ -9,7 +9,7 @@ import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
 import { objectToFormData } from "./constants/all";
-import { ProductAddToBasketParams } from "@/types/product";
+import { ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
 
 // Types
 interface LoginCredentials {
@@ -252,6 +252,19 @@ const clearCart = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.delete(apiUrl.PRODUCT_ENDPOINTS.CLEAR_CART);
 };
 
+const updateRedeemAmount = (
+  data: ProductRedeemAmount
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.put(
+    apiUrl.PRODUCT_ENDPOINTS.UPDATE_REDEEM_AMOUNT,
+    data
+  );
+};
+
+const cartItems = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.CART_LIST);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -293,6 +306,8 @@ export const apiRequest = {
   getTopCategory,
   getOrderHistory,
   clearCart,
+  cartItems,
+  updateRedeemAmount,
 } as const;
 
 // Export type for the apiRequest object
@@ -331,4 +346,6 @@ export {
   getTopCategory,
   getOrderHistory,
   clearCart,
+  cartItems,
+  updateRedeemAmount,
 };

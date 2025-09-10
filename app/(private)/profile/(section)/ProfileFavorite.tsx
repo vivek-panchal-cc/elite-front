@@ -10,6 +10,7 @@ import useFavouriteProductList from "@/hooks/useFavourite";
 import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 import LoaderProduct from "@/components/loaders/LoaderProduct";
 import { useBasket } from "@/components/context/BasketContext";
+import useCartItems from "@/hooks/useCartItems";
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 interface ProfileFavouriteProps {
@@ -19,6 +20,7 @@ interface ProfileFavouriteProps {
 export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const { addToBasketHandler, isLoading } = useBasket();
+  const { reloadCart } = useCartItems();
   const [loading, favouriteProduct, reload] = useFavouriteProductList();
   const [liked, setLiked] = useState<boolean[]>(
     Array(favouriteProduct.length).fill(true)
@@ -83,6 +85,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
         prod_sku: sku,
       });
     }
+    if (reloadCart) await reloadCart();
   };
 
   const handleLikeToggle = (index: number) => {

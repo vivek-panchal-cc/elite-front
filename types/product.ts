@@ -116,3 +116,7 @@ export interface ProductAddToBasketParams {
   only_free_prod?: number;
   prod_sku?: string;
 }
+
+export interface ProductRedeemAmount {
+  amount: number;
+}

@@ -5,7 +5,7 @@ import PrivateLayout from "../PrivateLayout";
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/ButtonUI";
-import { dualUSB, searchIcon } from "@/components/images";
+import { searchIcon } from "@/components/images";
 import { CURRENCY_SYMBOL } from "@/lib/constants/all";
 import useCategoryTypeList, { TCategory } from "@/hooks/useCategoryType";
 import LoaderCategory from "@/components/loaders/LoaderCategory";
@@ -17,10 +17,14 @@ import ProductCard from "./(section)/ProductCard";
 import { Input } from "@/components/ui/Input";
 import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 import { useBasket } from "@/components/context/BasketContext";
+import { useRouter } from "next/navigation";
+import useCartItems from "@/hooks/useCartItems";
 
 export default function Orders() {
+  const router = useRouter();
   const [searchText, setSearchText] = useState("");
   const { addToBasketHandler, isLoading } = useBasket();
+  const { reloadCart } = useCartItems();
   const [loading, categories] = useCategoryTypeList({ title: searchText });
   const [catId, setCatId] = useState<number | null>(null);
   const [openSub, setOpenSub] = useState<number | null>(null);
@@ -145,6 +149,33 @@ export default function Orders() {
     if (newQuantity < 0) return;
     setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
 
+    const product =
+      directProducts.find((p: Product) => p.prod_id === prodId) ||
+      subCategories
+        .flatMap((cat) => cat.productList)
+        .find((p: Product) => p.prod_id === prodId);
+
+    if (product) {
+      setCart((prevCart) => {
+        if (newQuantity === 0) {
+          return prevCart.filter((item) => item.product.prod_id !== prodId);
+        }
+
+        const existingItem = prevCart.find(
+          (item) => item.product.prod_id === prodId
+        );
+        if (existingItem) {
+          return prevCart.map((item) =>
+            item.product.prod_id === prodId
+              ? { ...item, quantity: newQuantity }
+              : item
+          );
+        } else {
+          return [...prevCart, { product, quantity: newQuantity }];
+        }
+      });
+    }
+
     if (newQuantity === 0) {
       await addToBasketHandler({
         prod_id: prodId,
@@ -169,6 +200,7 @@ export default function Orders() {
         prod_sku: sku,
       });
     }
+    if (reloadCart) await reloadCart();
   };
 
   const addToCart = (product: Product, quantity: number) => {
@@ -444,9 +476,7 @@ export default function Orders() {
 
             <button
               className="bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
-              onClick={() => {
-                console.log("View Cart clicked", cart);
-              }}
+              onClick={() => router.push("/cart")}
             >
               {commonLabels.viewCart}
             </button>

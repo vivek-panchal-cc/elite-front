@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/ButtonUI";
 import Link from "next/link";
 import { CustomLink } from "@/components/ui/CustomLink";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   burgerMenu,
   burgerMenuArrow,
@@ -27,6 +27,9 @@ import ResetPassword from "../pages/reset-password/ResetPasswordForm";
 import ProfileMenu from "../ui/ProfileMenu";
 import WrapAmount from "../wrapper/WrapAmount";
 import LoaderDiv from "../loaders/LoaderDiv";
+import useCartItems from "@/hooks/useCartItems";
+import { CartData, CartMeta, CartSummary } from "@/types/cart";
+import { cartEvents } from "@/lib/events/cartEvents";
 
 const publicNavigationItems = [
   { name: navigationLabels.offers, href: "/offers" },
@@ -45,6 +48,7 @@ const privateNavigationItems = [
 ];
 
 export function HeaderLayout() {
+  const [cart, setCart] = useState<CartData | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
@@ -52,10 +56,20 @@ export function HeaderLayout() {
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
   const { isAuthenticated, loading } = useAuthContext();
 
+  useEffect(() => {
+    const unsubscribe = cartEvents.subscribe((data) => {
+      setCart(data);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const items = cart?.items ?? [];
+  const total = cart?.summary?.sub_total ?? 0;
+
   const navigationItems = isAuthenticated
     ? privateNavigationItems
     : publicNavigationItems;
-  const cartItemCount = 5; // Replace with actual cart count from your cart state
 
   return (
     <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-50">
@@ -118,9 +132,9 @@ export function HeaderLayout() {
                       className="h-4 w-4 sm:h-6 sm:w-6 ml-[-4px] sm:ml-[-6px]"
                       priority
                     />
-                    {cartItemCount > 0 && (
+                    {items.length > 0 && (
                       <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-[var(--color-white)] text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
-                        {cartItemCount}
+                        {items.length}
                       </span>
                     )}
                   </div>
@@ -128,7 +142,7 @@ export function HeaderLayout() {
                   {/* Amount Section */}
                   <div className="bg-[var(--color-soft-white)] border-2 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
                     <span className="text-[var(--color-blue)] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
-                      <WrapAmount value={"50.0"} />
+                      <WrapAmount value={total} />
                     </span>
                   </div>
                 </div>

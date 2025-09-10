@@ -480,6 +480,7 @@ export const labels = {
     cartSummary: "Cart Summary",
     delivery: "Delivery",
     vat: "VAT",
+    offerDiscount: "Offer Discount",
     eliteRewards: "Elite Rewards",
     total: "Total",
     proceedToPayment: "Proceed to Payment",

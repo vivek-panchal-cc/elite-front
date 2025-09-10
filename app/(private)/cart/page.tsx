@@ -4,20 +4,41 @@ import PrivateLayout from "../PrivateLayout";
 import Image from "next/image";
 import { Button } from "@/components/ui/ButtonUI";
 import { X } from "lucide-react";
-import { productTwo } from "@/components/images";
+import { noProduct } from "@/components/images";
 import { altTextLabels, cartLabels, commonLabels } from "@/lib/labels";
-import { ELITE_WALLET } from "@/lib/constants/all";
+import { CURRENCY_SYMBOL, ELITE_WALLET } from "@/lib/constants/all";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 import { useBasket } from "@/components/context/BasketContext";
+import useCartItems from "@/hooks/useCartItems";
+import { CartMeta, CartSummary } from "@/types/cart";
+import LoaderItems from "@/components/loaders/LoaderItems";
+import {
+  useAuthStore,
+  useAuthStoreWithAutoRefresh,
+} from "@/stores/AuthStoreDealer";
+import { Input } from "@/components/ui/Input";
+const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
   const router = useRouter();
-  const { clearCart } = useBasket();
-  const [cartItems, setCartItems] = useState([
+  const { dealer } = useAuthStoreWithAutoRefresh();
+  const { clearCart, updateRedeemAmountBasket } = useBasket();
+  const { loadingCart, cartItems, reloadCart } = useCartItems();
+  const { items, meta, summary } = cartItems ?? {
+    items: [],
+    meta: {} as CartMeta,
+    summary: {} as CartSummary,
+  };
+  const [balance, setBalance] = useState<number>(
+    dealer?.current_amount_bal ?? 0
+  );
+  const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
+
+  const [cartItemsData, setCartItems] = useState([
     { qty: 10, name: "Jucce Bar Raspberry Edition" },
     { qty: 1, name: "Jucce Bar" },
     { qty: 100, name: "Raspberry Edition" },
@@ -39,8 +60,39 @@ const Cart = () => {
     );
   };
 
-  const handleClearCart = () => {
-    clearCart();
+  const handleClearCart = async () => {
+    await clearCart();
+    if (reloadCart) await reloadCart();
+  };
+
+  // const handleReedemBasket = async (value: number) => {
+  //   const result = await updateRedeemAmountBasket({ amount: value });
+  //   if (result) {
+  //     const authStore = useAuthStore.getState();
+  //     const dealer = authStore.dealer;
+  //     const user = authStore.user;
+  //     const token = authStore.token;
+
+  //     if (dealer && user && token) {
+  //       const updatedDealer = {
+  //         ...dealer,
+  //         current_amount_bal: dealer.current_amount_bal - value,
+  //       };
+  //       useAuthStore.getState().setAuthData({
+  //         dealer: updatedDealer,
+  //         user,
+  //         token,
+  //       });
+  //     }
+  //   }
+  //   if (reloadCart) await reloadCart();
+  // };
+
+  const handleReedemBasket = async (value: number) => {
+    await updateRedeemAmountBasket({ amount: value });
+    if (reloadCart) await reloadCart();
+    setBalance((prev) => prev - value);
+    setAmount(0);
   };
 
   return (
@@ -64,7 +116,7 @@ const Cart = () => {
               <span className="text-left">{cartLabels.sku}</span>
               <span className="text-center">{cartLabels.quantity}</span>
               <span className="text-right">{cartLabels.subtotal}</span>
-              {cartItems.length > 0 && (
+              {items.length > 0 && (
                 <span className="flex justify-center">
                   <Button
                     variant="destructive"
@@ -80,13 +132,15 @@ const Cart = () => {
             </div>
 
             {/* Table Body */}
-            <div className="max-h-[591px] overflow-y-auto custom-scrollbar">
-              {cartItems.length <= 0 ? (
-                <div className="text-center text-gray-500 py-8">
-                  {cartLabels.cartEmpty}
-                </div>
-              ) : (
-                cartItems.map((item, i) => (
+            <div className="max-h-[611px] overflow-y-auto custom-scrollbar">
+              {loadingCart ? (
+                [...Array(4)].map((_, idx) => (
+                  <div key={idx} className="rounded-[10px] p-2">
+                    <LoaderItems />
+                  </div>
+                ))
+              ) : items && items.length > 0 ? (
+                items.map((item, i) => (
                   <div
                     key={i}
                     className="flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center"
@@ -98,7 +152,11 @@ const Cart = () => {
                         {/* Product Image */}
                         <div className="flex-shrink-0 self-start md:self-center">
                           <Image
-                            src={productTwo}
+                            src={
+                              item.basket_prod_image
+                                ? `${imageUrl}/medium/${item.basket_prod_image}`
+                                : noProduct
+                            }
                             alt="Product"
                             width={60}
                             height={60}
@@ -108,15 +166,17 @@ const Cart = () => {
 
                         {/* Name + price + sku */}
                         <div className="flex flex-col justify-center">
-                          <span className="font-medium">{item.name}</span>
+                          <span className="font-medium">
+                            {item.basket_prod_name}
+                          </span>
 
                           {/* Mobile-only price + sku */}
                           <div className="md:hidden flex flex-col mt-1 gap-1">
                             <span className="text-[#888888]">
-                              <WrapAmount value={6.6} />
+                              <WrapAmount value={item.price} />
                             </span>
                             <span className="text-[#444444]">
-                              8000806291318
+                              {item.basket_prod_sku}
                             </span>
                             <div className="flex items-center justify-start gap-2">
                               <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
@@ -129,7 +189,7 @@ const Cart = () => {
                                 <input
                                   type="text"
                                   className="w-8 h-full text-center border-x text-xs"
-                                  value={item.qty}
+                                  value={item.quantity}
                                   readOnly
                                 />
                                 <button
@@ -140,7 +200,7 @@ const Cart = () => {
                                 </button>
                               </div>
                               <div className="text-left md:text-right text-[#888888]">
-                                <WrapAmount value={6.6 * item.qty} />
+                                <WrapAmount value={item.total} />
                               </div>
                             </div>
                             <div className="flex justify-start md:justify-center">
@@ -155,12 +215,12 @@ const Cart = () => {
 
                     {/* Price (desktop only) */}
                     <div className="hidden md:block text-center text-[#888888]">
-                      <WrapAmount value={6.6} />
+                      <WrapAmount value={item.price} />
                     </div>
 
                     {/* SKU (desktop only) */}
                     <div className="hidden md:block text-left text-[#444444]">
-                      8000806291318
+                      {item.basket_prod_sku}
                     </div>
 
                     {/* Quantity */}
@@ -175,7 +235,7 @@ const Cart = () => {
                         <input
                           type="text"
                           className="w-8 h-full text-center border-x text-xs"
-                          value={item.qty}
+                          value={item.quantity}
                           readOnly
                         />
                         <button
@@ -189,11 +249,11 @@ const Cart = () => {
 
                     {/* Subtotal */}
                     <div className="hidden md:block text-left md:text-right text-[#888888]">
-                      <WrapAmount value={6.6 * item.qty} />
+                      <WrapAmount value={item.total} />
                     </div>
 
                     {/* Remove button */}
-                    {cartItems.length > 0 && (
+                    {items.length > 0 && (
                       <div className="hidden md:flex justify-start md:justify-center">
                         <button className="text-[var(--color-red)] hover:text-red-700 cursor-pointer">
                           <X size={18} />
@@ -202,6 +262,10 @@ const Cart = () => {
                     )}
                   </div>
                 ))
+              ) : (
+                <div className="text-center text-gray-500 py-8">
+                  {cartLabels.cartEmpty}
+                </div>
               )}
             </div>
           </div>
@@ -226,14 +290,30 @@ const Cart = () => {
               {cartLabels.amountLeftInEliteWallet}:{" "}
               <span className="text-[var(--color-red)] font-semibold">
                 {" "}
-                <WrapAmount value={6.6} />
-                396.50
+                <WrapAmount value={balance} />
               </span>
             </p>
-            <div className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center">
-              <WrapAmount value={60} />
+            <div className="">
+              <Input
+                type="text"
+                className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
+                value={`${CURRENCY_SYMBOL}${amount}`}
+                disabled={items.length <= 0}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/[^0-9]/g, "");
+                  const maxAmount = balance ?? 0;
+                  const maxDigits = maxAmount.toString().length;
+                  const limitedVal = val.slice(0, maxDigits);
+                  const num = limitedVal ? parseInt(limitedVal, 10) : 0;
+                  setAmount(Math.min(num, maxAmount));
+                }}
+              />
             </div>
-            <Button className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]">
+            <Button
+              className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]"
+              // disabled={items.length <= 0 || amount <= 0}
+              onClick={() => handleReedemBasket(amount)}
+            >
               {cartLabels.redeemEliteWalletRewards}
             </Button>
           </div>
@@ -247,18 +327,33 @@ const Cart = () => {
               <div className="flex justify-between">
                 <span>{cartLabels.totalUnits}</span>
                 <span>
-                  {false ? <LoaderDiv height={20} width={50} /> : "120"}
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    summary.units
+                  )}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.totalSKUs}</span>
-                <span>5</span>
+                <span>
+                  {" "}
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    summary.sku_count
+                  )}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.subtotal}</span>
                 <span>
                   {" "}
-                  <WrapAmount value={756} />
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    <WrapAmount value={summary.sub_total} />
+                  )}
                 </span>
               </div>
             </div>
@@ -271,41 +366,75 @@ const Cart = () => {
                 <span>{cartLabels.delivery}</span>
                 <span>
                   {" "}
-                  <WrapAmount value={10} />
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    <WrapAmount value={summary.delivery_charge} />
+                  )}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.subtotal}</span>
                 <span>
                   {" "}
-                  <WrapAmount value={756} />
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    <WrapAmount value={summary.sub_total} />
+                  )}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>{cartLabels.vat}</span>
                 <span>
                   {" "}
-                  <WrapAmount value={4} />
+                  {loadingCart ? (
+                    <LoaderDiv height={20} width={50} />
+                  ) : (
+                    <WrapAmount value={summary.vat} />
+                  )}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span>{cartLabels.eliteRewards}</span>
-                <span className="text-[var(--color-red)]">
-                  - <WrapAmount value={60} />
-                </span>
-              </div>
+              {summary.offer_discount > 0 && (
+                <div className="flex justify-between">
+                  <span>{cartLabels.offerDiscount}</span>
+                  <span>
+                    {" "}
+                    {loadingCart ? (
+                      <LoaderDiv height={20} width={50} />
+                    ) : (
+                      <WrapAmount value={summary.offer_discount} />
+                    )}
+                  </span>
+                </div>
+              )}
+              {summary.discount_value ? (
+                <div className="flex justify-between">
+                  <span>{cartLabels.eliteRewards}</span>
+                  <span className="text-[var(--color-red)]">
+                    - <WrapAmount value={summary.discount_value} />
+                  </span>
+                </div>
+              ) : null}
             </div>
 
             <div className="flex justify-between text-lg font-semibold mt-4 p-2 pb-0 mb-0">
               <span>{cartLabels.total}</span>
               <span className="text-[var(--color-red)]">
                 {" "}
-                <WrapAmount value={710} />
+                {loadingCart ? (
+                  <LoaderDiv height={20} width={50} />
+                ) : (
+                  <WrapAmount value={summary.grand_total} />
+                )}
               </span>
             </div>
 
             <div className="space-y-2 mt-0">
-              <Button className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]">
+              <Button
+                className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
+                disabled={items.length <= 0}
+              >
                 {cartLabels.proceedToPayment}
               </Button>
               <Button
