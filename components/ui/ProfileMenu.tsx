@@ -8,12 +8,14 @@ interface ProfileMenuProps {
   isAuthenticated: boolean;
   setLoginOpen: (open: boolean) => void;
   setLogoutOpen: (open: boolean) => void;
+  isLoading: boolean;
 }
 
 const ProfileMenu: React.FC<ProfileMenuProps> = ({
   isAuthenticated,
   setLoginOpen,
   setLogoutOpen,
+  isLoading,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -76,14 +78,14 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
         </div>
       )}
     </div>
-  ) : (
+  ) : !isLoading ? (
     <Button
       className="hidden md:inline-flex bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
       onClick={() => setLoginOpen(true)}
     >
       {commonLabels.login}
     </Button>
-  );
+  ) : null;
 };
 
 export default ProfileMenu;

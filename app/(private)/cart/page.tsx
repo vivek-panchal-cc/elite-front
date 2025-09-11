@@ -9,7 +9,7 @@ import { altTextLabels, cartLabels, commonLabels } from "@/lib/labels";
 import { CURRENCY_SYMBOL, ELITE_WALLET } from "@/lib/constants/all";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 import { useBasket } from "@/components/context/BasketContext";
@@ -26,7 +26,8 @@ const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 const Cart = () => {
   const router = useRouter();
   const { dealer } = useAuthStoreWithAutoRefresh();
-  const { clearCart, updateRedeemAmountBasket } = useBasket();
+  const { clearCart, updateRedeemAmountBasket, addToBasketHandler } =
+    useBasket();
   const { loadingCart, cartItems, reloadCart } = useCartItems();
   const { items, meta, summary } = cartItems ?? {
     items: [],
@@ -36,33 +37,97 @@ const Cart = () => {
   const [balance, setBalance] = useState<number>(
     dealer?.current_amount_bal ?? 0
   );
-  const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
+  // const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
+  const [amount, setAmount] = useState<number>(0);
+  const [amountInput, setAmountInput] = useState<string>("0");
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
-  const [cartItemsData, setCartItems] = useState([
-    { qty: 10, name: "Jucce Bar Raspberry Edition" },
-    { qty: 1, name: "Jucce Bar" },
-    { qty: 100, name: "Raspberry Edition" },
-    { qty: 1, name: "Jucce Edition" },
-    { qty: 8, name: "Jucce Bar Raspberry" },
-    { qty: 4, name: "Jucce" },
-    { qty: 3, name: "Bar" },
-    { qty: 2, name: "Edition" },
-    { qty: 7, name: "Raspberry" },
-  ]);
+  useEffect(() => {
+    if (items && items.length > 0) {
+      const initialQuantities: { [key: number]: number } = {};
+      items.forEach((item) => {
+        initialQuantities[item.basket_id] = item.quantity;
+      });
+      setQuantities(initialQuantities);
+    }
+  }, [items]);
 
-  const handleQtyChange = (index: number, change: number) => {
-    setCartItems((prev) =>
-      prev.map((item, i) =>
-        i === index
-          ? { ...item, qty: Math.max(0, item.qty + change) } // prevent negative qty
-          : item
-      )
-    );
+  const handleUpdateQuantity = async (
+    prod_id: number,
+    basket_id: number,
+    newQuantity: number,
+    prod_sku: string
+  ) => {
+    if (newQuantity === 0) return;
+
+    setQuantities((prev) => ({
+      ...prev,
+      [basket_id]: Math.max(0, newQuantity),
+    }));
+
+    await addToBasketHandler({
+      prod_id,
+      basket_id,
+      action: "add",
+      quantity: newQuantity,
+      prod_sku,
+      only_free_prod: 0,
+    });
+    setAmount(0);
+    setAmountInput("0");
+    if (reloadCart) await reloadCart();
   };
 
   const handleClearCart = async () => {
     await clearCart();
     if (reloadCart) await reloadCart();
+  };
+
+  const removeSingleRecord = async (basket_id: number) => {
+    await addToBasketHandler({
+      basket_id: basket_id,
+      action: "remove",
+    });
+    if (reloadCart) await reloadCart();
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.replace(CURRENCY_SYMBOL, "");
+    val = val.replace(/[^0-9.]/g, "");
+
+    const parts = val.split(".");
+    if (parts.length > 2) {
+      val = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    if (parts[1]?.length > 2) {
+      val = parts[0] + "." + parts[1].slice(0, 2);
+    }
+
+    if (val === "") {
+      setAmount(0);
+      setAmountInput("0");
+      return;
+    }
+
+    const num = parseFloat(val);
+    if (!isNaN(num)) {
+      const maxBalance = balance ?? 0;
+      const maxCartTotal = summary.grand_total ?? 0;
+      const maxAllowed = Math.min(maxBalance, maxCartTotal);
+
+      const clamped = Math.min(num, maxAllowed);
+      setAmount(clamped);
+
+      if (clamped === num || val.endsWith(".")) {
+        setAmountInput(val);
+      } else {
+        setAmountInput(clamped.toFixed(2));
+      }
+    } else {
+      setAmount(0);
+      setAmountInput(val);
+    }
   };
 
   // const handleReedemBasket = async (value: number) => {
@@ -93,6 +158,7 @@ const Cart = () => {
     if (reloadCart) await reloadCart();
     setBalance((prev) => prev - value);
     setAmount(0);
+    setAmountInput("0");
   };
 
   return (
@@ -140,128 +206,175 @@ const Cart = () => {
                   </div>
                 ))
               ) : items && items.length > 0 ? (
-                items.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center"
-                  >
-                    {/* Product image + name + (Price + SKU on mobile) */}
-                    <div className="flex flex-col">
-                      {/* Product image + name + details */}
-                      <div className="flex gap-4">
-                        {/* Product Image */}
-                        <div className="flex-shrink-0 self-start md:self-center">
-                          <Image
-                            src={
-                              item.basket_prod_image
-                                ? `${imageUrl}/medium/${item.basket_prod_image}`
-                                : noProduct
-                            }
-                            alt="Product"
-                            width={60}
-                            height={60}
-                            className="rounded md:w-[60px] md:h-[60px] object-contain"
-                          />
-                        </div>
+                items.map((item, i) => {
+                  const step =
+                    item.box_size && item.box_size > 0 ? item.box_size : 1;
+                  return (
+                    <div
+                      key={i}
+                      className="flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center"
+                    >
+                      {/* Product image + name + (Price + SKU on mobile) */}
+                      <div className="flex flex-col">
+                        {/* Product image + name + details */}
+                        <div className="flex gap-4">
+                          {/* Product Image */}
+                          <div className="flex-shrink-0 self-start md:self-center">
+                            <Image
+                              src={
+                                item.basket_prod_image
+                                  ? `${imageUrl}/medium/${item.basket_prod_image}`
+                                  : noProduct
+                              }
+                              alt="Product"
+                              width={60}
+                              height={60}
+                              className="rounded md:w-[60px] md:h-[60px] object-contain"
+                            />
+                          </div>
 
-                        {/* Name + price + sku */}
-                        <div className="flex flex-col justify-center">
-                          <span className="font-medium">
-                            {item.basket_prod_name}
-                          </span>
+                          {/* Name + price + sku */}
+                          <div className="flex flex-col justify-center">
+                            <span className="font-medium">
+                              {item.basket_prod_name}
+                            </span>
 
-                          {/* Mobile-only price + sku */}
-                          <div className="md:hidden flex flex-col mt-1 gap-1">
-                            <span className="text-[#888888]">
-                              <WrapAmount value={item.price} />
-                            </span>
-                            <span className="text-[#444444]">
-                              {item.basket_prod_sku}
-                            </span>
-                            <div className="flex items-center justify-start gap-2">
-                              <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
+                            {/* Mobile-only price + sku */}
+                            <div className="md:hidden flex flex-col mt-1 gap-1">
+                              <span className="text-[#888888]">
+                                <WrapAmount value={item.price} />
+                              </span>
+                              <span className="text-[#444444]">
+                                {item.basket_prod_sku}
+                              </span>
+                              <div className="flex items-center justify-start gap-2">
+                                <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
+                                  <button
+                                    onClick={() =>
+                                      handleUpdateQuantity(
+                                        item.product_prod_id,
+                                        item.basket_id,
+                                        (quantities[item.basket_id] || 0) -
+                                          step,
+                                        item.basket_prod_sku
+                                      )
+                                    }
+                                    className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                                  >
+                                    –
+                                  </button>
+                                  <input
+                                    type="text"
+                                    className="w-8 h-full text-center border-x text-xs"
+                                    value={
+                                      quantities[item.basket_id] ??
+                                      item.quantity
+                                    }
+                                    readOnly
+                                  />
+                                  <button
+                                    onClick={() =>
+                                      handleUpdateQuantity(
+                                        item.product_prod_id,
+                                        item.basket_id,
+                                        (quantities[item.basket_id] || 0) +
+                                          step,
+                                        item.basket_prod_sku
+                                      )
+                                    }
+                                    className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                                <div className="text-left md:text-right text-[#888888]">
+                                  <WrapAmount value={item.total} />
+                                </div>
+                              </div>
+                              <div className="flex justify-start md:justify-center">
                                 <button
-                                  onClick={() => handleQtyChange(i, -1)}
-                                  className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                                  key={item.basket_id}
+                                  className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
+                                  onClick={() =>
+                                    removeSingleRecord(item.basket_id)
+                                  }
                                 >
-                                  –
-                                </button>
-                                <input
-                                  type="text"
-                                  className="w-8 h-full text-center border-x text-xs"
-                                  value={item.quantity}
-                                  readOnly
-                                />
-                                <button
-                                  onClick={() => handleQtyChange(i, 1)}
-                                  className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
-                                >
-                                  +
+                                  {commonLabels.remove}
                                 </button>
                               </div>
-                              <div className="text-left md:text-right text-[#888888]">
-                                <WrapAmount value={item.total} />
-                              </div>
-                            </div>
-                            <div className="flex justify-start md:justify-center">
-                              <button className="text-[var(--color-red)] hover:text-red-700 cursor-pointer">
-                                {commonLabels.remove}
-                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Price (desktop only) */}
-                    <div className="hidden md:block text-center text-[#888888]">
-                      <WrapAmount value={item.price} />
-                    </div>
-
-                    {/* SKU (desktop only) */}
-                    <div className="hidden md:block text-left text-[#444444]">
-                      {item.basket_prod_sku}
-                    </div>
-
-                    {/* Quantity */}
-                    <div className="hidden md:flex items-center justify-start md:justify-center">
-                      <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
-                        <button
-                          onClick={() => handleQtyChange(i, -1)}
-                          className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
-                        >
-                          –
-                        </button>
-                        <input
-                          type="text"
-                          className="w-8 h-full text-center border-x text-xs"
-                          value={item.quantity}
-                          readOnly
-                        />
-                        <button
-                          onClick={() => handleQtyChange(i, 1)}
-                          className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
-                        >
-                          +
-                        </button>
+                      {/* Price (desktop only) */}
+                      <div className="hidden md:block text-center text-[#888888]">
+                        <WrapAmount value={item.price} />
                       </div>
-                    </div>
 
-                    {/* Subtotal */}
-                    <div className="hidden md:block text-left md:text-right text-[#888888]">
-                      <WrapAmount value={item.total} />
-                    </div>
-
-                    {/* Remove button */}
-                    {items.length > 0 && (
-                      <div className="hidden md:flex justify-start md:justify-center">
-                        <button className="text-[var(--color-red)] hover:text-red-700 cursor-pointer">
-                          <X size={18} />
-                        </button>
+                      {/* SKU (desktop only) */}
+                      <div className="hidden md:block text-left text-[#444444]">
+                        {item.basket_prod_sku}
                       </div>
-                    )}
-                  </div>
-                ))
+
+                      {/* Quantity */}
+                      <div className="hidden md:flex items-center justify-start md:justify-center">
+                        <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                item.product_prod_id,
+                                item.basket_id,
+                                (quantities[item.basket_id] || 0) - step,
+                                item.basket_prod_sku
+                              )
+                            }
+                            className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                          >
+                            –
+                          </button>
+                          <input
+                            type="text"
+                            className="w-8 h-full text-center border-x text-xs"
+                            value={quantities[item.basket_id] || 0}
+                            readOnly
+                          />
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                item.product_prod_id,
+                                item.basket_id,
+                                (quantities[item.basket_id] || 0) + step,
+                                item.basket_prod_sku
+                              )
+                            }
+                            className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Subtotal */}
+                      <div className="hidden md:block text-left md:text-right text-[#888888]">
+                        <WrapAmount value={item.total} />
+                      </div>
+
+                      {/* Remove button */}
+                      {items.length > 0 && (
+                        <div className="hidden md:flex justify-start md:justify-center">
+                          <button
+                            key={item.basket_id}
+                            className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
+                            onClick={() => removeSingleRecord(item.basket_id)}
+                          >
+                            <X size={18} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
               ) : (
                 <div className="text-center text-gray-500 py-8">
                   {cartLabels.cartEmpty}
@@ -297,21 +410,14 @@ const Cart = () => {
               <Input
                 type="text"
                 className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
-                value={`${CURRENCY_SYMBOL}${amount}`}
+                value={`${CURRENCY_SYMBOL}${amountInput}`}
                 disabled={items.length <= 0}
-                onChange={(e) => {
-                  const val = e.target.value.replace(/[^0-9]/g, "");
-                  const maxAmount = balance ?? 0;
-                  const maxDigits = maxAmount.toString().length;
-                  const limitedVal = val.slice(0, maxDigits);
-                  const num = limitedVal ? parseInt(limitedVal, 10) : 0;
-                  setAmount(Math.min(num, maxAmount));
-                }}
+                onChange={handleAmountChange}
               />
             </div>
             <Button
               className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]"
-              // disabled={items.length <= 0 || amount <= 0}
+              disabled={items.length <= 0 || amount <= 0}
               onClick={() => handleReedemBasket(amount)}
             >
               {cartLabels.redeemEliteWalletRewards}

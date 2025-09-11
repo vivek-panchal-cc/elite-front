@@ -109,10 +109,11 @@ export interface OrderHistory {
 }
 
 export interface ProductAddToBasketParams {
-  prod_id: number;
+  basket_id?: number;
+  prod_id?: number;
   action: "add" | "product-remove" | "remove";
   flag?: "add" | "remove";
-  quantity: number;
+  quantity?: number;
   only_free_prod?: number;
   prod_sku?: string;
 }

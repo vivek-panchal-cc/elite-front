@@ -29,7 +29,7 @@ export interface BasketItem {
   basket_session_id: string;
   basket_unique_prod_disc_id: string;
   basket_user_id: number;
-
+  box_size: number | null;
   cat_type_id: number;
   category_type_group_cat_type_group_id: number;
   category_type_group_delivery_charge: number;

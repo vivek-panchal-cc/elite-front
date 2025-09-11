@@ -27,8 +27,7 @@ import ResetPassword from "../pages/reset-password/ResetPasswordForm";
 import ProfileMenu from "../ui/ProfileMenu";
 import WrapAmount from "../wrapper/WrapAmount";
 import LoaderDiv from "../loaders/LoaderDiv";
-import useCartItems from "@/hooks/useCartItems";
-import { CartData, CartMeta, CartSummary } from "@/types/cart";
+import { CartData } from "@/types/cart";
 import { cartEvents } from "@/lib/events/cartEvents";
 
 const publicNavigationItems = [
@@ -154,6 +153,7 @@ export function HeaderLayout() {
               isAuthenticated={isAuthenticated}
               setLoginOpen={setLoginOpen}
               setLogoutOpen={setLogoutOpen}
+              isLoading={loading}
             />
 
             {/* Mobile menu button */}
