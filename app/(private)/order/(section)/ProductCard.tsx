@@ -18,8 +18,13 @@ const ProductCard = ({
   handleQuantityChange,
   addToCart,
   addOrRemoveFavourite,
+  showDetails,
 }: any) => {
   const step = p.box_size && p.box_size > 0 ? p.box_size : 1;
+  const tag =
+    Array.isArray(p.free_product_disc) && p.free_product_disc.length > 0
+      ? p.free_product_disc[0].disc_display_name || p.free_product_disc[0].tag
+      : p.tag;
   return (
     <div
       className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
@@ -54,26 +59,29 @@ const ProductCard = ({
               fill
               className="object-contain rounded p-4"
             />
-            {p.tag && (
+            {tag && (
               <span
-                className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full ${
-                  p.tag === "25%"
-                    ? "bg-[var(--color-green)] text-[var(--color-white)]"
-                    : p.tag === "HOT"
-                    ? "bg-[var(--color-orange)] text-[var(--color-white)]"
-                    : p.tag === "BUY 5 GET 2 FREE"
-                    ? "bg-[var(--color-light-blue)] text-[var(--color-white)]"
-                    : p.tag === "SOLD OUT"
-                    ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                    : ""
-                } ${
+                title={tag}
+                className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full max-w-[90px] truncate ${(() => {
+                  const styles: Record<string, string> = {
+                    HOT: "bg-[var(--color-orange)] text-[var(--color-white)]",
+                    "25%": "bg-[var(--color-green)] text-[var(--color-white)]",
+                    "SOLD OUT":
+                      "bg-[var(--color-red)] text-[var(--color-white)]",
+                  };
+
+                  return (
+                    styles[tag] ||
+                    "bg-[var(--color-light-blue)] text-[var(--color-white)]"
+                  );
+                })()} ${
                   selectedProduct === idx
                     ? "-top-5 sm:-top-7 left-0"
                     : "-top-2 sm:-top-3 left-2 sm:left-3"
                 }`}
               >
-                {p.tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}{" "}
-                {p.tag}
+                {tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}
+                {tag.length > 12 ? tag.slice(0, 12) + "..." : tag}
               </span>
             )}
           </div>
@@ -91,7 +99,10 @@ const ProductCard = ({
       {/* Price + Icons */}
       <div className="w-full font-bold text-[var(--color-red)] px-1">
         <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div
+            className="flex items-center gap-1 sm:gap-2"
+            onClick={() => showDetails(p)}
+          >
             {selectedProduct === idx ? (
               <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
             ) : null}

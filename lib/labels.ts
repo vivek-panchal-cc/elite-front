@@ -490,6 +490,12 @@ export const labels = {
     units: "Units",
     items: "Items",
     cartEmpty: "Your cart is empty",
+    freeProductsHead: "Select a free product",
+    addToBasket: "Add to Basket",
+    outOfStock: "Out of Stock",
+    basket: "Basket",
+    stock: "Stock",
+    productDetails: "Product Details",
   },
 
   // Months for charts and date displays

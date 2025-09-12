@@ -3,8 +3,14 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { AxiosResponse } from "axios";
 import { apiRequest, ApiResponse } from "@/lib/apiRequest";
-import { ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
+import {
+  Product,
+  ProductAddToBasketParams,
+  ProductRedeemAmount,
+} from "@/types/product";
 import { toast } from "sonner";
+import Modal from "../ui/Modal";
+import ProductDetailsModal from "../pages/ProductDetailsModal";
 
 interface BasketContextType {
   isLoading: boolean;
@@ -15,12 +21,15 @@ interface BasketContextType {
   updateRedeemAmountBasket: (
     params: ProductRedeemAmount
   ) => Promise<ApiResponse | null>;
+  handleProductDetails: (details: any) => void;
 }
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
 
 export const BasketProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [productDetails, setProductDetails] = useState<boolean>(false);
+  const [details, setDetails] = useState<Product | null>(null);
 
   const addToBasketHandler = async (
     params: ProductAddToBasketParams
@@ -28,7 +37,8 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.addToBasket(params);
-      if (!data.success) throw data.message;
+      if (!data.success && data.statusCode === 200) throw data.message;
+      if (!data.success && data.statusCode === 201) return data;
       return data;
     } catch (error) {
       console.error("Basket API error:", error);
@@ -78,6 +88,16 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const handleProductDetails = async (details: any) => {
+    setProductDetails(true);
+    setDetails(details);
+  };
+
+  const clearBasketProvider = () => {
+    setProductDetails(false);
+    setDetails(null);
+  };
+
   return (
     <BasketContext.Provider
       value={{
@@ -85,9 +105,23 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
         addToBasketHandler,
         clearCart,
         updateRedeemAmountBasket,
+        handleProductDetails,
       }}
     >
       {children}
+      {details && (
+        <Modal
+          isOpen={productDetails}
+          onClose={clearBasketProvider}
+          classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+          isClose={false}
+        >
+          <ProductDetailsModal
+            setModalClose={clearBasketProvider}
+            details={details}
+          />
+        </Modal>
+      )}
     </BasketContext.Provider>
   );
 };

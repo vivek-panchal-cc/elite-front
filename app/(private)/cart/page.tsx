@@ -21,6 +21,7 @@ import {
   useAuthStoreWithAutoRefresh,
 } from "@/stores/AuthStoreDealer";
 import { Input } from "@/components/ui/Input";
+import { toast } from "sonner";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
@@ -59,13 +60,9 @@ const Cart = () => {
     prod_sku: string
   ) => {
     if (newQuantity === 0) return;
+    let response: any = null;
 
-    setQuantities((prev) => ({
-      ...prev,
-      [basket_id]: Math.max(0, newQuantity),
-    }));
-
-    await addToBasketHandler({
+    response = await addToBasketHandler({
       prod_id,
       basket_id,
       action: "add",
@@ -73,17 +70,29 @@ const Cart = () => {
       prod_sku,
       only_free_prod: 0,
     });
-    setAmount(0);
-    setAmountInput("0");
-    if (reloadCart) await reloadCart();
+    if (response?.success && response.statusCode === 200) {
+      setQuantities((prev) => ({
+        ...prev,
+        [basket_id]: Math.max(0, newQuantity),
+      }));
+      setAmount(0);
+      setAmountInput("0");
+      if (reloadCart) await reloadCart();
+    } else {
+      toast.warning(response.message);
+    }
   };
 
   const handleClearCart = async () => {
+    setAmount(0);
+    setAmountInput("0");
     await clearCart();
     if (reloadCart) await reloadCart();
   };
 
   const removeSingleRecord = async (basket_id: number) => {
+    setAmount(0);
+    setAmountInput("0");
     await addToBasketHandler({
       basket_id: basket_id,
       action: "remove",
@@ -238,6 +247,19 @@ const Cart = () => {
                             <span className="font-medium">
                               {item.basket_prod_name}
                             </span>
+                            {item.is_out_of_stock && (
+                              <div className="flex items-center gap-2 sm:gap-0 flex-wrap">
+                                <span className="p-1 text-[10px] bg-[var(--color-red)] text-[var(--color-white)] px-2 rounded-xl">
+                                  {cartLabels.outOfStock}
+                                </span>
+                                {/* <span className="text-xs text-[var(--color-gray)]">
+                                  {cartLabels.basket}: {item.quantity}
+                                </span> */}
+                                <span className="text-xs text-[var(--color-gray)]">
+                                  {cartLabels.stock}: {item.prod_stock_quantity}
+                                </span>
+                              </div>
+                            )}
 
                             {/* Mobile-only price + sku */}
                             <div className="md:hidden flex flex-col mt-1 gap-1">

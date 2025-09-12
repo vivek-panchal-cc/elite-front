@@ -23,6 +23,7 @@ export interface Product {
   prod_image?: string | null;
   is_favorite?: number | null;
   basket_quantity: number | null;
+  gcerp_product_status: number;
   category: Category[];
 }
 

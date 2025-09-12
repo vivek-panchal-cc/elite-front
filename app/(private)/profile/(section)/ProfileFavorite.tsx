@@ -11,6 +11,7 @@ import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 import LoaderProduct from "@/components/loaders/LoaderProduct";
 import { useBasket } from "@/components/context/BasketContext";
 import useCartItems from "@/hooks/useCartItems";
+import { toast } from "sonner";
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 interface ProfileFavouriteProps {
@@ -55,12 +56,11 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
     sku: string
   ) => {
     if (newQuantity < 0) return;
-
-    setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+    let response: any = null;
 
     if (newQuantity === 0) {
       // Remove from basket
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "product-remove",
         quantity: 0,
@@ -68,7 +68,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
       });
     } else if (newQuantity > (quantities[prodId] || 0)) {
       // Increment
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "add",
         flag: "add",
@@ -77,7 +77,7 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
       });
     } else {
       // Decrement
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "add",
         flag: "remove",
@@ -85,7 +85,12 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
         prod_sku: sku,
       });
     }
-    if (reloadCart) await reloadCart();
+    if (response?.success && response.statusCode === 200) {
+      setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+      if (reloadCart) await reloadCart();
+    } else {
+      toast.warning(response.message);
+    }
   };
 
   const handleLikeToggle = (index: number) => {

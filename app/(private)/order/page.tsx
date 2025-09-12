@@ -19,11 +19,14 @@ import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
 import { useBasket } from "@/components/context/BasketContext";
 import { useRouter } from "next/navigation";
 import useCartItems from "@/hooks/useCartItems";
+import { toast } from "sonner";
+import Modal from "@/components/ui/Modal";
+import FreeProductsModal from "@/components/pages/FreeProductsModal";
 
 export default function Orders() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
-  const { addToBasketHandler, isLoading } = useBasket();
+  const { addToBasketHandler, handleProductDetails } = useBasket();
   const { reloadCart } = useCartItems();
   const [loading, categories] = useCategoryTypeList({ title: searchText });
   const [catId, setCatId] = useState<number | null>(null);
@@ -39,6 +42,7 @@ export default function Orders() {
   const [visibleProducts, setVisibleProducts] = useState<any>(null);
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const [favourites, setFavourites] = useState<Record<number, boolean>>({});
+  const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const text: string = "";
 
   useEffect(() => {
@@ -147,44 +151,17 @@ export default function Orders() {
     sku: string
   ) => {
     if (newQuantity < 0) return;
-    setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
-
-    const product =
-      directProducts.find((p: Product) => p.prod_id === prodId) ||
-      subCategories
-        .flatMap((cat) => cat.productList)
-        .find((p: Product) => p.prod_id === prodId);
-
-    if (product) {
-      setCart((prevCart) => {
-        if (newQuantity === 0) {
-          return prevCart.filter((item) => item.product.prod_id !== prodId);
-        }
-
-        const existingItem = prevCart.find(
-          (item) => item.product.prod_id === prodId
-        );
-        if (existingItem) {
-          return prevCart.map((item) =>
-            item.product.prod_id === prodId
-              ? { ...item, quantity: newQuantity }
-              : item
-          );
-        } else {
-          return [...prevCart, { product, quantity: newQuantity }];
-        }
-      });
-    }
+    let response: any = null;
 
     if (newQuantity === 0) {
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "product-remove",
         quantity: 0,
         only_free_prod: 0,
       });
     } else if (newQuantity > (quantities[prodId] || 0)) {
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "add",
         flag: "add",
@@ -192,7 +169,7 @@ export default function Orders() {
         prod_sku: sku,
       });
     } else {
-      await addToBasketHandler({
+      response = await addToBasketHandler({
         prod_id: prodId,
         action: "add",
         flag: "remove",
@@ -200,7 +177,39 @@ export default function Orders() {
         prod_sku: sku,
       });
     }
-    if (reloadCart) await reloadCart();
+    if (response?.success && response.statusCode === 200) {
+      setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
+
+      const product =
+        directProducts.find((p: Product) => p.prod_id === prodId) ||
+        subCategories
+          .flatMap((cat) => cat.productList)
+          .find((p: Product) => p.prod_id === prodId);
+
+      if (product) {
+        setCart((prevCart) => {
+          if (newQuantity === 0) {
+            return prevCart.filter((item) => item.product.prod_id !== prodId);
+          }
+
+          const existingItem = prevCart.find(
+            (item) => item.product.prod_id === prodId
+          );
+          if (existingItem) {
+            return prevCart.map((item) =>
+              item.product.prod_id === prodId
+                ? { ...item, quantity: newQuantity }
+                : item
+            );
+          } else {
+            return [...prevCart, { product, quantity: newQuantity }];
+          }
+        });
+      }
+      if (reloadCart) await reloadCart();
+    } else {
+      toast.warning(response.message);
+    }
   };
 
   const addToCart = (product: Product, quantity: number) => {
@@ -378,6 +387,7 @@ export default function Orders() {
                                         }
                                         addToCart={addToCart}
                                         addOrRemoveFavourite={handleFavourite}
+                                        showDetails={handleProductDetails}
                                       />
                                     )
                                   )}
@@ -405,6 +415,7 @@ export default function Orders() {
                             handleQuantityChange={handleQuantityChange}
                             addToCart={addToCart}
                             addOrRemoveFavourite={handleFavourite}
+                            showDetails={handleProductDetails}
                           />
                         ))}
                       </div>
@@ -483,6 +494,14 @@ export default function Orders() {
           </div>
         </div>
       )}
+      <Modal
+        isOpen={freeProductsModal}
+        onClose={() => setFreeProductsModal(false)}
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        isClose={false}
+      >
+        <FreeProductsModal setModalClose={setFreeProductsModal} />
+      </Modal>
     </PrivateLayout>
   );
 }

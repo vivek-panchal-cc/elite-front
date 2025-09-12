@@ -42,7 +42,7 @@ export interface BasketItem {
   ins_float_rate1: number | null;
   ins_name: string | null;
   ins_total: string | number; // your sample shows "" sometimes, number other times
-
+  is_out_of_stock: boolean;
   insurance_ins_float_rate1: number | null;
   insurance_ins_float_rate2: number | null;
   insurance_ins_float_rate3: number | null;
@@ -61,7 +61,7 @@ export interface BasketItem {
   product_prod_sku: string;
   product_prod_stock_qty: number;
   product_vat_flag: number;
-
+  prod_stock_quantity: number;
   quantity: number;
   total: number;
 }
