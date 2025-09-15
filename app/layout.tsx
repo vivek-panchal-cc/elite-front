@@ -7,7 +7,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { LoaderProvider } from "@/components/providers/loader-provider";
 import { AuthProvider } from "@/lib/AuthProvider";
 import { RouteLoader } from "@/components/route-loader/RouteLoader";
-import ToasterComponent from "@/components/ui/toaster";
+import ToasterComponent from "@/components/ui/Toaster";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],

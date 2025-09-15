@@ -155,34 +155,44 @@ const ActivationDashboard = () => {
               {/* mobile view  */}
               <div className="flex flex-col">
                 <div className="lg:hidden w-full max-w-md mx-auto">
-                  {/* row- images */}
-                  <div className="grid grid-cols-[80px_125px_125px] text-center text-sm font-semibold">
-                    <div className="bg-[#F6F6F6]  border-r-2 border-[rgba(0,0,0,0.1)] py-5 text-[14px] font-bold rounded-l-[10px]">
-                      First Top Up
-                    </div>
-                    <div className="bg-[#F6F6F6] py-5 text-[14px] font-bold rounded-r-[10px]">
-                      Activation
-                    </div>
-                  </div>
-
-                  {/* Rows-content */}
-                  <div>
-                    {activationData.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="grid grid-cols-[80px_125px_125px] items-center text-center text-base font-medium"
-                      >
-                        <div className="border-r-2 border-[rgba(0,0,0,0.1)] p-3"></div>
-                        <div className="p-3"></div>
-                        <div className="flex justify-center">
-                          <Image src={item.logo} alt={item.name} />
+                  <div className="grid grid-cols-2 text-center text-sm font-semibold">
+                    {/* Activation Row */}
+                    <div
+                      className="text-center border-r-2 border-[rgba(0,0,0,0.1)]"
+                    >
+                      <div className='flex justify-end'>
+                        <div className="min-w-[124px] bg-[#F6F6F6] text-center p-5 text-[14px] text-[#000000] font-bold rounded-tl-[10px] rounded-bl-[10px] border-0">
+                          Activation
                         </div>
-                        <div className="bg-[#F6F6F6] border-r-2 border-[rgba(0,0,0,0.1)] py-4 rounded-l-[10px]">
-                          {item.topup}
-                        </div>
-                        <div className="bg-[#F6F6F6] py-4 rounded-r-[10px]">{item.activation}</div>
                       </div>
-                    ))}
+                      {activationData.map((item, idx) => (
+                        <div key={idx} className="flex gap-5 mt-8 justify-end">
+                          <div key={idx} className="py-2 justify-center items-center flex">
+                            <Image src={item.logo} alt={item.name} className="mx-auto" />
+                          </div>
+                          <p className="basis-[124px] p-5 bg-[#F6F6F6] text-[16px] font-medium rounded-tl-[10px] rounded-bl-[10px] border-0">
+                            {item.activation}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    {/* First Top Up Row */}
+                    <div
+                      className="text-center"
+                    >
+                      <div className='grid grid-cols-[124px_repeat(auto-fit,minmax(100px,1fr))]'>
+                        <div className="bg-[#F6F6F6] p-5 text-center text-[14px] text-[#000000] font-bold rounded-tr-[10px] rounded-br-[10px]">
+                          First Top Up
+                        </div>
+                      </div>
+                      {activationData.map((item, idx) => (
+                        <div key={idx} className="grid mt-8 grid-cols-[124px_repeat(auto-fit,minmax(100px,1fr))]">
+                          <p className="p-5 bg-[#F6F6F6] text-[16px] font-medium rounded-br-[10px] rounded-tr-[10px] border-0">
+                            {item.topup}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
