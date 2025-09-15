@@ -1,7 +1,4 @@
 "use client";
-
-import OffersHeader from "./(section)/OffersHeader";
-import OffersFooter from "./(section)/OffersFooter";
 import { footerLabels } from "@/lib/labels";
 import Tag from "@/components/images/svgs/Tag";
 import LimitedTime from "@/components/images/svgs/LimitedTime";
@@ -17,6 +14,8 @@ import RegistrationForm from "@/components/pages/registration-form/RegistrationF
 import ResetPassword from "@/components/pages/reset-password/ResetPasswordForm";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import OffersFooter from "./(section)/OffersFooter";
+import OffersHeader from "./(section)/OffersHeader";
 
 const offers = [
   { icon: <Tag />, label: footerLabels.offers.contentWholesalePrice },

@@ -41,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({
       style={{ pointerEvents: "auto" }}
     >
       <div
-        className={`relative bg-[var(--color-white)] rounded-[20px] shadow-lg max-h-[90vh] overflow-y-auto mx-4 ${classStyle}`}
+        className={`relative bg-[var(--color-white)] rounded-[20px] shadow-lg max-h-[90vh] overflow-y-auto hide-scrollbar mx-4 ${classStyle}`}
         onClick={(e) => e.stopPropagation()}
       >
         {isClose && (

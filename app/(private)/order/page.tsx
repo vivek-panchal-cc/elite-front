@@ -247,261 +247,273 @@ export default function Orders() {
   // }, [catId]);
 
   return (
-    <PrivateLayout>
-      {/* Search Bar - Responsive */}
-      <div className="flex items-center justify-center mb-8">
-        <div className="flex w-full border rounded-full overflow-hidden group focus-within:border-[var(--color-red)]">
-          <Input
-            type="text"
-            placeholder="Start Typing To Filter Products..."
-            className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-soft-white)] w-full p-[20px]"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[80px] max-w-[100px] h-[42px] hover:bg-[var(--color-blue)] cursor-auto">
-            <Image
-              src={searchIcon}
-              alt="search"
-              className="h-[20px] w-[20px]"
-            />
-          </Button>
-        </div>
-      </div>
+    // <PrivateLayout>
+    <div className="max-w-7xl mx-auto w-full">
+      <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
+        <div className="flex-1 space-y-4 py-6">
+          {/* Search Bar - Responsive */}
+          <div className="flex items-center justify-center mb-8">
+            <div className="flex w-full border rounded-full overflow-hidden group focus-within:border-[var(--color-red)]">
+              <Input
+                type="text"
+                placeholder="Start Typing To Filter Products..."
+                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-soft-white)] w-full p-[20px]"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[80px] max-w-[100px] h-[42px] hover:bg-[var(--color-blue)] cursor-auto">
+                <Image
+                  src={searchIcon}
+                  alt="search"
+                  className="h-[20px] w-[20px]"
+                />
+              </Button>
+            </div>
+          </div>
 
-      {/* Main Categories */}
-      <section className="space-y-2 sm:space-y-3">
-        {loading ? (
-          <LoaderCategory count={5} />
-        ) : mainCategories.length <= 0 ? (
-          <p className="text-center text-[var(--color-gray)] py-6">
-            {commonLabels.notFound}
-          </p>
-        ) : (
-          mainCategories.map((cat, idx) => {
-            const isOpen = catId === cat.cat_id;
+          {/* Main Categories */}
+          <section className="space-y-2 sm:space-y-3">
+            {loading ? (
+              <LoaderCategory count={5} />
+            ) : mainCategories.length <= 0 ? (
+              <p className="text-center text-[var(--color-gray)] py-6">
+                {commonLabels.notFound}
+              </p>
+            ) : (
+              mainCategories.map((cat, idx) => {
+                const isOpen = catId === cat.cat_id;
 
-            return (
-              <div key={cat.cat_id}>
-                {/* Main Category Button - Responsive */}
-                <button
-                  onClick={() => toggleMain(cat.cat_id)}
-                  className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
-                    isOpen
-                      ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                      : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
-                  }`}
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                    <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
-                      {cat.cat_name}
-                    </span>
-                  </div>
-                  {isOpen ? (
-                    <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                  ) : (
-                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
-                  )}
-                </button>
-
-                {/* Subcategories / Products */}
-                {isOpen && (
-                  <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
-                    {isProductLoading ? (
-                      <LoaderProduct count={5} />
-                    ) : !visibleProducts ||
-                      (!subCategories.length && !directProducts.length) ? (
-                      <p className="text-center text-gray-500">
-                        {commonLabels.notFound}
-                      </p>
-                    ) : subCategories.length > 0 ? (
-                      subCategories.map((sub, sIdx) => {
-                        const isSubOpen = openSub === sub.cat_id;
-                        return (
-                          <div key={sub.cat_id}>
-                            {/* Subcategory Button */}
-                            <button
-                              onClick={() => toggleSub(sub.cat_id)}
-                              className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
-                                isSubOpen
-                                  ? "bg-[var(--color-red)] text-[var(--color-white)]"
-                                  : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
-                              }`}
-                            >
-                              <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                                <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
-                                  {sub.cat_name}
-                                </span>
-                              </div>
-                              {isSubOpen ? (
-                                <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                              ) : (
-                                <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
-                              )}
-                            </button>
-
-                            {/* Products inside subcategory */}
-                            {isSubOpen && (
-                              <>
-                                {text && (
-                                  <div className="mb-2 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 px-1 sm:px-2">
-                                    <div>
-                                      <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
-                                        {isExpanded
-                                          ? text
-                                          : `${text.slice(0, 150)}${
-                                              text?.length > 150 ? "..." : ""
-                                            }`}
-                                        {text.length > 150 && (
-                                          <button
-                                            onClick={() =>
-                                              setIsExpanded(!isExpanded)
-                                            }
-                                            className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
-                                          >
-                                            {isExpanded
-                                              ? "Read less"
-                                              : "Read more..."}
-                                          </button>
-                                        )}
-                                      </p>
-                                    </div>
-                                  </div>
-                                )}
-                                <div className="pt-2 mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-                                  {sub.productList.map(
-                                    (p: Product, idx: number) => (
-                                      <ProductCard
-                                        key={p.prod_id}
-                                        p={{
-                                          ...p,
-                                          is_favorite:
-                                            favourites[p.prod_id] ??
-                                            p.is_favorite,
-                                        }}
-                                        idx={idx}
-                                        selectedProduct={selectedProduct}
-                                        setSelectedProduct={setSelectedProduct}
-                                        quantities={quantities}
-                                        handleQuantityChange={
-                                          handleQuantityChange
-                                        }
-                                        addToCart={addToCart}
-                                        addOrRemoveFavourite={handleFavourite}
-                                        showDetails={handleProductDetails}
-                                      />
-                                    )
-                                  )}
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        );
-                      })
-                    ) : directProducts.length > 0 ? (
-                      /* Direct products (no subcategories) */
-                      <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-                        {directProducts.map((p: Product, idx: number) => (
-                          <ProductCard
-                            key={p.prod_id}
-                            p={{
-                              ...p,
-                              is_favorite:
-                                favourites[p.prod_id] ?? p.is_favorite,
-                            }}
-                            idx={idx}
-                            selectedProduct={selectedProduct}
-                            setSelectedProduct={setSelectedProduct}
-                            quantities={quantities}
-                            handleQuantityChange={handleQuantityChange}
-                            addToCart={addToCart}
-                            addOrRemoveFavourite={handleFavourite}
-                            showDetails={handleProductDetails}
-                          />
-                        ))}
+                return (
+                  <div key={cat.cat_id}>
+                    {/* Main Category Button - Responsive */}
+                    <button
+                      onClick={() => toggleMain(cat.cat_id)}
+                      className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
+                        isOpen
+                          ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                          : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
+                        <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
+                          {cat.cat_name}
+                        </span>
                       </div>
-                    ) : (
-                      <p className="text-center text-gray-500">
-                        {commonLabels.notSubCategory}
-                      </p>
+                      {isOpen ? (
+                        <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                      ) : (
+                        <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                      )}
+                    </button>
+
+                    {/* Subcategories / Products */}
+                    {isOpen && (
+                      <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
+                        {isProductLoading ? (
+                          <LoaderProduct count={5} />
+                        ) : !visibleProducts ||
+                          (!subCategories.length && !directProducts.length) ? (
+                          <p className="text-center text-gray-500">
+                            {commonLabels.notFound}
+                          </p>
+                        ) : subCategories.length > 0 ? (
+                          subCategories.map((sub, sIdx) => {
+                            const isSubOpen = openSub === sub.cat_id;
+                            return (
+                              <div key={sub.cat_id}>
+                                {/* Subcategory Button */}
+                                <button
+                                  onClick={() => toggleSub(sub.cat_id)}
+                                  className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
+                                    isSubOpen
+                                      ? "bg-[var(--color-red)] text-[var(--color-white)]"
+                                      : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
+                                    <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
+                                      {sub.cat_name}
+                                    </span>
+                                  </div>
+                                  {isSubOpen ? (
+                                    <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  ) : (
+                                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  )}
+                                </button>
+
+                                {/* Products inside subcategory */}
+                                {isSubOpen && (
+                                  <>
+                                    {text && (
+                                      <div className="mb-2 sm:mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 px-1 sm:px-2">
+                                        <div>
+                                          <p className="text-center text-xs sm:text-sm text-[var(--color-black)] my-2 sm:my-5 transition-all duration-300">
+                                            {isExpanded
+                                              ? text
+                                              : `${text.slice(0, 150)}${
+                                                  text?.length > 150
+                                                    ? "..."
+                                                    : ""
+                                                }`}
+                                            {text.length > 150 && (
+                                              <button
+                                                onClick={() =>
+                                                  setIsExpanded(!isExpanded)
+                                                }
+                                                className="ml-1 text-[var(--color-black)] text-xs sm:text-sm font-bold cursor-pointer hover:underline"
+                                              >
+                                                {isExpanded
+                                                  ? "Read less"
+                                                  : "Read more..."}
+                                              </button>
+                                            )}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                    <div className="pt-2 mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                                      {sub.productList.map(
+                                        (p: Product, idx: number) => (
+                                          <ProductCard
+                                            key={p.prod_id}
+                                            p={{
+                                              ...p,
+                                              is_favorite:
+                                                favourites[p.prod_id] ??
+                                                p.is_favorite,
+                                            }}
+                                            idx={idx}
+                                            selectedProduct={selectedProduct}
+                                            setSelectedProduct={
+                                              setSelectedProduct
+                                            }
+                                            quantities={quantities}
+                                            handleQuantityChange={
+                                              handleQuantityChange
+                                            }
+                                            addToCart={addToCart}
+                                            addOrRemoveFavourite={
+                                              handleFavourite
+                                            }
+                                            showDetails={handleProductDetails}
+                                          />
+                                        )
+                                      )}
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            );
+                          })
+                        ) : directProducts.length > 0 ? (
+                          /* Direct products (no subcategories) */
+                          <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                            {directProducts.map((p: Product, idx: number) => (
+                              <ProductCard
+                                key={p.prod_id}
+                                p={{
+                                  ...p,
+                                  is_favorite:
+                                    favourites[p.prod_id] ?? p.is_favorite,
+                                }}
+                                idx={idx}
+                                selectedProduct={selectedProduct}
+                                setSelectedProduct={setSelectedProduct}
+                                quantities={quantities}
+                                handleQuantityChange={handleQuantityChange}
+                                addToCart={addToCart}
+                                addOrRemoveFavourite={handleFavourite}
+                                showDetails={handleProductDetails}
+                              />
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-center text-gray-500">
+                            {commonLabels.notSubCategory}
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
-              </div>
-            );
-          })
-        )}
-      </section>
+                );
+              })
+            )}
+          </section>
 
-      {/* Bottom Cart */}
-      {cart?.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-white)] shadow-lg border-t-[2px] border-[var(--color-red)] p-3 sm:p-4 z-11">
-          <div className="max-w-7xl mx-auto flex flex-col">
-            <div className="flex justify-center items-center mb-2 sm:mb-3">
-              <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1">
-                <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                  {cartLabels.total}:
-                  <span className="font-bold text-[var(--color-blue)]">
-                    {CURRENCY_SYMBOL}
-                    {cart
-                      .reduce(
-                        (sum, item) =>
-                          sum +
-                          item.product.prod_original_price * item.quantity,
-                        0
-                      )
-                      .toFixed(2)}
-                  </span>
-                </span>
-                <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
-                  |
-                </p>
-                <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                  {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "}
-                  {cartLabels.units}
-                </span>
-                <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
-                  |
-                </p>
-                <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                  {cart.length} {cartLabels.skus}
-                </span>
-                <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
-                  |
-                </p>
-                <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                  {cartLabels.eliteRewards}:
-                  <span className="font-bold text-[var(--color-red)]">
-                    {CURRENCY_SYMBOL}
-                    {(
-                      cart.reduce(
-                        (sum, item) =>
-                          sum +
-                          item.product.prod_original_price * item.quantity,
-                        0
-                      ) * 0.1
-                    ).toFixed(2)}
-                  </span>
-                </span>
+          {/* Bottom Cart */}
+          {cart?.length > 0 && (
+            <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-white)] shadow-lg border-t-[2px] border-[var(--color-red)] p-3 sm:p-4 z-11">
+              <div className="max-w-7xl mx-auto flex flex-col">
+                <div className="flex justify-center items-center mb-2 sm:mb-3">
+                  <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1">
+                    <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
+                      {cartLabels.total}:
+                      <span className="font-bold text-[var(--color-blue)]">
+                        {CURRENCY_SYMBOL}
+                        {cart
+                          .reduce(
+                            (sum, item) =>
+                              sum +
+                              item.product.prod_original_price * item.quantity,
+                            0
+                          )
+                          .toFixed(2)}
+                      </span>
+                    </span>
+                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                      |
+                    </p>
+                    <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
+                      {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "}
+                      {cartLabels.units}
+                    </span>
+                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                      |
+                    </p>
+                    <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
+                      {cart.length} {cartLabels.skus}
+                    </span>
+                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                      |
+                    </p>
+                    <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
+                      {cartLabels.eliteRewards}:
+                      <span className="font-bold text-[var(--color-red)]">
+                        {CURRENCY_SYMBOL}
+                        {(
+                          cart.reduce(
+                            (sum, item) =>
+                              sum +
+                              item.product.prod_original_price * item.quantity,
+                            0
+                          ) * 0.1
+                        ).toFixed(2)}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  className="bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
+                  onClick={() => router.push("/cart")}
+                >
+                  {commonLabels.viewCart}
+                </button>
               </div>
             </div>
-
-            <button
-              className="bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
-              onClick={() => router.push("/cart")}
-            >
-              {commonLabels.viewCart}
-            </button>
-          </div>
+          )}
+          <Modal
+            isOpen={freeProductsModal}
+            onClose={() => setFreeProductsModal(false)}
+            classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+            isClose={false}
+          >
+            <FreeProductsModal setModalClose={setFreeProductsModal} />
+          </Modal>
         </div>
-      )}
-      <Modal
-        isOpen={freeProductsModal}
-        onClose={() => setFreeProductsModal(false)}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
-        isClose={false}
-      >
-        <FreeProductsModal setModalClose={setFreeProductsModal} />
-      </Modal>
-    </PrivateLayout>
+      </div>
+    </div>
+    // </PrivateLayout>
   );
 }

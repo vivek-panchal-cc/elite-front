@@ -21,6 +21,7 @@ import LoaderDiv from "@/components/loaders/LoaderDiv";
 import GraphCard from "@/components/cards/GraphCard";
 import ContactCard from "@/components/cards/ContactCard";
 import OrderHistoryCard from "@/components/cards/OrderHistoryCard";
+import RecentTransactionCard from "@/components/cards/RecentTransactionCard";
 
 ChartJS.register(
   CategoryScale,
@@ -36,21 +37,6 @@ export default function ProfileDashboard() {
   const [loadingSumm, summaryList, reloadSumm] = useDealerSummary(
     Number(dealer?.dealer_id)
   );
-  const orderHistory = [
-    { orderNumber: "S08060291318", date: "03-07-25", total: "£450" },
-    { orderNumber: "S08060291318", date: "03-07-25", total: "£450" },
-    { orderNumber: "S08060291318", date: "03-07-25", total: "£450" },
-    { orderNumber: "S08060291318", date: "03-07-25", total: "£450" },
-    { orderNumber: "S08060291318", date: "03-07-25", total: "£450" },
-  ];
-
-  const walletTransactions = [
-    { id: "151581655", amount: "£48.32", units: 51, date: "27-06-25" },
-    { id: "151581655", amount: "£48.32", units: 51, date: "27-06-25" },
-    { id: "151581655", amount: "£48.32", units: 51, date: "27-06-25" },
-    { id: "151581655", amount: "£48.32", units: 51, date: "27-06-25" },
-    { id: "151581655", amount: "£48.32", units: 51, date: "27-06-25" },
-  ];
 
   // --- Reusable Cards ---
   const RewardBalanceCard = (
@@ -85,45 +71,6 @@ export default function ProfileDashboard() {
     </div>
   );
 
-  const WalletTransactionsCard = (
-    <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-        <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
-          {profileLabels.eliteWalletTrans}
-        </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
-          {/* min-w-[349px] */}
-          <thead>
-            <tr className="text-left text-[var(--color-black)] text-[10px]">
-              <th>{profileLabels.id}</th>
-              <th>{profileLabels.amount}</th>
-              <th>{profileLabels.units}</th>
-              <th>{profileLabels.date}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colSpan={4} className="p-0">
-                <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
-              </td>
-            </tr>
-            {walletTransactions.map((w, idx) => (
-              <tr
-                key={idx}
-                className="text-left text-[var(--color-black)] text-[10px]"
-              >
-                <td>{w.id}</td>
-                <td className="text-[var(--color-red)]">{w.amount}</td>
-                <td>{w.units}</td>
-                <td>{w.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-
   return (
     <section className="profile-header-section">
       <div className="max-w-7xl mx-auto w-full">
@@ -140,7 +87,11 @@ export default function ProfileDashboard() {
                 >
                   <SwiperSlide>{RewardBalanceCard}</SwiperSlide>
                   <SwiperSlide>{<OrderHistoryCard />}</SwiperSlide>
-                  <SwiperSlide>{WalletTransactionsCard}</SwiperSlide>
+                  <SwiperSlide>
+                    <RecentTransactionCard
+                      header={profileLabels.eliteWalletTrans}
+                    />
+                  </SwiperSlide>
                   <SwiperSlide>
                     <GraphCard />
                   </SwiperSlide>
@@ -154,7 +105,9 @@ export default function ProfileDashboard() {
               {RewardBalanceCard}
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
                 {<OrderHistoryCard />}
-                {WalletTransactionsCard}
+                <RecentTransactionCard
+                  header={profileLabels.eliteWalletTrans}
+                />
                 <GraphCard />
                 {<ContactCard />}
               </div>

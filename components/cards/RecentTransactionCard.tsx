@@ -2,15 +2,19 @@ import { profileLabels } from "@/lib/labels";
 import WrapAmount from "../wrapper/WrapAmount";
 import useRewards from "@/hooks/useRewards";
 import { formatDate } from "@/lib/constants/all";
+import LoaderDiv from "../loaders/LoaderDiv";
+interface TransProps {
+  header?: string;
+}
 
-export default function RecentTransactionCard() {
+export default function RecentTransactionCard({ header }: TransProps) {
   const [loadingTrans, transactionList, reloadTrans] = useRewards();
 
   return (
     <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] min-h-[239px]">
-        <h3 className="font-semibold text-[12px] sm:text-[14px] md:text-[14px] mb-2">
-          {profileLabels.recentTransaction}
+      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] h-[100%]">
+        <h3 className="font-semibold text-[12px] sm:text-[14px] md:text-[14px]">
+          {header ? header : profileLabels.recentTransaction}
         </h3>
         <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
           {/* min-w-[349px] */}
@@ -28,8 +32,25 @@ export default function RecentTransactionCard() {
                 <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
               </td>
             </tr>
-            {transactionList.length > 0 ? (
-              transactionList.map((o, idx) => (
+            {loadingTrans ? (
+              Array.from({ length: 5 }).map((_, rowIdx) => (
+                <tr
+                  key={rowIdx}
+                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                >
+                  {Array.from({ length: 4 }).map((_, colIdx) => (
+                    <td key={colIdx}>
+                      <LoaderDiv
+                        width={50}
+                        height={15}
+                        backgroundColor="#C7C7C7"
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : transactionList.length > 0 ? (
+              transactionList.slice(0, 5).map((o, idx) => (
                 <tr
                   key={idx}
                   className="text-[var(--color-black)] rounded-lg text-[10px]"
@@ -54,9 +75,9 @@ export default function RecentTransactionCard() {
               <tr>
                 <td
                   colSpan={4}
-                  className="text-center py-4 text-gray-500 text-[10px]"
+                  className="text-center py-4 text-[var(--color-gray)] text-xs"
                 >
-                  {profileLabels.noTrans}
+                  {profileLabels.noData}
                 </td>
               </tr>
             )}

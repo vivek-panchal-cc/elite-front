@@ -13,7 +13,7 @@ export default function OrderHistoryCard() {
   });
   return (
     <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
+      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] h-[100%]">
         <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
           {profileLabels.orderHistory}
         </h3>
@@ -33,38 +33,49 @@ export default function OrderHistoryCard() {
                 <div className="w-[calc(100%+1.5rem)] -ml-3 sm:w-[calc(100%+2rem)] sm:-ml-4 border-b-2 border-[var(--color-light-gray)]"></div>
               </td>
             </tr>
-            {loading
-              ? Array.from({ length: 5 }).map((_, rowIdx) => (
-                  <tr
-                    key={rowIdx}
-                    className="text-[var(--color-black)] rounded-lg text-[10px]"
-                  >
-                    {Array.from({ length: 4 }).map((_, colIdx) => (
-                      <td key={colIdx}>
-                        <LoaderDiv
-                          width={50}
-                          height={15}
-                          backgroundColor="#C7C7C7"
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                ))
-              : orderHistory.slice(0, 5).map((o, idx) => (
-                  <tr
-                    key={idx}
-                    className="text-[var(--color-black)] rounded-lg text-[10px]"
-                  >
-                    <td>{o.o_ord_id}</td>
-                    <td>{formatDate(o.o_ord_datetime)}</td>
-                    <td>
-                      <WrapAmount value={o.o_total} />
+            {loading ? (
+              Array.from({ length: 5 }).map((_, rowIdx) => (
+                <tr
+                  key={rowIdx}
+                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                >
+                  {Array.from({ length: 4 }).map((_, colIdx) => (
+                    <td key={colIdx}>
+                      <LoaderDiv
+                        width={50}
+                        height={15}
+                        backgroundColor="#C7C7C7"
+                      />
                     </td>
-                    <td className="text-[var(--color-red)] cursor-pointer">
-                      {profileLabels.reorder}
-                    </td>
-                  </tr>
-                ))}
+                  ))}
+                </tr>
+              ))
+            ) : orderHistory && orderHistory.length > 0 ? (
+              orderHistory.slice(0, 5).map((o, idx) => (
+                <tr
+                  key={idx}
+                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                >
+                  <td>{o.o_ord_id}</td>
+                  <td>{formatDate(o.o_ord_datetime)}</td>
+                  <td>
+                    <WrapAmount value={o.o_total} />
+                  </td>
+                  <td className="text-[var(--color-red)] cursor-pointer">
+                    {profileLabels.reorder}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="text-center text-[var(--color-gray)] py-4 text-xs"
+                >
+                  {profileLabels.noData}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

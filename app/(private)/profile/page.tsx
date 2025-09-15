@@ -91,33 +91,39 @@ const Profile: React.FC = () => {
   return (
     <>
       <ProfileHeader />
-      <PrivateLayout>
-        <h2 className="text-xl font-semibold mb-6">
-          {profileLabels.myAccount}
-        </h2>
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Sidebar */}
-          <div className="w-full md:w-1/3">
-            <SidebarNav
-              items={sidebarNavItems?.map((item, index) => ({
-                ...item,
-                renderContent:
-                  isMobile && index === activeIndex
-                    ? renderActiveSection()
-                    : null,
-              }))}
-              activeIndex={activeIndex}
-              onItemSelect={(index: number) => {
-                setActiveIndex(index);
-                if (index === 7) {
-                  setLogoutOpen(true);
-                }
-              }}
-            />
+      {/* <PrivateLayout> */}
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
+          <div className="flex-1 space-y-4 py-6">
+            <h2 className="text-xl font-semibold mb-6">
+              {profileLabels.myAccount}
+            </h2>
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Sidebar */}
+              <div className="w-full md:w-1/3">
+                <SidebarNav
+                  items={sidebarNavItems?.map((item, index) => ({
+                    ...item,
+                    renderContent:
+                      isMobile && index === activeIndex
+                        ? renderActiveSection()
+                        : null,
+                  }))}
+                  activeIndex={activeIndex}
+                  onItemSelect={(index: number) => {
+                    setActiveIndex(index);
+                    if (index === 7) {
+                      setLogoutOpen(true);
+                    }
+                  }}
+                />
+              </div>
+              {!isMobile && renderActiveSection()}
+            </div>
           </div>
-          {!isMobile && renderActiveSection()}
         </div>
-      </PrivateLayout>
+      </div>
+      {/* </PrivateLayout> */}
       <Modal
         isOpen={isLogoutOpen}
         onClose={() => setLogoutOpen(false)}

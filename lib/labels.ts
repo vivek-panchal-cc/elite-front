@@ -60,6 +60,7 @@ export const labels = {
     creditOrDebit: "Credit/Debit",
     desc: "Description",
     noTrans: "No Transaction Found",
+    noData: "No Data Found",
     units: "Units",
     date: "Date",
     orderNo: "Order Number",

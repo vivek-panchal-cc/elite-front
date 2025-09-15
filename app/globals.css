@@ -310,3 +310,13 @@
   /* text-shadow: 1px 1px var(--color-blue), 1.5px 1.5px var(--color-white); */
   text-shadow: 1.6px 0.5px var(--color-blue), 2px 0.5px var(--color-white);
 }
+
+/* Hide scrollbar but keep scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
