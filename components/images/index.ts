@@ -70,6 +70,15 @@ import offerImg from "./imgs/offer_img.png";
 import bestWeekImg from "./imgs/best_week.png";
 import availablePoints from "./imgs/available-points.png";
 import redeemsPoints from "./imgs/redeem-points.png";
+import treeImg from "./report-activation/tree.png";
+import o2Img from "./report-activation/O2.png";
+import vodafoneImg from "./report-activation/vodafone.png";
+import lebaraImg from "./report-activation/LEBARA.png";
+import eeImg from "./report-activation/EE.png";
+import giffgaffImg from "./report-activation/giffgaff.png";
+import voxiImg from "./report-activation/VOXI.png";
+import smartyImg from "./report-activation/smarty.png";
+import eliteLogoImg from "./report-activation/EliteLogo.png";
 
 // Export all images as a single object
 export const images = {
@@ -144,6 +153,15 @@ export const images = {
   bestWeekImg,
   availablePoints,
   redeemsPoints,
+  treeImg,
+  vodafoneImg,
+  lebaraImg,
+  smartyImg,
+  voxiImg,
+  eeImg,
+  o2Img,
+  giffgaffImg,
+  eliteLogoImg,
 } as const;
 
 // Export individual images for direct import
@@ -206,6 +224,15 @@ export {
   bestWeekImg,
   availablePoints,
   redeemsPoints,
+  treeImg,
+  vodafoneImg,
+  lebaraImg,
+  smartyImg,
+  voxiImg,
+  eeImg,
+  o2Img,
+  giffgaffImg,
+  eliteLogoImg,
 };
 
 // Type for the images object
