@@ -497,6 +497,17 @@ export const labels = {
     basket: "Basket",
     stock: "Stock",
     productDetails: "Product Details",
+    maxFreeProducts: "Maximum free product quantity",
+  },
+
+  reports: {
+    activatedSim: "Currently activated sim cards",
+    reportsDashboard: "Dashboard",
+    activation: "Activation",
+    firstTopUp: "First Top Up",
+    superBonusRewards: "Super Bonus Rewards",
+    contact: "Contact Our",
+    nearBy: "Nearby Executive",
   },
 
   // Months for charts and date displays
@@ -555,3 +566,4 @@ export const logoutLabels = labels.logout;
 export const registrationLabels = labels.registration;
 export const profileLabels = labels.profile;
 export const cartLabels = labels.cart;
+export const reportsLabels = labels.reports;

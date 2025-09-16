@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { IconDown, IconCircle, IconTrophy } from '@/components/images/icons';
+import * as React from "react";
+import { IconDown, IconCircle, IconTrophy } from "@/components/images/icons";
 
 interface RewardsItem {
   name: string;
@@ -49,7 +49,7 @@ export function RewardDropdown({
               <button
                 style={{ background: item.gradient }}
                 onClick={() => handleClick(index)}
-                className={`flex items-center justify-between w-full xl:w-[95%] pl-1 pr-8 py-1 rounded-full ${item.color}`}
+                className={`flex items-center justify-between w-full xl:w-[95%] pl-1 pr-8 py-1 rounded-full cursor-pointer ${item.color}`}
               >
                 <div className="flex items-center gap-2">
                   <div className="relative w-10.5 h-10.5">
@@ -63,7 +63,7 @@ export function RewardDropdown({
                 <IconDown
                   className={`transition-transform duration-100 h-1.5 w-2.5 ${
                     item.downArrowColor
-                  } ${isExpanded ? 'rotate-180' : 'rotate-0'}`}
+                  } ${isExpanded ? "rotate-180" : "rotate-0"}`}
                 />
               </button>
 

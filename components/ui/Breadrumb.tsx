@@ -33,7 +33,7 @@ const Breadcrumb = () => {
         </li>
         {breadcrumbLinks.map((crumb, idx) => (
           <React.Fragment key={crumb.href}>
-            <li>&gt;</li>
+            <li>/</li>
             <li>
               {idx === breadcrumbLinks.length - 1 ? (
                 <span className="text-[var(--color-gray)]">{crumb.label}</span>

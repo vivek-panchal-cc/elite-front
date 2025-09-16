@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Elite Galaxy",
+  title: "Elite Galaxy",
   description:
     "Access your Elite Galaxy dashboard with mortgage information, analytics, and exclusive offers.",
   openGraph: {
-    title: "Dashboard - Elite Galaxy",
+    title: "Elite Galaxy",
     description:
       "Access your Elite Galaxy dashboard with mortgage information, analytics, and exclusive offers.",
   },

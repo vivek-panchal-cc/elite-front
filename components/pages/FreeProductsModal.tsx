@@ -2,87 +2,52 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/ButtonUI";
 import { cartLabels } from "@/lib/labels";
 import Image from "next/image";
-import { productOne } from "../images";
+import { noProduct } from "../images";
 import WrapAmount from "../wrapper/WrapAmount";
-
-interface FreeProduct {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-}
+import { FreeProducts } from "@/types/product";
+const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 interface FreeProductsProps {
   setModalClose: React.Dispatch<React.SetStateAction<boolean>>;
+  products: FreeProducts[];
 }
 
-const mockProducts: FreeProduct[] = [
-  {
-    id: 1,
-    name: "Free Product 1",
-    image: "/images/sample-product.png",
-    price: 10,
-  },
-  {
-    id: 2,
-    name: "Free Product 2",
-    image: "/images/sample-product.png",
-    price: 20,
-  },
-  {
-    id: 3,
-    name: "Free Product 1",
-    image: "/images/sample-product.png",
-    price: 30,
-  },
-  {
-    id: 4,
-    name: "Free Product 2",
-    image: "/images/sample-product.png",
-    price: 40,
-  },
-  {
-    id: 5,
-    name: "Free Product 1",
-    image: "/images/sample-product.png",
-    price: 50,
-  },
-  {
-    id: 6,
-    name: "Free Product 2",
-    image: "/images/sample-product.png",
-    price: 60,
-  },
-  {
-    id: 7,
-    name: "Free Product 1",
-    image: "/images/sample-product.png",
-    price: 70,
-  },
-  {
-    id: 8,
-    name: "Free Product 2",
-    image: "/images/sample-product.png",
-    price: 80,
-  },
-];
-
-const FreeProductsModal = ({ setModalClose }: FreeProductsProps) => {
-  const initialQuantities = mockProducts.reduce(
-    (acc, product) => ({ ...acc, [product.id]: 0 }),
+const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
+  const initialQuantities = products.reduce(
+    (acc, product) => ({ ...acc, [product.prod_id]: 0 }),
     {} as Record<number, number>
   );
 
   const [quantities, setQuantities] =
     useState<Record<number, number>>(initialQuantities);
 
-  const handleQuantity = (id: number, type: "inc" | "dec") => {
+  const handleQuantity = (id: number, type: "inc" | "dec", maxQty: number) => {
     setQuantities((prev) => {
       const current = prev[id] || 0;
-      const newVal = type === "inc" ? current + 1 : Math.max(0, current - 1);
-      return { ...prev, [id]: newVal };
+
+      if (type === "inc") {
+        // If we increase, reset all other products
+        if (current < maxQty) {
+          return {
+            ...Object.keys(prev).reduce(
+              (acc, key) => ({ ...acc, [key]: 0 }),
+              {}
+            ),
+            [id]: current + 1,
+          };
+        }
+      } else if (type === "dec" && current > 0) {
+        // Just decrement for the current product
+        return { ...prev, [id]: current - 1 };
+      }
+
+      return prev;
     });
   };
+
+  const isButtonDisabled = !products.some(
+    (product) => quantities[product.prod_id] === product.free_prod_qty
+  );
 
   return (
     <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg flex flex-col max-h-[80vh]">
@@ -93,28 +58,40 @@ const FreeProductsModal = ({ setModalClose }: FreeProductsProps) => {
         </h2>
       </div>
 
+      <div className="p-4 md:p-5">
+        <h2 className="text-[14px] sm:text-xl font-bold text-left text-[var(--color-black)]">
+          {cartLabels.maxFreeProducts}:
+        </h2>
+      </div>
+
       {/* Product List */}
       <div className="flex-1 custom-scrollbar overflow-y-auto p-6 space-y-4">
-        {mockProducts.map((product) => (
+        {products.map((product) => (
           <div
-            key={product.id}
+            key={product.prod_id}
             className="flex items-center gap-4 border rounded-lg p-3"
           >
             {/* Product Image */}
             <Image
-              src={productOne || product.image}
-              alt={product.name}
+              src={
+                product.images.prod_image
+                  ? `${imageBaseUrl}/small/${product.images.prod_image}`
+                  : noProduct
+              }
+              alt={product.prod_short_name}
               width={60}
               height={60}
-              className="rounded-md"
+              className="object-contain rounded-md w-[60px] h-[60px]"
             />
 
             {/* Product Info */}
             <div className="flex flex-col flex-1">
-              <span className="font-semibold text-sm">{product.name}</span>
-              <span className="text-xs text-[var(--color-gray)]">
-                <WrapAmount value={product.price} />
+              <span className="font-semibold text-sm">
+                {product.prod_short_name}
               </span>
+              {/* <span className="text-xs text-[var(--color-gray)]">
+                <WrapAmount value={product.prod_sp_offer_price} />
+              </span> */}
             </div>
 
             {/* Quantity Controls */}
@@ -123,19 +100,19 @@ const FreeProductsModal = ({ setModalClose }: FreeProductsProps) => {
                 className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleQuantity(product.id, "dec");
+                  handleQuantity(product.prod_id, "dec", product.free_prod_qty);
                 }}
               >
                 -
               </button>
               <span className="w-1/3 text-center text-xs">
-                {quantities[product.id]}
+                {quantities[product.prod_id]}
               </span>
               <button
                 className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleQuantity(product.id, "inc");
+                  handleQuantity(product.prod_id, "inc", product.free_prod_qty);
                 }}
               >
                 +
@@ -151,6 +128,7 @@ const FreeProductsModal = ({ setModalClose }: FreeProductsProps) => {
           type="submit"
           className="w-full rounded-[50px]"
           onClick={() => setModalClose(false)}
+          disabled={isButtonDisabled}
         >
           {cartLabels.addToBasket}
         </Button>
