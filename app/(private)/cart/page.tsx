@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/ButtonUI";
 import { X } from "lucide-react";
 import { noProduct } from "@/components/images";
 import { altTextLabels, cartLabels, commonLabels } from "@/lib/labels";
-import { CURRENCY_SYMBOL, ELITE_WALLET } from "@/lib/constants/all";
+import {
+  CAT_TYPE_ID,
+  CURRENCY_SYMBOL,
+  ELITE_WALLET,
+} from "@/lib/constants/all";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { useEffect, useState } from "react";
@@ -22,6 +26,9 @@ import {
 } from "@/stores/AuthStoreDealer";
 import { Input } from "@/components/ui/Input";
 import { toast } from "sonner";
+import { ProductAddToBasketParams } from "@/types/product";
+import Modal from "@/components/ui/Modal";
+import FreeProductsModal from "@/components/pages/FreeProductsModal";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
@@ -41,6 +48,9 @@ const Cart = () => {
   // const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
   const [amount, setAmount] = useState<number>(0);
   const [amountInput, setAmountInput] = useState<string>("0");
+  const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
+  const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
+  const [pendingUpdate, setPendingUpdate] = useState<any>(null);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   useEffect(() => {
@@ -71,13 +81,55 @@ const Cart = () => {
       only_free_prod: 0,
     });
     if (response?.success && response.statusCode === 200) {
-      setQuantities((prev) => ({
-        ...prev,
-        [basket_id]: Math.max(0, newQuantity),
-      }));
-      setAmount(0);
-      setAmountInput("0");
-      if (reloadCart) await reloadCart();
+      if (response?.data?.length > 0) {
+        setFreeProductsData(response.data);
+        setFreeProductsModal(true);
+        setPendingUpdate({ basket_id, newQuantity });
+      } else {
+        setQuantities((prev) => ({
+          ...prev,
+          [basket_id]: Math.max(0, newQuantity),
+        }));
+        setAmount(0);
+        setAmountInput("0");
+        if (reloadCart) await reloadCart();
+      }
+    } else {
+      toast.warning(response.message);
+    }
+  };
+
+  const handleCloseFreeModal = async (data?: {
+    prodId: number;
+    quantity: number;
+    sku: string;
+    freeProdDiscId: number;
+  }) => {
+    if (!data) return null;
+    let response: any = null;
+    const payload = {
+      action: "add",
+      prod_id: data.prodId,
+      quantity: data.quantity,
+      prod_sku: data.sku,
+      flag: "addFreeProduct",
+      options: {
+        freeProdDiscId: data.freeProdDiscId,
+      },
+    } as const;
+    response = await addToBasketHandler(payload as ProductAddToBasketParams);
+    if (response?.success && response.statusCode === 200) {
+      setFreeProductsModal(false);
+
+      if (pendingUpdate) {
+        const { basket_id, newQuantity } = pendingUpdate;
+        setQuantities((prev) => ({
+          ...prev,
+          [basket_id]: Math.max(0, newQuantity),
+        }));
+        if (reloadCart) await reloadCart();
+        setPendingUpdate(null);
+      }
     } else {
       toast.warning(response.message);
     }
@@ -90,12 +142,16 @@ const Cart = () => {
     if (reloadCart) await reloadCart();
   };
 
-  const removeSingleRecord = async (basket_id: number) => {
+  const removeSingleRecord = async (
+    basket_id: number,
+    basket_prod_sku: string
+  ) => {
     setAmount(0);
     setAmountInput("0");
     await addToBasketHandler({
       basket_id: basket_id,
       action: "remove",
+      prod_sku: basket_prod_sku,
     });
     if (reloadCart) await reloadCart();
   };
@@ -330,7 +386,10 @@ const Cart = () => {
                                       key={item.basket_id}
                                       className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
                                       onClick={() =>
-                                        removeSingleRecord(item.basket_id)
+                                        removeSingleRecord(
+                                          item.basket_id,
+                                          item.basket_prod_sku
+                                        )
                                       }
                                     >
                                       {commonLabels.remove}
@@ -363,7 +422,10 @@ const Cart = () => {
                                     item.basket_prod_sku
                                   )
                                 }
-                                disabled={item.basket_is_free_product === 1}
+                                disabled={
+                                  item.basket_is_free_product === 1 ||
+                                  item.cat_type_id === CAT_TYPE_ID
+                                }
                                 className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                               >
                                 –
@@ -383,7 +445,10 @@ const Cart = () => {
                                     item.basket_prod_sku
                                   )
                                 }
-                                disabled={item.basket_is_free_product === 1}
+                                disabled={
+                                  item.basket_is_free_product === 1 ||
+                                  item.cat_type_id === CAT_TYPE_ID
+                                }
                                 className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                               >
                                 +
@@ -401,15 +466,19 @@ const Cart = () => {
                             <div className="hidden md:flex justify-start md:justify-center">
                               <button
                                 key={item.basket_id}
-                                className={`cursor-pointer ${
-                                  item.basket_is_free_product === 0
-                                    ? "text-[var(--color-red)] hover:text-red-700"
-                                    : "text-[var(--color-smooth-gray)] hover:text-[var(--color-smooth-gray)]-700"
-                                }`}
+                                className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
+                                // className={`cursor-pointer ${
+                                //   item.basket_is_free_product === 0
+                                //     ? "text-[var(--color-red)] hover:text-red-700"
+                                //     : "text-[var(--color-smooth-gray)] hover:text-[var(--color-smooth-gray)]-700"
+                                // }`}
                                 onClick={() =>
-                                  removeSingleRecord(item.basket_id)
+                                  removeSingleRecord(
+                                    item.basket_id,
+                                    item.basket_prod_sku
+                                  )
                                 }
-                                disabled={item.basket_is_free_product === 1}
+                                // disabled={item.basket_is_free_product === 1}
                               >
                                 <X size={18} />
                               </button>
@@ -599,6 +668,17 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={freeProductsModal}
+        onClose={() => handleCloseFreeModal()}
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        isClose={false}
+      >
+        <FreeProductsModal
+          setModalClose={handleCloseFreeModal}
+          products={freeProductsData}
+        />
+      </Modal>
     </div>
     // </PrivateLayout>
   );

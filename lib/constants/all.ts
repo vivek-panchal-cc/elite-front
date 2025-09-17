@@ -3,6 +3,7 @@ import { images } from "@/components/images";
 const ELITE_LOGO = images.elite_logo;
 const ELITE_WALLET = images.eliteWallet;
 const CURRENCY_SYMBOL = "£";
+const CAT_TYPE_ID = 21;
 
 const objectToFormData = (values: Record<string, any>): FormData => {
   const formData = new FormData();
@@ -40,4 +41,5 @@ export {
   CURRENCY_SYMBOL,
   objectToFormData,
   formatDate,
+  CAT_TYPE_ID,
 };
