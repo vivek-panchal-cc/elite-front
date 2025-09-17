@@ -102,7 +102,7 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
               <Image
                 src={
                   product.images.prod_image
-                    ? `${imageBaseUrl}/small/${product.images.prod_image}`
+                    ? `${imageBaseUrl}/medium/${product.images.prod_image}` //whenever data in small folder do change from medium to small
                     : noProduct
                 }
                 alt={product.prod_short_name}

@@ -293,7 +293,7 @@ const Cart = () => {
                                 <Image
                                   src={
                                     item.basket_prod_image
-                                      ? `${imageUrl}/medium/${item.basket_prod_image}`
+                                      ? `${imageUrl}/medium/${item.basket_prod_image}` //whenever data in small folder do change from medium to small
                                       : noProduct
                                   }
                                   alt="Product"
