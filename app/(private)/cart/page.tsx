@@ -299,7 +299,7 @@ const Cart = () => {
                                   alt="Product"
                                   width={60}
                                   height={60}
-                                  className="rounded md:w-[60px] md:h-[60px] object-contain"
+                                  className="rounded w-[60px] h-[60px] object-contain"
                                 />
                               </div>
 
