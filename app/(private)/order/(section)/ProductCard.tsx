@@ -40,51 +40,58 @@ const ProductCard = ({
       <div className="relative mb-1 sm:mb-2">
         <div className="relative mb-1 sm:mb-2 w-full">
           <div
-            className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden ${
+            className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden relative ${
               selectedProduct !== idx
                 ? "border border-[var(--color-orange)]"
                 : ""
             }`}
           >
             <Image
-              // src={`${imageBaseUrl}/medium/${p.prod_image}` || noProduct}
               src={
-                p.gcerp_product_status
-                  ? p.prod_image
-                    ? `${imageBaseUrl}/medium/${p.prod_image}`
-                    : noProduct
-                  : outOfStock
+                p.prod_image
+                  ? `${imageBaseUrl}/medium/${p.prod_image}`
+                  : noProduct
               }
               alt={p.prod_name || p.prod_long_name}
               fill
               className="object-contain rounded p-4"
             />
-            {tag && (
-              <span
-                title={tag}
-                className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full max-w-[90px] truncate ${(() => {
-                  const styles: Record<string, string> = {
-                    HOT: "bg-[var(--color-orange)] text-[var(--color-white)]",
-                    "25%": "bg-[var(--color-green)] text-[var(--color-white)]",
-                    "SOLD OUT":
-                      "bg-[var(--color-red)] text-[var(--color-white)]",
-                  };
-
-                  return (
-                    styles[tag] ||
-                    "bg-[var(--color-light-blue)] text-[var(--color-white)]"
-                  );
-                })()} ${
-                  selectedProduct === idx
-                    ? "-top-5 sm:-top-7 left-0"
-                    : "-top-2 sm:-top-3 left-2 sm:left-3"
-                }`}
-              >
-                {tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}
-                {tag.length > 12 ? tag.slice(0, 12) + "..." : tag}
-              </span>
+            {!p.gcerp_product_status && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-black)]/30">
+                <Image
+                  src={outOfStock}
+                  alt="Out of Stock"
+                  width={80}
+                  height={80}
+                  className="h-[80px] w-[80px] sm:w-[100px] md:h-[100px] object-contain"
+                />
+              </div>
             )}
           </div>
+          {tag && (
+            <span
+              title={tag}
+              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full max-w-[90px] truncate ${(() => {
+                const styles: Record<string, string> = {
+                  HOT: "bg-[var(--color-orange)] text-[var(--color-white)]",
+                  "25%": "bg-[var(--color-green)] text-[var(--color-white)]",
+                  "SOLD OUT": "bg-[var(--color-red)] text-[var(--color-white)]",
+                };
+
+                return (
+                  styles[tag] ||
+                  "bg-[var(--color-light-blue)] text-[var(--color-white)]"
+                );
+              })()} ${
+                selectedProduct === idx
+                  ? "-top-5 sm:-top-7 left-0"
+                  : "-top-2 sm:-top-3 left-2 sm:left-3"
+              }`}
+            >
+              {tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}
+              {tag.length > 12 ? tag.slice(0, 12) + "..." : tag}
+            </span>
+          )}
         </div>
         <div className="px-2 max-w-24 sm:max-w-32 md:max-w-30 lg:max-w-40">
           <p className="text-xs sm:text-sm font-medium">

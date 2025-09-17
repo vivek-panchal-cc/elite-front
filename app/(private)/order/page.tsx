@@ -12,7 +12,13 @@ import LoaderCategory from "@/components/loaders/LoaderCategory";
 import LoaderProduct from "@/components/loaders/LoaderProduct";
 import { cartLabels, commonLabels } from "@/lib/labels";
 import useProductList from "@/hooks/useProductList";
-import { Product, Category, SubCategory, CartItem } from "@/types/product";
+import {
+  Product,
+  Category,
+  SubCategory,
+  CartItem,
+  ProductAddToBasketParams,
+} from "@/types/product";
 import ProductCard from "./(section)/ProductCard";
 import { Input } from "@/components/ui/Input";
 import useAddOrRemoveFavourite from "@/hooks/useAddOrRemoveFavourite";
@@ -220,45 +226,67 @@ export default function Orders() {
     }
   };
 
-  const handleCloseFreeModal = async () => {
-    setFreeProductsModal(false);
+  const handleCloseFreeModal = async (data?: {
+    prodId: number;
+    quantity: number;
+    sku: string;
+    freeProdDiscId: number;
+  }) => {
+    if (!data) return null;
+    let response: any = null;
+    const payload = {
+      action: "add",
+      prod_id: data.prodId,
+      quantity: data.quantity,
+      prod_sku: data.sku,
+      flag: "addFreeProduct",
+      options: {
+        freeProdDiscId: data.freeProdDiscId,
+      },
+    } as const;
+    response = await addToBasketHandler(payload as ProductAddToBasketParams);
+    if (response?.success && response.statusCode === 200) {
+      setFreeProductsModal(false);
 
-    if (pendingUpdate) {
-      const { prodId, newQuantity } = pendingUpdate;
+      if (pendingUpdate) {
+        const { prodId, newQuantity } = pendingUpdate;
 
-      setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
+        setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
 
-      const product =
-        directProducts.find((p: Product) => p.prod_id === prodId) ||
-        subCategories
-          .flatMap((cat) => cat.productList)
-          .find((p: Product) => p.prod_id === prodId);
+        const product =
+          directProducts.find((p: Product) => p.prod_id === prodId) ||
+          subCategories
+            .flatMap((cat) => cat.productList)
+            .find((p: Product) => p.prod_id === prodId);
 
-      if (product) {
-        setCart((prevCart) => {
-          if (newQuantity === 0) {
-            return prevCart.filter((item) => item.product.prod_id !== prodId);
-          }
+        if (product) {
+          setCart((prevCart) => {
+            if (newQuantity === 0) {
+              return prevCart.filter((item) => item.product.prod_id !== prodId);
+            }
 
-          const existingItem = prevCart.find(
-            (item) => item.product.prod_id === prodId
-          );
-          if (existingItem) {
-            return prevCart.map((item) =>
-              item.product.prod_id === prodId
-                ? { ...item, quantity: newQuantity }
-                : item
+            const existingItem = prevCart.find(
+              (item) => item.product.prod_id === prodId
             );
-          } else {
-            return [...prevCart, { product, quantity: newQuantity }];
-          }
-        });
+            if (existingItem) {
+              return prevCart.map((item) =>
+                item.product.prod_id === prodId
+                  ? { ...item, quantity: newQuantity }
+                  : item
+              );
+            } else {
+              return [...prevCart, { product, quantity: newQuantity }];
+            }
+          });
+        }
+
+        if (reloadCart) await reloadCart();
+
+        // Clear pending update
+        setPendingUpdate(null);
       }
-
-      if (reloadCart) await reloadCart();
-
-      // Clear pending update
-      setPendingUpdate(null);
+    } else {
+      toast.warning(response.message);
     }
   };
 
@@ -555,7 +583,7 @@ export default function Orders() {
           )}
           <Modal
             isOpen={freeProductsModal}
-            onClose={handleCloseFreeModal}
+            onClose={() => handleCloseFreeModal()}
             classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
             isClose={false}
           >

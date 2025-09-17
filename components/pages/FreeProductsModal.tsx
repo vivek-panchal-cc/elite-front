@@ -8,12 +8,17 @@ import { FreeProducts } from "@/types/product";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 interface FreeProductsProps {
-  setModalClose: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalClose: (data?: {
+    prodId: number;
+    quantity: number;
+    sku: string;
+    freeProdDiscId: number;
+  }) => void;
   products: FreeProducts[];
 }
 
 const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
-  const initialQuantities = products.reduce(
+  const initialQuantities = products[0].items.reduce(
     (acc, product) => ({ ...acc, [product.prod_id]: 0 }),
     {} as Record<number, number>
   );
@@ -45,9 +50,29 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
     });
   };
 
-  const isButtonDisabled = !products.some(
+  const handleAddToBasket = () => {
+    const selected = products[0].items.find((p) => quantities[p.prod_id] > 0);
+
+    if (selected) {
+      const qty = quantities[selected.prod_id];
+      const totalUnits = qty * selected.box_size;
+
+      setModalClose({
+        prodId: selected.prod_id,
+        quantity: totalUnits, // box quantity
+        sku: selected.prod_sku,
+        freeProdDiscId: selected.disc_id,
+      });
+    } else {
+      setModalClose();
+    }
+  };
+
+  const isButtonDisabled = !products[0].items.some(
     (product) => quantities[product.prod_id] === product.free_prod_qty
   );
+
+  const maxQuantity = products[0].free_prod_qty;
 
   return (
     <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg flex flex-col max-h-[80vh]">
@@ -60,66 +85,82 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
 
       <div className="p-4 md:p-5">
         <h2 className="text-[14px] sm:text-xl font-bold text-left text-[var(--color-black)]">
-          {cartLabels.maxFreeProducts}:
+          {cartLabels.maxFreeProducts} : {maxQuantity}
         </h2>
       </div>
 
       {/* Product List */}
       <div className="flex-1 custom-scrollbar overflow-y-auto p-6 space-y-4">
-        {products.map((product) => (
-          <div
-            key={product.prod_id}
-            className="flex items-center gap-4 border rounded-lg p-3"
-          >
-            {/* Product Image */}
-            <Image
-              src={
-                product.images.prod_image
-                  ? `${imageBaseUrl}/small/${product.images.prod_image}`
-                  : noProduct
-              }
-              alt={product.prod_short_name}
-              width={60}
-              height={60}
-              className="object-contain rounded-md w-[60px] h-[60px]"
-            />
+        {products[0].items.map((product) => {
+          const qty = quantities[product.prod_id];
+          return (
+            <div
+              key={product.prod_id}
+              className="flex items-center gap-4 border rounded-lg p-3"
+            >
+              {/* Product Image */}
+              <Image
+                src={
+                  product.images.prod_image
+                    ? `${imageBaseUrl}/small/${product.images.prod_image}`
+                    : noProduct
+                }
+                alt={product.prod_short_name}
+                width={60}
+                height={60}
+                className="object-contain rounded-md w-[60px] h-[60px]"
+              />
 
-            {/* Product Info */}
-            <div className="flex flex-col flex-1">
-              <span className="font-semibold text-sm">
-                {product.prod_short_name}
-              </span>
-              {/* <span className="text-xs text-[var(--color-gray)]">
+              {/* Product Info */}
+              <div className="flex flex-col flex-1">
+                <span className="font-semibold text-sm">
+                  {product.prod_short_name || product.prod_name}
+                </span>
+                {qty > 0 && (
+                  <span className="text-xs text-[var(--color-gray)]">
+                    {cartLabels.totalUnits} : {qty * product.box_size}
+                  </span>
+                )}
+                {/* <span className="text-xs text-[var(--color-gray)]">
                 <WrapAmount value={product.prod_sp_offer_price} />
               </span> */}
-            </div>
+              </div>
 
-            {/* Quantity Controls */}
-            <div className="flex w-20 items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-6 transition-all duration-300 ease-in-out">
-              <button
-                className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleQuantity(product.prod_id, "dec", product.free_prod_qty);
-                }}
-              >
-                -
-              </button>
-              <span className="w-1/3 text-center text-xs">
-                {quantities[product.prod_id]}
-              </span>
-              <button
-                className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleQuantity(product.prod_id, "inc", product.free_prod_qty);
-                }}
-              >
-                +
-              </button>
+              {/* Quantity Controls */}
+              <div className="flex w-20 items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-6 transition-all duration-300 ease-in-out">
+                <button
+                  className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleQuantity(
+                      product.prod_id,
+                      "dec",
+                      product.free_prod_qty
+                    );
+                  }}
+                >
+                  -
+                </button>
+                <span className="w-1/3 text-center text-xs">
+                  {quantities[product.prod_id]}
+                </span>
+                <button
+                  className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleQuantity(
+                      product.prod_id,
+                      "inc",
+                      product.free_prod_qty
+                    );
+                  }}
+                >
+                  +
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Sticky Footer */}
@@ -127,7 +168,7 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
         <Button
           type="submit"
           className="w-full rounded-[50px]"
-          onClick={() => setModalClose(false)}
+          onClick={handleAddToBasket}
           disabled={isButtonDisabled}
         >
           {cartLabels.addToBasket}

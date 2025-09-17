@@ -113,10 +113,13 @@ export interface ProductAddToBasketParams {
   basket_id?: number;
   prod_id?: number;
   action: "add" | "product-remove" | "remove";
-  flag?: "add" | "remove";
+  flag?: "add" | "remove" | "addFreeProduct";
   quantity?: number;
   only_free_prod?: number;
   prod_sku?: string;
+  options?: {
+    freeProdDiscId: number;
+  };
 }
 
 export interface ProductRedeemAmount {
@@ -129,7 +132,7 @@ export interface FreeProductImages {
   default_image: boolean;
 }
 
-export interface FreeProducts {
+export interface FreeProductItems {
   prod_id: number;
   cat_ids: string;
   comp_group_id: number;
@@ -189,4 +192,10 @@ export interface FreeProducts {
   disc_id: number;
   free_prod_qty: number;
   prev_free_prod_qty: number;
+}
+
+export interface FreeProducts {
+  free_prod_qty: number;
+  min_cart_value: number;
+  items: FreeProductItems[];
 }

@@ -287,6 +287,9 @@ const Cart = () => {
                                             item.basket_prod_sku
                                           )
                                         }
+                                        disabled={
+                                          item.basket_is_free_product === 1
+                                        }
                                         className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                                       >
                                         –
@@ -309,6 +312,9 @@ const Cart = () => {
                                               step,
                                             item.basket_prod_sku
                                           )
+                                        }
+                                        disabled={
+                                          item.basket_is_free_product === 1
                                         }
                                         className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                                       >
@@ -357,6 +363,7 @@ const Cart = () => {
                                     item.basket_prod_sku
                                   )
                                 }
+                                disabled={item.basket_is_free_product === 1}
                                 className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                               >
                                 –
@@ -376,6 +383,7 @@ const Cart = () => {
                                     item.basket_prod_sku
                                   )
                                 }
+                                disabled={item.basket_is_free_product === 1}
                                 className="px-2 h-full text-[var(--color-gray)] cursor-pointer"
                               >
                                 +
@@ -393,10 +401,15 @@ const Cart = () => {
                             <div className="hidden md:flex justify-start md:justify-center">
                               <button
                                 key={item.basket_id}
-                                className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
+                                className={`cursor-pointer ${
+                                  item.basket_is_free_product === 0
+                                    ? "text-[var(--color-red)] hover:text-red-700"
+                                    : "text-[var(--color-smooth-gray)] hover:text-[var(--color-smooth-gray)]-700"
+                                }`}
                                 onClick={() =>
                                   removeSingleRecord(item.basket_id)
                                 }
+                                disabled={item.basket_is_free_product === 1}
                               >
                                 <X size={18} />
                               </button>

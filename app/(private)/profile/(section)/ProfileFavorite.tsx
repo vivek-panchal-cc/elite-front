@@ -12,6 +12,9 @@ import LoaderProduct from "@/components/loaders/LoaderProduct";
 import { useBasket } from "@/components/context/BasketContext";
 import useCartItems from "@/hooks/useCartItems";
 import { toast } from "sonner";
+import Modal from "@/components/ui/Modal";
+import FreeProductsModal from "@/components/pages/FreeProductsModal";
+import { ProductAddToBasketParams } from "@/types/product";
 
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 interface ProfileFavouriteProps {
@@ -27,6 +30,9 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
     Array(favouriteProduct.length).fill(true)
   );
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
+  const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
+  const [pendingUpdate, setPendingUpdate] = useState<any>(null);
 
   useEffect(() => {
     if (favouriteProduct.length > 0) {
@@ -86,8 +92,46 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
       });
     }
     if (response?.success && response.statusCode === 200) {
-      setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
-      if (reloadCart) await reloadCart();
+      if (response?.data?.length > 0) {
+        setFreeProductsData(response.data);
+        setFreeProductsModal(true);
+        setPendingUpdate({ prodId, newQuantity });
+      } else {
+        setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+        if (reloadCart) await reloadCart();
+      }
+    } else {
+      toast.warning(response.message);
+    }
+  };
+
+  const handleCloseFreeModal = async (data?: {
+    prodId: number;
+    quantity: number;
+    sku: string;
+    freeProdDiscId: number;
+  }) => {
+    if (!data) return null;
+    let response: any = null;
+    const payload = {
+      action: "add",
+      prod_id: data.prodId,
+      quantity: data.quantity,
+      prod_sku: data.sku,
+      flag: "addFreeProduct",
+      options: {
+        freeProdDiscId: data.freeProdDiscId,
+      },
+    } as const;
+    response = await addToBasketHandler(payload as ProductAddToBasketParams);
+    if (response?.success && response.statusCode === 200) {
+      setFreeProductsModal(false);
+      if (pendingUpdate) {
+        const { prodId, newQuantity } = pendingUpdate;
+        setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+        if (reloadCart) await reloadCart();
+        setPendingUpdate(null);
+      }
     } else {
       toast.warning(response.message);
     }
@@ -157,22 +201,26 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
                       <div className="relative mb-1 sm:mb-2 w-full">
                         <div className="relative h-24 w-full sm:h-32 md:h-40 rounded-md border border-[var(--color-red)] overflow-hidden">
                           <Image
-                            // src={
-                            //   p.images_prod_image
-                            //     ? `${imageBaseUrl}/medium/${p.images_prod_image}`
-                            //     : noProduct
-                            // }
                             src={
-                              p.gcerp_product_status
-                                ? p.default_image
-                                  ? `${imageBaseUrl}/medium/${p.default_image}`
-                                  : noProduct
-                                : outOfStock
+                              p.default_image
+                                ? `${imageBaseUrl}/medium/${p.default_image}`
+                                : noProduct
                             }
                             alt={p.prod_name}
                             fill
                             className="object-contain rounded p-4"
                           />
+                          {!p.gcerp_product_status && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-black)]/30">
+                              <Image
+                                src={outOfStock}
+                                alt="Out of Stock"
+                                width={80}
+                                height={80}
+                                className="h-[80px] w-[80px] sm:w-[100px] md:h-[100px] object-contain"
+                              />
+                            </div>
+                          )}
 
                           {/* Bottom controls */}
                           <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between z-10">
@@ -290,6 +338,17 @@ export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={freeProductsModal}
+        onClose={() => handleCloseFreeModal()}
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        isClose={false}
+      >
+        <FreeProductsModal
+          setModalClose={handleCloseFreeModal}
+          products={freeProductsData}
+        />
+      </Modal>
     </div>
   );
 }
