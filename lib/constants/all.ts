@@ -3,7 +3,7 @@ import { images } from "@/components/images";
 const ELITE_LOGO = images.elite_logo;
 const ELITE_WALLET = images.eliteWallet;
 const CURRENCY_SYMBOL = "£";
-const CAT_TYPE_ID = 21;
+const CAT_TYPE_ID = process.env.NODE_ENV === "production" ? 21 : 22;
 
 const objectToFormData = (values: Record<string, any>): FormData => {
   const formData = new FormData();

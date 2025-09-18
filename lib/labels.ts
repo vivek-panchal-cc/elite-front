@@ -45,6 +45,7 @@ export const labels = {
     myAccount: "My Account",
     hello: "Hello ",
     yourRewardBalance: "Your Reward Balance",
+    lastTenTrans: "Last 10 Transaction Amount",
     withdraw: "WITHDRAW",
     deposite: "DEPOSITE",
     orderHistory: "Order History",
