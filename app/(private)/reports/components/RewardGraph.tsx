@@ -1,46 +1,21 @@
-'use client';
-import React from 'react';
-import { profileLabels } from '@/lib/labels';
-import { Line } from 'react-chartjs-2';
+"use client";
+import React from "react";
+import { profileLabels } from "@/lib/labels";
+import { Line } from "react-chartjs-2";
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import Image from 'next/image';
-import { images } from '@/components/images';
+import "swiper/css";
+import "swiper/css/pagination";
+import Image from "next/image";
+import { images } from "@/components/images";
+import useDealerGraph from "@/hooks/useDealerGraph";
+import { getRewardGraphData, rewardGraphOptions } from "@/lib/constants/all";
 
 const RewardGraph = () => {
-  const rewardGraphData = {
-    labels: ['February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: profileLabels.received,
-        data: [30, 50, 40, 70, 60, 50],
-        borderColor: '#ff3e00',
-        backgroundColor: 'rgba(255, 75, 110, 0.2)',
-        tension: 0.4,
-      },
-      {
-        label: profileLabels.withdrawal,
-        data: [20, 30, 50, 60, 70, 55],
-        borderColor: '#10499e',
-        backgroundColor: 'rgba(31, 111, 235, 0.2)',
-        tension: 0.4,
-      },
-    ],
-  };
-  const rewardGraphOptions = {
-    plugins: { legend: { display: false } },
-    scales: {
-      x: {
-        grid: { display: false },
-        border: { display: false },
-      },
-      y: { display: false, grid: { display: false } },
-    },
-  };
+  const [loadingGraph, dealerGraphData, reloadGraph] = useDealerGraph();
+  const rewardGraphData = getRewardGraphData(dealerGraphData);
 
   const RewardGraphCard = (
-    <div className="bg-[var(--color-white)]   ">
+    <div className="bg-[var(--color-white)]">
       <div className="flex flex-row sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-30 sm:gap-0">
         <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[16px]">
           {profileLabels.rewardGraph}
@@ -65,7 +40,8 @@ const RewardGraph = () => {
       <div
         className="border-0 rounded-xl  p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
         style={{
-          background: ' linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)',
+          background:
+            " linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)",
         }}
       >
         <Image
@@ -85,7 +61,8 @@ const RewardGraph = () => {
       <div
         className="border rounded-xl p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
         style={{
-          background: ' linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)',
+          background:
+            " linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)",
         }}
       >
         <Image

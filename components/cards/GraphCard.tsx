@@ -2,45 +2,11 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { profileLabels } from "@/lib/labels";
 import useDealerGraph from "@/hooks/useDealerGraph";
+import { getRewardGraphData, rewardGraphOptions } from "@/lib/constants/all";
 
 export default function GraphCard() {
   const [loadingGraph, dealerGraphData, reloadGraph] = useDealerGraph();
-
-  const rewardGraphData = {
-    labels:
-      dealerGraphData?.data?.labels?.map((label: string) =>
-        label.slice(0, 3)
-      ) || [],
-    datasets:
-      dealerGraphData?.data?.datasets?.map((dataset) => {
-        let borderColor = "#ff3e00";
-        let backgroundColor = "rgba(255, 75, 110, 0.2)";
-
-        if (dataset.label.toLowerCase() === "withdrawal") {
-          borderColor = "#10499e";
-          backgroundColor = "rgba(31, 111, 235, 0.2)";
-        }
-
-        return {
-          label: dataset.label,
-          data: dataset.data,
-          borderColor,
-          backgroundColor,
-          tension: 0.4,
-        };
-      }) || [],
-  };
-
-  const rewardGraphOptions = {
-    plugins: { legend: { display: false } },
-    scales: {
-      x: {
-        grid: { display: false },
-        border: { display: false },
-      },
-      y: { display: false, grid: { display: false } },
-    },
-  };
+  const rewardGraphData = getRewardGraphData(dealerGraphData);
 
   return (
     <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4">

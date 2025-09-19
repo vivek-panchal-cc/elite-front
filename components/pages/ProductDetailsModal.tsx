@@ -30,19 +30,30 @@ const ProductDetailsModal = ({
       <div className="flex-1 custom-scrollbar overflow-y-auto p-6 space-y-6">
         <div className="flex flex-col items-center gap-4">
           {/* Product Image */}
-          <Image
-            src={
-              details.gcerp_product_status
-                ? details.prod_image
+          <div className="relative h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-md border border-[var(--color-red)] overflow-hidden">
+            <Image
+              src={
+                details.prod_image
                   ? `${imageBaseUrl}/medium/${details.prod_image}`
                   : noProduct
-                : outOfStock
-            }
-            alt={details.prod_name || details.prod_long_name}
-            width={200}
-            height={200}
-            className="object-contain rounded p-4"
-          />
+              }
+              alt={details.prod_name || details.prod_long_name}
+              fill
+              className="object-contain rounded p-4"
+            />
+
+            {!details.gcerp_product_status && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-black)]/30">
+                <Image
+                  src={outOfStock}
+                  alt="Out of Stock"
+                  width={80}
+                  height={80}
+                  className="h-[80px] w-[80px] sm:w-[100px] md:h-[100px] object-contain"
+                />
+              </div>
+            )}
+          </div>
 
           {/* Name + SKU */}
           <div className="text-center">
