@@ -108,7 +108,6 @@ export default function ProfileDashboard() {
               {RewardBalanceCard}
               <div className="lg:grid lg:grid-cols-1 lg:gap-2">
                 {<OrderHistoryCard />}
-
                 {<ContactCard />}
               </div>
             </div>

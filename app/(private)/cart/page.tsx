@@ -20,10 +20,7 @@ import { useBasket } from "@/components/context/BasketContext";
 import useCartItems from "@/hooks/useCartItems";
 import { CartMeta, CartSummary } from "@/types/cart";
 import LoaderItems from "@/components/loaders/LoaderItems";
-import {
-  useAuthStore,
-  useAuthStoreWithAutoRefresh,
-} from "@/stores/AuthStoreDealer";
+import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
 import { Input } from "@/components/ui/Input";
 import { toast } from "sonner";
 import { ProductAddToBasketParams } from "@/types/product";
@@ -47,7 +44,7 @@ const Cart = () => {
   );
   // const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
   const [amount, setAmount] = useState<number>(0);
-  const [amountInput, setAmountInput] = useState<string>("0");
+  const [amountInput, setAmountInput] = useState<string>("");
   const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
   const [pendingUpdate, setPendingUpdate] = useState<any>(null);
@@ -171,7 +168,7 @@ const Cart = () => {
 
     if (val === "") {
       setAmount(0);
-      setAmountInput("0");
+      setAmountInput("");
       return;
     }
 

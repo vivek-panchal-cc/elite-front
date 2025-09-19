@@ -15,13 +15,10 @@ import { toast } from "sonner";
 import Modal from "@/components/ui/Modal";
 import FreeProductsModal from "@/components/pages/FreeProductsModal";
 import { ProductAddToBasketParams } from "@/types/product";
-
+import { IsMobileProps } from "@/types/profile";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
-interface ProfileFavouriteProps {
-  isMobile?: boolean;
-}
 
-export default function ProfileFavourite({ isMobile }: ProfileFavouriteProps) {
+export default function ProfileFavourite({ isMobile }: IsMobileProps) {
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const { addToBasketHandler, isLoading } = useBasket();
   const { reloadCart } = useCartItems();

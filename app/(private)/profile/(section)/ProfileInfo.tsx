@@ -12,12 +12,9 @@ import { apiRequest } from "@/lib/apiRequest";
 import { toast } from "sonner";
 import { useLoader } from "@/components/providers/loader-provider";
 import ChangePassword from "./ChangePassword";
+import { IsMobileProps } from "@/types/profile";
 
-interface ProfileInfoProps {
-  isMobile?: boolean;
-}
-
-export default function ProfileInfo({ isMobile }: ProfileInfoProps) {
+export default function ProfileInfo({ isMobile }: IsMobileProps) {
   const { setIsLoading } = useLoader();
   const { user } = useAuthStoreWithAutoRefresh();
   const [isEditing, setIsEditing] = React.useState(false);

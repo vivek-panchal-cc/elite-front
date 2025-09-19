@@ -12,12 +12,9 @@ import { toast } from "sonner";
 import { companySchema } from "@/lib/validations/companySchema";
 import RoundedAdd from "@/components/images/svgs/RoundedAdd";
 import LoaderBranch from "@/components/loaders/LoaderBranch";
+import { IsMobileProps } from "@/types/profile";
 
-interface ProfileCompanyProps {
-  isMobile?: boolean;
-}
-
-export default function ProfileCompany({ isMobile }: ProfileCompanyProps) {
+export default function ProfileCompany({ isMobile }: IsMobileProps) {
   const [loading, companyDetails, reloadCompany] = useCompany();
   const [company, setCompany] = useState<Company[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);

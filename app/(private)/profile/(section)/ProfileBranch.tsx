@@ -13,11 +13,9 @@ import { toast } from "sonner";
 import { apiRequest } from "@/lib/apiRequest";
 import { branchSchema } from "@/lib/validations/branchSchema";
 import LoaderBranch from "@/components/loaders/LoaderBranch";
-interface ProfileBranchProps {
-  isMobile?: boolean;
-}
+import { IsMobileProps } from "@/types/profile";
 
-export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
+export default function ProfileBranch({ isMobile }: IsMobileProps) {
   const [loading, branchList, reloadBranch] = useBranchList();
   const [branches, setBranches] = useState<Branch[]>([]);
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -289,7 +287,7 @@ export default function ProfileBranch({ isMobile }: ProfileBranchProps) {
             <div className="flex flex-col divide-y-[2px] divide-[var(--table-border)]">
               {loading ? (
                 <LoaderBranch isMobile={isMobile} />
-              ) : branches.length <= 0 ? (
+              ) : branches.length <= 0 && !isAdding ? (
                 <div className="p-6 text-center text-sm text-[var(--color-gray)]">
                   {profileLabels.profileMyBranchesLabel.noBranches}
                 </div>

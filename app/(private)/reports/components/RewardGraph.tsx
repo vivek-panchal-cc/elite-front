@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
-import { profileLabels } from "@/lib/labels";
+import { profileLabels, reportsLabels } from "@/lib/labels";
 import { Line } from "react-chartjs-2";
-
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { images } from "@/components/images";
 import useDealerGraph from "@/hooks/useDealerGraph";
 import { getRewardGraphData, rewardGraphOptions } from "@/lib/constants/all";
+import WrapAmount from "@/components/wrapper/WrapAmount";
 
 const RewardGraph = () => {
   const [loadingGraph, dealerGraphData, reloadGraph] = useDealerGraph();
@@ -16,10 +16,11 @@ const RewardGraph = () => {
 
   const RewardGraphCard = (
     <div className="bg-[var(--color-white)]">
-      <div className="flex flex-row sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-30 sm:gap-0">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
         <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[16px]">
           {profileLabels.rewardGraph}
         </h3>
+        {/* keep labels inside card even on mobile */}
         <div className="flex gap-3 text-[11px] sm:text-[12px] text-[var(--color-gray)] font-semibold">
           <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)]">
             {profileLabels.received}
@@ -51,10 +52,10 @@ const RewardGraph = () => {
         />
         <div className=" flex flex-col md:justify-center md:items-center">
           <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
-            £451.40
+            <WrapAmount value={451.4} />
           </p>
           <p className="font-medium text-[10px] md:text-[18px] text-[var(--color-white)] ">
-            Redeems Points
+            {reportsLabels.redeemPts}
           </p>
         </div>
       </div>
@@ -72,10 +73,10 @@ const RewardGraph = () => {
         />
         <div className=" flex flex-col md:justify-center md:items-center">
           <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
-            £451.40
+            <WrapAmount value={451.45} />
           </p>
           <p className="font-medium text-[10px] md:text-[18px]  text-[var(--color-white)]">
-            Available Points
+            {reportsLabels.availablePts}
           </p>
         </div>
       </div>

@@ -1,3 +1,6 @@
+export interface IsMobileProps {
+  isMobile?: boolean;
+}
 export interface UserDetails {
   user_fname: string;
   user_lname: string;

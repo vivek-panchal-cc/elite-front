@@ -148,18 +148,17 @@ const ActivationDashboard = () => {
         <div className="max-w-7xl mx-auto w-full">
           <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-5 sm:px-5 md:px-8 lg:px-[60px]">
             <div>
-              {/* header  */}
-              <div className="xl:flex xl:flex-row xl:justify-end  xl:gap-[295px] lg:flex lg:flex-row lg:justify-end lg:gap-[150px]">
-                <p className="text-center text-[32px] text-[#005198] font-bold mb-4">
+              <div className="flex flex-col items-center gap-4 md:relative md:flex-row md:justify-end md:items-center">
+                <p className="text-center text-[24px] md:text-[32px] text-[var(--color-blue)] font-bold md:mb-4 md:absolute md:left-1/2 md:-translate-x-1/2">
                   {reportsLabels.reportsDashboard}
                 </p>
-                <div className="flex flex-row gap-6 justify-center items-center mb-6">
-                  <div className="border-1 border-[#ED174B] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
-                    <IconLeftArrow className="h-2.5 w-3.5"></IconLeftArrow>
+                <div className="flex flex-row gap-6 items-center mb-2 md:mb-6 md:static">
+                  <div className="border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
+                    <IconLeftArrow className="h-2.5 w-3.5" />
                   </div>
                   <p className="text-[15px] font-medium">November 2025</p>
-                  <div className="border-1 border-[#ED174B] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
-                    <IconRightArrow className="h-2.5 w-3.5 "></IconRightArrow>
+                  <div className="border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
+                    <IconRightArrow className="h-2.5 w-3.5" />
                   </div>
                 </div>
               </div>

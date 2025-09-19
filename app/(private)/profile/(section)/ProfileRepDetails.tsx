@@ -2,14 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { profileLabels } from "@/lib/labels";
 import Image from "next/image";
 import { productOne, userIcon } from "@/components/images";
+import { IsMobileProps } from "@/types/profile";
 
-interface ProfileRepDetailsProps {
-  isMobile?: boolean;
-}
-
-export default function ProfileRepDetails({
-  isMobile,
-}: ProfileRepDetailsProps) {
+export default function ProfileRepDetails({ isMobile }: IsMobileProps) {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 

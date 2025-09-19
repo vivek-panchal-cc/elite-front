@@ -1,11 +1,8 @@
+import { IsMobileProps } from "@/types/profile";
 import React from "react";
 import ContentLoader, { IContentLoaderProps } from "react-content-loader";
 
-interface BranchSkeletonProps extends IContentLoaderProps {
-  isMobile?: boolean;
-}
-
-const LoaderBranch: React.FC<BranchSkeletonProps> = ({
+const LoaderBranch: React.FC<IsMobileProps & IContentLoaderProps> = ({
   isMobile = false,
   ...props
 }) => {

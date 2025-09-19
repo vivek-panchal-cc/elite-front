@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/ButtonUI";
 import useRewards from "@/hooks/useRewards";
 import { formatDate } from "@/lib/constants/all";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
+import { useRouter } from "next/navigation";
+import { IsMobileProps } from "@/types/profile";
 
-interface ProfileRewardProps {
-  isMobile?: boolean;
-}
-
-export default function ProfileReward({ isMobile }: ProfileRewardProps) {
+export default function ProfileReward({ isMobile }: IsMobileProps) {
+  const router = useRouter();
   const [loadingTrans, transactionList, reloadTrans] = useRewards();
   const rewards = transactionList.map((r) => ({
     date: r.redeem_date,
@@ -291,7 +290,10 @@ export default function ProfileReward({ isMobile }: ProfileRewardProps) {
         )}
         {rewards && rewards.length > 0 && (
           <div className="p-6">
-            <Button className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]">
+            <Button
+              className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]"
+              onClick={() => router.push("/reports")}
+            >
               {profileLabels.rewardWalletLabel.viewStatement}
             </Button>
           </div>

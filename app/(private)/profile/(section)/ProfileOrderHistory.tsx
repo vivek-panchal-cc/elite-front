@@ -9,14 +9,9 @@ import useOrderHistory from "@/hooks/useOrderHistory";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { formatDate } from "@/lib/constants/all";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
+import { IsMobileProps } from "@/types/profile";
 
-interface ProfileOrderHistoryProps {
-  isMobile?: boolean;
-}
-
-export default function ProfileOrderHistory({
-  isMobile,
-}: ProfileOrderHistoryProps) {
+export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
   const [loading, orderHistory, reload] = useOrderHistory({
     limit: 10,
     orderBy: "DESC",
