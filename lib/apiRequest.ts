@@ -10,6 +10,11 @@ import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
 import { objectToFormData } from "./constants/all";
 import { ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
+import {
+  OrderStatus,
+  OrderSummary,
+  PayWithExistingToken,
+} from "@/types/payments";
 
 // Types
 interface LoginCredentials {
@@ -265,6 +270,50 @@ const cartItems = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.PRODUCT_ENDPOINTS.CART_LIST);
 };
 
+// Payments
+const getCardList = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PAYMENT.CARD_LIST);
+};
+
+const paymentInitiate = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PAYMENT.PAYMENT_INITIATE);
+};
+
+const createPayment = (
+  data: OrderSummary
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PAYMENT.PAYMENT_PAGE, data);
+};
+
+const checkOrderStatus = (
+  data: OrderStatus
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PAYMENT.ORDER_STATUS, data);
+};
+
+const getOrderDetails = (
+  params: Record<string, string | number>
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PAYMENT.ORDER_DETAILS, { params });
+};
+
+const setAsDefaultCard = (id: string): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.put(apiUrl.PAYMENT.CARD_ACTION(id));
+};
+
+const deleteCard = (id: string): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.delete(apiUrl.PAYMENT.CARD_ACTION(id));
+};
+
+const payWithExistingToken = (
+  data: PayWithExistingToken
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(
+    apiUrl.PAYMENT.PAY_WITH_EXISTING_TOKEN,
+    data
+  );
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -308,6 +357,14 @@ export const apiRequest = {
   clearCart,
   cartItems,
   updateRedeemAmount,
+  getCardList,
+  createPayment,
+  paymentInitiate,
+  checkOrderStatus,
+  getOrderDetails,
+  setAsDefaultCard,
+  deleteCard,
+  payWithExistingToken,
 } as const;
 
 // Export type for the apiRequest object
@@ -348,4 +405,12 @@ export {
   clearCart,
   cartItems,
   updateRedeemAmount,
+  getCardList,
+  createPayment,
+  paymentInitiate,
+  checkOrderStatus,
+  getOrderDetails,
+  setAsDefaultCard,
+  deleteCard,
+  payWithExistingToken,
 };

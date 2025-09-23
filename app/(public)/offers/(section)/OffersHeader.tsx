@@ -5,20 +5,13 @@ import Modal from "@/components/ui/Modal";
 import LoginForm from "@/components/pages/login-form/LoginForm";
 import ResetPassword from "@/components/pages/reset-password/ResetPasswordForm";
 import RegistrationForm from "@/components/pages/registration-form/RegistrationForm";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function OffersHeader() {
-  const [isMobile, setIsMobile] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
+  const isMobile = useIsMobile();
   return (
     <>
       <section

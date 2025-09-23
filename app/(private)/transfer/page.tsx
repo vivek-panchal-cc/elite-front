@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import TransferRightComponent from "./components/TransferRightComponent";
 import PaypalModal from "./components/PaypalModal";
+import useIsMobile from "@/hooks/useIsMobile";
 
 interface SidebarItem {
   title: string;
@@ -13,16 +14,9 @@ interface SidebarItem {
 }
 
 const Transfer = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const isMobile = useIsMobile();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const renderActiveSection = () => {
     switch (activeIndex) {

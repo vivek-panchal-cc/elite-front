@@ -79,6 +79,11 @@ import giffgaffImg from "./report-activation/giffgaff.png";
 import voxiImg from "./report-activation/VOXI.png";
 import smartyImg from "./report-activation/smarty.png";
 import eliteLogoImg from "./report-activation/EliteLogo.png";
+import spinner from "./spinner.gif";
+import success from "./success.gif";
+import thankYouHeader from "./imgs/thank-you-header-img.png";
+import check from "./svgs/Check";
+import download from "./svgs/Download";
 
 // Export all images as a single object
 export const images = {
@@ -162,6 +167,11 @@ export const images = {
   o2Img,
   giffgaffImg,
   eliteLogoImg,
+  spinner,
+  success,
+  thankYouHeader,
+  check,
+  download,
 } as const;
 
 // Export individual images for direct import
@@ -233,6 +243,11 @@ export {
   o2Img,
   giffgaffImg,
   eliteLogoImg,
+  spinner,
+  success,
+  thankYouHeader,
+  check,
+  download,
 };
 
 // Type for the images object

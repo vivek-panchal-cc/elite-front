@@ -145,7 +145,13 @@ export default function ProfileBranch({ isMobile }: IsMobileProps) {
           >
             {isAdding && (
               <form onSubmit={formik.handleSubmit}>
-                <div className="p-6 border-b-[2px] border-[var(--table-border)] bg-[var(--color-light-gray)]">
+                <div
+                  className={`p-6 bg-[var(--color-light-gray)] ${
+                    branches.length > 0
+                      ? "border-b-[2px] border-[var(--table-border)]"
+                      : ""
+                  }`}
+                >
                   <div className="flex justify-end mb-6 gap-3 mt-[-15px]">
                     <Button
                       type="submit"

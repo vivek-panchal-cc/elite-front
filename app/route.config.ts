@@ -19,6 +19,9 @@ export const routeConfig = {
     "/reports",
     // "/change-password",
     "/report-activations",
+    "/checkout",
+    "/thank-you",
+    "/try-again",
   ],
 
   // Admin routes - none currently configured

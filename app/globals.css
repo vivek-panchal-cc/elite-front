@@ -321,3 +321,12 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+.card-list-border-top {
+  background: linear-gradient(
+    85deg,
+    rgba(240, 26, 80, 1) 0%,
+    rgba(129, 59, 124, 1) 38%,
+    rgba(16, 73, 158, 1) 55%
+  );
+}

@@ -10,6 +10,8 @@ import {
   CAT_TYPE_ID,
   CURRENCY_SYMBOL,
   ELITE_WALLET,
+  NEW_CARD,
+  SAVED_CARD,
 } from "@/lib/constants/all";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
@@ -26,10 +28,15 @@ import { toast } from "sonner";
 import { ProductAddToBasketParams } from "@/types/product";
 import Modal from "@/components/ui/Modal";
 import FreeProductsModal from "@/components/pages/FreeProductsModal";
+import { useCheckout } from "@/components/context/CheckoutContext";
+import { apiRequest } from "@/lib/apiRequest";
+import { useLoader } from "@/components/providers/loader-provider";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
   const router = useRouter();
+  const { setIsLoading } = useLoader();
+  const { proceedToCheckout } = useCheckout();
   const { dealer } = useAuthStoreWithAutoRefresh();
   const { clearCart, updateRedeemAmountBasket, addToBasketHandler } =
     useBasket();
@@ -223,6 +230,47 @@ const Cart = () => {
     setAmountInput("0");
   };
 
+  const handleProceedToCheckout = async () => {
+    const orderData = {
+      sub_total: summary.sub_total || 0,
+      total_vat: summary.vat || 0,
+      delivery_charge: summary.delivery_charge || 0,
+      redeem_amount: summary.discount_value || 0,
+      grand_total: summary.grand_total || 0,
+      dealerId: dealer?.dealer_id || 0,
+      userDetails: {
+        name: dealer?.dealer_name || "",
+        address: {
+          line1: "",
+          city: "",
+          postCode: "",
+        },
+      },
+    };
+    const paymentInitiate = async () => {
+      if (!orderData) return;
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.paymentInitiate();
+        if (!data.success) throw data.message;
+        if (data.data.nextStep === NEW_CARD) {
+          const { data } = await apiRequest.createPayment(orderData);
+          if (!data.success) throw data.message;
+          if (data.data.paymentUrl) {
+            window.location.href = data.data.paymentUrl;
+          }
+        } else if (data.data.nextStep === SAVED_CARD) {
+          await proceedToCheckout(orderData);
+          router.push("/checkout");
+        }
+      } catch (error: any) {
+        if (typeof error === "string") return toast.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    paymentInitiate();
+  };
   return (
     // <PrivateLayout>
     <div className="max-w-7xl mx-auto w-full">
@@ -649,6 +697,7 @@ const Cart = () => {
                   <Button
                     className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
                     disabled={items.length <= 0}
+                    onClick={handleProceedToCheckout}
                   >
                     {cartLabels.proceedToPayment}
                   </Button>

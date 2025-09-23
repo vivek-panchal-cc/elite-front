@@ -527,6 +527,42 @@ export const labels = {
     availablePts: "Available Points",
   },
 
+  checkout: {
+    selectCard: "SELECT A CARD",
+    back: "Back",
+    payWithNew: "+ Pay With New Card",
+    selectSavedCard: "Select a saved card",
+    payNow: "Pay Now",
+    expires: "Expires:",
+    expired: "Card Expired:",
+    setAsDefault: "Set as Default",
+    delete: "Delete",
+    your: "Your",
+    noCards: "Card not saved",
+    cardExpMsg:
+      "saved card has expired. To continue using this payment method, please delete the expired card and add it again.",
+    thankYou: "Thank you",
+    forYourOrder: "For your order",
+    confirming: "Confirming your order...",
+    orderUpdates: "Order Updates",
+    emailNot: "You’ll get shipping and delivery updates by email.",
+    orderDetails: "Order Details",
+    orderNo: "Order Number",
+    orderDate: "Date Of Order",
+    info: "Information",
+    checkOutInfo: "Contact Info",
+    shippingAdd: "Shipping Address",
+    billingAdd: "Billing Address",
+    yourCart: "Your Cart",
+    downloadInvoice: "Download Invoice",
+    prod: "Products",
+    sku: "SKU",
+    price: "Price",
+    delivery: "Delivery",
+    subTotal: "Subtotal",
+    total: "Total",
+  },
+
   // Months for charts and date displays
   months: {
     jan: "Jan",
@@ -584,3 +620,4 @@ export const registrationLabels = labels.registration;
 export const profileLabels = labels.profile;
 export const cartLabels = labels.cart;
 export const reportsLabels = labels.reports;
+export const checkoutLabels = labels.checkout;

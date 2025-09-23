@@ -53,7 +53,7 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await apiRequest.clearCart();
       if (!data.success) throw data.message;
-      toast.success(data.message);
+      // toast.success(data.message);
       return data;
     } catch (error: any) {
       if (typeof error === "string") {

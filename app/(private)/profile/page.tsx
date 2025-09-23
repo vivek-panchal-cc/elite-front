@@ -24,6 +24,7 @@ import ProfileCompany from "./(section)/ProfileCompany";
 import ProfileFavourite from "./(section)/ProfileFavorite";
 import LogoutForm from "../../../components/pages/logout/Logout";
 import Modal from "@/components/ui/Modal";
+import useIsMobile from "@/hooks/useIsMobile";
 
 interface SidebarItem {
   title: string;
@@ -50,14 +51,7 @@ const sidebarNavItems: SidebarItem[] = [
 const Profile: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isLogoutOpen, setLogoutOpen] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   const renderActiveSection = () => {
     const mobileProps = { isMobile };

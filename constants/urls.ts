@@ -48,6 +48,16 @@ export const PROFILE = {
   DEALER_TOP_CATEGORY: "/dealer/top-categories",
 };
 
+export const PAYMENT = {
+  CARD_LIST: "/payment/card-list",
+  PAYMENT_INITIATE: "payment/worldpay/initiate",
+  PAYMENT_PAGE: "payment/worldpay/create-payment-page",
+  ORDER_STATUS: "/payment/check-order-status",
+  ORDER_DETAILS: "/orders/order-details",
+  CARD_ACTION: (id: string) => `/payment/card/${id}`,
+  PAY_WITH_EXISTING_TOKEN: "/payment/pay-with-existing-card",
+};
+
 // Generate full URLs with base path
 export const generateUrl = (basePath: string, endpoint: string) =>
   `${basePath}${endpoint}`;

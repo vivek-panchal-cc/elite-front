@@ -5,6 +5,8 @@ const ELITE_WALLET = images.eliteWallet;
 const CURRENCY_SYMBOL = "£";
 const CAT_TYPE_ID = process.env.NODE_ENV === "production" ? 21 : 22;
 const WITHDRAWAL = "withdrawal";
+const SAVED_CARD = "SAVED_CARDS_PAYMENT";
+const NEW_CARD = "NEW_CARD_PAYMENT";
 
 const objectToFormData = (values: Record<string, any>): FormData => {
   const formData = new FormData();
@@ -84,4 +86,6 @@ export {
   rewardGraphOptions,
   CAT_TYPE_ID,
   WITHDRAWAL,
+  SAVED_CARD,
+  NEW_CARD,
 };
