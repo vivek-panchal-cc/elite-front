@@ -560,6 +560,8 @@ export const labels = {
     price: "Price",
     delivery: "Delivery",
     subTotal: "Subtotal",
+    discValue: "Discount",
+    vat: "VAT",
     total: "Total",
   },
 

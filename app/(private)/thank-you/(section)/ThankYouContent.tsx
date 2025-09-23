@@ -1,16 +1,19 @@
 "use client";
 
 import { useBasket } from "@/components/context/BasketContext";
-import { productOne, spinner, success } from "@/components/images";
+import { noProduct, spinner } from "@/components/images";
 import Download from "@/components/images/svgs/Download";
 import { useLoader } from "@/components/providers/loader-provider";
+import WrapAmount from "@/components/wrapper/WrapAmount";
 import useCartItems from "@/hooks/useCartItems";
 import { apiRequest } from "@/lib/apiRequest";
+import { formatDate } from "@/lib/constants/all";
 import { checkoutLabels } from "@/lib/labels";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 export default function ThankYouContent() {
   const router = useRouter();
@@ -20,6 +23,36 @@ export default function ThankYouContent() {
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
   const [isOrderPlaced, setIsOrderPlaced] = useState<boolean>(false);
+  const [orderCollection, setOrderCollection] = useState<any>(null);
+  const {
+    ord_id,
+    ord_datetime,
+    user,
+    carts = [],
+    tariff_value,
+    sub_total,
+    discount_value,
+    ord_total_amt,
+    vat_charges,
+  } = orderCollection || {};
+
+  const {
+    user_email,
+    user_fname,
+    user_lname,
+    user_address1,
+    user_address2,
+    user_city,
+    user_county,
+    user_post,
+    user_s_fname,
+    user_s_lname,
+    user_s_address1,
+    user_s_address2,
+    user_s_city,
+    user_s_county,
+    user_s_post,
+  } = user || {};
 
   useEffect(() => {
     if (!isOrderPlaced) return;
@@ -66,8 +99,10 @@ export default function ThankYouContent() {
         transaction_reference: referenceId,
       });
       if (!data.success) throw data.message;
+      setOrderCollection(data.data);
     } catch (error: any) {
       if (typeof error === "string") return toast.error(error);
+      router.replace("/cart");
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +148,7 @@ export default function ThankYouContent() {
                       {checkoutLabels.orderNo}
                     </p>
                     <p className="text-[12px] sm:text-[14px] font-medium">
-                      45632132151431
+                      {ord_id}
                     </p>
                   </div>
 
@@ -122,7 +157,7 @@ export default function ThankYouContent() {
                       {checkoutLabels.orderDate}
                     </p>
                     <p className="text-[12px] sm:text-[14px] font-medium">
-                      22-09-2025
+                      {formatDate(ord_datetime)}
                     </p>
                   </div>
                 </div>
@@ -136,7 +171,7 @@ export default function ThankYouContent() {
                       {checkoutLabels.checkOutInfo}
                     </p>
                     <p className="text-[12px] sm:text-[14px] font-medium">
-                      LoremIpsum@gmail.com
+                      {user_email}
                     </p>
                   </div>
                   <div className="flex flex-row gap-4 sm:gap-10 mt-3">
@@ -144,31 +179,48 @@ export default function ThankYouContent() {
                       <h3 className="text-[10px] sm:text-[12px] text-[var(--color-gray)]">
                         {checkoutLabels.shippingAdd}
                       </h3>
-                      <p className="text-[12px] sm:text-[14px]">Test Dev</p>
                       <p className="text-[12px] sm:text-[14px]">
-                        F Gyllyng Flats
+                        {user_s_fname} {user_s_lname}
                       </p>
-                      <p className="text-[12px] sm:text-[14px]">Falmouth</p>
-                      <p className="text-[12px] sm:text-[14px]">Cornwall</p>
-                      <p className="text-[12px] sm:text-[14px]">TR11 3EZ</p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_s_address1}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_s_address2}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_s_city}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_s_county}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_s_post}
+                      </p>
                     </div>
                     <div>
                       <h3 className="text-[10px] sm:text-[12px] text-[var(--color-gray)]">
                         {checkoutLabels.billingAdd}
                       </h3>
-                      <p className="text-[12px] sm:text-[14px]">Test Dev</p>
                       <p className="text-[12px] sm:text-[14px]">
-                        F Gyllyng Flats
+                        {user_fname} {user_lname}
                       </p>
-                      <p className="text-[12px] sm:text-[14px]">Falmouth</p>
-                      <p className="text-[12px] sm:text-[14px]">Cornwall</p>
-                      <p className="text-[12px] sm:text-[14px]">TR11 3EZ</p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_address1}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_address2}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">{user_city}</p>
+                      <p className="text-[12px] sm:text-[14px]">
+                        {user_county}
+                      </p>
+                      <p className="text-[12px] sm:text-[14px]">{user_post}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right side: Your Cart */}
               <div className="border border-[rgba(0,0,0,0.3)] rounded-xl sm:rounded-3xl flex flex-col h-full">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-2 p-4 sm:p-6 sm:pb-2">
@@ -181,41 +233,38 @@ export default function ThankYouContent() {
                   </button>
                 </div>
 
-                {/* Products */}
                 <div className="flex-1 custom-scrollbar overflow-x-auto max-h-70 p-4 sm:p-0">
-                  {/* Mobile / tablet: stacked cards */}
                   <div className="flex flex-col gap-3 sm:hidden">
-                    {[1, 2, 3, 4, 5, 6].map((item) => (
+                    {carts.map((cart: any) => (
                       <div
-                        key={item}
-                        className="border border-[var(--color-red)] rounded-2xl p-3 flex justify-between items-center"
+                        key={cart.cart_id}
+                        className="border border-[var(--color-red)] rounded-2xl p-3 flex items-center gap-3"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="relative h-16 w-16 rounded-md border border-[var(--color-light-gray)] overflow-hidden">
-                            <Image
-                              src={productOne}
-                              alt="Product"
-                              fill
-                              className="object-contain p-1"
-                            />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-semibold text-[var(--color-black)] text-[12px]">
-                              {/* Product Name */}Crystal Pro Stand Offer
-                            </span>
-                            <span className="text-[var(--color-gray)] text-[10px]">
-                              {/* SKU */}8008006291318
-                            </span>
-                          </div>
+                        <div className="relative h-16 w-16 flex-shrink-0 rounded-md border border-[var(--color-light-gray)] bg-[var(--color-light-gray)] overflow-hidden">
+                          <Image
+                            src={
+                              cart.product.images[0]?.prod_image
+                                ? `${imageBaseUrl}/medium/${cart.product.images[0].prod_image}`
+                                : noProduct
+                            }
+                            alt="Product"
+                            fill
+                            className="object-contain p-1"
+                          />
                         </div>
-                        <span className="text-[var(--color-red)] font-bold">
-                          £66.00
-                        </span>
+
+                        <div className="flex flex-col justify-between flex-1">
+                          <span className="font-semibold text-[var(--color-black)] text-[12px]">
+                            {cart.product.prod_name}
+                          </span>
+                          <span className="text-[var(--color-red)] font-bold text-[12px]">
+                            <WrapAmount value={cart.price} />
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Desktop / large screens: table */}
                   <div className="hidden sm:block custom-scrollbar overflow-x-auto max-h-70 px-4 sm:px-6 z-10">
                     <table className="w-full text-left text-[10px] sm:text-[12px] text-[var(--color-black)] border-collapse">
                       <thead className="bg-[var(--color-white)] sticky top-0 z-10 border-b-2 border-[var(--table-border)]">
@@ -232,25 +281,31 @@ export default function ThankYouContent() {
                         </tr>
                       </thead>
                       <tbody className="divide-y">
-                        {[1, 2, 3, 4, 5, 6].map((item) => (
-                          <tr key={item}>
+                        {carts.map((cart: any) => (
+                          <tr key={cart.cart_id}>
                             <td className="py-2 flex items-center gap-2">
                               <div className="relative h-16 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-16 lg:w-16 rounded-md border border-[var(--color-light-gray)] overflow-hidden">
                                 <Image
-                                  src={productOne}
+                                  src={
+                                    cart.product.images[0]?.prod_image
+                                      ? `${imageBaseUrl}/medium/${cart.product.images[0].prod_image}`
+                                      : noProduct
+                                  }
                                   alt="Product"
                                   fill
                                   className="object-contain rounded p-1"
                                 />
                               </div>
-                              <span className="text-[var(--color-black)] font-semibold">
-                                Crystal Pro Stand Offer
+                              <span className="text-[var(--color-black)] font-semibold mr-2">
+                                {cart.product.prod_name}
                               </span>
                             </td>
                             <td className="text-[var(--color-gray)]">
-                              8008006291318
+                              {cart.product.prod_sku}
                             </td>
-                            <td className="text-[var(--color-red)]">£66.00</td>
+                            <td className="text-[var(--color-red)]">
+                              <WrapAmount value={cart.price} />
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -258,19 +313,36 @@ export default function ThankYouContent() {
                   </div>
                 </div>
 
-                {/* Summary */}
-                <div className="border-t-2 text-[12px] sm:text-[14px] p-3 sm:p-2 sm:px-10 bg-[var(--color-light-gray)] rounded-b-3xl space-y-2">
-                  <div className="flex justify-between text-[10px] sm:text-[12px] text-[var(--color-gray)]">
-                    <span>{checkoutLabels.delivery}</span>
-                    <span>£10</span>
-                  </div>
+                <div className="border-t-2 text-[12px] sm:text-[14px] p-3 sm:p-2 sm:px-10 bg-[var(--color-light-gray)] rounded-b-3xl space-y-1">
                   <div className="flex justify-between text-[10px] sm:text-[12px] text-[var(--color-gray)]">
                     <span>{checkoutLabels.subTotal}</span>
-                    <span>£132.00</span>
+                    <span>
+                      <WrapAmount value={sub_total} />
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-[10px] sm:text-[12px] text-[var(--color-gray)]">
+                    <span>{checkoutLabels.vat}</span>
+                    <span>
+                      <WrapAmount value={vat_charges} />
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-[10px] sm:text-[12px] text-[var(--color-gray)]">
+                    <span>{checkoutLabels.delivery}</span>
+                    <span>
+                      <WrapAmount value={tariff_value} />
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-[10px] sm:text-[12px] text-[var(--color-black)]">
+                    <span>{checkoutLabels.discValue}</span>
+                    <span>
+                      - <WrapAmount value={discount_value} />
+                    </span>
                   </div>
                   <div className="flex justify-between font-bold text-[var(--color-red)]">
                     <span>{checkoutLabels.total}</span>
-                    <span>£142.00</span>
+                    <span>
+                      <WrapAmount value={ord_total_amt} />
+                    </span>
                   </div>
                 </div>
               </div>
