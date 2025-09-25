@@ -46,6 +46,8 @@ export const PROFILE = {
   DEALER_GRAPH: "/dealer/get-rewards",
   DEALER_LATEST_OFFER: "/dealer/get-latest-offers",
   DEALER_TOP_CATEGORY: "/dealer/top-categories",
+  DEALER_REWARD_POINTS: "/dealer/get-rewards-points",
+  DEALER_ACTIVATION: "/dealer/activation",
 };
 
 export const PAYMENT = {
@@ -56,6 +58,12 @@ export const PAYMENT = {
   ORDER_DETAILS: "/orders/order-details",
   CARD_ACTION: (id: string) => `/payment/card/${id}`,
   PAY_WITH_EXISTING_TOKEN: "/payment/pay-with-existing-card",
+};
+
+export const TRANSFER = {
+  TRANSFER_SIMPLY: "/transfer/transfer-simply",
+  TRANSFER_GCERP: "/transfer/transfer-gcerp",
+  TRANSFER_PAYPAL: "/transfer/transfer-paypal",
 };
 
 // Generate full URLs with base path

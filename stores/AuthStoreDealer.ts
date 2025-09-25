@@ -7,6 +7,9 @@ interface Dealer {
   dealer_email: string;
   dealer_ref: string;
   current_amount_bal: number;
+  paypal_transfer_eligible: any;
+  simply_user_ref: any;
+  gcerpid: any;
   // Add other fields you use as needed
 }
 

@@ -18,9 +18,8 @@ import { Button } from "@/components/ui/ButtonUI";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import OrderHistoryCard from "@/components/cards/OrderHistoryCard";
 import ContactCard from "@/components/cards/ContactCard";
-import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
-import useDealerSummary from "@/hooks/useDealerSummary";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
+import useDealerRewardPoints from "@/hooks/useDealerRewardPoints";
 
 ChartJS.register(
   CategoryScale,
@@ -31,20 +30,15 @@ ChartJS.register(
   Legend
 );
 
-export default function ProfileDashboard() {
-  const { dealer } = useAuthStoreWithAutoRefresh();
-  const [loadingSumm, summaryList, reloadSumm] = useDealerSummary(
-    Number(dealer?.dealer_id)
-  );
-
+export default function ProfileDashboard({ loading, points }: ReportsProps) {
   const RewardBalanceCard = (
     <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-4 sm:p-5 md:p-16 flex flex-col items-center justify-center text-center">
       <h2 className="text-[18px] sm:text-[18px] md:text-[26px] lg:text-[32px] font-bold mb-4 sm:mb-6 text-[var(--color-dark-blue)]">
-        {loadingSumm ? (
+        {loading ? (
           <LoaderDiv height={50} />
         ) : (
           <>
-            {profileLabels.hello} {summaryList?.dealer_name}
+            {profileLabels.hello} {points.dealer_name}
           </>
         )}
       </h2>
@@ -52,20 +46,20 @@ export default function ProfileDashboard() {
         {profileLabels.yourRewardBalance}
       </p>
       <p className="font-extrabold text-[var(--color-dark-blue)] text-[43px] mb-3 sm:text-[60px] md:text-[96px]  leading-none ">
-        {loadingSumm ? (
+        {loading ? (
           <LoaderDiv height={50} />
         ) : (
-          <WrapAmount value={Number(summaryList?.current_amount_bal)} />
+          <WrapAmount value={points.reward_balance} />
         )}
       </p>
-      {false && (
+      {points.last_10_transactions_amount && (
         <p className="font-bold text-[var(--color-black)] text-[12px] sm:text-[22px] md:text-[22px]  leading-none mb-3 sm:mb-8 md:mb-10">
           {profileLabels.lastTenTrans} :&nbsp;
           <span className="font-bold text-[var(--color-dark-blue)]  text-[12px] sm:text-[22px] md:text-[22px]">
-            {loadingSumm ? (
+            {loading ? (
               <LoaderDiv height={30} />
             ) : (
-              <WrapAmount value={49.4} />
+              <WrapAmount value={points.last_10_transactions_amount} />
             )}
           </span>
         </p>

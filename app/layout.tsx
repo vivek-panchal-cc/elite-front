@@ -63,21 +63,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${robotoFlex.variable} font-sans antialiased`}>
-        <AuthProvider>
-          <CheckoutProvider>
-            <BasketProvider>
-              <QueryProvider>
-                <LoaderProvider>
+        <LoaderProvider>
+          <AuthProvider>
+            <CheckoutProvider>
+              <BasketProvider>
+                <QueryProvider>
                   <RouteLoader />
                   <ToasterComponent />
                   <HeaderLayout />
                   {children}
                   <FooterLayout />
-                </LoaderProvider>
-              </QueryProvider>
-            </BasketProvider>
-          </CheckoutProvider>
-        </AuthProvider>
+                </QueryProvider>
+              </BasketProvider>
+            </CheckoutProvider>
+          </AuthProvider>
+        </LoaderProvider>
       </body>
     </html>
   );

@@ -14,6 +14,7 @@ import {
   OrderStatus,
   OrderSummary,
   PayWithExistingToken,
+  Transfer,
 } from "@/types/payments";
 
 // Types
@@ -244,6 +245,14 @@ const getTopCategory = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.PROFILE.DEALER_TOP_CATEGORY);
 };
 
+const getDealerRewardPoints = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.DEALER_REWARD_POINTS);
+};
+
+const getDealerActivation = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.DEALER_ACTIVATION);
+};
+
 const getOrderHistory = (
   data: OrderHistoryReqParams
 ): Promise<AxiosResponse<ApiResponse>> => {
@@ -314,6 +323,22 @@ const payWithExistingToken = (
   );
 };
 
+const transferSimply = (
+  data: Transfer
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.TRANSFER.TRANSFER_SIMPLY, data);
+};
+
+const transferGCERP = (data: Transfer): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.TRANSFER.TRANSFER_GCERP, data);
+};
+
+const transferPaypal = (
+  data: Transfer
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.TRANSFER.TRANSFER_PAYPAL, data);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -365,6 +390,11 @@ export const apiRequest = {
   setAsDefaultCard,
   deleteCard,
   payWithExistingToken,
+  getDealerRewardPoints,
+  getDealerActivation,
+  transferSimply,
+  transferGCERP,
+  transferPaypal,
 } as const;
 
 // Export type for the apiRequest object
@@ -413,4 +443,9 @@ export {
   setAsDefaultCard,
   deleteCard,
   payWithExistingToken,
+  getDealerRewardPoints,
+  getDealerActivation,
+  transferSimply,
+  transferGCERP,
+  transferPaypal,
 };

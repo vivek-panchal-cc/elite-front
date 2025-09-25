@@ -18,6 +18,7 @@ import Mail from "@/components/images/svgs/Mail";
 import { useState } from "react";
 import { RewardDropdown } from "./RewardDropdown";
 import RewardCard from "./RewardCard";
+import useDealerActivation from "@/hooks/useDealerActivation";
 
 const activationData = [
   { name: "Tree", logo: treeImg, topup: 0, activation: 0 },
@@ -42,48 +43,48 @@ type Medal = {
 const medals: Medal[] = [
   {
     name: "Blue",
-    color: "bg-[#10499E] text-[var(--color-white)]",
-    trophyColor: "text-[#10499E]",
-    downArrowColor: "text-[#FFFFFF]",
-    borderColor: "border-[#10499E]",
+    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-blue)]",
+    downArrowColor: "text-[var(--color-white)]",
+    borderColor: "border-[var(--color-blue)]",
   },
   {
     name: "Bronze",
-    color: "bg-[#AA8954] text-[var(--color-white)]",
-    trophyColor: "text-[#AA8954]",
-    downArrowColor: "text-[#FFFFFF]",
-    borderColor: "border-[#AA8954]",
+    color: "bg-[var(--color-bronze)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-bronze)]",
+    downArrowColor: "text-[var(--color-white)]",
+    borderColor: "border-[var(--color-bronze)]",
   },
   {
     name: "Silver",
-    color: "bg-[#E2E2E2] text-gray-800",
-    trophyColor: "text-[#E2E2E2]",
-    downArrowColor: "text-[#000000]",
-    borderColor: "border-[#E2E2E2]",
+    color: "bg-[var(--color-silver)] text-gray-800",
+    trophyColor: "text-[var(--color-silver)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-silver)]",
   },
   {
     name: "Gold",
     gradient: "linear-gradient(90deg, #C5A158 0%, #FAD97B 50%, #C5A158 100%)",
-    color: "bg-[#10499E] text-[var(--color-white)]",
-    trophyColor: "text-[#E3C16C]",
-    downArrowColor: "text-[#000000]",
-    borderColor: "border-[#E3C16C]",
+    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-gold)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-gold)]",
   },
   {
     name: "Platinum",
-    color: "bg-[#DEDEDE] text-[var(--color-white)]",
-    trophyColor: "text-[#DEDEDE]",
-    downArrowColor: "text-[#000000]",
-    borderColor: "border-[#DEDEDE]",
+    color: "bg-[var(--color-platinum)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-platinum)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-platinum)]",
   },
   {
     name: "Diamond",
     gradient:
       " linear-gradient(90deg, #EBEFF9 27.68%, #D5DBEB 53.19%, #ECF0F9 71.09%)",
-    color: "bg-[#E2E2E2] text-gray-800",
+    color: "bg-[var(--color-silver)] text-gray-800",
     trophyColor: "text-[#D6DCEC]",
-    downArrowColor: "text-[#000000]",
-    borderColor: "border-[#E2E2E2]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-silver)]",
   },
 ];
 
@@ -134,6 +135,14 @@ const rewardData = [
 ];
 const ActivationDashboard = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const {
+    loadingActivation,
+    network,
+    lastYearMonthlyData,
+    lastYearMonthlyFirstTopUpData,
+    reloadActivationData,
+  } = useDealerActivation();
+  console.log("network: ", network);
 
   const renderActiveSection = () => {
     const section = rewardData[activeIndex];
@@ -170,7 +179,7 @@ const ActivationDashboard = () => {
                     {/* Activation Row */}
                     <div className="text-center border-r-2 border-[rgba(0,0,0,0.1)]">
                       <div className="flex justify-end">
-                        <div className="min-w-[124px] bg-[var(--color-light-gray)] text-center p-5 text-[14px] text-[#000000] font-bold rounded-tl-[10px] rounded-bl-[10px] border-0">
+                        <div className="min-w-[124px] bg-[var(--color-light-gray)] text-center p-5 text-[14px] text-[var(--color-black)] font-bold rounded-tl-[10px] rounded-bl-[10px] border-0">
                           {reportsLabels.activation}
                         </div>
                       </div>
@@ -195,7 +204,7 @@ const ActivationDashboard = () => {
                     {/* First Top Up Row */}
                     <div className="text-center">
                       <div className="grid grid-cols-[124px_repeat(auto-fit,minmax(100px,1fr))]">
-                        <div className="bg-[var(--color-light-gray)] p-5 text-center text-[14px] text-[#000000] font-bold rounded-tr-[10px] rounded-br-[10px]">
+                        <div className="bg-[var(--color-light-gray)] p-5 text-center text-[14px] text-[var(--color-black)] font-bold rounded-tr-[10px] rounded-br-[10px]">
                           {reportsLabels.firstTopUp}
                         </div>
                       </div>
@@ -240,7 +249,7 @@ const ActivationDashboard = () => {
                 md:grid-cols-[157px_repeat(auto-fit,minmax(90px,1fr))] 
                 text-center border-b-2 border-[rgba(0,0,0,0.1)]"
                   >
-                    <div className="bg-[var(--color-light-gray)] text-center p-5 text-[16px] text-[#000000] font-bold rounded-tl-[10px] rounded-tr-[10px] border-0">
+                    <div className="bg-[var(--color-light-gray)] text-center p-5 text-[16px] text-[var(--color-black)] font-bold rounded-tl-[10px] rounded-tr-[10px] border-0">
                       {reportsLabels.activation}
                     </div>
                     {activationData.map((item, idx) => (
@@ -258,7 +267,7 @@ const ActivationDashboard = () => {
                 md:grid-cols-[157px_repeat(auto-fit,minmax(90px,1fr))] 
                 text-center  border-t border-[rgba(0,0,0,0.1)] "
                   >
-                    <div className="bg-[var(--color-light-gray)] p-5 text-center text-[16px] text-[#000000] font-bold rounded-bl-[10px] rounded-br-[10px]">
+                    <div className="bg-[var(--color-light-gray)] p-5 text-center text-[16px] text-[var(--color-black)] font-bold rounded-bl-[10px] rounded-br-[10px]">
                       {reportsLabels.firstTopUp}
                     </div>
                     {activationData.map((item, idx) => (
@@ -275,7 +284,7 @@ const ActivationDashboard = () => {
 
               {/* super bonus reward */}
               <div>
-                <p className="text-[30px] font-bold text-center text-[#10499E] rounded-5xl py-7 lg:text-[30px] lg:mt-8">
+                <p className="text-[30px] font-bold text-center text-[var(--color-blue)] rounded-5xl py-7 lg:text-[30px] lg:mt-8">
                   {reportsLabels.superBonusRewards}
                 </p>
 

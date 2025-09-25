@@ -26,3 +26,11 @@ export interface DealerRegistrationResponse {
     };
   };
 }
+
+export interface RewardInfo {
+  dealer_name: string;
+  reward_balance: number;
+  last_10_transactions_amount: number;
+  redeem_points: number;
+  available_points: number;
+}

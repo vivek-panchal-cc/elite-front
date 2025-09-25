@@ -19,6 +19,11 @@
   --color-disabled: #b9b9b9;
   --color-smooth-gray: #d9d9d9;
   --color-checkbox: #4cbc55;
+  --color-silver: #e2e2e2;
+  --color-bronze: #aa8954;
+  --color-gold: #e3c16c;
+  --color-platinum: #dedede;
+  --color-diamond: #e2e2e2;
 }
 
 @custom-variant dark (&:is(.dark *));

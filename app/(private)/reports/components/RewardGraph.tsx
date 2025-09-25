@@ -10,7 +10,7 @@ import useDealerGraph from "@/hooks/useDealerGraph";
 import { getRewardGraphData, rewardGraphOptions } from "@/lib/constants/all";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 
-const RewardGraph = () => {
+const RewardGraph = ({ loading, points }: ReportsProps) => {
   const [loadingGraph, dealerGraphData, reloadGraph] = useDealerGraph();
   const rewardGraphData = getRewardGraphData(dealerGraphData);
 
@@ -51,8 +51,8 @@ const RewardGraph = () => {
           alt="transfer-img"
         />
         <div className=" flex flex-col md:justify-center md:items-center">
-          <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
-            <WrapAmount value={451.4} />
+          <p className="font-bold text-[18px] md:text-[42px] text-[var(--color-white)] leading-7">
+            <WrapAmount value={points.redeem_points || 0} />
           </p>
           <p className="font-medium text-[10px] md:text-[18px] text-[var(--color-white)] ">
             {reportsLabels.redeemPts}
@@ -72,10 +72,10 @@ const RewardGraph = () => {
           alt="transfer-img"
         />
         <div className=" flex flex-col md:justify-center md:items-center">
-          <p className="font-bold text-[18px] md:text-[42px]  text-[var(--color-white)] leading-7">
-            <WrapAmount value={451.45} />
+          <p className="font-bold text-[18px] md:text-[42px] text-[var(--color-white)] leading-7">
+            <WrapAmount value={points.available_points || 0} />
           </p>
-          <p className="font-medium text-[10px] md:text-[18px]  text-[var(--color-white)]">
+          <p className="font-medium text-[10px] md:text-[18px] text-[var(--color-white)]">
             {reportsLabels.availablePts}
           </p>
         </div>

@@ -381,7 +381,7 @@ const RewardsTransactions = () => {
   return (
     <div>
       <div className="max-w-7xl mx-auto w-full">
-        <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14  px-4 sm:px-5 md:px-8 lg:px-[60px]">
+        <div className="mx-auto gap-6 pb-8 sm:pb-10 md:pb-14 px-4 sm:px-5 md:px-8 lg:px-[60px]">
           {RewardsTransactions}
           <div className="hidden md:block">{TransactionTable}</div>
         </div>

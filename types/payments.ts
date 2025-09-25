@@ -61,3 +61,9 @@ export interface PayWithExistingToken {
   token_id: string;
   grand_total: number;
 }
+
+export interface Transfer {
+  transfer_amount: number;
+  paypal_email?: string;
+  confirm_paypal_email?: string;
+}

@@ -7,58 +7,53 @@ import { useEffect, useState } from "react";
 import TransferRightComponent from "./components/TransferRightComponent";
 import PaypalModal from "./components/PaypalModal";
 import useIsMobile from "@/hooks/useIsMobile";
+import { transferLabels } from "@/lib/labels";
+import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
 
 interface SidebarItem {
   title: string;
   icon?: React.ReactNode | null;
 }
-
 const Transfer = () => {
+  const { dealer } = useAuthStoreWithAutoRefresh();
+  const {
+    simply_user_ref = "",
+    paypal_transfer_eligible = "0",
+    gcerpid = "",
+  } = dealer || {};
   const isMobile = useIsMobile();
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [paypalAmount, setPaypalAmount] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
 
+  const flagObj = {
+    simply_user_ref,
+    gcerpid,
+    paypal_transfer_eligible,
+  };
+
   const renderActiveSection = () => {
-    switch (activeIndex) {
-      case 0:
-        return (
-          <TransferRightComponent
-            setIsOpen={setIsOpen}
-            isMobile={isMobile}
-            activeIndex={activeIndex}
-          />
-        );
-      case 1:
-        return (
-          <TransferRightComponent
-            setIsOpen={setIsOpen}
-            isMobile={isMobile}
-            activeIndex={activeIndex}
-          />
-        );
-      case 2:
-        return (
-          <TransferRightComponent
-            setIsOpen={setIsOpen}
-            isMobile={isMobile}
-            activeIndex={activeIndex}
-          />
-        );
-      default:
-        return null;
-    }
+    return (
+      <TransferRightComponent
+        setIsOpen={setIsOpen}
+        isMobile={isMobile}
+        activeIndex={activeIndex}
+        flag={flagObj}
+        setAmount={setPaypalAmount}
+      />
+    );
   };
 
   const sidebarNavItems: SidebarItem[] = [
     {
-      title: "SIMply",
+      title: transferLabels.simply,
       icon: null,
     },
     {
-      title: "Vape Jucce",
+      title: transferLabels.vapeJucce,
       icon: null,
     },
-    { title: "Paypal", icon: null },
+    { title: transferLabels.paypal, icon: null },
   ];
 
   const handleCloseModal = () => {
@@ -80,7 +75,7 @@ const Transfer = () => {
               </div>
               <div className="lg:basis-[50%]">
                 <h1 className="text-[26px] leading-8 lg:leading-14 text-center lg:text-left lg:text-[42px] font-bold">
-                  Transfer your funds to your FAVOURITE account
+                  {transferLabels.transferFund}
                 </h1>
               </div>
             </div>
@@ -113,7 +108,11 @@ const Transfer = () => {
           </div>
         </div>
       </div>
-      <PaypalModal isOpen={isOpen} handleClose={handleCloseModal} />
+      <PaypalModal
+        isOpen={isOpen}
+        handleClose={handleCloseModal}
+        amount={paypalAmount || 0}
+      />
     </>
   );
 };

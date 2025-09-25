@@ -1,12 +1,13 @@
 "use client";
 
+import { useBasket } from "@/components/context/BasketContext";
 import { useCheckout } from "@/components/context/CheckoutContext";
 import LoaderCard from "@/components/loaders/LoaderCard";
 import { useLoader } from "@/components/providers/loader-provider";
 import { Button } from "@/components/ui/ButtonUI";
 import useCardList from "@/hooks/useCards";
+import useCartItems from "@/hooks/useCartItems";
 import { apiRequest } from "@/lib/apiRequest";
-import { NEW_CARD } from "@/lib/constants/all";
 import { checkoutLabels } from "@/lib/labels";
 import { Card } from "@/types/payments";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,8 @@ import { toast } from "sonner";
 export default function Checkout() {
   const router = useRouter();
   const { resetCheckout, order, cardAction, payInstant } = useCheckout();
+  const { clearCart } = useBasket();
+  const { reloadCart } = useCartItems();
   const { setIsLoading } = useLoader();
   const [loadingCards, cardList, reloadCard] = useCardList();
 
@@ -52,6 +55,9 @@ export default function Checkout() {
     const { token_id } = card;
     const { grand_total } = order;
     if (payInstant) await payInstant({ token_id, grand_total });
+    if (clearCart) await clearCart();
+    if (reloadCart) await reloadCart();
+    router.push("/dashboard");
   };
 
   const goBack = () => {

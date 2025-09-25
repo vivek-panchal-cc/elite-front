@@ -55,6 +55,7 @@ export const CheckoutProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await apiRequest.payWithExistingToken(payload);
       if (!data.success) throw data.message;
       toast.success(data.message);
+      resetCheckout();
     } catch (error: any) {
       if (typeof error === "string") return toast.error(error);
     } finally {

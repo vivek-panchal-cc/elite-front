@@ -565,6 +565,56 @@ export const labels = {
     total: "Total",
   },
 
+  transfer: {
+    simply: "SIMply",
+    vapeJucce: "Vape Jucce",
+    paypal: "Paypal",
+    transferFund: "Transfer your funds to your FAVOURITE account",
+    simplyTitle: "Transfer to Your SIMply Account",
+    simplyDesc:
+      "How much would you like to transfer from your rewards account to SIMply?",
+    vapeJucceTitle: "Transfer to Your Vape Jucce Account",
+    vapeJucceDesc:
+      "How much would you like to transfer from your rewards account to Vape Jucce?",
+    paypalTitle: "Transfer to Your paypal Account",
+    paypalDesc:
+      "How much would you like to transfer from your rewards account to Paypal?",
+    submit: "Submit",
+
+    transSimplyHeader: "Transfer to SIMply",
+    transSimplySubHead: "SIMply TRANSFER",
+    transSimplyDesc:
+      "It does not appear that you have a SIMply account. Speak to your rep or call 01827 307777 to get more information regarding SIMply.",
+
+    transPaypalHead: "Transfer to Paypal",
+    transPaypalSubHead: "PayPal TRANSFER",
+    transPaypalDesc:
+      "We just need a little more information from you in order to set up your paypal transfer option. We require you to fill in and email back the below Self Bill form (I will give you to add as a hyperlink for download) along with a valid utility bill within the last 6 months. Please email these to proofs@elitemobile.com stating your Dealer Ref XXXXXX in the subject heading.",
+
+    transEliquidHead: "Transfer to Eliquid account",
+    transEliquidSubHead: "Eliquid Account Transfer",
+    transEliquidDesc:
+      "Unfortunately its not possible right now to transfer.Please call 01827 307777 to resolve this issue.",
+
+    trasnferCommonFooter:
+      "To order more SIM cards, vape products or for any other enquiry",
+
+    ppModal: "PAYPAL",
+    ppAvailBal: "Available Balance",
+    ppTransAmt: "Transfer Amount",
+    ppFee: "Paypal Fee",
+    ppRecAmt: "Receivable Amount",
+    ppCancel: "Cancel",
+    ppTransfer: "Transfer",
+    ppEmail: "Email Address",
+    ppEmailConfirm: "Confirm Email Address",
+    note: "Please note:",
+    note1:
+      "You must pay the PayPal charges at a rate of 3.4% of the transfer amount plus 30p per transaction. All PayPal credits will be subject to eligibility checks before your account will be credited.Once approved, transfers can take up to 3 days to complete and will show as pending until we confirm or cancel your request to transfer your requested amount to your PayPal account.",
+    note2:
+      "By requesting the transfer below, you are confirming that you are happy for Elite Mobile Limited to raise a Self Bill on your account. You will be responsible for any tax and VAT amounts payable, you agree to notify HMRC of such income.",
+  },
+
   // Months for charts and date displays
   months: {
     jan: "Jan",
@@ -623,3 +673,4 @@ export const profileLabels = labels.profile;
 export const cartLabels = labels.cart;
 export const reportsLabels = labels.reports;
 export const checkoutLabels = labels.checkout;
+export const transferLabels = labels.transfer;
