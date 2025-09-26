@@ -19,31 +19,37 @@ const PaypalModal = ({
   isOpen,
   handleClose,
   amount,
-}: // formik,
-{
+}: {
   isOpen: boolean;
   handleClose: () => void;
   amount: number | string;
-  // formik: any;
 }) => {
   const { dealer } = useAuthStoreWithAutoRefresh();
-  const [availableBalance, setAvailableBalance] = React.useState("0.00");
-
   const { setIsLoading } = useLoader();
 
   const formik = useFormik<Transfer>({
+    enableReinitialize: true,
     initialValues: {
       paypal_email: "",
       confirm_paypal_email: "",
-      transfer_amount: 0,
+      transfer_amount: Number(amount) || 0,
+      avaialble_balance: dealer?.current_amount_bal
+        ? Number(((dealer.current_amount_bal - 0.2) / 1.034).toFixed(2))
+        : 0,
+      paypal_fee: 0,
+      receivable_amount: 0,
     },
     validationSchema: transferSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       setIsLoading(true);
       try {
-        const { data } = await apiRequest.transferPaypal(values);
+        const { data } = await apiRequest.transferPaypal({
+          transfer_amount: values.transfer_amount,
+          paypal_email: values.paypal_email,
+        });
         if (!data.success) throw data.message;
         toast.success(data.message);
+        handleCloseModal();
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);
       } finally {
@@ -54,16 +60,21 @@ const PaypalModal = ({
   });
 
   useEffect(() => {
-    if (dealer?.current_amount_bal) {
-      const calcAvailable = (dealer.current_amount_bal - 0.2) / 1.034;
-      setAvailableBalance(calcAvailable.toFixed(2));
-    }
-  }, [dealer?.current_amount_bal, formik.values.transfer_amount]);
+    const transferAmount = Number(formik.values.transfer_amount || 0);
+    const fee = Number(((transferAmount * 3.4) / 100 + 0.3).toFixed(2));
+    const receivable = Number((transferAmount - fee).toFixed(2));
+
+    formik.setFieldValue("paypal_fee", fee, false);
+    formik.setFieldValue("receivable_amount", receivable, false);
+  }, [formik.values.transfer_amount]);
 
   const handleCloseModal = () => {
     formik.resetForm();
     handleClose();
   };
+
+  const readOnlyInputClass =
+    "w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] text-[12px] sm:text-[14px] cursor-not-allowed";
 
   return (
     <Modal
@@ -98,26 +109,36 @@ const PaypalModal = ({
               {transferLabels.ppAvailBal}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] cursor-not-allowed"
+              className={readOnlyInputClass}
               name="avaialble_balance"
               placeholder="Available Balance"
-              value={`${CURRENCY_SYMBOL}${availableBalance}`}
+              value={`${CURRENCY_SYMBOL}${formik.values.avaialble_balance}`}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.avaialble_balance &&
+                formik.errors.avaialble_balance
+              }
               readOnly
             />
           </div>
 
-          {/* Address 1 */}
           <div className="space-y-1">
             <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppTransAmt}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] cursor-not-allowed"
+              className={readOnlyInputClass}
               name="transfer_amount"
               value={`${CURRENCY_SYMBOL}${
                 formik.values.transfer_amount || amount
               }`}
               placeholder="Transfer Amount"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.transfer_amount && formik.errors.transfer_amount
+              }
               readOnly
             />
           </div>
@@ -127,8 +148,16 @@ const PaypalModal = ({
               {transferLabels.ppFee}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] cursor-not-allowed"
+              className={readOnlyInputClass}
               placeholder="Paypal fee"
+              name="paypal_fee"
+              value={`${CURRENCY_SYMBOL}${(
+                (Number(formik.values.transfer_amount) * 3.4) / 100 +
+                0.3
+              ).toFixed(2)}`}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.paypal_fee && formik.errors.paypal_fee}
               readOnly
             />
           </div>
@@ -138,8 +167,19 @@ const PaypalModal = ({
               {transferLabels.ppRecAmt}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] cursor-not-allowed"
+              className={readOnlyInputClass}
               placeholder="Receivable Amount"
+              name="receivable_amount"
+              value={`${CURRENCY_SYMBOL}${(
+                Number(formik.values.transfer_amount) -
+                ((Number(formik.values.transfer_amount) * 3.4) / 100 + 0.3)
+              ).toFixed(2)}`}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.receivable_amount &&
+                formik.errors.receivable_amount
+              }
               readOnly
             />
           </div>
@@ -149,7 +189,7 @@ const PaypalModal = ({
               {transferLabels.ppEmail}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] text-[12px] sm:text-[14px]"
               value={formik.values.paypal_email}
               name="paypal_email"
               placeholder="Email Address"
@@ -164,7 +204,7 @@ const PaypalModal = ({
               {transferLabels.ppEmailConfirm}
             </Label>
             <Input
-              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+              className="w-[100%] lg:w-[334px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] text-[12px] sm:text-[14px]"
               name="confirm_paypal_email"
               value={formik.values.confirm_paypal_email}
               placeholder="Confirm Email Address"

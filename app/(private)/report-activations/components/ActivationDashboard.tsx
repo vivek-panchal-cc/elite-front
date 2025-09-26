@@ -11,7 +11,7 @@ import {
 } from "@/components/images";
 import { IconLeftArrow, IconRightArrow } from "@/components/images/icons";
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { profileLabels, reportsLabels } from "@/lib/labels";
 import Phone from "@/components/images/svgs/Phone";
 import Mail from "@/components/images/svgs/Mail";
@@ -19,17 +19,7 @@ import { useState } from "react";
 import { RewardDropdown } from "./RewardDropdown";
 import RewardCard from "./RewardCard";
 import useDealerActivation from "@/hooks/useDealerActivation";
-
-const activationData = [
-  { name: "Tree", logo: treeImg, topup: 0, activation: 0 },
-  { name: "O2", logo: o2Img, topup: 1, activation: 1 },
-  { name: "Vodafone", logo: vodafoneImg, topup: 3, activation: 3 },
-  { name: "Lebara", logo: lebaraImg, topup: 5, activation: 5 },
-  { name: "EE", logo: eeImg, topup: 0, activation: 0 },
-  { name: "Giffgaff", logo: giffgaffImg, topup: 1, activation: 1 },
-  { name: "Smarty", logo: smartyImg, topup: 0, activation: 1 },
-  { name: "VOXI", logo: voxiImg, topup: 0, activation: 1 },
-];
+import { safeNumber } from "@/lib/constants/all";
 
 type Medal = {
   name: string;
@@ -133,8 +123,10 @@ const rewardData = [
     ],
   },
 ];
+
 const ActivationDashboard = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const {
     loadingActivation,
     network,
@@ -142,7 +134,77 @@ const ActivationDashboard = () => {
     lastYearMonthlyFirstTopUpData,
     reloadActivationData,
   } = useDealerActivation();
-  console.log("network: ", network);
+
+  // Extract available months (keys like "2025_07")
+  const availableMonths = Array.from(
+    new Set([
+      ...Object.keys(lastYearMonthlyFirstTopUpData || {}),
+      ...Object.keys(lastYearMonthlyData || {}),
+    ])
+  ).sort((a, b) => {
+    const [yearA, monthA] = a.split("_").map(Number);
+    const [yearB, monthB] = b.split("_").map(Number);
+
+    // Sort descending: latest first
+    if (yearA !== yearB) return yearB - yearA;
+    return monthB - monthA;
+  });
+
+  const monthLabels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Default values in case data not loaded yet
+  let currentKey = "";
+  let currentMonthLabel = "";
+
+  if (availableMonths.length > 0) {
+    currentKey = availableMonths[currentIndex];
+    const [year, month] = currentKey.split("_").map(Number);
+    currentMonthLabel = `${monthLabels[month - 1]} ${year}`;
+  }
+
+  // Build activationData for current month
+  const activationData = Object.keys(network).map((networkId) => {
+    const name = network[networkId];
+
+    const topup = safeNumber(
+      lastYearMonthlyFirstTopUpData?.[currentKey]?.[networkId]
+    );
+    const activation = safeNumber(
+      lastYearMonthlyData?.[currentKey]?.[networkId]?.monthTotal
+    );
+
+    // map logos dynamically if you already have them defined
+    const logos: Record<string, string | StaticImageData> = {
+      "1": treeImg,
+      "2": o2Img,
+      "5": vodafoneImg,
+      "7": lebaraImg,
+      "9": eeImg,
+      "14": giffgaffImg,
+      "15": voxiImg,
+      "16": smartyImg,
+    };
+
+    return {
+      name,
+      logo: logos[networkId],
+      topup,
+      activation,
+    };
+  });
 
   const renderActiveSection = () => {
     const section = rewardData[activeIndex];
@@ -162,13 +224,42 @@ const ActivationDashboard = () => {
                   {reportsLabels.reportsDashboard}
                 </p>
                 <div className="flex flex-row gap-6 items-center mb-2 md:mb-6 md:static">
-                  <div className="border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
+                  {/* Left Arrow */}
+                  <button
+                    disabled={currentIndex === availableMonths.length - 1}
+                    onClick={() =>
+                      setCurrentIndex((prev) =>
+                        Math.min(prev + 1, availableMonths.length - 1)
+                      )
+                    }
+                    className={`border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center ${
+                      currentIndex === availableMonths.length - 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                  >
                     <IconLeftArrow className="h-2.5 w-3.5" />
-                  </div>
-                  <p className="text-[15px] font-medium">November 2025</p>
-                  <div className="border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center">
+                  </button>
+
+                  {/* Dynamic Month */}
+                  <p className="text-[15px] font-medium min-w-[120px] text-center">
+                    {currentMonthLabel || "Loading..."}
+                  </p>
+
+                  {/* Right Arrow */}
+                  <button
+                    disabled={currentIndex === 0}
+                    onClick={() =>
+                      setCurrentIndex((prev) => Math.max(prev - 1, 0))
+                    }
+                    className={`border-1 border-[var(--color-red)] rounded-[8px] h-[32px] w-[32px] flex items-center justify-center ${
+                      currentIndex === 0
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                  >
                     <IconRightArrow className="h-2.5 w-3.5" />
-                  </div>
+                  </button>
                 </div>
               </div>
 

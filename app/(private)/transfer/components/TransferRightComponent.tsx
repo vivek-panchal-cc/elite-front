@@ -10,6 +10,7 @@ import { apiRequest } from "@/lib/apiRequest";
 import { toast } from "sonner";
 import Phone from "@/components/images/svgs/Phone";
 import Mail from "@/components/images/svgs/Mail";
+import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
 
 type FlagType = {
   gcerpid: string | null;
@@ -59,7 +60,9 @@ const TransferRightComponent = ({
   flag: FlagType;
   setAmount: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const { dealer } = useAuthStoreWithAutoRefresh();
   const [amountInput, setAmountInput] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { setIsLoading } = useLoader();
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,9 +78,21 @@ const TransferRightComponent = ({
       val = parts[0] + "." + parts[1].slice(0, 2);
     }
     setAmountInput(val);
+    if (errorMessage) setErrorMessage("");
   };
 
   const handlePayment = async () => {
+    const amount = parseFloat(amountInput);
+    if (isNaN(amount)) return;
+    if (dealer && amount > dealer.current_amount_bal) {
+      setErrorMessage(
+        `Amount cannot exceed ${CURRENCY_SYMBOL}${dealer.current_amount_bal}`
+      );
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
     setIsLoading(true);
     try {
       let response;
@@ -96,6 +111,7 @@ const TransferRightComponent = ({
           setAmount(amountInput);
           setIsOpen(true);
           setIsLoading(false);
+          setAmountInput("");
           return;
         default:
           return toast.error("Invalid tab selection");
@@ -112,6 +128,7 @@ const TransferRightComponent = ({
 
   useEffect(() => {
     setAmountInput("");
+    setErrorMessage("");
   }, [activeIndex]);
 
   const currentContent = content[activeIndex];
@@ -152,18 +169,21 @@ const TransferRightComponent = ({
               </h4>
               <p className="text-[14px]">{content[activeIndex].description}</p>
               <div className="flex gap-2 md:gap-4">
-                <Input
-                  className="max-h-[28px] lg:max-h-[37px] bg-[var(--color-white)] border-[1.5px] border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
-                  type="text"
-                  // className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
-                  value={`${CURRENCY_SYMBOL}${amountInput}`}
-                  onChange={handleAmountChange}
-                />
+                <div className="flex flex-col gap-1 w-full">
+                  <Input
+                    className="max-h-[28px] lg:max-h-[37px] bg-[var(--color-white)] border-[1.5px] border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                    type="text"
+                    value={`${CURRENCY_SYMBOL}${amountInput}`}
+                    onChange={handleAmountChange}
+                  />
+                  {errorMessage && (
+                    <p className="text-[12px] text-[var(--color-red)] font-medium">
+                      {errorMessage}
+                    </p>
+                  )}
+                </div>
                 <Button
                   className="min-w-[76px] max-h-[28px] lg:min-w-[118px] lg:max-h-[37px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-normal"
-                  // onClick={() => {
-                  //   setIsOpen(true);
-                  // }}
                   onClick={handlePayment}
                   disabled={
                     parseFloat(amountInput) < 10 ||

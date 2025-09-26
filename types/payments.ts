@@ -66,4 +66,7 @@ export interface Transfer {
   transfer_amount: number;
   paypal_email?: string;
   confirm_paypal_email?: string;
+  receivable_amount?: number;
+  paypal_fee?: number;
+  avaialble_balance?: number;
 }

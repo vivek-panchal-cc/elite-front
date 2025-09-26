@@ -76,6 +76,16 @@ const rewardGraphOptions = {
   },
 };
 
+const normalizeMonthKey = (key: string) => {
+  const [year, month] = key.split("_");
+  return `${year}_${Number(month)}`;
+};
+
+const safeNumber = (val: any) => {
+  const num = Number(val);
+  return Number.isNaN(num) ? 0 : num;
+};
+
 export {
   ELITE_LOGO,
   ELITE_WALLET,
@@ -88,4 +98,6 @@ export {
   WITHDRAWAL,
   SAVED_CARD,
   NEW_CARD,
+  normalizeMonthKey,
+  safeNumber,
 };
