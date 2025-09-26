@@ -41,11 +41,11 @@ export default function TryAgain() {
   return (
     <div className="max-w-7xl mx-auto w-full py-10 px-6 sm:px-4 md:px-6 lg:px-8">
       <div className="flex flex-col items-center justify-center  p-6">
-        <h1 className="text-2xl sm:text-4xl font-bold text-[var(--color-green)]">
-          Thank You! 🎉
+        <h1 className="text-2xl sm:text-4xl font-bold text-[var(--color-red)]">
+          Please try again
         </h1>
         <p className="mt-4 text-[var(--color-gray)]">
-          Your payment was successful.
+          Your payment was unsuccessful.
         </p>
 
         <p className="mt-2 text-sm sm:text-base text-[var(--color-gray)]">
@@ -57,11 +57,11 @@ export default function TryAgain() {
 
         {!isOrderPlaced ? (
           <p className="mt-4 text-yellow-600 font-medium">
-            ⏳ Confirming your order...
+            Confirming your order...
           </p>
         ) : (
           <p className="mt-4 text-[var(--color-green)] font-medium">
-            ✅ Your order has been placed successfully!
+            Your order has been placed successfully!
           </p>
         )}
       </div>

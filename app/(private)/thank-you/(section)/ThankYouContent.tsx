@@ -15,7 +15,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
-export default function ThankYouContent() {
+export default function ThankYouContent({
+  orderCollection,
+}: {
+  orderCollection: any;
+}) {
   const router = useRouter();
   const { clearCart } = useBasket();
   const { reloadCart } = useCartItems();
@@ -23,7 +27,7 @@ export default function ThankYouContent() {
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
   const [isOrderPlaced, setIsOrderPlaced] = useState<boolean>(false);
-  const [orderCollection, setOrderCollection] = useState<any>(null);
+  // const [orderCollection, setOrderCollection] = useState<any>(null);
   const {
     ord_id,
     ord_datetime,
@@ -54,59 +58,66 @@ export default function ThankYouContent() {
     user_s_post,
   } = user || {};
 
-  useEffect(() => {
-    if (!isOrderPlaced) return;
-    (async () => {
-      if (isOrderPlaced) {
-        if (clearCart) await clearCart();
-        if (reloadCart) await reloadCart();
-      }
-    })();
-  }, [isOrderPlaced]);
+  // useEffect(() => {
+  //   if (!isOrderPlaced) return;
+  //   (async () => {
+  //     if (isOrderPlaced) {
+  //       if (clearCart) await clearCart();
+  //       if (reloadCart) await reloadCart();
+  //     }
+  //   })();
+  // }, [isOrderPlaced]);
 
-  useEffect(() => {
-    if (!referenceId) router.replace("/cart");
-  }, [referenceId, router]);
+  // useEffect(() => {
+  //   if (!referenceId) router.replace("/cart");
+  // }, [referenceId, router]);
 
-  useEffect(() => {
-    if (!referenceId) return;
-    let interval: NodeJS.Timeout;
+  // useEffect(() => {
+  //   if (!referenceId) return;
+  //   let interval: NodeJS.Timeout;
+  //   let retryCount = 0;
+  //   const maxRetries = 10;
 
-    const checkOrderStatus = async () => {
-      try {
-        const { data } = await apiRequest.checkOrderStatus({
-          transaction_reference: referenceId,
-        });
-        if (data?.success && data?.data?.isOrderPlaced) {
-          setIsOrderPlaced(true);
-          clearInterval(interval);
-          getOrderDetails();
-        }
-      } catch (error: any) {
-        router.replace("/cart");
-      }
-    };
-    checkOrderStatus();
-    interval = setInterval(checkOrderStatus, 1000);
-    return () => clearInterval(interval);
-  }, [referenceId]);
+  //   const checkOrderStatus = async () => {
+  //     try {
+  //       const { data } = await apiRequest.checkOrderStatus({
+  //         transaction_reference: referenceId,
+  //       });
+  //       if (data?.success && data?.data?.isOrderPlaced) {
+  //         setIsOrderPlaced(true);
+  //         clearInterval(interval);
+  //         getOrderDetails();
+  //       }
+  //       retryCount++;
+  //       if (retryCount >= maxRetries) {
+  //         clearInterval(interval);
+  //         router.replace("/cart");
+  //       }
+  //     } catch (error: any) {
+  //       router.replace("/cart");
+  //     }
+  //   };
+  //   checkOrderStatus();
+  //   interval = setInterval(checkOrderStatus, 1000);
+  //   return () => clearInterval(interval);
+  // }, [referenceId]);
 
-  const getOrderDetails = async () => {
-    if (!referenceId) return;
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.getOrderDetails({
-        transaction_reference: referenceId,
-      });
-      if (!data.success) throw data.message;
-      setOrderCollection(data.data);
-    } catch (error: any) {
-      if (typeof error === "string") return toast.error(error);
-      router.replace("/cart");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const getOrderDetails = async () => {
+  //   if (!referenceId) return;
+  //   setIsLoading(true);
+  //   try {
+  //     const { data } = await apiRequest.getOrderDetails({
+  //       transaction_reference: referenceId,
+  //     });
+  //     if (!data.success) throw data.message;
+  //     setOrderCollection(data.data);
+  //   } catch (error: any) {
+  //     if (typeof error === "string") return toast.error(error);
+  //     router.replace("/cart");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="max-w-7xl mx-auto w-full py-10">
