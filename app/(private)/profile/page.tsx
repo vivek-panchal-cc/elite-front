@@ -40,7 +40,7 @@ const sidebarNavItems: SidebarItem[] = [
     title: profileLabels.profileOrderHistory,
     icon: <OrderHistory stroke="currentColor" />,
   },
-  { title: profileLabels.repDetails, icon: <RepDetails fill="currentColor" /> },
+  // { title: profileLabels.repDetails, icon: <RepDetails fill="currentColor" /> },
   { title: profileLabels.rewardWallet, icon: <Reward stroke="currentColor" /> },
   { title: profileLabels.myBranches, icon: <Branch stroke="currentColor" /> },
   { title: profileLabels.myCompany, icon: <Company fill="currentColor" /> },
@@ -60,17 +60,17 @@ const Profile: React.FC = () => {
         return <ProfileInfo {...mobileProps} />;
       case 1:
         return <ProfileOrderHistory {...mobileProps} />;
+      // case 2:
+      //   return <ProfileRepDetails {...mobileProps} />;
       case 2:
-        return <ProfileRepDetails {...mobileProps} />;
-      case 3:
         return <ProfileReward {...mobileProps} />;
-      case 4:
+      case 3:
         return <ProfileBranch {...mobileProps} />;
-      case 5:
+      case 4:
         return <ProfileCompany {...mobileProps} />;
-      case 6:
+      case 5:
         return <ProfileFavourite {...mobileProps} />;
-      case 7:
+      case 6:
         return null;
       default:
         return null;
@@ -106,7 +106,7 @@ const Profile: React.FC = () => {
                   activeIndex={activeIndex}
                   onItemSelect={(index: number) => {
                     setActiveIndex(index);
-                    if (index === 7) {
+                    if (index === 6) {
                       setLogoutOpen(true);
                     }
                   }}

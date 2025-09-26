@@ -40,7 +40,7 @@ function ThankYou() {
 
     let interval: NodeJS.Timeout;
     let retryCount = 0;
-    const maxRetries = 10;
+    const maxRetries = 40;
 
     const checkOrderStatus = async () => {
       try {
@@ -57,11 +57,11 @@ function ThankYou() {
         retryCount++;
         if (retryCount >= maxRetries) {
           clearInterval(interval);
-          router.replace("/cart");
+          router.replace("/try-again?transactionReference=" + referenceId);
         }
       } catch (error) {
         clearInterval(interval);
-        router.replace("/cart");
+        router.replace("/try-again?transactionReference=" + referenceId);
       }
     };
 
@@ -100,8 +100,8 @@ function ThankYou() {
         <Image
           src={spinner}
           alt="Loading..."
-          width={50}
-          height={50}
+          width={100}
+          height={100}
           className="animate-spin"
         />
         <p className="mt-4 text-yellow-600 font-medium">

@@ -563,6 +563,8 @@ export const labels = {
     discValue: "Discount",
     vat: "VAT",
     total: "Total",
+    tryAgainMsg:
+      "Transaction is taking longer than expected. Please refresh the page or contact support at 01827 307777 (9:00am to 5:30pm)",
   },
 
   transfer: {
