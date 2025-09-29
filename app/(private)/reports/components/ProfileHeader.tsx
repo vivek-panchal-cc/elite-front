@@ -20,6 +20,7 @@ import OrderHistoryCard from "@/components/cards/OrderHistoryCard";
 import ContactCard from "@/components/cards/ContactCard";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 import useDealerRewardPoints from "@/hooks/useDealerRewardPoints";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -31,6 +32,7 @@ ChartJS.register(
 );
 
 export default function ProfileDashboard({ loading, points }: ReportsProps) {
+  const router = useRouter();
   const RewardBalanceCard = (
     <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-4 sm:p-5 md:p-16 flex flex-col items-center justify-center text-center">
       <h2 className="text-[18px] sm:text-[18px] md:text-[26px] lg:text-[32px] font-bold mb-4 sm:mb-6 text-[var(--color-dark-blue)]">
@@ -66,7 +68,10 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
       )}
 
       <div className="flex flex-row lg:flex-row gap-3 w-full">
-        <Button className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">
+        <Button
+          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm"
+          onClick={() => router.push("/transfer")}
+        >
           {profileLabels.withdraw}
         </Button>
         {/* <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm">

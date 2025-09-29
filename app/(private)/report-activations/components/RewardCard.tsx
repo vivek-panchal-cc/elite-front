@@ -1,5 +1,6 @@
-import Image from 'next/image';
-import { eliteLogoImg } from '@/components/images';
+import Image from "next/image";
+import { eliteLogoImg } from "@/components/images";
+import { superRewardsLabels } from "@/lib/labels";
 
 const RewardCard: React.FC<{
   target: number | string;
@@ -12,12 +13,15 @@ const RewardCard: React.FC<{
           <div className="w-full p-4 pt-10 flex flex-col relative">
             {/* Target */}
             <p className="text-[14px] font-bold">
-              Target : <span className="font-medium text-[12px]">{target}</span>
+              {superRewardsLabels.target}
+              <span className="font-medium text-[12px]">{target}</span>
             </p>
 
             {/* Reward Section */}
             <div className="mt-2">
-              <p className="text-[14px] font-bold">Reward :</p>
+              <p className="text-[14px] font-bold">
+                {superRewardsLabels.reward}
+              </p>
               <ul className="text-[12px] font-medium pl-4 mt-1 space-y-1 list-none">
                 {rewards.map((r, i) => (
                   <li key={i}>{r}</li>

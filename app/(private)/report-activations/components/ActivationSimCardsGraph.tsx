@@ -12,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import { reportsLabels } from "@/lib/labels";
+import useActivatedSIMGraph from "@/hooks/useActivatedSimGraph";
 
 ChartJS.register(
   LineElement,
@@ -24,6 +25,7 @@ ChartJS.register(
 
 const ActivationSimCardsGraph = () => {
   const [activeFilter, setActiveFilter] = useState("1M");
+  const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph();
 
   const data = {
     labels: ["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"],
@@ -105,8 +107,7 @@ const ActivationSimCardsGraph = () => {
       </div>
 
       <div className="border-2 border-[var(--color-white)] rounded-xl p-4 pb-6">
-        <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
-          {/* Title + Number */}
+        {/* <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
           <div className="text-left">
             <h2 className="text-[10px] sm:text-[12px]">
               {reportsLabels.activatedSim}
@@ -114,7 +115,6 @@ const ActivationSimCardsGraph = () => {
             <p className="text-[20px] sm:text-[30px]">1,250</p>
           </div>
 
-          {/* Filters */}
           <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
             {filters.map((filter) => (
               <button
@@ -130,7 +130,7 @@ const ActivationSimCardsGraph = () => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="w-full min-h-[370px]">
           <Line data={data} options={options} />

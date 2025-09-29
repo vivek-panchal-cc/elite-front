@@ -339,6 +339,14 @@ const transferPaypal = (
   return axiosProductInstance.post(apiUrl.TRANSFER.TRANSFER_PAYPAL, data);
 };
 
+const activatedSIMGraph = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.AUTH_ENDPOINTS.GET_SIM_GRAPH);
+};
+
+const getSuperBonus = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.REWARDS.SUPER_BONUS);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -395,6 +403,8 @@ export const apiRequest = {
   transferSimply,
   transferGCERP,
   transferPaypal,
+  activatedSIMGraph,
+  getSuperBonus,
 } as const;
 
 // Export type for the apiRequest object
@@ -448,4 +458,6 @@ export {
   transferSimply,
   transferGCERP,
   transferPaypal,
+  activatedSIMGraph,
+  getSuperBonus,
 };

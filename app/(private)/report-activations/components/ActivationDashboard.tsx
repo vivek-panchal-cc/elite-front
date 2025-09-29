@@ -20,120 +20,37 @@ import { RewardDropdown } from "./RewardDropdown";
 import RewardCard from "./RewardCard";
 import useDealerActivation from "@/hooks/useDealerActivation";
 import { safeNumber } from "@/lib/constants/all";
-
-type Medal = {
-  name: string;
-  color: string;
-  trophyColor: string;
-  downArrowColor: string;
-  gradient?: string;
-  borderColor?: string;
-};
-
-const medals: Medal[] = [
-  {
-    name: "Blue",
-    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
-    trophyColor: "text-[var(--color-blue)]",
-    downArrowColor: "text-[var(--color-white)]",
-    borderColor: "border-[var(--color-blue)]",
-  },
-  {
-    name: "Bronze",
-    color: "bg-[var(--color-bronze)] text-[var(--color-white)]",
-    trophyColor: "text-[var(--color-bronze)]",
-    downArrowColor: "text-[var(--color-white)]",
-    borderColor: "border-[var(--color-bronze)]",
-  },
-  {
-    name: "Silver",
-    color: "bg-[var(--color-silver)] text-gray-800",
-    trophyColor: "text-[var(--color-silver)]",
-    downArrowColor: "text-[var(--color-black)]",
-    borderColor: "border-[var(--color-silver)]",
-  },
-  {
-    name: "Gold",
-    gradient: "linear-gradient(90deg, #C5A158 0%, #FAD97B 50%, #C5A158 100%)",
-    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
-    trophyColor: "text-[var(--color-gold)]",
-    downArrowColor: "text-[var(--color-black)]",
-    borderColor: "border-[var(--color-gold)]",
-  },
-  {
-    name: "Platinum",
-    color: "bg-[var(--color-platinum)] text-[var(--color-white)]",
-    trophyColor: "text-[var(--color-platinum)]",
-    downArrowColor: "text-[var(--color-black)]",
-    borderColor: "border-[var(--color-platinum)]",
-  },
-  {
-    name: "Diamond",
-    gradient:
-      " linear-gradient(90deg, #EBEFF9 27.68%, #D5DBEB 53.19%, #ECF0F9 71.09%)",
-    color: "bg-[var(--color-silver)] text-gray-800",
-    trophyColor: "text-[#D6DCEC]",
-    downArrowColor: "text-[var(--color-black)]",
-    borderColor: "border-[var(--color-silver)]",
-  },
-];
-
-const rewardData = [
-  {
-    target: 30,
-    rewards: [
-      "1 * iPhone SE 32GB Refurb (Rose Gold)",
-      "1 * £1 Per Activation Transferred To Rewards Account",
-    ],
-  },
-  {
-    target: 50,
-    rewards: [
-      "1 * Apple Watch Series 3",
-      "2 * £2 Per Activation To Rewards Account",
-    ],
-  },
-  {
-    target: 30,
-    rewards: [
-      "1 * iPhone SE 32GB Refurb (Rose Gold)",
-      "1 * £1 Per Activation Transferred To Rewards Account",
-    ],
-  },
-  {
-    target: 50,
-    rewards: [
-      "1 * Apple Watch Series 3",
-      "2 * £2 Per Activation To Rewards Account",
-    ],
-    logo: "/images/another-logo.png",
-  },
-  {
-    target: 30,
-    rewards: [
-      "1 * iPhone SE 32GB Refurb (Rose Gold)",
-      "1 * £1 Per Activation Transferred To Rewards Account",
-    ],
-  },
-  {
-    target: 50,
-    rewards: [
-      "1 * Apple Watch Series 3",
-      "2 * £2 Per Activation To Rewards Account",
-    ],
-  },
-];
+import useSuperBonus from "@/hooks/useSuperBonus";
+import { Gift, medals, RewardData, TierReward } from "@/types/rewards";
 
 const ActivationDashboard = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const {
-    loadingActivation,
-    network,
-    lastYearMonthlyData,
-    lastYearMonthlyFirstTopUpData,
-    reloadActivationData,
-  } = useDealerActivation();
+  const { superBonusList } = useSuperBonus();
+  const { network, lastYearMonthlyData, lastYearMonthlyFirstTopUpData } =
+    useDealerActivation();
+
+  const dynamicRewardData: RewardData[] = (
+    Array.isArray(superBonusList) ? superBonusList.flat() : []
+  ).map((tier: TierReward) => ({
+    name: tier.tier,
+    target: tier.tier_values,
+    rewards: tier.gifts.map(
+      (gift: Gift) => `${gift.tier_qty} * ${gift.tier_title_line}`
+    ),
+  }));
+
+  const mergedMedals = medals
+    .map((medal) => {
+      const reward = dynamicRewardData.find((r) => r.name === medal.name);
+      if (!reward) return null;
+      return {
+        ...medal,
+        target: reward.target,
+        rewards: reward.rewards,
+      };
+    })
+    .filter(Boolean);
 
   // Extract available months (keys like "2025_07")
   const availableMonths = Array.from(
@@ -207,7 +124,7 @@ const ActivationDashboard = () => {
   });
 
   const renderActiveSection = () => {
-    const section = rewardData[activeIndex];
+    const section = mergedMedals[activeIndex];
     if (!section) return null;
 
     return <RewardCard target={section.target} rewards={section.rewards} />;

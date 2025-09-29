@@ -22,6 +22,7 @@ import GraphCard from "@/components/cards/GraphCard";
 import ContactCard from "@/components/cards/ContactCard";
 import OrderHistoryCard from "@/components/cards/OrderHistoryCard";
 import RecentTransactionCard from "@/components/cards/RecentTransactionCard";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -33,6 +34,7 @@ ChartJS.register(
 );
 
 export default function ProfileDashboard() {
+  const router = useRouter();
   const { dealer } = useAuthStoreWithAutoRefresh();
   const [loadingSumm, summaryList, reloadSumm] = useDealerSummary(
     Number(dealer?.dealer_id)
@@ -61,7 +63,10 @@ export default function ProfileDashboard() {
         )}
       </p>
       <div className="flex flex-row lg:flex-col gap-3 w-full">
-        <Button className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]">
+        <Button
+          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]"
+          onClick={() => router.push("/transfer")}
+        >
           {profileLabels.withdraw}
         </Button>
         {/* <Button className="flex-1 lg:w-full bg-[var(--color-dark-blue)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]">

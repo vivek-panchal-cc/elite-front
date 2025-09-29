@@ -11,3 +11,16 @@ export interface ChartData {
 export interface ChartApiResponse {
   data: ChartData;
 }
+
+export interface ActivatedGraphData {
+  Blue: number[];
+  Bronze: number[];
+  Silver: number[];
+  Gold: number[];
+  Platinum: number[];
+  Diamond: number[];
+}
+
+export interface ActivatedSIMGraphData {
+  graphData: ActivatedGraphData;
+}

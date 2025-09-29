@@ -10,6 +10,7 @@ export const AUTH_ENDPOINTS = {
   FORGOT_PASSWORD: "/dealer/forgot-password",
   RESET_PASSWORD: "/reset-password",
   GET_PROFILE: "/dealer/profile",
+  GET_SIM_GRAPH: "dealer/activated-sim-graph",
 } as const;
 
 // User endpoints
@@ -64,6 +65,10 @@ export const TRANSFER = {
   TRANSFER_SIMPLY: "/transfer/transfer-simply",
   TRANSFER_GCERP: "/transfer/transfer-gcerp",
   TRANSFER_PAYPAL: "/transfer/transfer-paypal",
+};
+
+export const REWARDS = {
+  SUPER_BONUS: "/dealer/super-bonus",
 };
 
 // Generate full URLs with base path

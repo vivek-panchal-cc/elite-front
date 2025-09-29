@@ -15,6 +15,7 @@ import { Pagination } from "swiper/modules";
 import RewardBalanceCard from "@/components/cards/RewardBalanceCard";
 import GraphCard from "@/components/cards/GraphCard";
 import RecentTransactionCard from "@/components/cards/RecentTransactionCard";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -26,6 +27,7 @@ ChartJS.register(
 );
 
 export default function ProfileDashboard() {
+  const router = useRouter();
   return (
     <section className="profile-header-section">
       <div className="max-w-7xl mx-auto w-full">
@@ -43,7 +45,7 @@ export default function ProfileDashboard() {
                   <SwiperSlide>
                     <div className="min-h-[215px]">
                       <RewardBalanceCard
-                        onWithdraw={() => console.log("Withdraw clicked")}
+                        onWithdraw={() => router.push("/transfer")}
                       />
                     </div>
                   </SwiperSlide>
@@ -59,9 +61,7 @@ export default function ProfileDashboard() {
 
             {/* Desktop -> Grid */}
             <div className="hidden gap-6 lg:grid grid-cols-1 lg:grid-cols-[350px_1fr]">
-              <RewardBalanceCard
-                onWithdraw={() => console.log("Withdraw clicked")}
-              />
+              <RewardBalanceCard onWithdraw={() => router.push("/transfer")} />
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
                 <RecentTransactionCard />
                 <GraphCard />

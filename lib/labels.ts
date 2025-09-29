@@ -617,6 +617,11 @@ export const labels = {
       "By requesting the transfer below, you are confirming that you are happy for Elite Mobile Limited to raise a Self Bill on your account. You will be responsible for any tax and VAT amounts payable, you agree to notify HMRC of such income.",
   },
 
+  superRewards: {
+    target: "Target : ",
+    reward: "Reward : ",
+  },
+
   // Months for charts and date displays
   months: {
     jan: "Jan",
@@ -676,3 +681,4 @@ export const cartLabels = labels.cart;
 export const reportsLabels = labels.reports;
 export const checkoutLabels = labels.checkout;
 export const transferLabels = labels.transfer;
+export const superRewardsLabels = labels.superRewards;

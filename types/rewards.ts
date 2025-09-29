@@ -17,3 +17,77 @@ export interface RewardRecord {
   redeem_id: string;
   redeem_points: number;
 }
+
+export interface Gift {
+  tier_qty: number;
+  tier_title_line: string;
+}
+
+export interface TierReward {
+  tier: string;
+  tier_values: number;
+  gifts: Gift[];
+}
+
+export interface RewardData {
+  name: string;
+  target: number;
+  rewards: string[];
+}
+
+export type Medal = {
+  name: string;
+  color: string;
+  trophyColor: string;
+  downArrowColor: string;
+  gradient?: string;
+  borderColor?: string;
+};
+
+export const medals: Medal[] = [
+  {
+    name: "Blue",
+    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-blue)]",
+    downArrowColor: "text-[var(--color-white)]",
+    borderColor: "border-[var(--color-blue)]",
+  },
+  {
+    name: "Bronze",
+    color: "bg-[var(--color-bronze)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-bronze)]",
+    downArrowColor: "text-[var(--color-white)]",
+    borderColor: "border-[var(--color-bronze)]",
+  },
+  {
+    name: "Silver",
+    color: "bg-[var(--color-silver)] text-gray-800",
+    trophyColor: "text-[var(--color-silver)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-silver)]",
+  },
+  {
+    name: "Gold",
+    gradient: "linear-gradient(90deg, #C5A158 0%, #FAD97B 50%, #C5A158 100%)",
+    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-gold)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-gold)]",
+  },
+  {
+    name: "Platinum",
+    color: "bg-[var(--color-platinum)] text-[var(--color-white)]",
+    trophyColor: "text-[var(--color-platinum)]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-platinum)]",
+  },
+  {
+    name: "Diamond",
+    gradient:
+      " linear-gradient(90deg, #EBEFF9 27.68%, #D5DBEB 53.19%, #ECF0F9 71.09%)",
+    color: "bg-[var(--color-silver)] text-gray-800",
+    trophyColor: "text-[#D6DCEC]",
+    downArrowColor: "text-[var(--color-black)]",
+    borderColor: "border-[var(--color-silver)]",
+  },
+];
