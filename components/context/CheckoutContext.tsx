@@ -8,12 +8,14 @@ import {
 import { useLoader } from "../providers/loader-provider";
 import { apiRequest } from "@/lib/apiRequest";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(
   undefined
 );
 
 export const CheckoutProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const { setIsLoading } = useLoader();
   const [order, setOrder] = useState<OrderSummary | undefined>(undefined);
 
@@ -44,20 +46,21 @@ export const CheckoutProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const payInstant = async (data: PayWithExistingToken) => {
-    if (!data) return;
+  const payInstant = async (params: PayWithExistingToken) => {
+    if (!params) return null;
     setIsLoading(true);
-    let payload = {
-      token_id: data.token_id,
-      grand_total: data.grand_total,
-    };
     try {
-      const { data } = await apiRequest.payWithExistingToken(payload);
+      const { data } = await apiRequest.payWithExistingToken(params);
       if (!data.success) throw data.message;
       toast.success(data.message);
-      resetCheckout();
+      if (data.data.isSuccess) {
+        router.push(
+          "/thank-you?transactionReference=" + data.data?.transactionReference
+        );
+      }
     } catch (error: any) {
-      if (typeof error === "string") return toast.error(error);
+      if (typeof error === "string") toast.error(error);
+      resetCheckout();
     } finally {
       setIsLoading(false);
     }

@@ -58,8 +58,13 @@ export interface OrderStatus {
 }
 
 export interface PayWithExistingToken {
-  token_id: string;
+  token_id: number | string;
   grand_total: number;
+}
+
+export interface PayInstantResponse {
+  isSuccess?: boolean;
+  transactionReference?: string;
 }
 
 export interface Transfer {

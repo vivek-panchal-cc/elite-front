@@ -30,19 +30,33 @@ import LoaderDiv from "../loaders/LoaderDiv";
 import { CartData } from "@/types/cart";
 import { cartEvents } from "@/lib/events/cartEvents";
 
-const publicNavigationItems = [
+interface NavigationItem {
+  name: string;
+  href: string | null;
+  children?: NavigationItem[];
+}
+
+const publicNavigationItems: NavigationItem[] = [
   { name: navigationLabels.offers, href: "/offers" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   { name: navigationLabels.contactUs, href: "#" },
 ];
 
-const privateNavigationItems = [
+const privateNavigationItems: NavigationItem[] = [
   { name: navigationLabels.home, href: "/dashboard" },
   { name: navigationLabels.orders, href: "/order" },
   { name: navigationLabels.claim, href: "/claim" },
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
-  { name: navigationLabels.reports, href: "/reports" },
+  // { name: navigationLabels.reports, href: "/reports" },
+  {
+    name: navigationLabels.reports,
+    href: null,
+    children: [
+      { name: "Reward Statements", href: "/reports" },
+      { name: "Activations ", href: "/report-activations" },
+    ],
+  },
   { name: navigationLabels.contactUs, href: "#" },
 ];
 
@@ -54,6 +68,9 @@ export function HeaderLayout() {
   const [isLogoutOpen, setLogoutOpen] = useState(false);
   const [resetPasswordOpen, setResetPasswordOpen] = useState(false);
   const { isAuthenticated, loading } = useAuthContext();
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const unsubscribe = cartEvents.subscribe((data) => {
@@ -93,15 +110,42 @@ export function HeaderLayout() {
             {/* Desktop Navigation */}
             {!loading ? (
               <nav className="hidden md:flex">
-                {navigationItems.map((item) => (
-                  <CustomLink
-                    key={item.name}
-                    href={item.href}
-                    className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
-                  >
-                    {item.name}
-                  </CustomLink>
-                ))}
+                {navigationItems.map((item) => {
+                  if ("children" in item && item.children?.length) {
+                    return (
+                      <div key={item.name} className="relative group">
+                        <button
+                          type="button"
+                          className="link-hover cursor-pointer flex items-center justify-between w-full text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium hover:text-[var(--color-blue)]"
+                        >
+                          {item.name}
+                        </button>
+
+                        <div className="absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
+                          {item.children.map((child) => (
+                            <CustomLink
+                              key={child.name}
+                              href={child.href ?? "#"}
+                              className="block px-3 py-2 text-sm text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
+                            >
+                              {child.name}
+                            </CustomLink>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <CustomLink
+                      key={item.name}
+                      href={item.href ?? "#"}
+                      className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
+                    >
+                      {item.name}
+                    </CustomLink>
+                  );
+                })}
               </nav>
             ) : (
               <div className="hidden md:flex space-x-3">
@@ -184,21 +228,62 @@ export function HeaderLayout() {
         <div className="md:hidden pt-4 flex flex-col h-[50vh]">
           {/* Scrollable navigation items */}
           <nav className="flex-1 overflow-y-auto">
-            {navigationItems.map((item) => (
-              <CustomLink
-                key={item.name}
-                href={item.href}
-                className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-                <Image
-                  src={burgerMenuArrow}
-                  alt="Menu arrow"
-                  className="h-[15px] w-[10px]"
-                />
-              </CustomLink>
-            ))}
+            {navigationItems.map((item) => {
+              const hasChildren = item.children && item.children.length > 0;
+              const isOpen = openMobileDropdown === item.name;
+
+              return (
+                <div key={item.name}>
+                  {hasChildren ? (
+                    <>
+                      <button
+                        onClick={() =>
+                          setOpenMobileDropdown(isOpen ? null : item.name)
+                        }
+                        className={`cursor-pointer flex justify-between w-full px-10 py-2 text-sm font-medium text-[var(--color-dark-gray)]`}
+                      >
+                        {item.name}
+                        <Image
+                          src={burgerMenuArrow}
+                          alt="Menu arrow"
+                          className={`h-[15px] w-[10px] transition-transform duration-200 ${
+                            isOpen ? "rotate-90" : ""
+                          }`}
+                        />
+                      </button>
+
+                      {isOpen && (
+                        <div className="flex flex-col pl-6 border-l border-[var(--color-light-gray)]">
+                          {item.children!.map((child) => (
+                            <CustomLink
+                              key={child.name}
+                              href={child.href ?? "#"}
+                              className="ml-4 px-4 py-2 text-sm text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {child.name}
+                            </CustomLink>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <CustomLink
+                      href={item.href ?? "#"}
+                      className="flex justify-between w-full px-10 py-2 text-sm font-medium text-[var(--color-dark-gray)]"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                      <Image
+                        src={burgerMenuArrow}
+                        alt="Menu arrow"
+                        className="h-[15px] w-[10px]"
+                      />
+                    </CustomLink>
+                  )}
+                </div>
+              );
+            })}
             {isAuthenticated && (
               <nav className="flex-1 overflow-y-auto">
                 <CustomLink

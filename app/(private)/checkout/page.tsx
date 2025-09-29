@@ -52,12 +52,9 @@ export default function Checkout() {
 
   const handlePayNow = async (card: Card) => {
     if (!card || !order) return;
-    const { token_id } = card;
+    const { id } = card;
     const { grand_total } = order;
-    if (payInstant) await payInstant({ token_id, grand_total });
-    if (clearCart) await clearCart();
-    if (reloadCart) await reloadCart();
-    router.push("/dashboard");
+    if (payInstant) await payInstant({ token_id: id, grand_total });
   };
 
   const goBack = () => {
