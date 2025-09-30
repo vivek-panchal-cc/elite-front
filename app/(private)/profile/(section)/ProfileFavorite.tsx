@@ -129,9 +129,12 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
     response = await addToBasketHandler(payload as ProductAddToBasketParams);
     if (response?.success && response.statusCode === 200) {
       if (currentFreeIndex < freeProductsQueue.length - 1) {
-        setCurrentFreeIndex((prev) => prev + 1);
-      } else {
-        // last modal → clear queue
+        setFreeProductsQueue([]);
+        setTimeout(() => {
+          setCurrentFreeIndex((prev) => prev + 1);
+          setFreeProductsQueue(freeProductsData);
+        }, 300);
+      } else {        
         setFreeProductsQueue([]);
         setCurrentFreeIndex(0);
         if (pendingUpdate) {
