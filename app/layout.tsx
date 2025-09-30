@@ -10,6 +10,8 @@ import { RouteLoader } from "@/components/route-loader/RouteLoader";
 import { BasketProvider } from "@/components/context/BasketContext";
 import ToasterComponent from "@/components/ui/Toaster";
 import { CheckoutProvider } from "@/components/context/CheckoutContext";
+import { Suspense } from "react";
+import DefaultLoader from "@/components/ui/Loader";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
@@ -71,7 +73,21 @@ export default function RootLayout({
                   <RouteLoader />
                   <ToasterComponent />
                   <HeaderLayout />
-                  {children}
+                  <Suspense
+                    fallback={
+                      <div className="flex items-center justify-center min-h-screen bg-black/10">
+                        <div className="inset-0 flex items-center justify-center bg-transparent backdrop-blur-md">
+                          <div className="flex flex-col items-center gap-6 p-8 backdrop-blur-md">
+                            <div className="relative">
+                              <DefaultLoader size="xl" variant="spinner" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  >
+                    {children}
+                  </Suspense>
                   <FooterLayout />
                 </QueryProvider>
               </BasketProvider>

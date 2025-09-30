@@ -14,11 +14,11 @@ interface FreeProductsProps {
     sku: string;
     freeProdDiscId: number;
   }) => void;
-  products: FreeProducts[];
+  products: FreeProducts;
 }
 
 const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
-  const initialQuantities = products[0].items.reduce(
+  const initialQuantities = products.items.reduce(
     (acc, product) => ({ ...acc, [product.prod_id]: 0 }),
     {} as Record<number, number>
   );
@@ -51,7 +51,7 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
   };
 
   const handleAddToBasket = () => {
-    const selected = products[0].items.find((p) => quantities[p.prod_id] > 0);
+    const selected = products.items.find((p) => quantities[p.prod_id] > 0);
 
     if (selected) {
       const qty = quantities[selected.prod_id];
@@ -68,11 +68,11 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
     }
   };
 
-  const isButtonDisabled = !products[0].items.some(
+  const isButtonDisabled = !products.items.some(
     (product) => quantities[product.prod_id] === product.free_prod_qty
   );
 
-  const maxQuantity = products[0].free_prod_qty;
+  const maxQuantity = products.free_prod_qty;
 
   return (
     <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg flex flex-col max-h-[80vh]">
@@ -91,7 +91,7 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
 
       {/* Product List */}
       <div className="flex-1 custom-scrollbar overflow-y-auto p-6 space-y-4">
-        {products[0].items.map((product) => {
+        {products.items.map((product) => {
           const qty = quantities[product.prod_id];
           return (
             <div

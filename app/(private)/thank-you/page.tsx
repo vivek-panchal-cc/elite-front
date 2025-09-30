@@ -11,12 +11,14 @@ import { toast } from "sonner";
 import { useLoader } from "@/components/providers/loader-provider";
 import useCartItems from "@/hooks/useCartItems";
 import { useBasket } from "@/components/context/BasketContext";
+import useCartSummary from "@/hooks/useCartSummary";
 
 function ThankYou() {
   const router = useRouter();
   const { setIsLoading } = useLoader();
   const { clearCart } = useBasket();
   const { reloadCart } = useCartItems();
+  const { reloadCartSummary } = useCartSummary();
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
   const [isOrderPlaced, setIsOrderPlaced] = useState<boolean>(false);
@@ -28,6 +30,7 @@ function ThankYou() {
       if (isOrderPlaced) {
         if (clearCart) await clearCart();
         if (reloadCart) await reloadCart();
+        if (reloadCartSummary) await reloadCartSummary();
       }
     })();
   }, [isOrderPlaced]);

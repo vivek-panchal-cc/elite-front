@@ -347,6 +347,16 @@ const getSuperBonus = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.REWARDS.SUPER_BONUS);
 };
 
+const downloadInvoice = (id: number): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(
+    apiUrl.PRODUCT_ENDPOINTS.DOWNLOAD_INVOICE(id)
+  );
+};
+
+const cartSummary = (): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.AUTH_ENDPOINTS.CART_SUMMARY);
+};
+
 // Export all API functions in a single object
 export const apiRequest = {
   // Auth
@@ -405,6 +415,8 @@ export const apiRequest = {
   transferPaypal,
   activatedSIMGraph,
   getSuperBonus,
+  downloadInvoice,
+  cartSummary,
 } as const;
 
 // Export type for the apiRequest object
@@ -460,4 +472,6 @@ export {
   transferPaypal,
   activatedSIMGraph,
   getSuperBonus,
+  downloadInvoice,
+  cartSummary,
 };

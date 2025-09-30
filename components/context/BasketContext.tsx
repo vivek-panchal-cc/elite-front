@@ -22,6 +22,7 @@ interface BasketContextType {
     params: ProductRedeemAmount
   ) => Promise<ApiResponse | null>;
   handleProductDetails: (details: any) => void;
+  handleDownloadInvoice: (id: number) => void;
 }
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
@@ -98,6 +99,28 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     setDetails(null);
   };
 
+  const handleDownloadInvoice = async (id: number) => {
+    if (!id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.downloadInvoice(id);
+      if (!data.success) throw data.message;
+      const { base64, fileName } = data.data;
+      const extension = fileName?.split(".")?.[1] || "";
+      const dtnow = new Date().toISOString();
+      const linkSource = `data:application/${extension};base64,${base64}`;
+      const downloadLink = document.createElement("a");
+      const fileFullName = `${id}_${dtnow}.${extension}`;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileFullName;
+      downloadLink.click();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <BasketContext.Provider
       value={{
@@ -106,6 +129,7 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
         clearCart,
         updateRedeemAmountBasket,
         handleProductDetails,
+        handleDownloadInvoice,
       }}
     >
       {children}

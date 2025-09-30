@@ -152,7 +152,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                         <div className="flex flex-col">
                           {dt.description}
                           {dt.orderNo && (
-                            <a href="#" className="text-[12px] text-[#582CD9]">
+                            <a href={undefined} className="text-[12px] text-[#582CD9]">
                               #{dt.orderNo}
                             </a>
                           )}
@@ -263,7 +263,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                             <span>{dt.description}</span>
                             {dt.orderNo && (
                               <a
-                                href="#"
+                                href={undefined}
                                 className="text-[12px] text-[#582CD9]"
                               >
                                 #{dt.orderNo}

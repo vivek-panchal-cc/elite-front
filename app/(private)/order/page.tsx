@@ -28,12 +28,15 @@ import useCartItems from "@/hooks/useCartItems";
 import { toast } from "sonner";
 import Modal from "@/components/ui/Modal";
 import FreeProductsModal from "@/components/pages/FreeProductsModal";
+import WrapAmount from "@/components/wrapper/WrapAmount";
+import useCartSummary from "@/hooks/useCartSummary";
 
 export default function Orders() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
   const { addToBasketHandler, handleProductDetails } = useBasket();
   const { reloadCart } = useCartItems();
+  const { cartSummary, reloadCartSummary } = useCartSummary();
   const [loading, categories] = useCategoryTypeList({ title: searchText });
   const [catId, setCatId] = useState<number | null>(null);
   const [openSub, setOpenSub] = useState<number | null>(null);
@@ -50,6 +53,8 @@ export default function Orders() {
   const [favourites, setFavourites] = useState<Record<number, boolean>>({});
   const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
+  const [freeProductsQueue, setFreeProductsQueue] = useState<any[]>([]);
+  const [currentFreeIndex, setCurrentFreeIndex] = useState<number>(0);
   const [pendingUpdate, setPendingUpdate] = useState<any>(null);
   const text: string = "";
 
@@ -188,7 +193,8 @@ export default function Orders() {
     if (response?.success && response.statusCode === 200) {
       if (response?.data?.length > 0) {
         setFreeProductsData(response.data);
-        setFreeProductsModal(true);
+        setFreeProductsQueue(response.data);
+        setCurrentFreeIndex(0);
         setPendingUpdate({ prodId, newQuantity });
       } else {
         setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
@@ -220,6 +226,7 @@ export default function Orders() {
           });
         }
         if (reloadCart) await reloadCart();
+        if (reloadCartSummary) await reloadCartSummary();
       }
     } else {
       toast.warning(response.message);
@@ -246,44 +253,21 @@ export default function Orders() {
     } as const;
     response = await addToBasketHandler(payload as ProductAddToBasketParams);
     if (response?.success && response.statusCode === 200) {
-      setFreeProductsModal(false);
+      if (currentFreeIndex < freeProductsQueue.length - 1) {
+        setCurrentFreeIndex((prev) => prev + 1);
+      } else {
+        // last modal → clear queue
+        setFreeProductsQueue([]);
+        setCurrentFreeIndex(0);
 
-      if (pendingUpdate) {
-        const { prodId, newQuantity } = pendingUpdate;
-
-        setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
-
-        const product =
-          directProducts.find((p: Product) => p.prod_id === prodId) ||
-          subCategories
-            .flatMap((cat) => cat.productList)
-            .find((p: Product) => p.prod_id === prodId);
-
-        if (product) {
-          setCart((prevCart) => {
-            if (newQuantity === 0) {
-              return prevCart.filter((item) => item.product.prod_id !== prodId);
-            }
-
-            const existingItem = prevCart.find(
-              (item) => item.product.prod_id === prodId
-            );
-            if (existingItem) {
-              return prevCart.map((item) =>
-                item.product.prod_id === prodId
-                  ? { ...item, quantity: newQuantity }
-                  : item
-              );
-            } else {
-              return [...prevCart, { product, quantity: newQuantity }];
-            }
-          });
+        // apply pending update only once when queue ends
+        if (pendingUpdate) {
+          const { prodId, newQuantity } = pendingUpdate;
+          setQuantities((prev: any) => ({ ...prev, [prodId]: newQuantity }));
+          setPendingUpdate(null);
+          if (reloadCart) await reloadCart();
+          if (reloadCartSummary) await reloadCartSummary();
         }
-
-        if (reloadCart) await reloadCart();
-
-        // Clear pending update
-        setPendingUpdate(null);
       }
     } else {
       toast.warning(response.message);
@@ -526,9 +510,10 @@ export default function Orders() {
                 <div className="flex justify-center items-center mb-2 sm:mb-3">
                   <div className="flex flex-wrap justify-center gap-x-1 sm:gap-x-2 gap-y-1">
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                      {cartLabels.total}:
+                      {cartLabels.total} :{" "}
                       <span className="font-bold text-[var(--color-blue)]">
-                        {CURRENCY_SYMBOL}
+                        <WrapAmount value={Number(cartSummary?.sub_total)} />
+                        {/* {CURRENCY_SYMBOL}
                         {cart
                           .reduce(
                             (sum, item) =>
@@ -536,23 +521,24 @@ export default function Orders() {
                               item.product.prod_original_price * item.quantity,
                             0
                           )
-                          .toFixed(2)}
+                          .toFixed(2)} */}
                       </span>
                     </span>
                     <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                      {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "}
-                      {cartLabels.units}
+                      {/* {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "} */}
+                      {cartSummary?.units} {cartLabels.units}
                     </span>
                     <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
-                      {cart.length} {cartLabels.skus}
+                      {/* {cart.length} */}
+                      {cartSummary?.quantity} {cartLabels.skus}
                     </span>
-                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                    {/* <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
@@ -568,7 +554,7 @@ export default function Orders() {
                           ) * 0.1
                         ).toFixed(2)}
                       </span>
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 
@@ -581,17 +567,19 @@ export default function Orders() {
               </div>
             </div>
           )}
-          <Modal
-            isOpen={freeProductsModal}
-            onClose={() => handleCloseFreeModal()}
-            classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
-            isClose={false}
-          >
-            <FreeProductsModal
-              setModalClose={handleCloseFreeModal}
-              products={freeProductsData}
-            />
-          </Modal>
+          {freeProductsQueue.length > 0 && (
+            <Modal
+              isOpen={true}
+              onClose={() => handleCloseFreeModal()}
+              classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+              isClose={false}
+            >
+              <FreeProductsModal
+                setModalClose={handleCloseFreeModal}
+                products={freeProductsQueue[currentFreeIndex]}
+              />
+            </Modal>
+          )}
         </div>
       </div>
     </div>

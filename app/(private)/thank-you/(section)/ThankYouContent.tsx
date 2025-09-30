@@ -21,7 +21,7 @@ export default function ThankYouContent({
   orderCollection: any;
 }) {
   const router = useRouter();
-  const { clearCart } = useBasket();
+  const { isLoading, clearCart, handleDownloadInvoice } = useBasket();
   const { reloadCart } = useCartItems();
   const { setIsLoading } = useLoader();
   const searchParams = useSearchParams();
@@ -232,7 +232,17 @@ export default function ThankYouContent({
                 <h2 className="font-semibold text-[var(--color-blue)]">
                   {checkoutLabels.yourCart}
                 </h2>
-                <button className="flex justify-center items-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl cursor-pointer">
+                <button
+                  className={`flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl cursor-pointer ${
+                    isLoading
+                      ? "bg-[var(--color-smooth-gray)]"
+                      : "bg-[var(--color-red)] hover:bg-[var(--color-red-hover)]"
+                  }`}
+                  disabled={isLoading}
+                  onClick={() =>
+                    handleDownloadInvoice && handleDownloadInvoice(ord_id)
+                  }
+                >
                   <Download className="h-3 w-3" />
                   {checkoutLabels.downloadInvoice}
                 </button>

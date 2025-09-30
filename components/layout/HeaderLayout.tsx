@@ -27,8 +27,8 @@ import ResetPassword from "../pages/reset-password/ResetPasswordForm";
 import ProfileMenu from "../ui/ProfileMenu";
 import WrapAmount from "../wrapper/WrapAmount";
 import LoaderDiv from "../loaders/LoaderDiv";
-import { CartData } from "@/types/cart";
-import { cartEvents } from "@/lib/events/cartEvents";
+import { CartSummaryResponse } from "@/types/cart";
+import { cartSummaryEvents } from "@/lib/events/cartSummaryEvents";
 
 interface NavigationItem {
   name: string;
@@ -45,7 +45,7 @@ const publicNavigationItems: NavigationItem[] = [
 const privateNavigationItems: NavigationItem[] = [
   { name: navigationLabels.home, href: "/dashboard" },
   { name: navigationLabels.orders, href: "/order" },
-  { name: navigationLabels.claim, href: "/claim" },
+  // { name: navigationLabels.claim, href: "/claim" },
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   // { name: navigationLabels.reports, href: "/reports" },
@@ -61,7 +61,7 @@ const privateNavigationItems: NavigationItem[] = [
 ];
 
 export function HeaderLayout() {
-  const [cart, setCart] = useState<CartData | null>(null);
+  const [cart, setCart] = useState<CartSummaryResponse | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
@@ -73,15 +73,12 @@ export function HeaderLayout() {
   );
 
   useEffect(() => {
-    const unsubscribe = cartEvents.subscribe((data) => {
+    const unsubscribe = cartSummaryEvents.subscribe((data) => {
       setCart(data);
     });
 
     return () => unsubscribe();
   }, []);
-
-  const items = cart?.items ?? [];
-  const total = cart?.summary?.sub_total ?? 0;
 
   const navigationItems = isAuthenticated
     ? privateNavigationItems
@@ -175,9 +172,9 @@ export function HeaderLayout() {
                       className="h-4 w-4 sm:h-6 sm:w-6 ml-[-4px] sm:ml-[-6px]"
                       priority
                     />
-                    {items.length > 0 && (
+                    {cart?.units && (
                       <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-[var(--color-white)] text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
-                        {items.length}
+                        {cart?.units}
                       </span>
                     )}
                   </div>
@@ -185,7 +182,7 @@ export function HeaderLayout() {
                   {/* Amount Section */}
                   <div className="bg-[var(--color-soft-white)] border-2 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
                     <span className="text-[var(--color-blue)] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
-                      <WrapAmount value={total} />
+                      <WrapAmount value={Number(cart?.sub_total) || 0} />
                     </span>
                   </div>
                 </div>

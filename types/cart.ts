@@ -93,3 +93,9 @@ export interface CartData {
   summary: CartSummary;
   meta: CartMeta;
 }
+
+export interface CartSummaryResponse {
+  sub_total: number | string;
+  quantity: number | string;
+  units: number | string;
+}

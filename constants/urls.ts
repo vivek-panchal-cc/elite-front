@@ -11,6 +11,7 @@ export const AUTH_ENDPOINTS = {
   RESET_PASSWORD: "/reset-password",
   GET_PROFILE: "/dealer/profile",
   GET_SIM_GRAPH: "dealer/activated-sim-graph",
+  CART_SUMMARY: "/dealer/cart-summary",
 } as const;
 
 // User endpoints
@@ -33,6 +34,7 @@ export const PRODUCT_ENDPOINTS = {
   CLEAR_CART: "/orders/cart",
   CART_LIST: "/orders/cart-list",
   UPDATE_REDEEM_AMOUNT: "orders/update-redeem-amount",
+  DOWNLOAD_INVOICE: (order_id: number) => `/orders/invoice/${order_id}`,
 } as const;
 
 export const PROFILE = {

@@ -16,12 +16,14 @@ import Modal from "@/components/ui/Modal";
 import FreeProductsModal from "@/components/pages/FreeProductsModal";
 import { ProductAddToBasketParams } from "@/types/product";
 import { IsMobileProps } from "@/types/profile";
+import useCartSummary from "@/hooks/useCartSummary";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 export default function ProfileFavourite({ isMobile }: IsMobileProps) {
   const { addOrRemoveFavourite } = useAddOrRemoveFavourite();
   const { addToBasketHandler, isLoading } = useBasket();
   const { reloadCart } = useCartItems();
+  const { reloadCartSummary } = useCartSummary();
   const [loading, favouriteProduct, reload] = useFavouriteProductList();
   const [liked, setLiked] = useState<boolean[]>(
     Array(favouriteProduct.length).fill(true)
@@ -29,6 +31,8 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
+  const [freeProductsQueue, setFreeProductsQueue] = useState<any[]>([]);
+  const [currentFreeIndex, setCurrentFreeIndex] = useState<number>(0);
   const [pendingUpdate, setPendingUpdate] = useState<any>(null);
 
   useEffect(() => {
@@ -91,11 +95,13 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
     if (response?.success && response.statusCode === 200) {
       if (response?.data?.length > 0) {
         setFreeProductsData(response.data);
-        setFreeProductsModal(true);
+        setFreeProductsQueue(response.data);
+        setCurrentFreeIndex(0);
         setPendingUpdate({ prodId, newQuantity });
       } else {
         setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
         if (reloadCart) await reloadCart();
+        if (reloadCartSummary) await reloadCartSummary();
       }
     } else {
       toast.warning(response.message);
@@ -122,12 +128,19 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
     } as const;
     response = await addToBasketHandler(payload as ProductAddToBasketParams);
     if (response?.success && response.statusCode === 200) {
-      setFreeProductsModal(false);
-      if (pendingUpdate) {
-        const { prodId, newQuantity } = pendingUpdate;
-        setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
-        if (reloadCart) await reloadCart();
-        setPendingUpdate(null);
+      if (currentFreeIndex < freeProductsQueue.length - 1) {
+        setCurrentFreeIndex((prev) => prev + 1);
+      } else {
+        // last modal → clear queue
+        setFreeProductsQueue([]);
+        setCurrentFreeIndex(0);
+        if (pendingUpdate) {
+          const { prodId, newQuantity } = pendingUpdate;
+          setQuantities((prev) => ({ ...prev, [prodId]: newQuantity }));
+          if (reloadCart) await reloadCart();
+          if (reloadCartSummary) await reloadCartSummary();
+          setPendingUpdate(null);
+        }
       }
     } else {
       toast.warning(response.message);
@@ -335,17 +348,19 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
           </div>
         </div>
       </div>
-      <Modal
-        isOpen={freeProductsModal}
-        onClose={() => handleCloseFreeModal()}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
-        isClose={false}
-      >
-        <FreeProductsModal
-          setModalClose={handleCloseFreeModal}
-          products={freeProductsData}
-        />
-      </Modal>
+      {freeProductsQueue.length > 0 && (
+        <Modal
+          isOpen={true}
+          onClose={() => handleCloseFreeModal()}
+          classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+          isClose={false}
+        >
+          <FreeProductsModal
+            setModalClose={handleCloseFreeModal}
+            products={freeProductsQueue[currentFreeIndex]}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

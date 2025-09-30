@@ -1,5 +1,5 @@
 "use client";
-import useCartItems from "@/hooks/useCartItems";
+import useCartSummary from "@/hooks/useCartSummary";
 import { useAuthContext } from "@/lib/AuthProvider";
 
 export default function PrivateLayout({
@@ -8,11 +8,11 @@ export default function PrivateLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated } = useAuthContext();
-  const {} = useCartItems();
+  const {} = useCartSummary();
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   return <>{children}</>;
 }

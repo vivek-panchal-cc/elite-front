@@ -31,6 +31,7 @@ import FreeProductsModal from "@/components/pages/FreeProductsModal";
 import { useCheckout } from "@/components/context/CheckoutContext";
 import { apiRequest } from "@/lib/apiRequest";
 import { useLoader } from "@/components/providers/loader-provider";
+import useCartSummary from "@/hooks/useCartSummary";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
@@ -40,22 +41,28 @@ const Cart = () => {
   const { dealer } = useAuthStoreWithAutoRefresh();
   const { clearCart, updateRedeemAmountBasket, addToBasketHandler } =
     useBasket();
+  const { reloadCartSummary } = useCartSummary();
   const { loadingCart, cartItems, reloadCart } = useCartItems();
   const { items, meta, summary } = cartItems ?? {
     items: [],
     meta: {} as CartMeta,
     summary: {} as CartSummary,
   };
-  const [balance, setBalance] = useState<number>(
-    dealer?.current_amount_bal ?? 0
-  );
-  // const [amount, setAmount] = useState<number>(dealer?.current_amount_bal ?? 0);
+  const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
   const [amountInput, setAmountInput] = useState<string>("");
   const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
+  const [freeProductsQueue, setFreeProductsQueue] = useState<any[]>([]);
+  const [currentFreeIndex, setCurrentFreeIndex] = useState<number>(0);
   const [pendingUpdate, setPendingUpdate] = useState<any>(null);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+
+  useEffect(() => {
+    if (dealer?.current_amount_bal) {
+      setBalance(dealer.current_amount_bal);
+    }
+  }, [dealer]);
 
   useEffect(() => {
     if (items && items.length > 0) {
@@ -87,7 +94,8 @@ const Cart = () => {
     if (response?.success && response.statusCode === 200) {
       if (response?.data?.length > 0) {
         setFreeProductsData(response.data);
-        setFreeProductsModal(true);
+        setFreeProductsQueue(response.data);
+        setCurrentFreeIndex(0);
         setPendingUpdate({ basket_id, newQuantity });
       } else {
         setQuantities((prev) => ({
@@ -97,6 +105,7 @@ const Cart = () => {
         setAmount(0);
         setAmountInput("0");
         if (reloadCart) await reloadCart();
+        if (reloadCartSummary) await reloadCartSummary();
       }
     } else {
       toast.warning(response.message);
@@ -123,16 +132,23 @@ const Cart = () => {
     } as const;
     response = await addToBasketHandler(payload as ProductAddToBasketParams);
     if (response?.success && response.statusCode === 200) {
-      setFreeProductsModal(false);
+      if (currentFreeIndex < freeProductsQueue.length - 1) {
+        setCurrentFreeIndex((prev) => prev + 1);
+      } else {
+        // last modal → clear queue
+        setFreeProductsQueue([]);
+        setCurrentFreeIndex(0);
 
-      if (pendingUpdate) {
-        const { basket_id, newQuantity } = pendingUpdate;
-        setQuantities((prev) => ({
-          ...prev,
-          [basket_id]: Math.max(0, newQuantity),
-        }));
-        if (reloadCart) await reloadCart();
-        setPendingUpdate(null);
+        if (pendingUpdate) {
+          const { basket_id, newQuantity } = pendingUpdate;
+          setQuantities((prev) => ({
+            ...prev,
+            [basket_id]: Math.max(0, newQuantity),
+          }));
+          if (reloadCart) await reloadCart();
+          if (reloadCartSummary) await reloadCartSummary();
+          setPendingUpdate(null);
+        }
       }
     } else {
       toast.warning(response.message);
@@ -144,6 +160,7 @@ const Cart = () => {
     setAmountInput("0");
     await clearCart();
     if (reloadCart) await reloadCart();
+    if (reloadCartSummary) await reloadCartSummary();
   };
 
   const removeSingleRecord = async (
@@ -158,6 +175,7 @@ const Cart = () => {
       prod_sku: basket_prod_sku,
     });
     if (reloadCart) await reloadCart();
+    if (reloadCartSummary) await reloadCartSummary();
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,12 +243,20 @@ const Cart = () => {
   const handleReedemBasket = async (value: number) => {
     await updateRedeemAmountBasket({ amount: value });
     if (reloadCart) await reloadCart();
+    if (reloadCartSummary) await reloadCartSummary();
     setBalance((prev) => prev - value);
     setAmount(0);
     setAmountInput("0");
   };
 
   const handleProceedToCheckout = async () => {
+    const hasOutOfStock = items.some((item) => item.is_out_of_stock);
+    if (hasOutOfStock) {
+      toast.warning(
+        "Some items in your cart are out of stock. Please remove them before proceeding."
+      );
+      return;
+    }
     const orderData = {
       sub_total: summary.sub_total || 0,
       total_vat: summary.vat || 0,
@@ -327,7 +353,11 @@ const Cart = () => {
                       return (
                         <div
                           key={i}
-                          className="flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center"
+                          className={`flex flex-col gap-2 border-b py-4 text-sm px-2 md:grid md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] md:items-center ${
+                            item.is_out_of_stock
+                              ? "opacity-50 bg-[var(--color-light-gray)]"
+                              : ""
+                          }`}
                         >
                           {/* Product image + name + (Price + SKU on mobile) */}
                           <div className="flex flex-col">
@@ -714,17 +744,19 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      <Modal
-        isOpen={freeProductsModal}
-        onClose={() => handleCloseFreeModal()}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
-        isClose={false}
-      >
-        <FreeProductsModal
-          setModalClose={handleCloseFreeModal}
-          products={freeProductsData}
-        />
-      </Modal>
+      {freeProductsQueue.length > 0 && (
+        <Modal
+          isOpen={true}
+          onClose={() => handleCloseFreeModal()}
+          classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+          isClose={false}
+        >
+          <FreeProductsModal
+            setModalClose={handleCloseFreeModal}
+            products={freeProductsQueue[currentFreeIndex]}
+          />
+        </Modal>
+      )}
     </div>
     // </PrivateLayout>
   );

@@ -248,7 +248,7 @@ const RewardsTransactions = () => {
                   <p className="flex flex-col text-[12px] leading-3">
                     {item.description}
                     {item.redeem_id && (
-                      <a href="#" className="text-[12px] text-[#582CD9]">
+                      <a href={undefined} className="text-[12px] text-[#582CD9]">
                         #{item.redeem_id}
                       </a>
                     )}
@@ -354,7 +354,7 @@ const RewardsTransactions = () => {
                     <div className="flex flex-col">
                       <span>{item.description}</span>
                       {item.redeem_id && (
-                        <a href="#" className="text-[12px] text-[#582CD9]">
+                        <a href={undefined} className="text-[12px] text-[#582CD9]">
                           #{item.redeem_id}
                         </a>
                       )}
