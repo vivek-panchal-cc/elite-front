@@ -18,27 +18,48 @@ import WrapAmount from "@/components/wrapper/WrapAmount";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 
 const RewardsTransactions = () => {
-  const [loadingTrans, transactionList] = useRewards();
   const [active, setActive] = useState("All");
-
+  const [crDr, setCrDr] = useState<"" | "C" | "D">("");
+  const [loadingTrans, transactionList, reloadRewards] = useRewards({
+    cr_dr: crDr,
+    is_dashboard: false,
+  });
   const tabs = ["All", "Available", "Used"];
+
+  // Update crDr whenever tab changes
+  const handleTabClick = (tab: string) => {
+    setActive(tab);
+    switch (tab) {
+      case "All":
+        setCrDr("");
+        break;
+      case "Available":
+        setCrDr("C");
+        break;
+      case "Used":
+        setCrDr("D");
+        break;
+    }
+    // reloadRewards(); // trigger reload after changing cr_dr
+  };
+
   const RewardsTransactions = (
     <div>
-      <p className="text-[22px] font-bold text-[var(--color-blue)] lg:text-[26px] text-center mb-3 lg:mb-0 lg:text-left">
+      <p className="text-[22px] font-bold text-[var(--color-blue)] lg:text-[26px] text-center mb-3 lg:mb-3 lg:text-left">
         {reportsLabels.rewardTrans}
       </p>
       <div className="flex flex-col">
         <div className="flex flex-col items-center md:flex-row md:justify-end sm:items-end md:gap-3 w-full">
-          <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
+          {/* <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
             <Input
               className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 text-[12px] font-semibold"
               placeholder="Search"
             />
 
-            <IconSearch className="absolute right-0 top-0 m-2.5 h-4 w-4 text-muted-foreground" />
-          </div>
+            <IconSearch className="absolute right-0 top-0 m-2.5 h-4 w-4 text-muted-foreground cursor-pointer" />
+          </div> */}
 
-          <div className="hidden md:flex relative items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] cursor-pointer">
+          {/* <div className="hidden md:flex relative items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] cursor-pointer">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-6 focus:outline-none cursor-pointer">
                 <span className="text-[12px] font-semibold">
@@ -57,7 +78,7 @@ const RewardsTransactions = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+          </div> */}
         </div>
         {/* navbar with dropdown button small and medium device */}
         <div className="md:hidden flex flex-row gap-5 py-5 lg:p-0 justify-between md:justify-center items-center">
@@ -69,7 +90,7 @@ const RewardsTransactions = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActive(tab)}
+                  onClick={() => handleTabClick(tab)}
                   className={`relative transition-colors px-1 ${
                     active === tab
                       ? "text-[var(--color-black)] font-semibold"
@@ -85,7 +106,7 @@ const RewardsTransactions = () => {
             </div>
           </nav>
 
-          <div className="relative inline-flex items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] ">
+          {/* <div className="relative inline-flex items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] ">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 focus:outline-none">
                 <span className="text-[12px] font-medium">
@@ -105,7 +126,7 @@ const RewardsTransactions = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+          </div> */}
         </div>
         {/* nav bar desktop  */}
         <div className="hidden md:flex flex-row gap-6 py-5 sm:p-0 items-start">
@@ -114,7 +135,7 @@ const RewardsTransactions = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActive(tab)}
+                  onClick={() => handleTabClick(tab)}
                   className={`relative transition-colors cursor-pointer ${
                     active === tab
                       ? "text-[var(--color-black)] font-semibold"
@@ -248,7 +269,10 @@ const RewardsTransactions = () => {
                   <p className="flex flex-col text-[12px] leading-3">
                     {item.description}
                     {item.redeem_id && (
-                      <a href={undefined} className="text-[12px] text-[#582CD9]">
+                      <a
+                        href={undefined}
+                        className="text-[12px] text-[#582CD9]"
+                      >
                         #{item.redeem_id}
                       </a>
                     )}
@@ -354,7 +378,10 @@ const RewardsTransactions = () => {
                     <div className="flex flex-col">
                       <span>{item.description}</span>
                       {item.redeem_id && (
-                        <a href={undefined} className="text-[12px] text-[#582CD9]">
+                        <a
+                          href={undefined}
+                          className="text-[12px] text-[#582CD9]"
+                        >
                           #{item.redeem_id}
                         </a>
                       )}

@@ -91,3 +91,8 @@ export const medals: Medal[] = [
     borderColor: "border-[var(--color-silver)]",
   },
 ];
+
+export interface RewardReqParams {
+  cr_dr: "C" | "D" | "";
+  is_dashboard: boolean;
+}

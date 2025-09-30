@@ -10,7 +10,10 @@ import { IsMobileProps } from "@/types/profile";
 
 export default function ProfileReward({ isMobile }: IsMobileProps) {
   const router = useRouter();
-  const [loadingTrans, transactionList, reloadTrans] = useRewards();
+  const [loadingTrans, transactionList, reloadTrans] = useRewards({
+    cr_dr: "",
+    is_dashboard: true,
+  });
   const rewards = transactionList.map((r) => ({
     date: r.redeem_date,
     creditAmount: r.cr_dr === "C" ? r.redeem_amount : "",
@@ -152,7 +155,10 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                         <div className="flex flex-col">
                           {dt.description}
                           {dt.orderNo && (
-                            <a href={undefined} className="text-[12px] text-[#582CD9]">
+                            <a
+                              href={undefined}
+                              className="text-[12px] text-[#582CD9]"
+                            >
                               #{dt.orderNo}
                             </a>
                           )}

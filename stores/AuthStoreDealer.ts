@@ -52,6 +52,8 @@ interface AuthState {
   setAuthData: (data: { dealer: Dealer; user: User; token: string }) => void;
   refreshUserData: () => Promise<void>;
   logout: () => void;
+  reloadUser: boolean;
+  setReloadUser: (value: boolean) => void;
 }
 
 import { getToken } from "@/lib/utils";
@@ -77,6 +79,8 @@ const getStoredAuthData = () => {
 export const useAuthStore = create<AuthState>((set, get) => ({
   ...getStoredAuthData(),
   isLoading: false,
+  reloadUser: false, // initial state
+  setReloadUser: (value: boolean) => set({ reloadUser: value }),
 
   setAuthData: ({ dealer, user, token }) => {
     // Save to storage
@@ -138,7 +142,7 @@ export const useAuthStoreWithAutoRefresh = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [store.reloadUser]);
 
   return store;
 };

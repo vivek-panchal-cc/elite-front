@@ -8,7 +8,10 @@ interface TransProps {
 }
 
 export default function RecentTransactionCard({ header }: TransProps) {
-  const [loadingTrans, transactionList, reloadTrans] = useRewards();
+  const [loadingTrans, transactionList, reloadTrans] = useRewards({
+    cr_dr: "",
+    is_dashboard: true,
+  });
 
   return (
     <div className="overflow-hidden rounded-xl">

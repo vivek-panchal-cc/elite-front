@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/apiRequest";
-import { RewardRecord } from "@/types/rewards";
+import { RewardRecord, RewardReqParams } from "@/types/rewards";
 
-const useRewards = () => {
+const useRewards = ({ cr_dr = "", is_dashboard = true }: RewardReqParams) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [company, setReward] = useState<RewardRecord[]>([]);
   const [reloadFlag, setReloadFlag] = useState<boolean>(false);
@@ -11,10 +11,10 @@ const useRewards = () => {
     setReloadFlag((cs) => !cs);
   };
 
-  const getRewards = async () => {
+  const getRewards = async (params: RewardReqParams) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.getRewards();
+      const { data } = await apiRequest.getRewards(params);
       if (!data.success) throw data.message;
       setReward(data.data || []);
     } catch (error) {
@@ -25,8 +25,8 @@ const useRewards = () => {
   };
 
   useEffect(() => {
-    getRewards();
-  }, [reloadFlag]);
+    getRewards({ cr_dr, is_dashboard });
+  }, [reloadFlag, cr_dr?.trim()]);
 
   return [loading, company, reload] as const;
 };

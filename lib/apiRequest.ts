@@ -16,6 +16,7 @@ import {
   PayWithExistingToken,
   Transfer,
 } from "@/types/payments";
+import { RewardReqParams } from "@/types/rewards";
 
 // Types
 interface LoginCredentials {
@@ -225,8 +226,10 @@ const addCompany = (data: CompanyAdd): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.post(apiUrl.PROFILE.COMPANY_ADD, data);
 };
 
-const getRewards = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosProductInstance.post(apiUrl.PROFILE.MY_REWARDS);
+const getRewards = (
+  data: RewardReqParams
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PROFILE.MY_REWARDS, data);
 };
 
 const getDealerSummary = (id: number): Promise<AxiosResponse<ApiResponse>> => {

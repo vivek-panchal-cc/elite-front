@@ -24,7 +24,7 @@ const PaypalModal = ({
   handleClose: () => void;
   amount: number | string;
 }) => {
-  const { dealer } = useAuthStoreWithAutoRefresh();
+  const { dealer, reloadUser, setReloadUser } = useAuthStoreWithAutoRefresh();
   const { setIsLoading } = useLoader();
 
   const formik = useFormik<Transfer>({
@@ -49,6 +49,7 @@ const PaypalModal = ({
         });
         if (!data.success) throw data.message;
         toast.success(data.message);
+        setReloadUser(!reloadUser);
         handleCloseModal();
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);

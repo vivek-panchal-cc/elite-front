@@ -45,7 +45,7 @@ const publicNavigationItems: NavigationItem[] = [
 const privateNavigationItems: NavigationItem[] = [
   { name: navigationLabels.home, href: "/dashboard" },
   { name: navigationLabels.orders, href: "/order" },
-  // { name: navigationLabels.claim, href: "/claim" },
+  { name: navigationLabels.claim, href: "/claim" },
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
   // { name: navigationLabels.reports, href: "/reports" },
@@ -54,7 +54,7 @@ const privateNavigationItems: NavigationItem[] = [
     href: null,
     children: [
       { name: "Reward Statements", href: "/reports" },
-      { name: "Activations ", href: "/report-activations" },
+      // { name: "Activations ", href: "/report-activations" },
     ],
   },
   { name: navigationLabels.contactUs, href: "#" },
