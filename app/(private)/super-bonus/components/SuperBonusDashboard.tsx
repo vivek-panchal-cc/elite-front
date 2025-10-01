@@ -8,7 +8,7 @@ import useDealerActivation from "@/hooks/useDealerActivation";
 import useSuperBonus from "@/hooks/useSuperBonus";
 import { Gift, medals, RewardData, TierReward } from "@/types/rewards";
 
-const ClaimDashboard = () => {
+const SuperBonusDashboard = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const { superBonusList } = useSuperBonus();
@@ -120,4 +120,4 @@ const ClaimDashboard = () => {
   );
 };
 
-export default ClaimDashboard;
+export default SuperBonusDashboard;

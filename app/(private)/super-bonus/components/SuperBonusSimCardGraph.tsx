@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const ClaimSimCardGraph = () => {
+const SuperBonusSimCardGraph = () => {
   const [activeFilter, setActiveFilter] = useState("1M");
   const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph();
 
@@ -140,4 +140,4 @@ const ClaimSimCardGraph = () => {
   );
 };
 
-export default ClaimSimCardGraph;
+export default SuperBonusSimCardGraph;

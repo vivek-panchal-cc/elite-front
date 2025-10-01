@@ -1,6 +1,10 @@
 import React from "react";
 import { Input } from "@/components/ui/Input";
-import { IconSearch, IconDownArrow } from "@/components/images/icons";
+import {
+  IconSearch,
+  IconDownArrow,
+  IconCross,
+} from "@/components/images/icons";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -31,6 +35,7 @@ const RewardsTransactions = () => {
   // Update crDr whenever tab changes
   const handleTabClick = (tab: string) => {
     setActive(tab);
+    setSearch("")
     switch (tab) {
       case "All":
         setCrDr("");
@@ -64,7 +69,14 @@ const RewardsTransactions = () => {
               placeholder="Search"
             />
 
-            <IconSearch className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            {search ? (
+              <IconCross
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground cursor-pointer"
+                onClick={() => setSearch("")}
+              />
+            ) : (
+              <IconSearch className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
           </div>
 
           {/* <div className="hidden md:flex relative items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] cursor-pointer">

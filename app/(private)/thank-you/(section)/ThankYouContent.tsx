@@ -2,6 +2,7 @@
 
 import { useBasket } from "@/components/context/BasketContext";
 import { noProduct, spinner } from "@/components/images";
+import { IconLoader } from "@/components/images/icons";
 import Download from "@/components/images/svgs/Download";
 import { useLoader } from "@/components/providers/loader-provider";
 import WrapAmount from "@/components/wrapper/WrapAmount";
@@ -233,18 +234,25 @@ export default function ThankYouContent({
                   {checkoutLabels.yourCart}
                 </h2>
                 <button
-                  className={`flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl cursor-pointer ${
-                    isLoading
-                      ? "bg-[var(--color-smooth-gray)]"
-                      : "bg-[var(--color-red)] hover:bg-[var(--color-red-hover)]"
+                  className={`flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
+                    isLoading ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                   disabled={isLoading}
                   onClick={() =>
                     handleDownloadInvoice && handleDownloadInvoice(ord_id)
                   }
                 >
-                  <Download className="h-3 w-3" />
-                  {checkoutLabels.downloadInvoice}
+                  {isLoading ? (
+                    <>
+                      <IconLoader className="h-4 w-4 animate-spin" />
+                      {checkoutLabels.downloading}
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-3 w-3" />
+                      {checkoutLabels.downloadInvoice}
+                    </>
+                  )}
                 </button>
               </div>
 

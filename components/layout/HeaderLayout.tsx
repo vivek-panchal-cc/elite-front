@@ -45,15 +45,20 @@ const publicNavigationItems: NavigationItem[] = [
 const privateNavigationItems: NavigationItem[] = [
   { name: navigationLabels.home, href: "/dashboard" },
   { name: navigationLabels.orders, href: "/order" },
-  { name: navigationLabels.claim, href: "/claim" },
+  {
+    name: navigationLabels.claim,
+    href: null,
+    children: [
+      { name: navigationLabels.superBonus, href: "/super-bonus" },
+    ],
+  },
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
-  // { name: navigationLabels.reports, href: "/reports" },
   {
     name: navigationLabels.reports,
     href: null,
     children: [
-      { name: "Reward Statements", href: "/reports" },
+      { name: navigationLabels.rewardStatements, href: "/reports" },
       // { name: "Activations ", href: "/report-activations" },
     ],
   },

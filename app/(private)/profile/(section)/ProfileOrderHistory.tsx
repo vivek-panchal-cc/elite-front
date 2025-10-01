@@ -3,15 +3,18 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
-import { MoreVertical } from "lucide-react";
-import { profileLabels } from "@/lib/labels";
+import { Download, MoreVertical } from "lucide-react";
+import { checkoutLabels, profileLabels } from "@/lib/labels";
 import useOrderHistory from "@/hooks/useOrderHistory";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { formatDate } from "@/lib/constants/all";
 import LoaderDiv from "@/components/loaders/LoaderDiv";
 import { IsMobileProps } from "@/types/profile";
+import { useBasket } from "@/components/context/BasketContext";
+import { IconLoader } from "@/components/images/icons";
 
 export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
+  const { isLoading, handleDownloadInvoice } = useBasket();
   const [loading, orderHistory, reload] = useOrderHistory({
     limit: 10,
     orderBy: "DESC",
@@ -20,6 +23,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
   });
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -30,6 +34,15 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleInvoiceDownload = async (orderId: number) => {
+    try {
+      setLoadingId(orderId);
+      if (handleDownloadInvoice) await handleDownloadInvoice(orderId);
+    } finally {
+      setLoadingId(null);
+    }
+  };
 
   return (
     <div
@@ -98,53 +111,85 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                           ))}
                         </tr>
                       ))
-                    : orderHistory.map((order, idx) => (
-                        <tr
-                          key={idx}
-                          className="border-t border-[var(--table-border)]"
-                        >
-                          <td className="px-4 py-2">
-                            {formatDate(order.o_ord_datetime)}
-                          </td>
-                          <td className="px-4 py-2">{order.o_ord_id}</td>
-                          <td className="px-4 py-2">
-                            <WrapAmount value={order.o_total} />
-                          </td>
-                          <td className="px-2 py-2 text-right relative">
-                            <div ref={menuRef} className="inline-block">
-                              <button
-                                onClick={() =>
-                                  setOpenMenuIndex(
-                                    openMenuIndex === idx ? null : idx
-                                  )
-                                }
-                                className="p-1"
-                              >
-                                <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
-                              </button>
-                            </div>
-                            {openMenuIndex === idx && (
-                              <div className="overflow-hidden absolute right-0 mt-1 w-25 bg-[var(--color-white)] border border-[var(--color-red)] rounded-xl shadow-md z-10">
-                                {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                    : orderHistory.map((order, idx) => {
+                        return (
+                          <tr
+                            key={idx}
+                            className="border-t border-[var(--table-border)]"
+                          >
+                            <td className="px-4 py-2">
+                              {formatDate(order.o_ord_datetime)}
+                            </td>
+                            <td className="px-4 py-2">{order.o_ord_id}</td>
+                            <td className="px-4 py-2">
+                              <WrapAmount value={order.o_total} />
+                            </td>
+                            <td className="px-2 py-2 text-right relative">
+                              <div className="inline-block">
+                                <button
+                                  onClick={() =>
+                                    setOpenMenuIndex(
+                                      openMenuIndex === idx ? null : idx
+                                    )
+                                  }
+                                  className="p-1"
+                                >
+                                  <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
+                                </button>
+                              </div>
+                              {openMenuIndex === idx && (
+                                <div
+                                  className="absolute right-0 mt-1 w-28 bg-white border border-red-500 rounded-xl shadow-md z-50 overflow-visible"
+                                  data-row-index={idx}
+                                >
+                                  {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {
                                 profileLabels.profileOrderHistoryLabel
                                   .viewReceipt
                               }
                             </button> */}
-                                <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                                  {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                                   {
                                     profileLabels.profileOrderHistoryLabel
                                       .viewOrder
                                   }
+                                </button> */}
+                                  <button
+                                    className={`block w-full px-3 py-1 text-center ${
+                                      loadingId === order.o_ord_id
+                                        ? "cursor-not-allowed"
+                                        : "cursor-pointer"
+                                    }`}
+                                    disabled={loadingId === order.o_ord_id}
+                                    onClick={() =>
+                                      handleInvoiceDownload(order.o_ord_id)
+                                    }
+                                  >
+                                    {loadingId === order.o_ord_id ? (
+                                      <>
+                                        <span className="flex justify-center items-center gap-2">
+                                          {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
+                                          {checkoutLabels.downloading}
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <span className="flex justify-center items-center gap-2">
+                                          <Download className="h-3 w-3" />
+                                          {checkoutLabels.downloadInvoice}
+                                        </span>
+                                      </>
+                                    )}
+                                  </button>
                                   {/* <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.reOrder}
                             </button> */}
-                                </button>
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
                 </tbody>
               </table>
             </div>
@@ -213,12 +258,35 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                               {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
                         </Button> */}
-                              <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                                 {
                                   profileLabels.profileOrderHistoryLabel
                                     .viewOrder
                                 }
-                              </Button>
+                              </Button> */}
+                              <button
+                                className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
+                                  loadingId === order.o_ord_id
+                                    ? "cursor-not-allowed"
+                                    : "cursor-pointer"
+                                }`}
+                                disabled={loadingId === order.o_ord_id}
+                                onClick={() =>
+                                  handleInvoiceDownload(order.o_ord_id)
+                                }
+                              >
+                                {loadingId === order.o_ord_id ? (
+                                  <>
+                                    <IconLoader className="h-4 w-4 animate-spin" />
+                                    {checkoutLabels.downloading}
+                                  </>
+                                ) : (
+                                  <>
+                                    <Download className="h-3 w-3" />
+                                    {checkoutLabels.downloadInvoice}
+                                  </>
+                                )}
+                              </button>
                               {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
                         </Button> */}

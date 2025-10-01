@@ -22,7 +22,7 @@ export const routeConfig = {
     "/checkout",
     "/thank-you",
     "/try-again",
-    "/claim",
+    "/super-bonus",
   ],
 
   // Admin routes - none currently configured

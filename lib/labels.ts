@@ -245,6 +245,8 @@ export const labels = {
     claim: "Claim",
     transfer: "Transfer",
     reports: "Reports",
+    rewardStatements: "Reward Statements",
+    superBonus: "Super Bonus",
   },
 
   // Sidebar menu items
@@ -555,6 +557,7 @@ export const labels = {
     billingAdd: "Billing Address",
     yourCart: "Your Cart",
     downloadInvoice: "Download Invoice",
+    downloading: "Downloading...",
     prod: "Products",
     sku: "SKU",
     price: "Price",

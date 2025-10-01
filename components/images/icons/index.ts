@@ -7,3 +7,5 @@ export { default as IconRightArrow } from "./RightArrow";
 export { default as IconDown } from "./Down";
 export { default as IconCircle } from "./Circle";
 export { default as IconTrophy } from "./Trophy";
+export { default as IconCross } from "./Cross";
+export { default as IconLoader } from "./Loader";

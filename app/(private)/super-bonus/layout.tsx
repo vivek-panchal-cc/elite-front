@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ClaimLayout({
+export default function SuperBonusLayout({
   children,
 }: {
   children: React.ReactNode;
