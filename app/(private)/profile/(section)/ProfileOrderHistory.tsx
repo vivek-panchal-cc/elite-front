@@ -175,7 +175,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                     ) : (
                                       <>
                                         <span className="flex justify-center items-center gap-2">
-                                          <Download className="h-3 w-3" />
+                                          {/* <Download className="h-3 w-3" /> */}
                                           {checkoutLabels.downloadInvoice}
                                         </span>
                                       </>
