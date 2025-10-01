@@ -309,6 +309,10 @@ const getOrderDetails = (
   return axiosProductInstance.get(apiUrl.PAYMENT.ORDER_DETAILS, { params });
 };
 
+const viewOrderDetails = (id: number): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(apiUrl.PAYMENT.VIEW_ORDER_DETAILS(id));
+};
+
 const setAsDefaultCard = (id: string): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.put(apiUrl.PAYMENT.CARD_ACTION(id));
 };
@@ -420,6 +424,7 @@ export const apiRequest = {
   getSuperBonus,
   downloadInvoice,
   cartSummary,
+  viewOrderDetails,
 } as const;
 
 // Export type for the apiRequest object
@@ -477,4 +482,5 @@ export {
   getSuperBonus,
   downloadInvoice,
   cartSummary,
+  viewOrderDetails,
 };

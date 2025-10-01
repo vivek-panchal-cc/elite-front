@@ -13,6 +13,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
   const [loadingTrans, transactionList, reloadTrans] = useRewards({
     cr_dr: "",
     is_dashboard: true,
+    search: "",
   });
   const rewards = transactionList.map((r) => ({
     date: r.redeem_date,

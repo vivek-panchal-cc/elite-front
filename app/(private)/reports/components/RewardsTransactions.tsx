@@ -20,9 +20,11 @@ import LoaderDiv from "@/components/loaders/LoaderDiv";
 const RewardsTransactions = () => {
   const [active, setActive] = useState("All");
   const [crDr, setCrDr] = useState<"" | "C" | "D">("");
+  const [search, setSearch] = useState<string>("");
   const [loadingTrans, transactionList, reloadRewards] = useRewards({
     cr_dr: crDr,
     is_dashboard: false,
+    search: search,
   });
   const tabs = ["All", "Available", "Used"];
 
@@ -43,6 +45,10 @@ const RewardsTransactions = () => {
     // reloadRewards(); // trigger reload after changing cr_dr
   };
 
+  const handleSearch = (elm: any) => {
+    setSearch(elm.target.value);
+  };
+
   const RewardsTransactions = (
     <div>
       <p className="text-[22px] font-bold text-[var(--color-blue)] lg:text-[26px] text-center mb-3 lg:mb-3 lg:text-left">
@@ -50,14 +56,16 @@ const RewardsTransactions = () => {
       </p>
       <div className="flex flex-col">
         <div className="flex flex-col items-center md:flex-row md:justify-end sm:items-end md:gap-3 w-full">
-          {/* <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
+          <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
             <Input
-              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 text-[12px] font-semibold"
+              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 pr-8 text-[12px] font-semibold"
+              value={search}
+              onChange={handleSearch}
               placeholder="Search"
             />
 
-            <IconSearch className="absolute right-0 top-0 m-2.5 h-4 w-4 text-muted-foreground cursor-pointer" />
-          </div> */}
+            <IconSearch className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          </div>
 
           {/* <div className="hidden md:flex relative items-center border-1 border-[rgba(0,0,0,0.31)] rounded-4xl px-3 py-2 bg-[rgba(0,0,0,0.05)] cursor-pointer">
             <DropdownMenu>

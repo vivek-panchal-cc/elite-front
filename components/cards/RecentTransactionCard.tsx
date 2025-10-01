@@ -11,6 +11,7 @@ export default function RecentTransactionCard({ header }: TransProps) {
   const [loadingTrans, transactionList, reloadTrans] = useRewards({
     cr_dr: "",
     is_dashboard: true,
+    search: "",
   });
 
   return (

@@ -110,7 +110,7 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
       const dtnow = new Date().toISOString();
       const linkSource = `data:application/${extension};base64,${base64}`;
       const downloadLink = document.createElement("a");
-      const fileFullName = `${id}_${dtnow}.${extension}`;
+      const fileFullName = `INVOICE_${id}.${extension}`;
       downloadLink.href = linkSource;
       downloadLink.download = fileFullName;
       downloadLink.click();

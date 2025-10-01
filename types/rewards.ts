@@ -95,4 +95,5 @@ export const medals: Medal[] = [
 export interface RewardReqParams {
   cr_dr: "C" | "D" | "";
   is_dashboard: boolean;
+  search: string;
 }

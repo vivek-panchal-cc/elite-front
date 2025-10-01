@@ -59,6 +59,7 @@ export const PAYMENT = {
   PAYMENT_PAGE: "payment/worldpay/create-payment-page",
   ORDER_STATUS: "/payment/check-order-status",
   ORDER_DETAILS: "/orders/order-details",
+  VIEW_ORDER_DETAILS: (id: number) => `/orders/order-details/${id}`,
   CARD_ACTION: (id: string) => `/payment/card/${id}`,
   PAY_WITH_EXISTING_TOKEN: "/payment/pay-with-existing-card",
 };
