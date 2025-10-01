@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { User } from "lucide-react";
 import { Button } from "./ButtonUI";
 import { commonLabels, profileLabels } from "@/lib/labels";
 import { useRouter } from "next/navigation";
+import UserIcon from "../images/svgs/User";
 
 interface ProfileMenuProps {
   isAuthenticated: boolean;
@@ -53,7 +53,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
         className="w-10 h-10 rounded-full bg-[var(--color-white)] border flex items-center justify-center cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <User className="text-[var(--color-black)] w-5 h-5" />
+        <UserIcon className="text-[var(--color-black)] w-4 h-4" />
       </button>
 
       {/* Dropdown (on click) */}

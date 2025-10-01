@@ -78,7 +78,7 @@ const ChangePassword = ({ onBack }: onBackProps) => {
           <Input
             type="text"
             name="email"
-            className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
+            className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
             placeholder="Enter Email"
             autoComplete="username"
             onChange={formik.handleChange}
@@ -96,7 +96,7 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         <Input
           type={showOldPassword ? "text" : "password"}
           name="old_password"
-          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
+          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           placeholder="Enter Old Password"
           autoComplete="new-password"
           onChange={formik.handleChange}
@@ -122,7 +122,7 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         <Input
           type={showNewPassword ? "text" : "password"}
           name="new_password"
-          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
+          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           placeholder="Enter New Password"
           autoComplete="new-password"
           onChange={formik.handleChange}

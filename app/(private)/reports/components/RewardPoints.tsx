@@ -65,7 +65,7 @@ const RewardPoints = () => {
                   min={0}
                   className="md:text-[25px] px-4 border-2 h-[33px] md:h-[51px] rounded-4xl w-full font-bold"
                   style={{ borderColor: "var(--color-red)" }}
-                  value={`${CURRENCY_SYMBOL}${amountInput}`}
+                  value={`${CURRENCY_SYMBOL} ${amountInput}`}
                   onChange={handleAmountChange}
                 />
                 <div className="flex flex-row-reverse lg:flex-row gap-3 w-full lg:w-auto">

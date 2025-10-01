@@ -172,6 +172,7 @@ export default function Orders() {
         action: "product-remove",
         quantity: 0,
         only_free_prod: 0,
+        prod_sku: sku,
       });
     } else if (newQuantity > (quantities[prodId] || 0)) {
       response = await addToBasketHandler({

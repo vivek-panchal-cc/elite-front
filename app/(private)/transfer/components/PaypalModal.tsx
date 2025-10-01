@@ -99,21 +99,21 @@ const PaypalModal = ({
         </Button>
       </div>
       <form
-        className="p-5 md:px-13 md:py-8 max-w-[809px]"
+        className="p-5 md:px-13 md:py-8 max-w-[809px] bg-[var(--color-light-gray)]"
         onSubmit={formik.handleSubmit}
       >
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-4 md:gap-y-8`}
         >
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppAvailBal}
             </Label>
             <Input
               className={readOnlyInputClass}
               name="avaialble_balance"
               placeholder="Available Balance"
-              value={`${CURRENCY_SYMBOL}${formik.values.avaialble_balance}`}
+              value={`${CURRENCY_SYMBOL} ${formik.values.avaialble_balance}`}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -125,13 +125,13 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppTransAmt}
             </Label>
             <Input
               className={readOnlyInputClass}
               name="transfer_amount"
-              value={`${CURRENCY_SYMBOL}${
+              value={`${CURRENCY_SYMBOL} ${
                 formik.values.transfer_amount || amount
               }`}
               placeholder="Transfer Amount"
@@ -145,14 +145,14 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppFee}
             </Label>
             <Input
               className={readOnlyInputClass}
               placeholder="Paypal fee"
               name="paypal_fee"
-              value={`${CURRENCY_SYMBOL}${(
+              value={`${CURRENCY_SYMBOL} ${(
                 (Number(formik.values.transfer_amount) * 3.4) / 100 +
                 0.3
               ).toFixed(2)}`}
@@ -164,14 +164,14 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppRecAmt}
             </Label>
             <Input
               className={readOnlyInputClass}
               placeholder="Receivable Amount"
               name="receivable_amount"
-              value={`${CURRENCY_SYMBOL}${(
+              value={`${CURRENCY_SYMBOL} ${(
                 Number(formik.values.transfer_amount) -
                 ((Number(formik.values.transfer_amount) * 3.4) / 100 + 0.3)
               ).toFixed(2)}`}
@@ -186,7 +186,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppEmail}
             </Label>
             <Input
@@ -201,7 +201,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
               {transferLabels.ppEmailConfirm}
             </Label>
             <Input

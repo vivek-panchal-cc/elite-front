@@ -601,7 +601,7 @@ const Cart = () => {
                   <Input
                     type="text"
                     className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
-                    value={`${CURRENCY_SYMBOL}${amountInput}`}
+                    value={`${CURRENCY_SYMBOL} ${amountInput}`}
                     disabled={items.length <= 0}
                     onChange={handleAmountChange}
                   />
@@ -715,9 +715,9 @@ const Cart = () => {
                   ) : null}
                 </div>
 
-                <div className="flex justify-between text-lg font-semibold mt-4 p-2 pb-0 mb-0">
+                <div className="flex justify-between text-lg font-semibold mt-2 p-2 pb-0 mb-2">
                   <span>{cartLabels.total}</span>
-                  <span className="text-[var(--color-red)]">
+                  <span className="text-[var(--color-black)]">
                     {" "}
                     {loadingCart ? (
                       <LoaderDiv height={20} width={50} />
@@ -729,7 +729,7 @@ const Cart = () => {
 
                 <div className="space-y-2 mt-0">
                   <Button
-                    className="w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
+                    className="w-full font-bold bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
                     disabled={items.length <= 0}
                     onClick={handleProceedToCheckout}
                   >
@@ -737,7 +737,7 @@ const Cart = () => {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full rounded-[50px]"
+                    className="w-full rounded-[50px] font-bold"
                     onClick={() => router.push("/order")}
                   >
                     {cartLabels.continueShopping}

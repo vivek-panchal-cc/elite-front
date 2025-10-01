@@ -173,7 +173,7 @@ const TransferRightComponent = ({
                   <Input
                     className="max-h-[28px] lg:max-h-[37px] bg-[var(--color-white)] border-[1.5px] border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px] text-[12px] sm:text-[14px]"
                     type="text"
-                    value={`${CURRENCY_SYMBOL}${amountInput}`}
+                    value={`${CURRENCY_SYMBOL} ${amountInput}`}
                     onChange={handleAmountChange}
                   />
                   {errorMessage && (
@@ -197,7 +197,7 @@ const TransferRightComponent = ({
           </div>
         ) : (
           <>
-            <div className="flex flex-col gap-3 text-center text-[var(--color-dark-gray)]">
+            <div className="flex flex-col gap-3 text-center">
               <p className="text-[22px] md:text-[32px] font-bold text-[var(--color-blue)]">
                 {activeIndex === 0
                   ? transferLabels.transSimplyHeader
