@@ -6,10 +6,23 @@ import Fire from "@/components/images/svgs/Fire";
 import Heart from "@/components/images/svgs/Heart";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { cartLabels } from "@/lib/labels";
+import { Product } from "@/types/product";
 import Image from "next/image";
 const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
-const ProductCard = ({
+interface ProductCardProps {
+  p: Product;
+  idx: number;
+  selectedProduct: any;
+  setSelectedProduct: any;
+  quantities: any;
+  handleQuantityChange: any;
+  addToCart: any;
+  addOrRemoveFavourite: any;
+  showDetails: any;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({
   p,
   idx,
   selectedProduct,
@@ -19,7 +32,7 @@ const ProductCard = ({
   addToCart,
   addOrRemoveFavourite,
   showDetails,
-}: any) => {
+}) => {
   const step = p.box_size && p.box_size > 0 ? p.box_size : 1;
   const tag =
     Array.isArray(p.free_product_disc) && p.free_product_disc.length > 0
@@ -29,7 +42,7 @@ const ProductCard = ({
     <div
       className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
         selectedProduct === idx
-          ? "ring-1 sm:ring-2 ring-[var(--color-red)]"
+          ? "ring-1 sm:ring-2 ring-[var(--color-red)] bg-[var(--color-white)]"
           : ""
       }`}
       // onClick={() => setSelectedProduct(idx)}
@@ -43,7 +56,7 @@ const ProductCard = ({
             className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden relative ${
               selectedProduct !== idx
                 ? "border border-[var(--color-orange)]"
-                : ""
+                : "sm:border border-[#dcdcdc] sm:bg-[var(--color-soft-white)]"
             }`}
           >
             <Image

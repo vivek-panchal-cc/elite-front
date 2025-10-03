@@ -156,18 +156,18 @@ const TransferRightComponent = ({
       >
         {isEligible ? (
           <div className="flex flex-wrap lg:flex-nowrap gap-5 md:gap-14 justify-center text-center lg:text-left">
-            <div>
+            {/* <div> */}
               <Image
                 className="h-[80px] md:h-auto w-auto"
                 src={content[activeIndex].image}
                 alt="transfer-img"
               />
-            </div>
-            <div className="flex flex-col gap-2  md:gap-4">
-              <h4 className="text-[18px] md:text-[29px] font-bold leading-[30px]">
+            {/* </div> */}
+            <div className="flex flex-col gap-3 md:gap-4">
+              <h4 className="text-[18px] md:text-[29px] font-bold leading-[18px] sm:leading-[30px]">
                 {content[activeIndex].title}
               </h4>
-              <p className="text-[14px]">{content[activeIndex].description}</p>
+              <p className="text-[14px] leading-[14px] sm:leading-[18px] mb-2 sm:mb-0">{content[activeIndex].description}</p>
               <div className="flex gap-2 md:gap-4">
                 <div className="flex flex-col gap-1 w-full">
                   <Input
@@ -183,7 +183,7 @@ const TransferRightComponent = ({
                   )}
                 </div>
                 <Button
-                  className="min-w-[76px] max-h-[28px] lg:min-w-[118px] lg:max-h-[37px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-normal"
+                  className="min-w-[76px] max-h-[28px] lg:min-w-[118px] lg:max-h-[37px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] sm:text-[14px] font-normal"
                   onClick={handlePayment}
                   disabled={
                     parseFloat(amountInput) < 10 ||

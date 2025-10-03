@@ -75,19 +75,21 @@ export function SidebarNav({
                   : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-[var(--color-white)] hover:border-none"
               )}
             >
-              {item.icon && (
-                <span
-                  className={cn(
-                    "text-lg transition-colors",
-                    isActive || isExpanded
-                      ? "text-[var(--color-white)]"
-                      : "text-[var(--color-red)] group-hover:text-[var(--color-white)]"
-                  )}
-                >
-                  {item.icon}
-                </span>
-              )}
-              {item.title}
+              <span className="px-4 flex gap-3">
+                {item.icon && (
+                  <span
+                    className={cn(
+                      "text-lg transition-colors",
+                      isActive || isExpanded
+                        ? "text-[var(--color-white)]"
+                        : "text-[var(--color-red)] group-hover:text-[var(--color-white)]"
+                    )}
+                  >
+                    {item.icon}
+                  </span>
+                )}
+                {item.title}
+              </span>
               {(!isMobileOrTablet ||
                 (isMobileOrTablet &&
                   item.title !== profileLabels.profLogout)) && (

@@ -11,7 +11,7 @@ const useDealerSummary = (dealer_id: number = 0) => {
     setReloadFlag((cs) => !cs);
   };
 
-  const getRewards = async (dealer_id: number) => {
+  const getDealerSummary = async (dealer_id: number) => {
     setLoading(true);
     try {
       const { data } = await apiRequest.getDealerSummary(dealer_id);
@@ -25,7 +25,7 @@ const useDealerSummary = (dealer_id: number = 0) => {
   };
 
   useEffect(() => {
-    getRewards(dealer_id);
+    getDealerSummary(dealer_id);
   }, [reloadFlag]);
 
   return [loading, dealerSummary, reload] as const;

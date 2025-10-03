@@ -224,7 +224,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
           {/* Profile Inputs */}
           <div
             className={`grid grid-cols-1 ${
-              isMobile ? "gap-3 p-4" : "md:grid-cols-2 gap-4 mb-8"
+              isMobile ? "gap-3 py-4" : "md:grid-cols-2 gap-4 mb-8"
             }`}
           >
             {[
@@ -233,8 +233,15 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
               { name: "companyName", label: profileLabels.companyName },
               { name: "customerEmail", label: profileLabels.customerEmail },
             ].map(({ name, label }) => (
-              <div key={name}>
-                <Label className="font-medium text-sm sm:text-base md:text-base">
+              <div
+                key={name}
+                className={
+                  name === "companyName" || name === "customerEmail"
+                    ? "lg:col-span-2"
+                    : ""
+                }
+              >
+                <Label className="font-medium text-[14px] lg:text-[16px]">
                   {label}
                 </Label>
                 <Input
@@ -242,7 +249,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                   value={(formik.values as any)[name]}
                   onChange={formik.handleChange}
                   readOnly={!isEditing}
-                  className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
+                  className={`bg-[var(--color-white)] rounded-full mt-1 text-[12px] sm:text-[14px] ${
                     !isEditing ? "opacity-75 cursor-not-allowed" : ""
                   }`}
                   error={
@@ -273,7 +280,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {Object.entries(formik.values.billing).map(([key, value]) => (
                 <div key={key}>
-                  <Label className="font-medium text-sm sm:text-base md:text-base">
+                  <Label className="font-medium text-[12px] lg:text-[12px]">
                     {
                       profileLabels.billing[
                         key as keyof typeof profileLabels.billing
@@ -285,7 +292,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                     value={value}
                     onChange={formik.handleChange}
                     readOnly={!isEditing}
-                    className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
+                    className={`bg-[var(--color-white)] rounded-full mt-1 text-[12px] sm:text-[14px] ${
                       !isEditing ? "opacity-75 cursor-not-allowed" : ""
                     }`}
                     error={
@@ -332,7 +339,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {Object.entries(formik.values.shipping).map(([key, value]) => (
                 <div key={key}>
-                  <Label className="font-medium text-sm sm:text-base md:text-base">
+                  <Label className="font-medium text-[12px] lg:text-[12px]">
                     {
                       profileLabels.shipping[
                         key as keyof typeof profileLabels.shipping
@@ -344,7 +351,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                     value={value}
                     onChange={formik.handleChange}
                     readOnly={!isEditing}
-                    className={`bg-[var(--color-white)] rounded-full mt-1 text-sm sm:text-base ${
+                    className={`bg-[var(--color-white)] rounded-full mt-1 text-[12px] sm:text-[14px] ${
                       !isEditing ? "opacity-75 cursor-not-allowed" : ""
                     }`}
                     error={

@@ -16,15 +16,23 @@ export interface Product {
   prod_sp_offer_price: number;
   prod_stock_qty: number;
   network_id: number;
+  tag: string;
+  cat_name: string;
   box_size: number | null;
   prod_stock: number;
   upload_prod_sku: string;
   prod_original_price: number;
   prod_image?: string | null;
-  is_favorite?: number | null;
+  is_favorite?: boolean | number | null;
   basket_quantity: number | null;
   gcerp_product_status: number;
   category: Category[];
+  free_product_disc: FreeProductLabel[];
+}
+
+export interface FreeProductLabel {
+  disc_display_name: string;
+  tag: string;
 }
 
 export interface CategoryMini {
@@ -101,12 +109,24 @@ export interface TopCategory {
   total_quantity: number;
 }
 
+// export interface OrderHistory {
+//   o_ord_id: number;
+//   o_ord_datetime: string;
+//   o_userId: number;
+//   o_total: number;
+//   status: "processing" | "completed" | "cancelled" | string;
+// }
+
 export interface OrderHistory {
-  o_ord_id: number;
-  o_ord_datetime: string;
-  o_userId: number;
-  o_total: number;
-  status: "processing" | "completed" | "cancelled" | string;
+  ord_id: number;
+  user: {
+    user_id: number;
+  };
+  ord_total_amt: number;
+  ord_datetime: string;
+  paymentStatus: {
+    pay_status_label: string;
+  };
 }
 
 export interface ProductAddToBasketParams {

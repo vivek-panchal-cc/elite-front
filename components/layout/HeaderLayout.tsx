@@ -118,7 +118,7 @@ export function HeaderLayout() {
                       <div key={item.name} className="relative group">
                         <button
                           type="button"
-                          className="link-hover cursor-pointer flex items-center justify-between w-full text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium hover:text-[var(--color-blue)]"
+                          className="text-[14px] lg:text-[18px] link-hover cursor-pointer flex items-center justify-between w-full text-[var(--color-dark-gray)] px-3 py-2 hover:text-[var(--color-blue)]"
                         >
                           {item.name}
                         </button>
@@ -128,7 +128,7 @@ export function HeaderLayout() {
                             <CustomLink
                               key={child.name}
                               href={child.href ?? "#"}
-                              className="block px-3 py-2 text-sm text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
+                              className="text-[12px] lg:text-[16px] block px-3 py-2 text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
                             >
                               {child.name}
                             </CustomLink>
@@ -142,7 +142,7 @@ export function HeaderLayout() {
                     <CustomLink
                       key={item.name}
                       href={item.href ?? "#"}
-                      className="text-[var(--color-dark-gray)] px-3 py-2 text-sm font-medium"
+                      className="text-[14px] lg:text-[18px] text-[var(--color-dark-gray)] px-3 py-2"
                     >
                       {item.name}
                     </CustomLink>
@@ -170,11 +170,11 @@ export function HeaderLayout() {
               >
                 <div className="flex items-center">
                   {/* Cart Icon Section */}
-                  <div className="relative bg-[var(--color-blue)] w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-y border-l border-[var(--color-blue)]">
+                  <div className="relative bg-[var(--color-blue)] w-[46px] h-[46px] rounded-full flex items-center justify-center border-y border-l border-[var(--color-blue)]">
                     <Image
                       src={shoppingCart}
                       alt="shopping cart"
-                      className="h-4 w-4 sm:h-6 sm:w-6 ml-[-4px] sm:ml-[-6px]"
+                      className="h-[24px] w-[26px] ml-[-4px] sm:ml-[-6px]"
                       priority
                     />
                     {cart?.units && (
@@ -185,8 +185,8 @@ export function HeaderLayout() {
                   </div>
 
                   {/* Amount Section */}
-                  <div className="bg-[var(--color-soft-white)] border-2 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-6 sm:h-8 px-2 sm:px-3 flex items-center">
-                    <span className="text-[var(--color-blue)] font-bold text-[12px] sm:text-[16px] pr-1 sm:pr-2">
+                  <div className="bg-[var(--color-soft-white)] border-1 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-[34px] px-2 sm:px-3 flex items-center">
+                    <span className="text-[var(--color-blue)] font-bold text-[12px] pr-1 sm:pr-2">
                       <WrapAmount value={Number(cart?.sub_total) || 0} />
                     </span>
                   </div>

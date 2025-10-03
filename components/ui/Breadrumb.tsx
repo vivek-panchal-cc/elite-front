@@ -28,7 +28,7 @@ const Breadcrumb = () => {
             href="/"
             className="hover:underline text-[var(--color-blue)] font-medium"
           >
-            Dashboard
+            Home
           </Link>
         </li>
         {breadcrumbLinks.map((crumb, idx) => (

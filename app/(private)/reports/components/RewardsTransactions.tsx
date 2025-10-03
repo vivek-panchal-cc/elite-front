@@ -63,7 +63,7 @@ const RewardsTransactions = () => {
         <div className="flex flex-col items-center md:flex-row md:justify-end sm:items-end md:gap-3 w-full">
           <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
             <Input
-              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 pr-8 text-[12px] font-semibold"
+              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 pr-8 text-[12px] placeholder:text-[12px] placeholder:text-[rgba(0,0,0,0.3)] font-semibold"
               value={search}
               onChange={handleSearch}
               placeholder="Search"
@@ -151,7 +151,7 @@ const RewardsTransactions = () => {
         {/* nav bar desktop  */}
         <div className="hidden md:flex flex-row gap-6 py-5 sm:p-0 items-start">
           <nav className="flex flex-row gap-10">
-            <div className="text-[14px] font-medium flex flex-row gap-6 mt-2 lg:gap-12 lg:text-[18px] leading-4">
+            <div className="text-[14px] font-medium flex flex-row gap-6 mt-0 lg:gap-12 lg:text-[18px] leading-4">
               {tabs.map((tab) => (
                 <button
                   key={tab}
@@ -428,7 +428,7 @@ const RewardsTransactions = () => {
   return (
     <div>
       <div className="max-w-7xl mx-auto w-full">
-        <div className="mx-auto gap-6 pb-8 sm:pb-10 md:pb-14 px-4 sm:px-5 md:px-8 lg:px-[60px]">
+        <div className="mx-auto gap-6 pb-8 sm:pb-10 md:pb-14 px-10 md:px-8 lg:px-[60px]">
           {RewardsTransactions}
           <div className="hidden md:block">{TransactionTable}</div>
         </div>

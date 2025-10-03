@@ -317,29 +317,29 @@ export default function Orders() {
     // <PrivateLayout>
     <div className="max-w-7xl mx-auto w-full">
       <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-        <div className="flex-1 space-y-4 py-6">
+        <div className="flex-1 space-y-4 py-10">
           {/* Search Bar - Responsive */}
-          <div className="flex items-center justify-center mb-8">
-            <div className="flex w-full border rounded-full overflow-hidden group focus-within:border-[var(--color-red)]">
+          <div className="flex items-center justify-center mb-12">
+            <div className="flex w-full border rounded-full overflow-hidden group border-[var(--color-red)]">
               <Input
                 type="text"
                 placeholder="Start Typing To Filter Products..."
-                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-soft-white)] w-full p-[20px]"
+                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-light-gray)] w-full p-[20px] sm:px-[40px] h-[55px] focus-visible:border-none focus-visible:ring-ring/0 focus-visible:ring-0"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
-              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[80px] max-w-[100px] h-[42px] hover:bg-[var(--color-blue)] cursor-auto">
+              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[83px] max-w-[100px] h-[55px] sm:min-w-[148px] sm:max-w-[200px] sm:h-[55px] hover:bg-[var(--color-blue)] border border-[var(--color-red)] cursor-auto">
                 <Image
                   src={searchIcon}
                   alt="search"
-                  className="h-[20px] w-[20px]"
+                  className="h-[25px] w-[25px] sm:h-[31px] sm:w-[31px]"
                 />
               </Button>
             </div>
           </div>
 
           {/* Main Categories */}
-          <section className="space-y-2 sm:space-y-3">
+          <section className="space-y-4 sm:space-y-5">
             {loading ? (
               <LoaderCategory count={5} />
             ) : mainCategories.length <= 0 ? (
@@ -355,7 +355,7 @@ export default function Orders() {
                     {/* Main Category Button - Responsive */}
                     <button
                       onClick={() => toggleMain(cat.cat_id)}
-                      className={`relative z-10 flex justify-between items-center w-full max-h-10 sm:max-h-12 px-3 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
+                      className={`relative z-10 flex justify-between items-center w-full min-h-[55px] px-5 sm:px-5 py-3 sm:py-3 text-left transition-colors cursor-pointer rounded-full border border-[var(--color-red)] ${
                         isOpen
                           ? "bg-[var(--color-red)] text-[var(--color-white)]"
                           : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
@@ -367,15 +367,15 @@ export default function Orders() {
                         </span>
                       </div>
                       {isOpen ? (
-                        <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />
                       ) : (
-                        <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                       )}
                     </button>
 
                     {/* Subcategories / Products */}
                     {isOpen && (
-                      <div className="mt-[-4px] z-9 mx-2 sm:mx-4 py-4 sm:py-4 px-3 sm:px-10 rounded-b-lg border border-[var(--color-red)] border-t-0 space-y-2 sm:space-y-3 bg-[var(--color-light-gray)]">
+                      <div className="mt-[-8px] z-9 mx-2 sm:mx-4 pt-6 pb-8 sm:pt-8 sm:pb-10 px-3 sm:px-10 rounded-b-2xl sm:rounded-b-3xl border border-[var(--color-red)] border-t-0 space-y-3 sm:space-y-3 bg-[var(--color-light-gray)]">
                         {isProductLoading ? (
                           <LoaderProduct count={5} />
                         ) : !visibleProducts ||
@@ -391,7 +391,7 @@ export default function Orders() {
                                 {/* Subcategory Button */}
                                 <button
                                   onClick={() => toggleSub(sub.cat_id)}
-                                  className={`w-full flex justify-between items-center px-3 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
+                                  className={`w-full flex justify-between items-center min-h-[55px] px-5 sm:px-5 py-3 max-h-10 sm:max-h-12 rounded-full transition-colors border border-[var(--color-red)] cursor-pointer ${
                                     isSubOpen
                                       ? "bg-[var(--color-red)] text-[var(--color-white)]"
                                       : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
@@ -403,9 +403,9 @@ export default function Orders() {
                                     </span>
                                   </div>
                                   {isSubOpen ? (
-                                    <ChevronUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />
                                   ) : (
-                                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                                   )}
                                 </button>
 
@@ -529,21 +529,21 @@ export default function Orders() {
                           .toFixed(2)} */}
                       </span>
                     </span>
-                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
                       {/* {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "} */}
                       {cartSummary?.units} {cartLabels.units}
                     </span>
-                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                    <p className="text-sm sm:text-[16px] md:text-[20px] font-medium sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">
                       {/* {cart.length} */}
                       {cartSummary?.quantity} {cartLabels.skus}
                     </span>
-                    {/* <p className="text-sm sm:text-[16px] md:text-[20px] font-medium hidden sm:inline">
+                    {/* <p className="text-sm sm:text-[16px] md:text-[20px] font-medium sm:inline">
                       |
                     </p>
                     <span className="text-sm sm:text-[16px] md:text-[20px] font-medium">

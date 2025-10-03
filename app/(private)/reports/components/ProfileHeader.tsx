@@ -56,7 +56,7 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
       </p>
       {points.last_10_transactions_amount && (
         <p className="font-bold text-[var(--color-black)] text-[12px] sm:text-[22px] md:text-[22px]  leading-none mb-3 sm:mb-8 md:mb-10">
-          {profileLabels.lastTenTrans} :&nbsp;
+          {profileLabels.lastTenTrans}&nbsp;
           <span className="font-bold text-[var(--color-dark-blue)]  text-[12px] sm:text-[22px] md:text-[22px]">
             {loading ? (
               <LoaderDiv height={30} />

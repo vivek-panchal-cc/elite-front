@@ -118,11 +118,11 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                             className="border-t border-[var(--table-border)]"
                           >
                             <td className="px-4 py-2">
-                              {formatDate(order.o_ord_datetime)}
+                              {formatDate(order.ord_datetime)}
                             </td>
-                            <td className="px-4 py-2">{order.o_ord_id}</td>
+                            <td className="px-4 py-2">{order.ord_id}</td>
                             <td className="px-4 py-2">
-                              <WrapAmount value={order.o_total} />
+                              <WrapAmount value={order.ord_total_amt} />
                             </td>
                             <td className="px-2 py-2 text-right relative">
                               <div className="inline-block">
@@ -156,16 +156,16 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                 </button> */}
                                   <button
                                     className={`block w-full px-3 py-1 text-center ${
-                                      loadingId === order.o_ord_id
+                                      loadingId === order.ord_id
                                         ? "cursor-not-allowed"
                                         : "cursor-pointer"
                                     }`}
-                                    disabled={loadingId === order.o_ord_id}
+                                    disabled={loadingId === order.ord_id}
                                     onClick={() =>
-                                      handleInvoiceDownload(order.o_ord_id)
+                                      handleInvoiceDownload(order.ord_id)
                                     }
                                   >
-                                    {loadingId === order.o_ord_id ? (
+                                    {loadingId === order.ord_id ? (
                                       <>
                                         <span className="flex justify-center items-center gap-2">
                                           {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
@@ -242,16 +242,16 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                           className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
                         >
                           <td className="px-4 py-6 whitespace-nowrap">
-                            {formatDate(order.o_ord_datetime)}
+                            {formatDate(order.ord_datetime)}
                           </td>
                           <td className="px-4 py-6 whitespace-nowrap">
-                            {order.o_ord_id}
+                            {order.ord_id}
                           </td>
                           <td className="px-4 py-6 whitespace-nowrap capitalize">
-                            {order.status}
+                            {order.paymentStatus.pay_status_label}
                           </td>
                           <td className="px-4 py-6 whitespace-nowrap">
-                            <WrapAmount value={order.o_total} />
+                            <WrapAmount value={order.ord_total_amt} />
                           </td>
                           <td className="px-2 py-6 whitespace-nowrap flex gap-2">
                             <>
@@ -266,16 +266,16 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                               </Button> */}
                               <button
                                 className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
-                                  loadingId === order.o_ord_id
+                                  loadingId === order.ord_id
                                     ? "cursor-not-allowed"
                                     : "cursor-pointer"
                                 }`}
-                                disabled={loadingId === order.o_ord_id}
+                                disabled={loadingId === order.ord_id}
                                 onClick={() =>
-                                  handleInvoiceDownload(order.o_ord_id)
+                                  handleInvoiceDownload(order.ord_id)
                                 }
                               >
-                                {loadingId === order.o_ord_id ? (
+                                {loadingId === order.ord_id ? (
                                   <>
                                     <IconLoader className="h-4 w-4 animate-spin" />
                                     {checkoutLabels.downloading}

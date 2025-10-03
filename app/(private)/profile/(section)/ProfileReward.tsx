@@ -298,7 +298,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
         {rewards && rewards.length > 0 && (
           <div className="p-6">
             <Button
-              className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]"
+              className="w-full text-[12px] md:text-[12px] text-[var(--color-white)] rounded-[50px] h-[32px]"
               onClick={() => router.push("/reports")}
             >
               {profileLabels.rewardWalletLabel.viewStatement}

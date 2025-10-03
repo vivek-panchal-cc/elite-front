@@ -56,10 +56,10 @@ export default function OrderHistoryCard() {
                   key={idx}
                   className="text-[var(--color-black)] rounded-lg text-[10px]"
                 >
-                  <td>{o.o_ord_id}</td>
-                  <td>{formatDate(o.o_ord_datetime)}</td>
+                  <td>{o.ord_id}</td>
+                  <td>{formatDate(o.ord_datetime)}</td>
                   <td>
-                    <WrapAmount value={o.o_total} />
+                    <WrapAmount value={o.ord_total_amt} />
                   </td>
                   <td className="text-[var(--color-red)] cursor-pointer">
                     {profileLabels.reorder}

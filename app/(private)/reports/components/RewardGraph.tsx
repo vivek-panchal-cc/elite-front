@@ -87,7 +87,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
     <>
       <section>
         <div className="max-w-7xl mx-auto w-full">
-          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-4 sm:px-5 md:px-8 lg:px-[60px]">
+          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-10 md:px-8 lg:px-[60px]">
             <div className="gap-4 md:grid grid-cols-1 md:grid-cols-[459px_1fr] xl:grid-cols-[799px_1fr] ">
               <div className="p-4 border-1 border-[var(--color-red)] rounded-xl">
                 {RewardGraphCard}

@@ -88,7 +88,7 @@ const LatestOffer = () => {
                 </p>
                 {!loading && topProductList.length > 0 && (
                   <button
-                    className="absolute right-0 text-[12px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] cursor-pointer"
+                    className="absolute right-0 text-[8px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] cursor-pointer"
                     onClick={() => router.push("/order")}
                   >
                     {homepageLabels.topProductList.viewMore}
@@ -97,7 +97,7 @@ const LatestOffer = () => {
               </div>
 
               {/* Products */}
-              <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className="mt-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {loading ? (
                   [...Array(4)].map((_, idx) => (
                     <div key={idx} className="rounded-[10px] p-2">
