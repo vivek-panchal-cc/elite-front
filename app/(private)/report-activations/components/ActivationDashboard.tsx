@@ -127,14 +127,20 @@ const ActivationDashboard = () => {
     const section = mergedMedals[activeIndex];
     if (!section) return null;
 
-    return <RewardCard target={section.target} rewards={section.rewards} />;
+    return (
+      <RewardCard
+        target={section.target}
+        rewards={section.rewards}
+        image={section.image}
+      />
+    );
   };
 
   return (
     <>
       <section>
         <div className="max-w-7xl mx-auto w-full">
-          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-5 sm:px-5 md:px-8 lg:px-[60px]">
+          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-12 lg:py-14 px-[50px] lg:px-[60px]">
             <div>
               <div className="flex flex-col items-center gap-4 md:relative md:flex-row md:justify-end md:items-center">
                 <p className="text-center text-[24px] md:text-[32px] text-[var(--color-blue)] font-bold md:mb-4 md:absolute md:left-1/2 md:-translate-x-1/2">

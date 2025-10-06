@@ -78,7 +78,12 @@ import eeImg from "./report-activation/EE.png";
 import giffgaffImg from "./report-activation/giffgaff.png";
 import voxiImg from "./report-activation/VOXI.png";
 import smartyImg from "./report-activation/smarty.png";
-import eliteLogoImg from "./report-activation/EliteLogo.png";
+import eliteBlue from "./report-activation/elite-blue.png";
+import eliteGold from "./report-activation/elite-gold.png";
+import eliteBronze from "./report-activation/elite-bronze.png";
+import eliteSilver from "./report-activation/elite-silver.png";
+import elitePlatinum from "./report-activation/elite-platinum.png";
+import eliteDiamond from "./report-activation/elite-diamond.png";
 import spinner from "./spinner.gif";
 import success from "./success.gif";
 import thankYouHeader from "./imgs/thank-you-header-img.png";
@@ -166,12 +171,17 @@ export const images = {
   eeImg,
   o2Img,
   giffgaffImg,
-  eliteLogoImg,
+  eliteBlue,
   spinner,
   success,
   thankYouHeader,
   check,
   download,
+  eliteGold,
+  eliteBronze,
+  eliteSilver,
+  elitePlatinum,
+  eliteDiamond,
 } as const;
 
 // Export individual images for direct import
@@ -242,12 +252,17 @@ export {
   eeImg,
   o2Img,
   giffgaffImg,
-  eliteLogoImg,
+  eliteBlue,
   spinner,
   success,
   thankYouHeader,
   check,
   download,
+  eliteGold,
+  eliteBronze,
+  eliteSilver,
+  elitePlatinum,
+  eliteDiamond,
 };
 
 // Type for the images object

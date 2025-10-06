@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/ButtonUI";
 import Edit from "@/components/images/svgs/Edit";
 import { Label } from "@/components/ui/Label";
 import { Download, MoreVertical } from "lucide-react";
-import { checkoutLabels, profileLabels } from "@/lib/labels";
+import { checkoutLabels, commonLabels, profileLabels } from "@/lib/labels";
 import useOrderHistory from "@/hooks/useOrderHistory";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { formatDate } from "@/lib/constants/all";
@@ -94,102 +94,113 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                 </thead>
 
                 <tbody>
-                  {loading
-                    ? Array.from({ length: 5 }).map((_, rowIdx) => (
+                  {loading ? (
+                    Array.from({ length: 5 }).map((_, rowIdx) => (
+                      <tr
+                        key={rowIdx}
+                        className="border-t border-[var(--table-border)]"
+                      >
+                        {Array.from({ length: 4 }).map((_, colIdx) => (
+                          <td key={colIdx} className="px-4 py-2">
+                            <LoaderDiv
+                              width={colIdx === 3 ? 20 : 50}
+                              height={colIdx === 3 ? 20 : 15}
+                              backgroundColor="#C7C7C7"
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    ))
+                  ) : orderHistory.length > 0 ? (
+                    orderHistory.map((order, idx) => {
+                      return (
                         <tr
-                          key={rowIdx}
+                          key={idx}
                           className="border-t border-[var(--table-border)]"
                         >
-                          {Array.from({ length: 4 }).map((_, colIdx) => (
-                            <td key={colIdx} className="px-4 py-2">
-                              <LoaderDiv
-                                width={colIdx === 3 ? 20 : 50}
-                                height={colIdx === 3 ? 20 : 15}
-                                backgroundColor="#C7C7C7"
-                              />
-                            </td>
-                          ))}
-                        </tr>
-                      ))
-                    : orderHistory.map((order, idx) => {
-                        return (
-                          <tr
-                            key={idx}
-                            className="border-t border-[var(--table-border)]"
-                          >
-                            <td className="px-4 py-2">
-                              {formatDate(order.ord_datetime)}
-                            </td>
-                            <td className="px-4 py-2">{order.ord_id}</td>
-                            <td className="px-4 py-2">
-                              <WrapAmount value={order.ord_total_amt} />
-                            </td>
-                            <td className="px-2 py-2 text-right relative">
-                              <div className="inline-block">
-                                <button
-                                  onClick={() =>
-                                    setOpenMenuIndex(
-                                      openMenuIndex === idx ? null : idx
-                                    )
-                                  }
-                                  className="p-1"
-                                >
-                                  <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
-                                </button>
-                              </div>
-                              {openMenuIndex === idx && (
-                                <div
-                                  className="absolute right-0 mt-1 w-28 bg-white border border-red-500 rounded-xl shadow-md z-50 overflow-visible"
-                                  data-row-index={idx}
-                                >
-                                  {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                          <td className="px-4 py-2">
+                            {formatDate(order.ord_datetime)}
+                          </td>
+                          <td className="px-4 py-2">{order.ord_id}</td>
+                          <td className="px-4 py-2">
+                            <WrapAmount value={order.ord_total_amt} />
+                          </td>
+                          <td className="px-2 py-2 text-right relative">
+                            <div className="inline-block">
+                              <button
+                                onClick={() =>
+                                  setOpenMenuIndex(
+                                    openMenuIndex === idx ? null : idx
+                                  )
+                                }
+                                className="p-1"
+                              >
+                                <MoreVertical className="w-5 h-5 text-[var(--color-dark-blue)]" />
+                              </button>
+                            </div>
+                            {openMenuIndex === idx && (
+                              <div
+                                className="absolute right-0 mt-1 w-28 bg-white border border-red-500 rounded-xl shadow-md z-50 overflow-visible"
+                                data-row-index={idx}
+                              >
+                                {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {
                                 profileLabels.profileOrderHistoryLabel
                                   .viewReceipt
                               }
                             </button> */}
-                                  {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                                {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                                   {
                                     profileLabels.profileOrderHistoryLabel
                                       .viewOrder
                                   }
                                 </button> */}
-                                  <button
-                                    className={`block w-full px-3 py-1 text-center ${
-                                      loadingId === order.ord_id
-                                        ? "cursor-not-allowed"
-                                        : "cursor-pointer"
-                                    }`}
-                                    disabled={loadingId === order.ord_id}
-                                    onClick={() =>
-                                      handleInvoiceDownload(order.ord_id)
-                                    }
-                                  >
-                                    {loadingId === order.ord_id ? (
-                                      <>
-                                        <span className="flex justify-center items-center gap-2">
-                                          {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
-                                          {checkoutLabels.downloading}
-                                        </span>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <span className="flex justify-center items-center gap-2">
-                                          {/* <Download className="h-3 w-3" /> */}
-                                          {checkoutLabels.downloadInvoice}
-                                        </span>
-                                      </>
-                                    )}
-                                  </button>
-                                  {/* <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                                <button
+                                  className={`block w-full px-3 py-1 text-center ${
+                                    loadingId === order.ord_id
+                                      ? "cursor-not-allowed"
+                                      : "cursor-pointer"
+                                  }`}
+                                  disabled={loadingId === order.ord_id}
+                                  onClick={() =>
+                                    handleInvoiceDownload(order.ord_id)
+                                  }
+                                >
+                                  {loadingId === order.ord_id ? (
+                                    <>
+                                      <span className="flex justify-center items-center gap-2">
+                                        {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
+                                        {checkoutLabels.downloading}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span className="flex justify-center items-center gap-2">
+                                        {/* <Download className="h-3 w-3" /> */}
+                                        {checkoutLabels.downloadInvoice}
+                                      </span>
+                                    </>
+                                  )}
+                                </button>
+                                {/* <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.reOrder}
                             </button> */}
-                                </div>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="text-center py-10 text-gray-500 text-[12px]"
+                      >
+                        {commonLabels.noOrders}
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -219,81 +230,92 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                   </tr>
                 </thead>
                 <tbody className="text-[10px] md:text-[12px]">
-                  {loading
-                    ? Array.from({ length: 5 }).map((_, idx) => (
-                        <tr
-                          key={idx}
-                          className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
-                        >
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <td key={i} className="px-4 py-6 whitespace-nowrap">
-                              <LoaderDiv
-                                width={100}
-                                height={25}
-                                backgroundColor="#C7C7C7"
-                              />
-                            </td>
-                          ))}
-                        </tr>
-                      ))
-                    : orderHistory.map((order, idx) => (
-                        <tr
-                          key={idx}
-                          className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
-                        >
-                          <td className="px-4 py-6 whitespace-nowrap">
-                            {formatDate(order.ord_datetime)}
+                  {loading ? (
+                    Array.from({ length: 5 }).map((_, idx) => (
+                      <tr
+                        key={idx}
+                        className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
+                      >
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <td key={i} className="px-4 py-6 whitespace-nowrap">
+                            <LoaderDiv
+                              width={100}
+                              height={25}
+                              backgroundColor="#C7C7C7"
+                            />
                           </td>
-                          <td className="px-4 py-6 whitespace-nowrap">
-                            {order.ord_id}
-                          </td>
-                          <td className="px-4 py-6 whitespace-nowrap capitalize">
-                            {order.paymentStatus.pay_status_label}
-                          </td>
-                          <td className="px-4 py-6 whitespace-nowrap">
-                            <WrapAmount value={order.ord_total_amt} />
-                          </td>
-                          <td className="px-2 py-6 whitespace-nowrap flex gap-2">
-                            <>
-                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                        ))}
+                      </tr>
+                    ))
+                  ) : orderHistory.length > 0 ? (
+                    orderHistory.map((order, idx) => (
+                      <tr
+                        key={idx}
+                        className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
+                      >
+                        <td className="px-4 py-6 whitespace-nowrap">
+                          {formatDate(order.ord_datetime)}
+                        </td>
+                        <td className="px-4 py-6 whitespace-nowrap">
+                          {order.ord_id}
+                        </td>
+                        <td className="px-4 py-6 whitespace-nowrap capitalize">
+                          {order.paymentStatus.pay_status_label}
+                        </td>
+                        <td className="px-4 py-6 whitespace-nowrap">
+                          <WrapAmount value={order.ord_total_amt} />
+                        </td>
+                        <td className="px-2 py-6 whitespace-nowrap flex gap-2">
+                          <>
+                            {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
                         </Button> */}
-                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                            {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                                 {
                                   profileLabels.profileOrderHistoryLabel
                                     .viewOrder
                                 }
                               </Button> */}
-                              <button
-                                className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
-                                  loadingId === order.ord_id
-                                    ? "cursor-not-allowed"
-                                    : "cursor-pointer"
-                                }`}
-                                disabled={loadingId === order.ord_id}
-                                onClick={() =>
-                                  handleInvoiceDownload(order.ord_id)
-                                }
-                              >
-                                {loadingId === order.ord_id ? (
-                                  <>
-                                    <IconLoader className="h-4 w-4 animate-spin" />
-                                    {checkoutLabels.downloading}
-                                  </>
-                                ) : (
-                                  <>
-                                    <Download className="h-3 w-3" />
-                                    {checkoutLabels.downloadInvoice}
-                                  </>
-                                )}
-                              </button>
-                              {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
+                            <button
+                              className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
+                                loadingId === order.ord_id
+                                  ? "cursor-not-allowed"
+                                  : "cursor-pointer"
+                              }`}
+                              disabled={loadingId === order.ord_id}
+                              onClick={() =>
+                                handleInvoiceDownload(order.ord_id)
+                              }
+                            >
+                              {loadingId === order.ord_id ? (
+                                <>
+                                  <IconLoader className="h-4 w-4 animate-spin" />
+                                  {checkoutLabels.downloading}
+                                </>
+                              ) : (
+                                <>
+                                  <Download className="h-3 w-3" />
+                                  {checkoutLabels.downloadInvoice}
+                                </>
+                              )}
+                            </button>
+                            {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
                         </Button> */}
-                            </>
-                          </td>
-                        </tr>
-                      ))}
+                          </>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="text-center py-10 text-gray-500 text-[14px]"
+                      >
+                        {commonLabels.noOrders}
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

@@ -4,8 +4,9 @@
 export const labels = {
   // Common actions and buttons
   common: {
-    login: "Log In",
-    logout: "Log Out",
+    login: "Login",
+    loginCaps: "LOG IN",
+    logout: "Logout",
     signUp: "Sign Up",
     or: "OR",
     submit: "Submit",
@@ -34,6 +35,7 @@ export const labels = {
     notSubCategory: "No sub-categories found",
     viewCart: "View Cart",
     noFavourites: "No favourites found",
+    noOrders: "No orders found",
     uploadDoc: "Upload Utility Bill",
     remove: "Remove",
   },
@@ -323,6 +325,7 @@ export const labels = {
       privacy: "Privacy Policy",
       cookies: "Cookie Policy",
       gdpr: "GDPR Compliance",
+      companyPolicy: "Company Policy",
       dealerRegistration: "Call: +44 (0) 17 8521 6850",
     },
     contact: {
@@ -347,7 +350,8 @@ export const labels = {
       innovationExcellence: "Innovation Excellence",
       qualityAssurance: "Quality Assurance",
     },
-    copyright: `Copyright © ${new Date().getFullYear()} Elite Mobile. All rights reserved.`,
+    // copyright: `Copyright © ${new Date().getFullYear()} Elite mobile ltd. All Rights Reserved`,
+    copyright: `Copyright © 2022 Elite mobile ltd. All Rights Reserved`,
     privacy: {
       privacyPolicy: "Privacy Policy",
       privacyMessage:

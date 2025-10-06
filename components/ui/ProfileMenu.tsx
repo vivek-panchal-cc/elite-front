@@ -80,10 +80,10 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
     </div>
   ) : !isLoading ? (
     <Button
-      className="hidden md:inline-flex bg-[var(--color-blue)] text-[var(--color-soft-white)] rounded-[50px]"
+      className="hidden md:inline-flex bg-[var(--color-dark-blue)] text-[var(--color-soft-white)] rounded-[50px] text-[12px] leading-[26px]"
       onClick={() => setLoginOpen(true)}
     >
-      {commonLabels.login}
+      {commonLabels.loginCaps}
     </Button>
   ) : null;
 };

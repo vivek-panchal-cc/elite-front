@@ -81,17 +81,23 @@ const SuperBonusDashboard = () => {
     const section = mergedMedals[activeIndex];
     if (!section) return null;
 
-    return <RewardCard target={section.target} rewards={section.rewards} />;
+    return (
+      <RewardCard
+        target={section.target}
+        rewards={section.rewards}
+        image={section.image}
+      />
+    );
   };
 
   return (
     <>
       <section>
         <div className="max-w-7xl mx-auto w-full">
-          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-14 lg:py-16 px-5 sm:px-5 md:px-8 lg:px-[60px]">
+          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-12 lg:py-14 px-[50px] lg:px-[60px]">
             <div>
               <div>
-                <p className="font-bold text-center text-[var(--color-blue)] rounded-5xl pb-7 text-[20px] lg:text-[25px]">
+                <p className="font-bold text-center text-[var(--color-blue)] rounded-5xl pb-7 text-[30px] lg:text-[25px]">
                   {reportsLabels.superBonusRewards}
                 </p>
 

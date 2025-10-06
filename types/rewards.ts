@@ -1,3 +1,13 @@
+import type { StaticImageData } from "next/image";
+import {
+  eliteBlue,
+  eliteBronze,
+  eliteDiamond,
+  eliteGold,
+  elitePlatinum,
+  eliteSilver,
+} from "@/components/images";
+
 export interface RewardRecord {
   active_sim_month: string;
   active_sim_year: string;
@@ -35,6 +45,7 @@ export interface RewardData {
   rewards: string[];
 }
 
+
 export type Medal = {
   name: string;
   color: string;
@@ -42,6 +53,7 @@ export type Medal = {
   downArrowColor: string;
   gradient?: string;
   borderColor?: string;
+  image: string | StaticImageData;
 };
 
 export const medals: Medal[] = [
@@ -51,6 +63,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[var(--color-blue)]",
     downArrowColor: "text-[var(--color-white)]",
     borderColor: "border-[var(--color-blue)]",
+    image: eliteBlue,
   },
   {
     name: "Bronze",
@@ -58,6 +71,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[var(--color-bronze)]",
     downArrowColor: "text-[var(--color-white)]",
     borderColor: "border-[var(--color-bronze)]",
+    image: eliteBronze,
   },
   {
     name: "Silver",
@@ -65,6 +79,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[var(--color-silver)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-silver)]",
+    image: eliteSilver,
   },
   {
     name: "Gold",
@@ -73,6 +88,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[var(--color-gold)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-gold)]",
+    image: eliteGold,
   },
   {
     name: "Platinum",
@@ -80,6 +96,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[var(--color-platinum)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-platinum)]",
+    image: elitePlatinum,
   },
   {
     name: "Diamond",
@@ -89,6 +106,7 @@ export const medals: Medal[] = [
     trophyColor: "text-[#D6DCEC]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-silver)]",
+    image: eliteDiamond,
   },
 ];
 

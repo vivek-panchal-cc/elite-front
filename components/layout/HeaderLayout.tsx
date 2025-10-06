@@ -48,9 +48,7 @@ const privateNavigationItems: NavigationItem[] = [
   {
     name: navigationLabels.claim,
     href: null,
-    children: [
-      { name: navigationLabels.superBonus, href: "/super-bonus" },
-    ],
+    children: [{ name: navigationLabels.superBonus, href: "/super-bonus" }],
   },
   { name: navigationLabels.transfer, href: "/transfer" },
   // { name: navigationLabels.vapeProducts, href: "/vape-products" },
@@ -94,7 +92,7 @@ export function HeaderLayout() {
       <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px] py-3">
         <div className="flex items-center h-16">
           {/* Logo */}
-          <div className="flex items-center mr-4 md:mr-0 md:justify-start justify-center flex-1">
+          <div className="flex items-center mr-0 md:mr-8 md:justify-start justify-center flex-1">
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={images.elite_logo}
@@ -186,7 +184,7 @@ export function HeaderLayout() {
 
                   {/* Amount Section */}
                   <div className="bg-[var(--color-soft-white)] border-1 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-[34px] px-2 sm:px-3 flex items-center">
-                    <span className="text-[var(--color-blue)] font-bold text-[12px] pr-1 sm:pr-2">
+                    <span className="text-[var(--color-blue)] font-bold text-[12px] px-1 sm:px-2">
                       <WrapAmount value={Number(cart?.sub_total) || 0} />
                     </span>
                   </div>
@@ -227,7 +225,8 @@ export function HeaderLayout() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden pt-4 flex flex-col h-[50vh]">
+        <div className="md:hidden pt-4 flex flex-col max-h-[50vh] overflow-y-auto">
+          {/* h-[50vh] */}
           {/* Scrollable navigation items */}
           <nav className="flex-1 overflow-y-auto">
             {navigationItems.map((item) => {
@@ -317,7 +316,6 @@ export function HeaderLayout() {
               </nav>
             )}
           </nav>
-
           {/* Sticky button section */}
           <div className="sticky bottom-0 py-4 flex justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
             {isAuthenticated ? (
@@ -376,7 +374,7 @@ export function HeaderLayout() {
       <Modal
         isOpen={isLogoutOpen}
         onClose={() => setLogoutOpen(false)}
-        classStyle=""
+        classStyle="border-2 border-[var(--color-red)]"
         isClose={false}
       >
         <Logout setLogoutOpen={setLogoutOpen} />

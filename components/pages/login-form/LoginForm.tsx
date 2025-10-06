@@ -82,7 +82,7 @@ const LoginForm = ({
         <Input
           type="text"
           name="email"
-          placeholder="Enter Email"
+          // placeholder="Enter Email"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="username"
           onChange={formik.handleChange}
@@ -100,7 +100,7 @@ const LoginForm = ({
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          placeholder="Enter Password"
+          // placeholder="Enter Password"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="current-password"
           onChange={formik.handleChange}

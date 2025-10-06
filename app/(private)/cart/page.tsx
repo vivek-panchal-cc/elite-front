@@ -319,12 +319,12 @@ const Cart = () => {
             <div className="lg:col-span-2 w-full overflow-x-auto custom-scrollbar">
               <div className="md:min-w-[700px]">
                 {/* Table Header */}
-                <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2">
-                  <span>{cartLabels.products}</span>
-                  <span className="text-center">{cartLabels.price}</span>
-                  <span className="text-left">{cartLabels.sku}</span>
-                  <span className="text-center">{cartLabels.quantity}</span>
-                  <span className="text-right">{cartLabels.subtotal}</span>
+                <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2 gap-2">
+                  <span className="min-w-[150px] mr-20">{cartLabels.products}</span>
+                  <span className="min-w-[60px] text-left mr-8">{cartLabels.price}</span>
+                  <span className="text-left min-w-[100px] mr-8">{cartLabels.sku}</span>
+                  <span className="text-left mr-8">{cartLabels.quantity}</span>
+                  <span className="text-left mr-8">{cartLabels.subtotal}</span>
                   {items.length > 0 && (
                     <span className="flex justify-center">
                       <Button
@@ -343,7 +343,7 @@ const Cart = () => {
                 </div>
 
                 {/* Table Body */}
-                <div className="max-h-[611px] overflow-y-auto custom-scrollbar">
+                <div className="max-h-[540px] overflow-y-auto custom-scrollbar">
                   {loadingCart ? (
                     [...Array(4)].map((_, idx) => (
                       <div key={idx} className="rounded-[10px] p-2">
@@ -383,8 +383,8 @@ const Cart = () => {
                               </div>
 
                               {/* Name + price + sku */}
-                              <div className="flex flex-col justify-center">
-                                <span className="font-medium">
+                              <div className="flex flex-col justify-center mr-16">
+                                <span className="font-medium text-[12px] sm:text-[14px] min-w-[150px] break-words">
                                   {item.basket_prod_name}
                                 </span>
                                 {item.is_out_of_stock && (
@@ -404,10 +404,10 @@ const Cart = () => {
 
                                 {/* Mobile-only price + sku */}
                                 <div className="md:hidden flex flex-col mt-1 gap-1">
-                                  <span className="text-[#888888]">
+                                  <span className="text-[#888888] text-[12px]">
                                     <WrapAmount value={item.price} />
                                   </span>
-                                  <span className="text-[#444444]">
+                                  <span className="text-[#444444] text-[12px]">
                                     {item.basket_prod_sku}
                                   </span>
                                   <div className="flex items-center justify-start gap-2">
@@ -456,14 +456,14 @@ const Cart = () => {
                                         +
                                       </button>
                                     </div>
-                                    <div className="text-left md:text-right text-[#888888]">
+                                    <div className="text-left md:text-right text-[#888888] text-[12px]">
                                       <WrapAmount value={item.total} />
                                     </div>
                                   </div>
                                   <div className="flex justify-start md:justify-center">
                                     <button
                                       key={item.basket_id}
-                                      className="text-[var(--color-red)] hover:text-red-700 cursor-pointer"
+                                      className="text-[12px] text-[var(--color-red)] hover:text-red-700 cursor-pointer"
                                       onClick={() =>
                                         removeSingleRecord(
                                           item.basket_id,
@@ -480,17 +480,17 @@ const Cart = () => {
                           </div>
 
                           {/* Price (desktop only) */}
-                          <div className="hidden md:block text-center text-[#888888]">
+                          <div className="hidden md:block text-left text-[#888888] mr-8 min-w-[60px]">
                             <WrapAmount value={item.price} />
                           </div>
 
                           {/* SKU (desktop only) */}
-                          <div className="hidden md:block text-left text-[#444444]">
+                          <div className="hidden md:block text-left text-[#444444] min-w-[100px] mr-8">
                             {item.basket_prod_sku}
                           </div>
 
                           {/* Quantity */}
-                          <div className="hidden md:flex items-center justify-start md:justify-center">
+                          <div className="hidden md:flex items-left justify-start md:justify-left mr-2">
                             <div className="flex items-center border rounded-full overflow-hidden h-6 w-auto text-xs">
                               <button
                                 onClick={() =>
@@ -536,7 +536,7 @@ const Cart = () => {
                           </div>
 
                           {/* Subtotal */}
-                          <div className="hidden md:block text-left md:text-right text-[#888888]">
+                          <div className="hidden md:block text-left md:text-left mr-8 text-[#888888]">
                             <WrapAmount value={item.total} />
                           </div>
 
@@ -590,7 +590,7 @@ const Cart = () => {
                     priority
                   />
                 </h3>
-                <p className="text-sm text-[var(--color-black)] mb-2 text-center">
+                <p className="text-[12px] text-[var(--color-black)] mb-2 text-center">
                   {cartLabels.amountLeftInEliteWallet}:{" "}
                   <span className="text-[var(--color-red)] font-semibold">
                     {" "}
@@ -600,14 +600,14 @@ const Cart = () => {
                 <div className="">
                   <Input
                     type="text"
-                    className="text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
+                    className="max-h-[29px] text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
                     value={`${CURRENCY_SYMBOL} ${amountInput}`}
                     disabled={items.length <= 0}
                     onChange={handleAmountChange}
                   />
                 </div>
                 <Button
-                  className="w-full text-[12px] md:text-sm text-[var(--color-white)] rounded-[50px]"
+                  className="w-full max-h-[29px] text-[12px] text-[var(--color-white)] rounded-[50px] font-normal"
                   disabled={items.length <= 0 || amount <= 0}
                   onClick={() => handleReedemBasket(amount)}
                 >
@@ -616,11 +616,11 @@ const Cart = () => {
               </div>
 
               {/* Order Summary */}
-              <div className="border rounded-md p-4 shadow-sm space-y-3 pl-[30px] pr-[30px]">
-                <h3 className="text-sm font-medium text-[var(--color-black)] mb-1 border-b p-2">
+              <div className="border rounded-md p-4 pb-6 shadow-sm space-y-3 px-[30px]">
+                <h3 className="text-[12px] font-medium text-[var(--color-black)] mb-1 border-b p-2 pt-1">
                   {cartLabels.orderDetails}
                 </h3>
-                <div className="text-sm text-[#444444] p-2 pb-0">
+                <div className="text-[12px] text-[#444444] p-2 pb-0">
                   <div className="flex justify-between">
                     <span>{cartLabels.totalUnits}</span>
                     <span>
@@ -655,10 +655,10 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <h3 className="text-sm font-medium text-[var(--color-black)] mt-4 mb-1 border-b p-2">
+                <h3 className="text-[12px] font-medium text-[var(--color-black)] mt-4 mb-1 border-b p-2">
                   {cartLabels.cartSummary}
                 </h3>
-                <div className="text-sm text-[#444444] p-2 pb-0">
+                <div className="text-[12px] text-[#444444] p-2 pb-0">
                   <div className="flex justify-between">
                     <span>{cartLabels.delivery}</span>
                     <span>
@@ -715,7 +715,7 @@ const Cart = () => {
                   ) : null}
                 </div>
 
-                <div className="flex justify-between text-lg font-semibold mt-2 p-2 pb-0 mb-2">
+                <div className="flex justify-between text-[14px] font-semibold mt-2 p-2 pb-0 mb-2">
                   <span>{cartLabels.total}</span>
                   <span className="text-[var(--color-black)]">
                     {" "}
@@ -729,7 +729,7 @@ const Cart = () => {
 
                 <div className="space-y-2 mt-0">
                   <Button
-                    className="w-full font-bold bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
+                    className="w-full max-h-[32px] text-[12px] font-normal bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] rounded-[50px]"
                     disabled={items.length <= 0}
                     onClick={handleProceedToCheckout}
                   >
@@ -737,7 +737,7 @@ const Cart = () => {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full rounded-[50px] font-bold"
+                    className="w-full max-h-[32px] rounded-[50px] text-[12px] font-bold"
                     onClick={() => router.push("/order")}
                   >
                     {cartLabels.continueShopping}

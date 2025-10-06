@@ -31,7 +31,7 @@ export default function ProfileDashboard() {
   return (
     <section className="profile-header-section">
       <div className="max-w-7xl mx-auto w-full">
-        <div className="mx-auto gap-6 pb-24 lg:pb-40 pt-8 sm:pt-10 md:pt-14 lg:pt-16 px-4 sm:px-5 md:px-8 lg:px-[60px]">
+        <div className="mx-auto gap-6 pb-24 lg:pb-40 pt-12 sm:pt-14 md:pt-18 lg:pt-20 px-4 sm:px-5 md:px-8 lg:px-[60px]">
           <div>
             {/* Mobile/Tablet -> Swiper */}
             <div className="lg:hidden">

@@ -97,17 +97,19 @@ const SuperBonusSimCardGraph = () => {
 
   return (
     <div
-      className="h-full px-8 sm:px-16 pt-8 pb-16"
+      className="h-full"
       style={{
         background: "linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)",
       }}
     >
-      <div className="[&_nav]:text-[14px] md:[&_nav]:text-[16px] [&_a]:text-[var(--color-white)] [&_span]:text-[var(--color-white)] [&_li]:text-[var(--color-white)] pb-4">
-        <Breadcrumb />
-      </div>
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="mx-auto gap-6 pt-8 py-12 lg:pt-10 lg:py-16 px-12 lg:px-[60px]">
+          <div className="[&_nav]:text-[14px] md:[&_nav]:text-[16px] [&_a]:text-[var(--color-white)] [&_span]:text-[var(--color-white)] [&_li]:text-[var(--color-white)] pb-4">
+            <Breadcrumb />
+          </div>
 
-      <div className="border-2 border-[var(--color-white)] rounded-xl p-4 pb-6">
-        {/* <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
+          <div className="border-2 border-[var(--color-white)] rounded-xl p-4 pb-6">
+            {/* <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
           <div className="text-left">
             <h2 className="text-[10px] sm:text-[12px]">
               {reportsLabels.activatedSim}
@@ -132,8 +134,10 @@ const SuperBonusSimCardGraph = () => {
           </div>
         </div> */}
 
-        <div className="w-full min-h-[370px]">
-          <Line data={data} options={options} />
+            <div className="w-full min-h-[370px]">
+              <Line data={data} options={options} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

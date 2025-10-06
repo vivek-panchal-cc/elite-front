@@ -33,7 +33,7 @@ const footerSections = [
       { name: footerLabels.sections.terms, href: "#" },
       { name: footerLabels.sections.privacy, href: "/privacy-policy" },
       { name: footerLabels.sections.cookies, href: "#" },
-      { name: footerLabels.sections.gdpr, href: "#" },
+      { name: footerLabels.sections.companyPolicy, href: "#" },
     ],
   },
   {
@@ -85,13 +85,13 @@ export function FooterLayout() {
   return (
     <footer className="bg-[var(--color-soft-white)] border-t">
       <div className="max-w-7xl mx-auto px-[40px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-        {/* ✅ Mobile View Custom Layout */}
+        {/* Mobile View Custom Layout */}
         <div className="block lg:hidden space-y-6 mb-8">
           {/* Group 1: Get Started + Legals in a row */}
           <div className="grid grid-cols-2 gap-6 items-start">
             {[footerSections[0], footerSections[1]].map((section) => (
               <div key={section.title} className="flex-1">
-                <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
+                <h3 className="text-[14px] sm:text-[14px] font-bold text-[var(--color-gray)] mb-2">
                   {section.title}
                 </h3>
                 <ul className="space-y-0 sm:space-y-2">
@@ -116,7 +116,7 @@ export function FooterLayout() {
               {[footerSections[2], footerSections[3], footerSections[4]].map(
                 (section) => (
                   <div key={section.title}>
-                    <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
+                    <h3 className="text-[14px] sm:text-[14px] font-bold text-[var(--color-gray)] mb-2">
                       {section.title}
                     </h3>
                     <ul className="space-y-0 sm:space-y-2">
@@ -153,11 +153,12 @@ export function FooterLayout() {
           </div>
         </div>
 
-        {/* ✅ Web View (Unchanged) */}
-        <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        {/* Web View (Unchanged) */}
+        {/* <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"> */}
+        <div className="hidden lg:grid grid-cols-[repeat(auto-fit,minmax(max-content,180px))] gap-6 mb-8">
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-[12px] sm:text-[14px] font-semibold text-[var(--color-gray)] mb-2">
+              <h3 className="text-[14px] sm:text-[18px] font-bold text-[var(--color-gray)] mb-2 sm:leading-[21px]">
                 {section.title}
               </h3>
               <ul className="space-y-0 sm:space-y-2">
@@ -165,7 +166,7 @@ export function FooterLayout() {
                   <li key={link.name}>
                     <CustomLink
                       href={link.href}
-                      className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
+                      className="text-[14px] sm:text-[16px] text-[var(--color-gray)] leading-[22px]"
                     >
                       {link.name}
                     </CustomLink>
@@ -192,22 +193,22 @@ export function FooterLayout() {
                   id="newsletter"
                   type="email"
                   placeholder={footerLabels.newsletter.placeholder}
-                  className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-white)] w-full"
+                  className="rounded-r-none bg-[var(--color-white)] w-full placeholder:text-[12px] placeholder:text-[rgba(0,0,0,0.3)] px-6 text-[12px] md:text-[12px] sm:text-[12px]"
                 />
-                <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
+                <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px] bg-[#10499E]">
                   <Image src={rightArrow} alt="right arrow icon" />
                 </Button>
               </div>
 
-              <div className="flex items-start gap-2 mt-2 ml-[10px]">
+              <div className="flex items-start gap-2 mt-0 ml-[10px]">
                 <input
                   type="checkbox"
                   id="newsletterConsent"
-                  className="mt-[2px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px]"
+                  className="mt-[4px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] leading-[22px]"
                 />
                 <label
                   htmlFor="newsletterConsent"
-                  className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer"
+                  className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer leading-[22px]"
                 >
                   {footerLabels.newsletter.description}
                 </label>
@@ -231,9 +232,9 @@ export function FooterLayout() {
                 id="newsletter-mobile"
                 type="email"
                 placeholder={footerLabels.newsletter.placeholder}
-                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-white)] w-full"
+                className="rounded-r-none text-[10px] md:text-[10px] sm:text-[10px] bg-[var(--color-white)] w-full placeholder:text-[rgba(0,0,0,0.3)] px-6"
               />
-              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px]">
+              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-10px] min-w-[80px] max-w-[100px] bg-[#10499E]">
                 <Image src={rightArrow} alt="right arrow icon" />
               </Button>
             </div>
@@ -242,11 +243,11 @@ export function FooterLayout() {
               <input
                 type="checkbox"
                 id="newsletterConsentMobile"
-                className="mt-[2px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px]"
+                className="mt-[4px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] leading-[22px]"
               />
               <label
                 htmlFor="newsletterConsentMobile"
-                className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer"
+                className="text-[8px] sm:text-[10px] text-[var(--color-black)] cursor-pointer leading-[22px]"
               >
                 {footerLabels.newsletter.description}
               </label>
@@ -255,7 +256,7 @@ export function FooterLayout() {
         </div>
 
         {/* Desktop Only Awards */}
-        <div className="hidden lg:block border-t border-gray-200 pt-6 sm:pt-8 pb-6 sm:pb-0">
+        <div className="hidden lg:block border-t border-gray-200 pt-6 sm:pt-0 pb-6 sm:pb-0">
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3">
             {awards.map((award, index) => (
               <div key={index} className="flex-shrink-0">

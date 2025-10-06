@@ -25,23 +25,23 @@ const Logout = ({
   };
 
   return (
-    <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto">
+    <div className="w-full max-w-[600px] bg-[var(--color-white)] rounded-lg py-8 md:py-12 px-4 md:px-10 mx-auto">
       {!showConfirmModal ? (
         <>
-          <h2 className="text-lg md:text-xl font-semibold text-[var(--color-gray)] text-left">
-            <span className="text-[var(--color-blue)]">
+          <h2 className="text-lg md:text-xl font-semibold text-[var(--color-gray)] text-center sm:text-left leading-[26px] sm:leading-[24px]">
+            <span className="text-[22px] sm:text-[25px] font-bold text-[var(--color-blue)]">
               {logoutLabels.areYouSure}
             </span>
-            <span className="text-[var(--color-red)] font-bold">
+            <span className="text-[22px] sm:text-[25px] text-[var(--color-red)] font-bold">
               {logoutLabels.logoutRed}?
             </span>
           </h2>
 
-          <p className="text-sm text-[var(--color-gray)] text-left mt-3">
+          <p className="text-[12px] sm:text-[14px] text-[var(--color-gray)] text-center sm:text-left mt-1 sm:mt-3">
             {logoutLabels.logoutMessage}
           </p>
 
-          <div className="flex flex-col md:flex-row w-full gap-3 mt-6">
+          <div className="flex flex-col md:flex-row w-full gap-3 sm:gap-4 mt-6 sm:mt-12">
             <Button
               className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-[var(--color-white)] py-2 rounded-full font-medium"
               onClick={handleLogout}
@@ -57,9 +57,9 @@ const Logout = ({
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center px-4 sm:px-20 py-4 sm:py-0">
           <Image src={images.rightTick} alt="right" className="shrink-0" />
-          <h2 className="text-xl font-bold text-[var(--color-blue)]">
+          <h2 className="text-[18px] sm:text-[25px] font-bold text-[var(--color-blue)]">
             {logoutLabels.logoutSuccessMessage}
           </h2>
           {/* <Button

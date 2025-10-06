@@ -1,11 +1,11 @@
-import Image from "next/image";
-import { eliteLogoImg } from "@/components/images";
+import Image, { StaticImageData } from "next/image";
 import { superRewardsLabels } from "@/lib/labels";
 
 const RewardCard: React.FC<{
   target: number | string;
   rewards: string[];
-}> = ({ target, rewards }) => {
+  image: string | StaticImageData;
+}> = ({ target, rewards, image }) => {
   return (
     <>
       <div className="w-[95%] mx-auto">
@@ -32,7 +32,7 @@ const RewardCard: React.FC<{
             {/* Logo */}
             <div className="absolute top-8 right-3">
               <Image
-                src={eliteLogoImg}
+                src={image}
                 width={30}
                 height={20}
                 alt="elite"

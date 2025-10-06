@@ -74,7 +74,7 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
           type="text"
           name="email"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
-          placeholder="Enter Email"
+          // placeholder="Enter Email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
@@ -85,19 +85,21 @@ const ResetPassword = ({ setLoginClose }: ResetPasswordFormProps) => {
 
       <div className="flex justify-left">
         {SITE_KEY ? (
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={(token: string | null) => {
-              setCaptchaToken(token);
-              formik.setFieldValue("captcha", Boolean(token));
-              formik.setFieldValue("g_recaptcha_token", token || "");
-            }}
-            onExpired={() => {
-              setCaptchaToken(null);
-              formik.setFieldValue("captcha", false);
-              formik.setFieldValue("g_recaptcha_token", "");
-            }}
-          />
+          <div className="scale-80 origin-left sm:scale-100 sm:origin-left">
+            <ReCAPTCHA
+              sitekey={SITE_KEY}
+              onChange={(token: string | null) => {
+                setCaptchaToken(token);
+                formik.setFieldValue("captcha", Boolean(token));
+                formik.setFieldValue("g_recaptcha_token", token || "");
+              }}
+              onExpired={() => {
+                setCaptchaToken(null);
+                formik.setFieldValue("captcha", false);
+                formik.setFieldValue("g_recaptcha_token", "");
+              }}
+            />
+          </div>
         ) : (
           <div className="text-[var(--color-red)] text-sm">
             {registrationLabels.reCaptchaMissing}

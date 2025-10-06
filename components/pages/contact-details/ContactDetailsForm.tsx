@@ -96,7 +96,7 @@ const ContactDetailsForm = ({
         <Input
           type="text"
           name="contact_name"
-          placeholder="Enter Contact Name"
+          // placeholder="Enter Contact Name"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -111,7 +111,7 @@ const ContactDetailsForm = ({
         <Input
           type="tel"
           name="mobile_number"
-          placeholder="Enter Mobile Number"
+          // placeholder="Enter Mobile Number"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -126,7 +126,7 @@ const ContactDetailsForm = ({
         <Input
           type="email"
           name="email"
-          placeholder="Enter Email"
+          // placeholder="Enter Email"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
