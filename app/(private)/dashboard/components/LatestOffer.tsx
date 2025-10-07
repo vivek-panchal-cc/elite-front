@@ -20,16 +20,16 @@ const LatestOffer = () => {
   const router = useRouter();
 
   return (
-    <div className="py-10 px-4 sm:px-5 md:px-8 lg:px-[60px] bg-[var(--color-white)] rounded-tl-[40px] rounded-tr-[40px] lg:rounded-tl-[80px] lg:rounded-tr-[80px] mt-[-80px] relative">
+    <div className="py-10 sm:pb-15 px-4 sm:px-5 md:px-8 lg:px-[60px] bg-[var(--color-white)] rounded-tl-[40px] rounded-tr-[40px] lg:rounded-tl-[80px] lg:rounded-tr-[80px] mt-[-80px] relative shadow-[0_-4px_6px_rgba(0,0,0,0.1)]">
       <div className="mx-auto max-w-7xl">
         <h4 className="font-bold text-[22px] mb-3">
           {homepageLabels.topProductList.popularOffer}
         </h4>
         <div className="gap-4 grid grid-cols-1 lg:grid-cols-[462px_1fr]">
           <ProductOfferCard />
-          <div className="grid gap-7">
+          <div className="grid gap-3">
             {/* First row: two columns */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[287px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[287px]">
               <OfferCard />
               <div>
                 <h5 className="font-bold text-[18px] mb-2">

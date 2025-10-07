@@ -86,7 +86,7 @@ export function FooterLayout() {
     <footer className="bg-[var(--color-soft-white)] border-t">
       <div className="max-w-7xl mx-auto px-[40px] pt-[20px] pb-[0px] sm:pt-[40px] sm:pb-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         {/* Mobile View Custom Layout */}
-        <div className="block lg:hidden space-y-6 mb-8">
+        <div className="block lg:hidden space-y-6 mb-8 md:mb-4">
           {/* Group 1: Get Started + Legals in a row */}
           <div className="grid grid-cols-2 gap-6 items-start">
             {[footerSections[0], footerSections[1]].map((section) => (
@@ -137,6 +137,7 @@ export function FooterLayout() {
             </div>
 
             {/* Awards in second column */}
+            {/* <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4 justify-self-end"> */}
             <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4">
               {awards.map((award, index) => (
                 <div key={index} className="flex justify-center items-center">
@@ -218,8 +219,8 @@ export function FooterLayout() {
         </div>
 
         {/* Newsletter for Mobile/Tablet (bottom) */}
-        <div className="block lg:hidden border-t border-gray-200 sm:pt-8 pb-6 sm:pb-0">
-          <div className="w-full">
+        <div className="block lg:hidden border-t sm:justify-items-center border-gray-200 md:pt-0 sm:pt-0 pb-6 sm:pb-0">
+          <div className="w-full sm:w-[50%]">
             <label
               htmlFor="newsletter-mobile"
               className="block text-[12px] sm:text-[16px] font-semibold text-[var(--color-gray)] mb-1"

@@ -23,7 +23,7 @@ export default function RecentTransactionCard({ header }: TransProps) {
         <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
           {/* min-w-[349px] */}
           <thead>
-            <tr className="text-left text-[var(--color-black)] text-[10px]">
+            <tr className="text-center text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.orderDate}</th>
               <th>{profileLabels.creditOrDebit}</th>
               <th>{profileLabels.amount}</th>
@@ -43,7 +43,7 @@ export default function RecentTransactionCard({ header }: TransProps) {
                   className="text-[var(--color-black)] rounded-lg text-[10px]"
                 >
                   {Array.from({ length: 4 }).map((_, colIdx) => (
-                    <td key={colIdx}>
+                    <td key={colIdx} className="justify-items-center">
                       <LoaderDiv
                         width={50}
                         height={15}
@@ -57,7 +57,7 @@ export default function RecentTransactionCard({ header }: TransProps) {
               transactionList.slice(0, 5).map((o, idx) => (
                 <tr
                   key={idx}
-                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                  className="text-center text-[var(--color-black)] rounded-lg text-[10px]"
                 >
                   <td>{formatDate(o.redeem_date)}</td>
                   <td

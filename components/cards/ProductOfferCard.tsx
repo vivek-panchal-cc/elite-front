@@ -20,34 +20,34 @@ export const ProductOfferCard = () => {
         className="latest-offer-slider"
       >
         <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
+          <div className="h-full text-center text-[14px] flex flex-col items-center px-6 pb-0 pt-8">
             <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
+            <h3 className="font-bold text-[62px] leading-[1]">£20 + VAT</h3>
             <Image
               alt="offer"
-              className="h-[325px] w-auto"
+              className="h-[325px] w-auto -mt-3"
               src={images.productOfferOne}
             ></Image>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
+          <div className="h-full text-center text-[14px] flex flex-col items-center px-6 pb-0 pt-8">
             <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
+            <h3 className="font-bold text-[62px] leading-[1]">£20 + VAT</h3>
             <Image
               alt="offer"
-              className="h-[325px] w-auto"
+              className="h-[325px] w-auto -mt-3"
               src={images.productOfferOne}
             ></Image>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="h-full text-center flex flex-col items-center p-3">
+          <div className="h-full text-center text-[14px] flex flex-col items-center px-6 pb-0 pt-8">
             <p>{homepageLabels.topProductList.getCrystalPro}</p>
-            <h3 className="font-bold text-[62px] leading-[1]">£20 + vat</h3>
+            <h3 className="font-bold text-[62px] leading-[1]">£20 + VAT</h3>
             <Image
               alt="offer"
-              className="h-[325px] w-auto"
+              className="h-[325px] w-auto -mt-3"
               src={images.productOfferOne}
             ></Image>
           </div>

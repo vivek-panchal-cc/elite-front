@@ -305,8 +305,8 @@ export const labels = {
       appStore: "App Store",
     },
     topProductList: {
-      getCrystalPro: "Get your crystal pro stand for only",
-      popularOffer: "Our popular and latest offers",
+      getCrystalPro: "GET YOUR CRYSTAL PRO STAND FOR ONLY",
+      popularOffer: "Our Popular And Latest Offers",
       topCategories: "Top Categories",
       bestPick: "Best Pick Of The Week",
       viewMore: "Show More",

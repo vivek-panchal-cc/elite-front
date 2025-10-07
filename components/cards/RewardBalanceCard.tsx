@@ -20,8 +20,8 @@ export default function RewardBalanceCard({
   );
 
   return (
-    <div className="h-full bg-[var(--color-white)] rounded-xl shadow-lg p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center text-center min-h-[239px]">
-      <h2 className="text-[22px] font-bold text-[var(--color-dark-blue)]">
+    <div className="h-full bg-[var(--color-white)] rounded-xl shadow-lg p-8 sm:p-5 sm:pb-4 md:p-6 md:pb-4 flex flex-col items-center justify-center text-center">
+      <h2 className="text-[22px] font-bold text-[var(--color-dark-blue)] mb-2 leading-[16px]">
         {loadingSumm ? (
           <LoaderDiv height={30} />
         ) : (
@@ -30,10 +30,10 @@ export default function RewardBalanceCard({
           </>
         )}
       </h2>
-      <p className="text-[var(--color-black)] text-[16px]">
+      <p className="text-[var(--color-black)] text-[16px] leading-[20px] py-1 font-medium">
         {profileLabels.yourRewardBalance}
       </p>
-      <p className="font-extrabold text-[var(--color-dark-blue)] text-[48px] leading-none mb-6">
+      <p className="font-extrabold text-[var(--color-dark-blue)] text-[48px] leading-none mb-10">
         {loadingSumm ? (
           <LoaderDiv height={50} />
         ) : (
