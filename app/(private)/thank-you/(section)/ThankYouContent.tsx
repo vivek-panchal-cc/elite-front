@@ -281,7 +281,7 @@ export default function ThankYouContent({
                           {cart.product.prod_name}
                         </span>
                         <span className="text-[var(--color-red)] font-bold text-[12px]">
-                          <WrapAmount value={cart.price} />
+                          <WrapAmount value={cart.price * cart.qty} />
                         </span>
                       </div>
                     </div>
