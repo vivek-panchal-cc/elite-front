@@ -38,7 +38,7 @@ const Cart = () => {
   const router = useRouter();
   const { setIsLoading } = useLoader();
   const { proceedToCheckout } = useCheckout();
-  const { dealer } = useAuthStoreWithAutoRefresh();
+  const { dealer, reloadUser, setReloadUser } = useAuthStoreWithAutoRefresh();
   const { clearCart, updateRedeemAmountBasket, addToBasketHandler } =
     useBasket();
   const { reloadCartSummary } = useCartSummary();
@@ -51,6 +51,7 @@ const Cart = () => {
   const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
   const [amountInput, setAmountInput] = useState<string>("");
+  const [originalGrandTotal, setOriginalGrandTotal] = useState<number>(0);
   const [freeProductsModal, setFreeProductsModal] = useState<boolean>(false);
   const [freeProductsData, setFreeProductsData] = useState<any[]>([]);
   const [freeProductsQueue, setFreeProductsQueue] = useState<any[]>([]);
@@ -63,6 +64,27 @@ const Cart = () => {
       setBalance(dealer.current_amount_bal);
     }
   }, [dealer]);
+
+  useEffect(() => {
+    if ((dealer?.current_amount_bal ?? 0) > 0 && balance <= 0) {
+      if (setReloadUser) setReloadUser(!reloadUser);
+    }
+  }, [dealer, balance]);
+
+  useEffect(() => {
+    if (
+      summary?.grand_total !== undefined &&
+      summary?.discount_value !== undefined
+    ) {
+      setOriginalGrandTotal(summary.grand_total + summary.discount_value);
+    }
+  }, [summary?.grand_total, summary?.discount_value]);
+
+  useEffect(() => {
+    const grandTotal = Number(summary?.grand_total) || 0;
+    const discount = Number(summary?.discount_value) || 0;
+    setOriginalGrandTotal(grandTotal + discount);
+  }, [summary?.grand_total, summary?.discount_value]);
 
   useEffect(() => {
     if (items && items.length > 0) {
@@ -106,6 +128,7 @@ const Cart = () => {
         setAmountInput("0");
         if (reloadCart) await reloadCart();
         if (reloadCartSummary) await reloadCartSummary();
+        if (setReloadUser) await setReloadUser(!reloadUser);
       }
     } else {
       toast.warning(response.message);
@@ -180,6 +203,7 @@ const Cart = () => {
     });
     if (reloadCart) await reloadCart();
     if (reloadCartSummary) await reloadCartSummary();
+    if (setReloadUser) await setReloadUser(!reloadUser);
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,7 +228,9 @@ const Cart = () => {
     const num = parseFloat(val);
     if (!isNaN(num)) {
       const maxBalance = balance ?? 0;
-      const maxCartTotal = summary.grand_total ?? 0;
+      // const maxCartTotal = summary.grand_total ?? 0;
+      // const maxAllowed = Math.min(maxBalance, maxCartTotal);
+      const maxCartTotal = originalGrandTotal || summary.grand_total || 0;
       const maxAllowed = Math.min(maxBalance, maxCartTotal);
 
       const clamped = Math.min(num, maxAllowed);
