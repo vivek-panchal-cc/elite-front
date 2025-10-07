@@ -9,6 +9,7 @@ export default function TryAgain() {
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
   const orderId = searchParams.get("orderId");
+  console.log('orderId: ', orderId);
 
   useEffect(() => {
     if (!referenceId && !orderId) {
