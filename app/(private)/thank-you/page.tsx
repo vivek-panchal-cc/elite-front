@@ -21,6 +21,7 @@ function ThankYou() {
   const { reloadCartSummary } = useCartSummary();
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
+  const orderId = searchParams.get("orderId");
   const [isOrderPlaced, setIsOrderPlaced] = useState<boolean>(false);
   const [orderCollection, setOrderCollection] = useState<any>(null);
 
@@ -37,7 +38,7 @@ function ThankYou() {
 
   useEffect(() => {
     if (!referenceId) {
-      router.replace("/cart");
+      // router.replace("/cart");
       return;
     }
 
@@ -96,6 +97,28 @@ function ThankYou() {
       getOrderDetails();
     }
   }, [isOrderPlaced, referenceId]);
+
+  useEffect(() => {
+    const getOrderDetails = async () => {
+      if (!orderId) return;
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.viewOrderDetails(Number(orderId));
+        if (!data.success) throw data.message;
+        setOrderCollection(data.data);
+      } catch (error: any) {
+        if (typeof error === "string") return toast.error(error);
+        router.replace("/cart");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (orderId) {
+      setIsOrderPlaced(true);
+      getOrderDetails();
+    }
+  }, [orderId, router]);
 
   if (!isOrderPlaced || !orderCollection) {
     return (

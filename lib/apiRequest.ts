@@ -9,7 +9,7 @@ import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
 import { objectToFormData } from "./constants/all";
-import { ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
+import { InitiatePayment, ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
 import {
   OrderStatus,
   OrderSummary,
@@ -287,8 +287,10 @@ const getCardList = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.get(apiUrl.PAYMENT.CARD_LIST);
 };
 
-const paymentInitiate = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosProductInstance.post(apiUrl.PAYMENT.PAYMENT_INITIATE);
+const paymentInitiate = (
+  data: InitiatePayment
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.PAYMENT.PAYMENT_INITIATE, data);
 };
 
 const createPayment = (

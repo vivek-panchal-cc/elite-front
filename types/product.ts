@@ -145,6 +145,9 @@ export interface ProductAddToBasketParams {
 export interface ProductRedeemAmount {
   amount: number;
 }
+export interface InitiatePayment {
+  is_free_shopping: boolean;
+}
 
 export interface FreeProductImages {
   id: number;

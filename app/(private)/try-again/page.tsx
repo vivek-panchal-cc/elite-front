@@ -8,12 +8,15 @@ export default function TryAgain() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
+  const orderId = searchParams.get("orderId");
 
   useEffect(() => {
-    if (!referenceId) router.replace("/cart");
-  }, [referenceId, router]);
+    if (!referenceId && !orderId) {
+      router.replace("/cart");
+    }
+  }, [referenceId, orderId, router]);
 
-  if (!referenceId) return null;
+  if (!referenceId && !orderId) return null;
 
   return (
     <div className="max-w-7xl mx-auto w-full py-10 px-6 sm:px-4 md:px-6 lg:px-8">

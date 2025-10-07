@@ -254,6 +254,11 @@ const Cart = () => {
   };
 
   const handleProceedToCheckout = async () => {
+    if (items.length <= 0) return;
+    let freeShopping = false;
+    if (summary.grand_total <= 0) {
+      freeShopping = true;
+    }
     const hasOutOfStock = items.some((item) => item.is_out_of_stock);
     if (hasOutOfStock) {
       toast.warning(
@@ -281,17 +286,23 @@ const Cart = () => {
       if (!orderData) return;
       setIsLoading(true);
       try {
-        const { data } = await apiRequest.paymentInitiate();
+        const { data } = await apiRequest.paymentInitiate({
+          is_free_shopping: freeShopping,
+        });
         if (!data.success) throw data.message;
-        if (data.data.nextStep === NEW_CARD) {
-          const { data } = await apiRequest.createPayment(orderData);
-          if (!data.success) throw data.message;
-          if (data.data.paymentUrl) {
-            window.location.href = data.data.paymentUrl;
+        if (data.data.is_free_shopping) {
+          router.push("/thank-you?orderId=" + data.data?.orderId);
+        } else if (!data.data.is_free_shopping) {
+          if (data.data.nextStep === NEW_CARD) {
+            const { data } = await apiRequest.createPayment(orderData);
+            if (!data.success) throw data.message;
+            if (data.data.paymentUrl) {
+              window.location.href = data.data.paymentUrl;
+            }
+          } else if (data.data.nextStep === SAVED_CARD) {
+            await proceedToCheckout(orderData);
+            router.push("/checkout");
           }
-        } else if (data.data.nextStep === SAVED_CARD) {
-          await proceedToCheckout(orderData);
-          router.push("/checkout");
         }
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);
