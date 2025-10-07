@@ -8,8 +8,7 @@ export default function TryAgain() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const referenceId = searchParams.get("transactionReference");
-  const orderId = searchParams.get("orderId");
-  console.log('orderId: ', orderId);
+  const orderId = searchParams.get("orderId");  
 
   useEffect(() => {
     if (!referenceId && !orderId) {
