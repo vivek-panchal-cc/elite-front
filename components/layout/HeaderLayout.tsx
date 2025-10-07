@@ -172,19 +172,27 @@ export function HeaderLayout() {
                     <Image
                       src={shoppingCart}
                       alt="shopping cart"
-                      className="h-[24px] w-[26px] ml-[-4px] sm:ml-[-6px]"
+                      className="h-[24px] w-[26px] ml-[-4px] sm:ml-[-3px]"
                       priority
                     />
                     {cart?.units && (
-                      <span className="absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-[var(--color-white)] text-[10px] sm:text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold">
-                        {cart?.units}
+                      <span
+                        className={`absolute -top-1 -left-2 sm:-left-3 bg-[#E15325] text-[var(--color-white)] ${
+                          Number(cart.units) >= 100
+                            ? "text-[10px]"
+                            : Number(cart.units) >= 1000
+                            ? "text-[8px]"
+                            : "text-[10px] sm:text-[14px]"
+                        } w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center font-semibold`}
+                      >
+                        {cart.units}
                       </span>
                     )}
                   </div>
 
                   {/* Amount Section */}
                   <div className="bg-[var(--color-soft-white)] border-1 border-[var(--color-blue)] rounded-r-full ml-[-8px] sm:ml-[-10px] h-[34px] px-2 sm:px-3 flex items-center">
-                    <span className="text-[var(--color-blue)] font-bold text-[12px] px-1 sm:px-2">
+                    <span className="text-[var(--color-blue)] font-bold text-[12px] px-1 sm:px-1">
                       <WrapAmount value={Number(cart?.sub_total) || 0} />
                     </span>
                   </div>

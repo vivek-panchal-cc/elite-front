@@ -27,22 +27,22 @@ export default function MidPageSection() {
           {/* Info & Buttons */}
           <div className="w-full lg:hidden order-2">
             <Card className="bg-[#E9E9E9] border-none">
-              <CardContent className="pt-0 pb-0 px-6 lg:p-6 flex flex-col items-center justify-center text-center h-full">
-                <h3 className="text-[18px] md:text-[27px] font-bold text-[var(--color-gray)] mb-4">
+              <CardContent className="pt-0 pb-0 px-3 lg:p-6 flex flex-col items-center justify-center text-center h-full">
+                <h3 className="text-[17px] md:text-[26px] font-bold text-[var(--color-black)] mb-4 leading-[100%]">
                   {homepageLabels.platform.downloadApp}
                 </h3>
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-wrap gap-2 justify-center">
                   <Image
                     src={images.googlePlay}
                     alt="Google Play Icon"
                     height={100}
-                    className="shrink-0 w-auto"
+                    className="shrink-0 w-[128px]"
                   />
                   <Image
                     src={images.appleStore}
                     alt="Apple Store Icon"
                     height={100}
-                    className="shrink-0 w-auto"
+                    className="shrink-0 w-[128px]"
                   />
                 </div>
               </CardContent>
@@ -52,8 +52,8 @@ export default function MidPageSection() {
           {/* Download App Card */}
           <div className="flex flex-col gap-10 w-full lg:w-1/2 order-3 lg:order-none">
             {/* Direct Top-Up Card */}
-            <Card className="border-[3px] border-[#10499E] rounded-[20px] py-1">
-              <CardContent className="flex items-center gap-4 p-4 pl-6 sm:pl-12 md:pl-20">
+            <Card className="border-[3px] border-[#10499E] rounded-[20px] py-0 sm:py-2">
+              <CardContent className="flex items-center gap-4 p-4 px-6 sm:px-14">
                 <Image
                   src={images.simply}
                   alt="SIMply Icon"
@@ -62,12 +62,12 @@ export default function MidPageSection() {
                   className="shrink-0"
                 />
                 <div>
-                  <h3 className="text-[#10499E] sm:text-[20px] md:text-[25px] font-extrabold leading-tight">
+                  <h3 className="text-[#10499E] text-[17px] sm:text-[20px] md:text-[25px] font-extrabold leading-tight">
                     {homepageLabels.platform.directTopUp}
                   </h3>
                   <Link
                     href="#"
-                    className="text-[#10499E] hover:underline sm:text-[15px] md:text-[20px] font-medium"
+                    className="text-[#10499E] text-[14px] hover:underline sm:text-[15px] md:text-[20px] font-medium"
                   >
                     {homepageLabels.platform.clickForMoreInfo}
                   </Link>
@@ -78,8 +78,8 @@ export default function MidPageSection() {
             {/* Download App Card for desktop view only */}
             <div className="hidden lg:block">
               <Card className="bg-[#E9E9E9] border-none">
-                <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
-                  <h3 className="text-[18px] md:text-[27px] font-bold text-[var(--color-gray)] mb-4">
+                <CardContent className="p-6 px-10 flex flex-col items-center justify-center text-center h-full">
+                  <h3 className="text-[26px] font-bold text-[var(--color-black)] mb-4 leading-[100%]">
                     {homepageLabels.platform.downloadApp}
                   </h3>
                   <div className="flex flex-wrap gap-4 justify-center">

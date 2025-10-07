@@ -8,6 +8,7 @@ export const labels = {
     loginCaps: "LOG IN",
     logout: "Logout",
     signUp: "Sign Up",
+    signUpCaps: "SIGN UP",
     or: "OR",
     submit: "Submit",
     cancel: "Cancel",
@@ -271,7 +272,8 @@ export const labels = {
   // Homepage specific labels
   homepage: {
     hero: {
-      title: "WELCOME TO ELITE EXTRA REWARDS",
+      titleOne: "WELCOME TO",
+      titleTwo: "ELITE EXTRA REWARDS",
       lostPassword: "Lost your password? Click here",
       findOutMore: "Find Out More",
       latestBrochure: "LATEST BROCHURE",

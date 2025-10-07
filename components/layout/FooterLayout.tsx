@@ -178,9 +178,9 @@ export function FooterLayout() {
         </div>
 
         {/* Newsletter for Desktop (top-right) */}
-        <div className="hidden lg:flex border-t border-gray-200 mb-6 sm:mb-8">
-          <div className="w-full flex flex-col md:flex-row md:items-center md:justify-end gap-4 lg:mt-[-40px] lg:ml-[-50px] md:mt-[-100px] md:ml-[-60px]">
-            <div className="w-full md:w-auto">
+        <div className="hidden lg:flex border-t border-gray-200 mb-6 sm:mb-8 relative">
+          <div className="w-full flex flex-col md:flex-row md:items-center md:justify-end gap-4 lg:mt-[-70px] lg:ml-[-120px] md:mt-[-100px] md:ml-[-60px] pointer-events-none">
+            <div className="w-full md:w-auto pointer-events-auto">
               <label
                 htmlFor="newsletter"
                 className="block text-[12px] sm:text-[16px] font-semibold text-[var(--color-gray)] mb-1 ml-[10px]"

@@ -320,9 +320,15 @@ const Cart = () => {
               <div className="md:min-w-[700px]">
                 {/* Table Header */}
                 <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2 gap-2">
-                  <span className="min-w-[150px] mr-20">{cartLabels.products}</span>
-                  <span className="min-w-[60px] text-left mr-8">{cartLabels.price}</span>
-                  <span className="text-left min-w-[100px] mr-8">{cartLabels.sku}</span>
+                  <span className="min-w-[150px] mr-20">
+                    {cartLabels.products}
+                  </span>
+                  <span className="min-w-[60px] text-left mr-8">
+                    {cartLabels.price}
+                  </span>
+                  <span className="text-left min-w-[100px] mr-8">
+                    {cartLabels.sku}
+                  </span>
                   <span className="text-left mr-8">{cartLabels.quantity}</span>
                   <span className="text-left mr-8">{cartLabels.subtotal}</span>
                   {items.length > 0 && (
@@ -368,22 +374,22 @@ const Cart = () => {
                             {/* Product image + name + details */}
                             <div className="flex gap-4">
                               {/* Product Image */}
-                              <div className="flex-shrink-0 self-start md:self-center">
+                              <div className="flex-shrink-0 self-start md:self-center w-[60px] h-[60px] flex items-center justify-center bg-white border border-gray-200 rounded">
                                 <Image
                                   src={
                                     item.basket_prod_image
-                                      ? `${imageUrl}/medium/${item.basket_prod_image}` //whenever data in small folder do change from medium to small
+                                      ? `${imageUrl}/medium/${item.basket_prod_image}`
                                       : noProduct
                                   }
-                                  alt="Product"
+                                  alt={item.basket_prod_name || "Product"}
                                   width={60}
                                   height={60}
-                                  className="rounded w-[60px] h-[60px] object-contain"
+                                  className="rounded w-full h-full p-2 object-contain transition-transform duration-200 hover:scale-105"
                                 />
                               </div>
 
                               {/* Name + price + sku */}
-                              <div className="flex flex-col justify-center mr-16">
+                              <div className="flex flex-col justify-center mr-2">
                                 <span className="font-medium text-[12px] sm:text-[14px] min-w-[150px] break-words">
                                   {item.basket_prod_name}
                                 </span>
