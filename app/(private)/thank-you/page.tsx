@@ -105,8 +105,10 @@ function ThankYou() {
       try {
         const { data } = await apiRequest.viewOrderDetails(Number(orderId));
         if (!data.success) throw data.message;
-        if (!data.data)
+        if (!data.data) {
           router.replace("/try-again?orderId=" + orderId);
+          return;
+        }
         setOrderCollection(data.data);
       } catch (error: any) {
         if (typeof error === "string") return toast.error(error);
