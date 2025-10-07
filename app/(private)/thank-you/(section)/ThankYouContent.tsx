@@ -327,7 +327,7 @@ export default function ThankYouContent({
                             {cart.product.prod_sku}
                           </td>
                           <td className="text-[var(--color-red)]">
-                            <WrapAmount value={cart.price} />
+                            <WrapAmount value={cart.price * cart.qty} />
                           </td>
                         </tr>
                       ))}
