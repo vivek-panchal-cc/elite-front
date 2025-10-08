@@ -643,7 +643,7 @@ const Cart = () => {
                 <div className="">
                   <Input
                     type="text"
-                    className="max-h-[29px] text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
+                    className="max-h-[29px] text-[14px] sm:text-[16px] font-bold mb-2 border rounded-[60px] p-1 text-center"
                     value={`${CURRENCY_SYMBOL} ${amountInput}`}
                     disabled={items.length <= 0}
                     onChange={handleAmountChange}

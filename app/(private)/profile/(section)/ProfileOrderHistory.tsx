@@ -60,12 +60,12 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
           className={`flex ${
             isMobile
               ? "flex-col gap-3"
-              : "justify-between items-center px-6 pt-10 pb-4"
+              : "justify-between items-center px-6 pt-6 pb-0"
           }`}
         >
           {!isMobile && (
             <h3
-              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
+              className={`font-semibold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
             >
               {profileLabels.profileOrderHistory}
             </h3>
@@ -75,7 +75,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
         {isMobile ? (
           // Mobile table
           <div className="overflow-hidden rounded-xl">
-            <div className="pt-4 custom-scrollbar max-h-[300px] min-h-[300px] overflow-visible">
+            <div className="pt-4 custom-scrollbar max-h-[300px] min-h-[300px] overflow-visible hide-scrollbar">
               <table className="w-full text-[12px]">
                 <thead className="w-full text-[12px]">
                   <tr className="bg-[var(--color-light-gray)] text-left">
@@ -208,11 +208,11 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
         ) : (
           // Desktop table
           <div className="overflow-hidden rounded-xl">
-            <div className="custom-scrollbar max-h-[400px] min-h-[400px]">
+            <div className="custom-scrollbar max-h-[400px] min-h-[400px] hide-scrollbar">
               <table className="w-full max-w-[792px] min-w-[770px] rounded-lg">
                 <thead className="border-b border-[var(--color-gray)] text-[10px] md:text-[12px]">
-                  <tr className="text-left text-[12px] md:text-[14px] font-medium">
-                    <th className="px-4 py-3 whitespace-nowrap">
+                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px]">
+                    <th className="px-6 py-3 whitespace-nowrap">
                       {profileLabels.profileOrderHistoryLabel.date}
                     </th>
                     <th className="px-4 py-3 whitespace-nowrap">
@@ -224,7 +224,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                     <th className="px-4 py-3 whitespace-nowrap">
                       {profileLabels.profileOrderHistoryLabel.total}
                     </th>
-                    <th className="px-4 py-3 whitespace-nowrap">
+                    <th className="px-4 py-3 whitespace-nowrap text-center">
                       {profileLabels.profileOrderHistoryLabel.action}
                     </th>
                   </tr>
@@ -237,7 +237,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                         className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
                       >
                         {Array.from({ length: 5 }).map((_, i) => (
-                          <td key={i} className="px-4 py-6 whitespace-nowrap">
+                          <td key={i} className="p-4 whitespace-nowrap">
                             <LoaderDiv
                               width={100}
                               height={25}
@@ -251,21 +251,21 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                     orderHistory.map((order, idx) => (
                       <tr
                         key={idx}
-                        className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]"
+                        className="border-t-[2px] border-[var(--table-border)] text-[10px] md:text-[12px] leading-[38px]"
                       >
-                        <td className="px-4 py-6 whitespace-nowrap">
+                        <td className="p-4 px-6 whitespace-nowrap">
                           {formatDate(order.ord_datetime)}
                         </td>
-                        <td className="px-4 py-6 whitespace-nowrap">
+                        <td className="p-4 whitespace-nowrap">
                           {order.ord_id}
                         </td>
-                        <td className="px-4 py-6 whitespace-nowrap capitalize">
+                        <td className="p-4 whitespace-nowrap capitalize">
                           {order.paymentStatus.pay_status_label}
                         </td>
-                        <td className="px-4 py-6 whitespace-nowrap">
+                        <td className="p-4 whitespace-nowrap">
                           <WrapAmount value={order.ord_total_amt} />
                         </td>
-                        <td className="px-2 py-6 whitespace-nowrap flex gap-2">
+                        <td className="px-2 py-6 whitespace-nowrap flex gap-2 justify-center">
                           <>
                             {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
@@ -276,8 +276,8 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                     .viewOrder
                                 }
                               </Button> */}
-                            <button
-                              className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[14px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
+                            <Button
+                              className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[12px] leading-[30px] font-medium px-3 py-1 rounded-xl ${
                                 loadingId === order.ord_id
                                   ? "cursor-not-allowed"
                                   : "cursor-pointer"
@@ -298,7 +298,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                   {checkoutLabels.downloadInvoice}
                                 </>
                               )}
-                            </button>
+                            </Button>
                             {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
                         </Button> */}

@@ -133,7 +133,8 @@ export default function Offers() {
       <Modal
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        // classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        classStyle="w-[444px]"
         isClose={true}
       >
         <LoginForm

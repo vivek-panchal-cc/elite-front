@@ -30,7 +30,9 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
     >
       <div
         className={`border border-[var(--color-red)] ${
-          isMobile ? "border-t-0 rounded-t-none rounded-b-xl" : "rounded-xl"
+          isMobile
+            ? "border-t-0 rounded-t-none rounded-b-xl"
+            : "rounded-xl min-h-[548px]"
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {/* Profile Info Header */}
@@ -38,12 +40,12 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
           className={`flex ${
             isMobile
               ? "flex-col gap-3"
-              : "justify-between items-center px-6 pt-10 pb-4"
+              : "justify-between items-center px-6 pt-6 pb-0"
           }`}
         >
           {!isMobile && (
             <h3
-              className={`font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
+              className={`font-semibold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]`}
             >
               {profileLabels.rewardWallet}
             </h3>
@@ -53,7 +55,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
         {isMobile ? (
           // Mobile table
           <div className="overflow-visible rounded-xl">
-            <div className="pt-4 custom-scrollbar max-h-[240px] min-h-[240px] overflow-y-auto space-y-4">
+            <div className="pt-4 custom-scrollbar max-h-[240px] min-h-[240px] overflow-y-auto space-y-4 hide-scrollbar">
               {loadingTrans ? (
                 Array.from({ length: 2 }).map((_, rowIdx) => (
                   <div
@@ -210,11 +212,11 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
           </div>
         ) : (
           // Desktop table
-          <div className="overflow-hidden rounded-xl">
-            <div className="custom-scrollbar max-h-[360px]">
+          <div className="overflow-hidden rounded-t-xl">
+            <div className="custom-scrollbar max-h-[460px] hide-scrollbar">
               <table className="w-full max-w-[792px] rounded-lg">
                 <thead className="border-b-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]">
-                  <tr className="text-left text-[12px] md:text-[14px] font-medium">
+                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px]">
                     <th className="py-3 pl-6 whitespace-nowrap">
                       {profileLabels.rewardWalletLabel.redeemDate}
                     </th>
@@ -240,7 +242,12 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                         className="border-t border-[var(--table-border)]"
                       >
                         {Array.from({ length: 5 }).map((_, colIdx) => (
-                          <td key={colIdx} className="px-4 py-2">
+                          <td
+                            key={colIdx}
+                            className={`px-4 py-8 ${
+                              colIdx === 0 ? "pl-6" : ""
+                            }`}
+                          >
                             <LoaderDiv
                               width={50}
                               height={15}
@@ -252,7 +259,10 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                     ))
                   ) : rewards.length > 0 ? (
                     rewards.slice(0, 5).map((dt, idx) => (
-                      <tr key={idx} className="text-[10px] md:text-[12px]">
+                      <tr
+                        key={idx}
+                        className="border-t-[2px] border-[var(--table-border)] text-[#0a0a0a] text-[10px] md:text-[12px] leading-[38px]"
+                      >
                         <td className="py-4 pl-6 whitespace-nowrap">
                           {formatDate(dt.date)}
                         </td>
@@ -265,7 +275,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                         <td className="py-4 whitespace-nowrap">
                           <WrapAmount value={dt.balanceAmount} />
                         </td>
-                        <td className="py-4 whitespace-nowrap">
+                        <td className="py-4 whitespace-nowrap leading-[20px]">
                           <div className="flex flex-col">
                             <span>{dt.description}</span>
                             {dt.orderNo && (

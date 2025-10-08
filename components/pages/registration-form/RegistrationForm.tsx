@@ -176,7 +176,7 @@ const RegistrationForm = ({
     <>
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-2xl max-w-[600px] bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
+        className="w-full max-w-[600px] bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
       >
         {/* Step 1: Verify Dealer */}
         {step === "verifyDealer" && (
@@ -185,13 +185,13 @@ const RegistrationForm = ({
               {registrationLabels.verifyDealer}
             </h2>
             <div className="space-y-1">
-              <Label className="font-normal">
+              <Label className="font-normal lg:text-[15px]">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
                 type="text"
                 name="dealer_ref"
-                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                 // placeholder="Enter Dealer Account/Reference Number"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -239,14 +239,14 @@ const RegistrationForm = ({
               </div>
             )}
             <div className="space-y-1">
-              <Label className="font-normal">
+              <Label className="font-normal lg:text-[15px]">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
                 type="text"
                 name="dealer_ref"
                 // placeholder="Enter Dealer Account/Reference Number"
-                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                 disabled
                 onBlur={formik.handleBlur}
                 value={formik.values.dealer_ref}
@@ -254,14 +254,14 @@ const RegistrationForm = ({
               />
             </div>
             <div className="space-y-1">
-              <Label className="font-normal">
+              <Label className="font-normal lg:text-[15px]">
                 {registrationLabels.postCode}
               </Label>
               <Input
                 type="text"
                 name="postcode"
                 // placeholder="Enter Postcode"
-                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.postcode}
@@ -293,14 +293,14 @@ const RegistrationForm = ({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.dealerAccountRef}
                 </Label>
                 <Input
                   type="text"
                   name="dealer_ref"
                   // placeholder="Enter Dealer Account/Reference Number"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   // onChange={formik.handleChange}
                   disabled
                   onBlur={formik.handleBlur}
@@ -310,14 +310,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.dealerName}
                 </Label>
                 <Input
                   type="text"
                   name="dealer_name"
                   // placeholder="Enter Dealer Name"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_name}
@@ -328,14 +328,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1 relative">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.password}
                 </Label>
                 <Input
                   type={showPassword.password ? "text" : "password"}
                   name="dealer_password"
                   // placeholder="Enter Password"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_password}
@@ -361,14 +361,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1 relative">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.confirmPassword}
                 </Label>
                 <Input
                   type={showPassword.confirmPassword ? "text" : "password"}
                   name="confirm_password"
                   // placeholder="Enter Confirm Password"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.confirm_password}
@@ -397,14 +397,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.email}
                 </Label>
                 <Input
                   type="text"
                   name="dealer_email"
                   // placeholder="Enter Email"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_email}
@@ -415,14 +415,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.mobileNumber}
                 </Label>
                 <Input
                   type="tel"
                   name="dealer_mobile"
                   // placeholder="Enter Mobile Number"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_mobile}
@@ -433,14 +433,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.postCode}
                 </Label>
                 <Input
                   type="text"
                   name="postcode"
                   // placeholder="Enter Postcode"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.postcode}
@@ -449,14 +449,14 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.city}
                 </Label>
                 <Input
                   type="text"
                   name="dealer_city"
                   // placeholder="Enter City"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_city}
@@ -470,14 +470,14 @@ const RegistrationForm = ({
             {/* Address Fields */}
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px]">
+                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.address}
                 </Label>
                 <Input
                   type="text"
                   name="dealer_address1"
                   // placeholder="Address Line 1"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.dealer_address1}
@@ -491,7 +491,7 @@ const RegistrationForm = ({
                 <Input
                   type="text"
                   name="dealer_address2"
-                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+                  className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px] font-medium"
                   // placeholder="Address Line 2 (Optional)"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

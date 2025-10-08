@@ -90,9 +90,25 @@ export function HeaderLayout() {
   return (
     <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px] py-3">
+        {/* Mobile menu button */}
+        <div className="flex justify-end md:hidden">
+          <button
+            className="flex-shrink-0"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen && (
+              <span className="h-[25px] w-[20px] min-w-[20px] min-h-[25px] px-2 font-semibold text-[var(--color-dark-gray)] text-[18px]">X</span>
+              // <Image
+              //   src={closeIcon}
+              //   alt="close"
+              //   className="h-[25px] w-[20px] min-w-[20px] min-h-[25px]"
+              // />
+            )}
+          </button>
+        </div>
         <div className="flex items-center h-16">
           {/* Logo */}
-          <div className="flex items-center mr-0 md:mr-8 md:justify-start justify-center flex-1">
+          <div className="flex items-center mr-4 ml-4 sm:ml-0 md:mr-8 md:justify-start justify-center flex-1">
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={images.elite_logo}
@@ -164,7 +180,7 @@ export function HeaderLayout() {
             {isAuthenticated && (
               <Link
                 href="/cart"
-                className="relative items-center hidden md:flex lg:flex xl:flex 2xl:flex"
+                className="relative items-center md:flex lg:flex xl:flex 2xl:flex"
               >
                 <div className="flex items-center">
                   {/* Cart Icon Section */}
@@ -213,13 +229,7 @@ export function HeaderLayout() {
               className="md:hidden flex-shrink-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? (
-                <Image
-                  src={closeIcon}
-                  alt="close"
-                  className="h-[25px] w-[25px] min-w-[25px] min-h-[25px]"
-                />
-              ) : (
+              {!isMobileMenuOpen && (
                 <Image
                   src={burgerMenu}
                   alt="Menu"
@@ -233,7 +243,7 @@ export function HeaderLayout() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden pt-4 flex flex-col max-h-[50vh] overflow-y-auto">
+        <div className="md:hidden pt-0 flex flex-col max-h-[50vh] overflow-y-auto">
           {/* h-[50vh] */}
           {/* Scrollable navigation items */}
           <nav className="flex-1 overflow-y-auto">
@@ -249,7 +259,7 @@ export function HeaderLayout() {
                         onClick={() =>
                           setOpenMobileDropdown(isOpen ? null : item.name)
                         }
-                        className={`cursor-pointer flex justify-between w-full px-10 py-2 text-sm font-medium text-[var(--color-dark-gray)]`}
+                        className={`cursor-pointer flex justify-between items-center w-full px-15 py-2 text-[var(--color-dark-gray)] text-[18px] font-normal leading-[30px]`}
                       >
                         {item.name}
                         <Image
@@ -267,7 +277,7 @@ export function HeaderLayout() {
                             <CustomLink
                               key={child.name}
                               href={child.href ?? "#"}
-                              className="ml-4 px-4 py-2 text-sm text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
+                              className="ml-8 px-4 py-2 text-[16px] text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {child.name}
@@ -279,7 +289,7 @@ export function HeaderLayout() {
                   ) : (
                     <CustomLink
                       href={item.href ?? "#"}
-                      className="flex justify-between w-full px-10 py-2 text-sm font-medium text-[var(--color-dark-gray)]"
+                      className="flex justify-between w-full items-center px-15 py-2 text-[18px] font-normal text-[var(--color-dark-gray)] leading-[30px]"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -295,7 +305,7 @@ export function HeaderLayout() {
             })}
             {isAuthenticated && (
               <nav className="flex-1 overflow-y-auto">
-                <CustomLink
+                {/* <CustomLink
                   key="cart"
                   href="/cart"
                   className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
@@ -307,11 +317,11 @@ export function HeaderLayout() {
                     alt="Menu arrow"
                     className="h-[15px] w-[10px]"
                   />
-                </CustomLink>
+                </CustomLink> */}
                 <CustomLink
                   key="profile"
                   href="/profile"
-                  className="flex justify-between text-[var(--color-dark-gray)] px-10 py-2 text-sm font-medium"
+                  className="flex justify-between items-center text-[var(--color-dark-gray)] px-15 py-2 text-[18px] font-normal leading-[30px]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {profileLabels.myProfile}
@@ -355,7 +365,8 @@ export function HeaderLayout() {
       <Modal
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        // classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        classStyle="w-[444px]"
         isClose={true}
       >
         <LoginForm

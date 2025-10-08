@@ -187,7 +187,7 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
         {/* Product Grid */}
         <div className="overflow-hidden rounded-xl">
           <div
-            className={`custom-scrollbar ${
+            className={`custom-scrollbar hide-scrollbar ${
               isMobile
                 ? "max-h-[690px] px-2 pt-8 pb-8"
                 : "max-h-[900px] px-8 pb-8 pt-4"

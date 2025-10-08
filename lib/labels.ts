@@ -4,6 +4,7 @@
 export const labels = {
   // Common actions and buttons
   common: {
+    loginFormLabel: "Log in",
     login: "Login",
     loginCaps: "LOG IN",
     logout: "Logout",

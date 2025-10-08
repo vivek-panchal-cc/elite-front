@@ -65,8 +65,8 @@ const LoginForm = ({
       onSubmit={formik.handleSubmit}
       className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
     >
-      <h2 className="text-xl font-bold text-left mb-2 text-[var(--color-blue)]">
-        {commonLabels.login}
+      <h2 className="text-[25px] ml-3 font-bold text-left mb-4 text-[var(--color-blue)]">
+        {commonLabels.loginFormLabel}
       </h2>
 
       {formik.status?.error && (
@@ -76,13 +76,13 @@ const LoginForm = ({
       )}
 
       <div className="space-y-1">
-        <Label className="font-medium leading-[24.42px] tracking-[0px]">
+        <Label className="font-medium leading-[24.42px] tracking-[0px] lg:text-[15px]">
           {loginLabels.email}
         </Label>
         <Input
           type="text"
           name="email"
-          // placeholder="Enter Email"
+          placeholder="Enter Email"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="username"
           onChange={formik.handleChange}
@@ -94,13 +94,13 @@ const LoginForm = ({
       </div>
 
       <div className="space-y-1 relative">
-        <Label className="font-medium leading-[24.42px] tracking-[0px]">
+        <Label className="font-medium leading-[24.42px] tracking-[0px] lg:text-[15px]">
           {loginLabels.password}
         </Label>
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          // placeholder="Enter Password"
+          placeholder="Enter Password"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="current-password"
           onChange={formik.handleChange}
@@ -119,7 +119,7 @@ const LoginForm = ({
         </span>
       </div>
 
-      <div className="text-xs text-left">
+      <div className="text-xs text-left mb-1 ml-2 mt-8">
         <span className="text-[var(--color-black)]">
           {loginLabels.forgotPassword}{" "}
         </span>
@@ -139,7 +139,7 @@ const LoginForm = ({
         className="w-full rounded-[50px]"
         disabled={formik.isSubmitting}
       >
-        {formik.isSubmitting ? "Logging in..." : commonLabels.login}
+        {formik.isSubmitting ? "Logging in..." : commonLabels.loginFormLabel}
       </Button>
 
       <div className="text-xs text-center mt-2 cursor-pointer">
