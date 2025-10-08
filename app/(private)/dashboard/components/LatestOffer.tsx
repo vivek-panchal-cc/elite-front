@@ -27,7 +27,7 @@ const LatestOffer = () => {
         </h4>
         <div className="gap-4 grid grid-cols-1 lg:grid-cols-[462px_1fr]">
           <ProductOfferCard />
-          <div className="grid gap-3">
+          <div className="grid gap-6">
             {/* First row: two columns */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[287px]">
               <OfferCard />
@@ -35,7 +35,7 @@ const LatestOffer = () => {
                 <h5 className="font-bold text-[18px] mb-2 leading-[22px]">
                   {homepageLabels.topProductList.topCategories}
                 </h5>
-                <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-y-3 gap-x-3 justify-items-center">
+                <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-y-2 gap-x-3 justify-items-center">
                   {loadingTopCategory ? (
                     [...Array(6)].map((_, idx) => (
                       <div
@@ -64,7 +64,7 @@ const LatestOffer = () => {
                             width={50}
                           />
                         </div>
-                        <p className="text-[12px] lg:text-[9px] xl:text-[12px] font-semibold mt-1 text-center break-words w-[90px]">
+                        <p className="text-[12px] lg:text-[9px] xl:text-[12px] font-semibold mt-1 text-center break-words w-[90px] leading-[22px]">
                           {item.cat_name}
                         </p>
                       </div>
