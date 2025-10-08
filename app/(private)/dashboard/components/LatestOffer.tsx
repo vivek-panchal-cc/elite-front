@@ -22,7 +22,7 @@ const LatestOffer = () => {
   return (
     <div className="py-10 sm:pb-15 px-4 sm:px-5 md:px-8 lg:px-[60px] bg-[var(--color-white)] rounded-tl-[40px] rounded-tr-[40px] lg:rounded-tl-[80px] lg:rounded-tr-[80px] mt-[-80px] relative shadow-[0_-4px_6px_rgba(0,0,0,0.1)]">
       <div className="mx-auto max-w-7xl">
-        <h4 className="font-bold text-[22px] mb-3">
+        <h4 className="font-bold text-[22px] mb-3 leading-[22px]">
           {homepageLabels.topProductList.popularOffer}
         </h4>
         <div className="gap-4 grid grid-cols-1 lg:grid-cols-[462px_1fr]">
@@ -32,10 +32,10 @@ const LatestOffer = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[287px]">
               <OfferCard />
               <div>
-                <h5 className="font-bold text-[18px] mb-2">
+                <h5 className="font-bold text-[18px] mb-2 leading-[22px]">
                   {homepageLabels.topProductList.topCategories}
                 </h5>
-                <div className="grid grid-cols-3 lg:grid-cols-3 gap-y-3">
+                <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-y-3 gap-x-3 justify-items-center">
                   {loadingTopCategory ? (
                     [...Array(6)].map((_, idx) => (
                       <div
@@ -51,7 +51,7 @@ const LatestOffer = () => {
                         key={item.cat_id}
                         className="text-center flex items-center flex-col"
                       >
-                        <div className="relative bg-[var(--color-smooth-gray)] h-[90px] w-[90px] rounded-[100%] flex items-center justify-center">
+                        <div className="relative bg-[var(--color-smooth-gray)] h-[90px] w-[90px] lg:h-[70px] lg:w-[70px] xl:h-[90px] xl:w-[90px] rounded-[100%] flex items-center justify-center">
                           <Image
                             alt="offer"
                             className="w-auto"
@@ -64,7 +64,7 @@ const LatestOffer = () => {
                             width={50}
                           />
                         </div>
-                        <p className="text-[12px] font-semibold mt-1">
+                        <p className="text-[12px] lg:text-[9px] xl:text-[12px] font-semibold mt-1 text-center break-words w-[90px]">
                           {item.cat_name}
                         </p>
                       </div>
@@ -88,7 +88,7 @@ const LatestOffer = () => {
                 </p>
                 {!loading && topProductList.length > 0 && (
                   <button
-                    className="absolute right-0 text-[8px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] cursor-pointer"
+                    className="absolute right-0 text-[8px] font-medium text-[var(--color-black)] underline hover:text-[var(--color-red)] leading-[22px] cursor-pointer"
                     onClick={() => router.push("/order")}
                   >
                     {homepageLabels.topProductList.viewMore}
@@ -124,10 +124,10 @@ const LatestOffer = () => {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-[12px] truncate">
+                        <p className="text-[12px] truncate leading-[22px]">
                           {product.prod_name || product.prod_long_name}
                         </p>
-                        <p className="text-[12px] text-[var(--color-red)]">
+                        <p className="text-[12px] truncate text-[var(--color-red)]">
                           <WrapAmount value={product.prod_original_price} />
                         </p>
                       </div>

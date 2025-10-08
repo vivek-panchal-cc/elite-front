@@ -20,10 +20,10 @@ export default function RecentTransactionCard({ header }: TransProps) {
         <h3 className="font-semibold text-[12px] sm:text-[14px] md:text-[14px]">
           {header ? header : profileLabels.recentTransaction}
         </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 border-spacing-x-1">
           {/* min-w-[349px] */}
           <thead>
-            <tr className="text-center text-[var(--color-black)] text-[10px]">
+            <tr className="text-center text-[var(--color-black)] text-[10px] leading-[20px]">
               <th>{profileLabels.orderDate}</th>
               <th>{profileLabels.creditOrDebit}</th>
               <th>{profileLabels.amount}</th>
@@ -57,7 +57,7 @@ export default function RecentTransactionCard({ header }: TransProps) {
               transactionList.slice(0, 5).map((o, idx) => (
                 <tr
                   key={idx}
-                  className="text-center text-[var(--color-black)] rounded-lg text-[10px]"
+                  className="text-center text-[var(--color-black)] rounded-lg text-[10px] leading-[20px]"
                 >
                   <td>{formatDate(o.redeem_date)}</td>
                   <td

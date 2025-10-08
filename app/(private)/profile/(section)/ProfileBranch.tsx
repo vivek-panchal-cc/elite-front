@@ -122,7 +122,7 @@ export default function ProfileBranch({ isMobile }: IsMobileProps) {
       >
         {/* Header */}
         <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)] gap-2">
-          <h3 className="font-bold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
+          <h3 className="font-semibold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
             {profileLabels.myBranches}
           </h3>
           <Button

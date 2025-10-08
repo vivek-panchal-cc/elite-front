@@ -88,7 +88,7 @@ const Profile: React.FC = () => {
       {/* <PrivateLayout> */}
       <div className="max-w-7xl mx-auto w-full">
         <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-          <div className="flex-1 space-y-4 py-6">
+          <div className="flex-1 space-y-4 pt-6 pb-16">
             <h2 className="text-xl font-semibold mb-6">
               {profileLabels.myAccount}
             </h2>

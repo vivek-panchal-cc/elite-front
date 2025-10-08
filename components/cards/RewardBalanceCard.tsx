@@ -42,7 +42,7 @@ export default function RewardBalanceCard({
       </p>
       <div className="flex flex-row gap-3 w-full">
         <Button
-          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px]"
+          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px] leading-[20px]"
           onClick={onWithdraw}
         >
           {profileLabels.withdraw}

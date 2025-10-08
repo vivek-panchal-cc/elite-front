@@ -103,7 +103,7 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
         {/* Header */}
 
         <div className="flex justify-between items-center px-6 py-6 border-b-[2px] border-[var(--table-border)]">
-          <h3 className="font-bold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
+          <h3 className="font-semibold text-[16px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
             {profileLabels.myCompany}
           </h3>
           {company.length === 0 && !isAdding && (
@@ -128,11 +128,11 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
           >
             {isAdding ? (
               <form onSubmit={formik.handleSubmit}>
-                <div className="p-6 bg-[var(--color-light-gray)]">
+                <div className="p-6 pb-12 bg-[var(--color-light-gray)]">
                   <div className="flex justify-end mb-6 gap-3">
                     <Button
                       type="submit"
-                      className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-normal"
+                      className="min-w-[78px] max-h-[25px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] font-medium leading-[29px]"
                       disabled={formik.isSubmitting}
                     >
                       {formik.isSubmitting
@@ -145,7 +145,7 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                     </Button>
                     <Button
                       type="button"
-                      className="min-w-[78px] max-h-[25px] bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-full px-5 py-2 text-sm"
+                      className="min-w-[78px] max-h-[25px] bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-full px-5 py-2 text-sm font-medium leading-[29px]"
                       onClick={() => {
                         formik.resetForm();
                         setEditIndex(null);
@@ -162,12 +162,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                   >
                     {/* Company Name */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.companyName}
                       </Label>
                       <Input
                         name="company_name"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.company_name}
                         placeholder="Company Name"
                         onChange={formik.handleChange}
@@ -181,12 +181,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
 
                     {/* Address 2 */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.addressLine2}
                       </Label>
                       <Input
                         name="address_line2"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.address_line2}
                         placeholder="Address Line 2"
                         onChange={formik.handleChange}
@@ -200,12 +200,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
 
                     {/* Country */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.country}
                       </Label>
                       <Input
                         name="country"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.country}
                         placeholder="Country"
                         onChange={formik.handleChange}
@@ -219,12 +219,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
 
                     {/* Address 1 */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.addressLine1}
                       </Label>
                       <Input
                         name="address_line1"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.address_line1}
                         placeholder="Address Line 1"
                         onChange={formik.handleChange}
@@ -238,12 +238,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
 
                     {/* Postcode */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.postCode}
                       </Label>
                       <Input
                         name="postcode"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.postcode}
                         placeholder="Post Code"
                         onChange={formik.handleChange}
@@ -257,12 +257,12 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
 
                     {/* City */}
                     <div className="space-y-1">
-                      <Label className="ml-0 font-bold text-sm sm:text-base md:text-base text-[var(--color-black)]">
+                      <Label className="ml-0 font-bold text-[12px] sm:text-[12px] md:text-[12px] lg:text-[12px] text-[var(--color-black)]">
                         {profileLabels.profileCompanyLabel.city}
                       </Label>
                       <Input
                         name="city"
-                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[14px]"
+                        className="max-h-[30px] bg-[var(--color-white)] border border-[var(--color-red)] focus-visible:border-[var(--color-red)] focus-visible:ring-1 focus-visible:ring-[var(--color-red)] placeholder:text-[10px] placeholder:leading-[25px] text-[10px] md:text-[10px]"
                         value={formik.values.city}
                         placeholder="City"
                         onChange={formik.handleChange}
@@ -368,11 +368,11 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                           {/* Column 1 */}
                           <div className="space-y-2">
                             <div className={`${isMobile ? "mb-4" : ""}`}>
-                              <p className="font-semibold text-sm">
+                              <p className="font-semibold text-[12px]">
                                 {profileLabels.profileCompanyLabel.addressLine1}
                               </p>
                               <p
-                                className={`text-sm text-[var(--color-black)] ${
+                                className={`text-[12px] text-[var(--color-black)] ${
                                   !isMobile ? "max-w-[200px]" : ""
                                 }`}
                               >
@@ -380,11 +380,11 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                               </p>
                             </div>
                             <div>
-                              <p className="font-semibold text-sm">
+                              <p className="font-semibold text-[12px]">
                                 {profileLabels.profileCompanyLabel.addressLine2}
                               </p>
                               <p
-                                className={`text-sm text-[var(--color-black)] ${
+                                className={`text-[12px] text-[var(--color-black)] ${
                                   !isMobile ? "max-w-[200px]" : ""
                                 }`}
                               >
@@ -396,19 +396,19 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                           {/* Column 2 */}
                           <div className="space-y-2">
                             <div className={`${isMobile ? "mb-4" : ""}`}>
-                              <p className="font-semibold text-sm">
+                              <p className="font-semibold text-[12px]">
                                 {" "}
                                 {profileLabels.profileCompanyLabel.country}
                               </p>
-                              <p className="text-sm text-[var(--color-black)]">
+                              <p className="text-[12px] text-[var(--color-black)]">
                                 {co.country}
                               </p>
                             </div>
                             <div>
-                              <p className="font-semibold text-sm">
+                              <p className="font-semibold text-[12px]">
                                 {profileLabels.profileCompanyLabel.city}
                               </p>
-                              <p className="text-sm text-[var(--color-black)]">
+                              <p className="text-[12px] text-[var(--color-black)]">
                                 {co.city}
                               </p>
                             </div>
@@ -417,11 +417,11 @@ export default function ProfileCompany({ isMobile }: IsMobileProps) {
                           {/* Column 3 */}
                           <div className="space-y-2 md:text-right">
                             <div>
-                              <p className="font-semibold text-sm">
+                              <p className="font-semibold text-[12px]">
                                 {" "}
                                 {profileLabels.profileCompanyLabel.postCode}
                               </p>
-                              <p className="text-sm text-[var(--color-black)]">
+                              <p className="text-[12px] text-[var(--color-black)]">
                                 {co.postcode}
                               </p>
                             </div>

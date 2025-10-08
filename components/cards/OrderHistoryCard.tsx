@@ -54,7 +54,7 @@ export default function OrderHistoryCard() {
               orderHistory.slice(0, 5).map((o, idx) => (
                 <tr
                   key={idx}
-                  className="text-[var(--color-black)] rounded-lg text-[10px]"
+                  className="text-[var(--color-black)] rounded-lg text-[10px] leading-[20px]"
                 >
                   <td>{o.ord_id}</td>
                   <td>{formatDate(o.ord_datetime)}</td>

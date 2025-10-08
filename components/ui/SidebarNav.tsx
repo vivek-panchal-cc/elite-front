@@ -75,7 +75,7 @@ export function SidebarNav({
                   : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-[var(--color-white)] hover:border-none"
               )}
             >
-              <span className="px-4 flex gap-3">
+              <span className="px-4 flex gap-3 items-center text-[14px] sm:text-[12px] leading-[100%] font-semibold">
                 {item.icon && (
                   <span
                     className={cn(
@@ -96,6 +96,7 @@ export function SidebarNav({
                 <span
                   className={cn(
                     "ml-auto transition-transform duration-300",
+                    isMobileOrTablet && "mr-5",
                     isMobileOrTablet
                       ? isExpanded
                         ? "rotate-270"
