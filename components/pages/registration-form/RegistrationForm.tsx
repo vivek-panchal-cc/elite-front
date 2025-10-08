@@ -548,7 +548,7 @@ const RegistrationForm = ({
                 />
                 <label
                   htmlFor="marketing"
-                  className="mt-1 text-[9px]"
+                  className="mt-1 text-[9px] font-medium"
                 >
                   {registrationLabels.receiveOffer}
                 </label>
@@ -567,7 +567,7 @@ const RegistrationForm = ({
                 <div className="flex flex-col">
                   <label
                     htmlFor="term_and_condition"
-                    className="mt-1 text-[9px]"
+                    className="mt-1 text-[9px] font-medium"
                   >
                     {registrationLabels.iConfirm}
                   </label>
