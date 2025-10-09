@@ -214,10 +214,10 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
           // Desktop table
           <div className="overflow-hidden rounded-t-xl">
             <div className="custom-scrollbar max-h-[460px] hide-scrollbar">
-              <table className="w-full max-w-[792px] rounded-lg">
+              <table className="w-full max-w-[792px] rounded-lg border-separate border-spacing-x-2">
                 <thead className="border-b-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]">
                   <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px]">
-                    <th className="py-3 pl-6 whitespace-nowrap">
+                    <th className="py-3 pl-8 whitespace-nowrap">
                       {profileLabels.rewardWalletLabel.redeemDate}
                     </th>
                     <th className="py-3 whitespace-nowrap">
@@ -229,7 +229,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                     <th className="py-3 whitespace-nowrap">
                       {profileLabels.rewardWalletLabel.balanceAmount}
                     </th>
-                    <th className="py-3 whitespace-nowrap">
+                    <th className="py-3 whitespace-nowrap pr-8 sm:pr-8 md:pr-8 lg:pr-0 xl:pr-0">
                       {profileLabels.rewardWalletLabel.desc}
                     </th>
                   </tr>
@@ -245,7 +245,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                           <td
                             key={colIdx}
                             className={`px-4 py-8 ${
-                              colIdx === 0 ? "pl-6" : ""
+                              colIdx === 0 ? "pl-8" : ""
                             }`}
                           >
                             <LoaderDiv
@@ -261,9 +261,9 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
                     rewards.slice(0, 5).map((dt, idx) => (
                       <tr
                         key={idx}
-                        className="border-t-[2px] border-[var(--table-border)] text-[#0a0a0a] text-[10px] md:text-[12px] leading-[38px]"
+                        className="border-t-[2px] border-[var(--table-border)] text-[var(--color-black)] text-[10px] md:text-[12px] leading-[38px]"
                       >
-                        <td className="py-4 pl-6 whitespace-nowrap">
+                        <td className="py-4 pl-8 whitespace-nowrap">
                           {formatDate(dt.date)}
                         </td>
                         <td className="py-4 whitespace-nowrap text-[var(--color-blue)]">
