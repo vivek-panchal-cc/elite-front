@@ -67,22 +67,25 @@ const Transfer = () => {
         <div className="max-w-7xl mx-auto w-full">
           <div className="mx-auto gap-6 pb-7 lg:pb-7 pt-7 sm:pt-7 md:pt-7 lg:pt-7 px-4 sm:px-5 md:px-8 lg:px-[60px]">
             {!isMobile && (
-              <div className="[&_nav]:text-[14px] md:[&_nav]:text-[16px] [&_a]:text-[var(--color-white)] [&_span]:text-[var(--color-white)] [&_li]:text-[var(--color-white)] pb-4">
+              <div className="[&_nav]:text-[14px] md:[&_nav]:text-[16px] [&_a]:text-[var(--color-white)] [&_span]:text-[var(--color-white)] [&_li]:text-[var(--color-white)] pb-4 font-semibold leading-[22px]">
                 <Breadcrumb />
               </div>
             )}
-            <div className="flex justify-center items-center flex-wrap lg:flex-nowrap">
-              <div className="lg:basis-[50%]">
+            <div className="flex justify-center items-center flex-wrap lg:flex-nowrap mt-0 sm:-mt-13">
+              <div className="lg:basis-[45%]">
                 <Image
-                  className="w-auto h-[200px] lg:h-[369px]"
+                  className="w-auto h-[200px] lg:h-[269px]"
                   src={images.transferHero}
                   alt="hero"
                 />
               </div>
-              <div className="lg:basis-[50%]">
-                <h1 className="text-[26px] leading-8 lg:leading-14 text-center lg:text-left lg:text-[42px] mb-6 sm:mb-0 font-bold">
-                  {transferLabels.transferFund}
-                </h1>
+              <div className="lg:basis-[45%]">
+                <h1
+                  className="text-[26px] leading-8 lg:leading-14 text-center lg:text-left lg:text-[42px] mb-6 sm:mb-0 font-bold"
+                  dangerouslySetInnerHTML={{
+                    __html: transferLabels.transferFund,
+                  }}
+                ></h1>
               </div>
             </div>
           </div>

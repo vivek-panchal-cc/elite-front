@@ -581,7 +581,7 @@ export const labels = {
     simply: "SIMply",
     vapeJucce: "Vape Jucce",
     paypal: "Paypal",
-    transferFund: "Transfer Your Funds To Your Favourite Account",
+    transferFund: "Transfer Your Funds To <br /> Your Favourite Account",
     simplyTitle: "Transfer to Your SIMply Account",
     simplyDesc:
       "How much would you like to transfer from your rewards account to SIMply?",
