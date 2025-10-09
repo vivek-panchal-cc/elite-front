@@ -71,7 +71,7 @@ const Transfer = () => {
                 <Breadcrumb />
               </div>
             )}
-            <div className="flex justify-center items-center flex-wrap lg:flex-nowrap mt-0 sm:-mt-13">
+            <div className="flex justify-center items-center flex-wrap lg:flex-nowrap mt-0 md:-mt-10 lg:-mt-13">
               <div className="lg:basis-[45%]">
                 <Image
                   className="w-auto h-[200px] lg:h-[269px]"
