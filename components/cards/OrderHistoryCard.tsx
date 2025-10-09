@@ -23,8 +23,8 @@ export default function OrderHistoryCard() {
             <tr className="text-left text-[var(--color-black)] text-[10px]">
               <th>{profileLabels.orderNo}</th>
               <th>{profileLabels.orderDate}</th>
-              <th>{profileLabels.total}</th>
-              <th>{profileLabels.action}</th>
+              <th className="text-center">{profileLabels.total}</th>
+              <th className="text-end">{profileLabels.action}</th>
             </tr>
           </thead>
           <tbody>
@@ -58,10 +58,10 @@ export default function OrderHistoryCard() {
                 >
                   <td>{o.ord_id}</td>
                   <td>{formatDate(o.ord_datetime)}</td>
-                  <td>
+                  <td className="text-center">
                     <WrapAmount value={o.ord_total_amt} />
                   </td>
-                  <td className="text-[var(--color-red)] cursor-pointer">
+                  <td className="text-[var(--color-red)] cursor-pointer text-end">
                     {profileLabels.reorder}
                   </td>
                 </tr>

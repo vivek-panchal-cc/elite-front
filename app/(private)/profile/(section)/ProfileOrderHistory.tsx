@@ -140,7 +140,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                             </div>
                             {openMenuIndex === idx && (
                               <div
-                                className="absolute right-0 mt-1 w-28 bg-white border border-red-500 rounded-xl shadow-md z-50 overflow-visible"
+                                className="absolute right-0 mt-1 w-28 bg-white border border-red-500 rounded-md shadow-md z-50 overflow-visible"
                                 data-row-index={idx}
                               >
                                 {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
@@ -168,14 +168,14 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                 >
                                   {loadingId === order.ord_id ? (
                                     <>
-                                      <span className="flex justify-center items-center gap-2">
+                                      <span className="flex justify-center items-center gap-2 text-[var(--color-black)]">
                                         {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
                                         {checkoutLabels.downloading}
                                       </span>
                                     </>
                                   ) : (
                                     <>
-                                      <span className="flex justify-center items-center gap-2">
+                                      <span className="flex justify-center items-center gap-2 text-[var(--color-black)]">
                                         {/* <Download className="h-3 w-3" /> */}
                                         {checkoutLabels.downloadInvoice}
                                       </span>
