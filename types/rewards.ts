@@ -75,7 +75,7 @@ export const medals: Medal[] = [
   },
   {
     name: "Silver",
-    color: "bg-[var(--color-silver)] text-gray-800",
+    color: "bg-[var(--color-silver)] text-[var(--color-black)]",
     trophyColor: "text-[var(--color-silver)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-silver)]",
@@ -92,7 +92,7 @@ export const medals: Medal[] = [
   },
   {
     name: "Platinum",
-    color: "bg-[var(--color-platinum)] text-[var(--color-white)]",
+    color: "bg-[var(--color-platinum)] text-[var(--color-black)]",
     trophyColor: "text-[var(--color-platinum)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-platinum)]",
@@ -100,9 +100,9 @@ export const medals: Medal[] = [
   },
   {
     name: "Diamond",
-    gradient:
-      " linear-gradient(90deg, #EBEFF9 27.68%, #D5DBEB 53.19%, #ECF0F9 71.09%)",
-    color: "bg-[var(--color-silver)] text-gray-800",
+    // gradient:
+    //   " linear-gradient(90deg, #EBEFF9 27.68%, #D5DBEB 53.19%, #ECF0F9 71.09%)",
+    color: "bg-[#BFF4FF] text-[var(--color-black)]",
     trophyColor: "text-[#D6DCEC]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-silver)]",

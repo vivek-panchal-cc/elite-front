@@ -36,7 +36,7 @@ const RewardCard: React.FC<{
                 width={30}
                 height={20}
                 alt="elite"
-                className="w-12 h-12 object-contain"
+                className="w-[58px] h-[58px] object-contain"
               />
             </div>
           </div>

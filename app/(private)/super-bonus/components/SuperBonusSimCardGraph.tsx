@@ -83,6 +83,10 @@ const SuperBonusSimCardGraph = () => {
           display: false, // hides y-axis border line
         },
         ticks: {
+          mirror: true,
+          padding: 5,
+          labelOffset: -6,
+          align: "end" as const,
           color: "rgba(255, 255, 255, 0.5)",
           font: {
             size: 12,
@@ -109,30 +113,30 @@ const SuperBonusSimCardGraph = () => {
           </div>
 
           <div className="border-2 border-[var(--color-white)] rounded-xl p-4 pb-6">
-            {/* <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
-          <div className="text-left">
-            <h2 className="text-[10px] sm:text-[12px]">
-              {reportsLabels.activatedSim}
-            </h2>
-            <p className="text-[20px] sm:text-[30px]">1,250</p>
-          </div>
+            <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
+              <div className="text-left">
+                <h2 className="text-[10px] sm:text-[12px]">
+                  {reportsLabels.activatedSim}
+                </h2>
+                <p className="text-[20px] sm:text-[30px]">1,250</p>
+              </div>
 
-          <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition cursor-pointer ${
-                  activeFilter === filter
-                    ? "font-semibold border border-[var(--color-orange)] rounded-xl text-[var(--color-black)]"
-                    : "text-[var(--color-gray)]"
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-        </div> */}
+              <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
+                {filters.map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition cursor-pointer ${
+                      activeFilter === filter
+                        ? "font-semibold border border-[var(--color-orange)] rounded-xl text-[var(--color-black)]"
+                        : "text-[var(--color-gray)]"
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+            </div>
 
             <div className="w-full min-h-[370px]">
               <Line data={data} options={options} />

@@ -132,17 +132,30 @@ export function HeaderLayout() {
                       <div key={item.name} className="relative group">
                         <button
                           type="button"
+                          onClick={() => {
+                            const width = window.innerWidth;
+                            // Only handle click for tablet screens (768px to 1023px)
+                            if (width >= 768 && width < 1024) {
+                              setOpenMobileDropdown(openMobileDropdown === item.name ? null : item.name);
+                            }
+                          }}
                           className="text-[14px] lg:text-[18px] link-hover cursor-pointer flex items-center justify-between w-full text-[var(--color-dark-gray)] px-3 py-2 hover:text-[var(--color-blue)]"
                         >
                           {item.name}
                         </button>
 
-                        <div className="absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
+                        <div className={`absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg transition-all duration-200 z-50 ${
+                          // Show on hover for desktop (1024px and above)
+                          'lg:opacity-0 lg:invisible lg:group-hover:visible lg:group-hover:opacity-100' +
+                          // Show on click for tablet (768px to 1023px)
+                          (openMobileDropdown === item.name ? ' opacity-100 visible' : ' opacity-0 invisible')
+                        }`}>
                           {item.children.map((child) => (
                             <CustomLink
                               key={child.name}
                               href={child.href ?? "#"}
                               className="text-[12px] lg:text-[16px] block px-3 py-2 text-[var(--color-dark-gray)] hover:bg-[var(--color-light-gray)]"
+                              onClick={() => setOpenMobileDropdown(null)}
                             >
                               {child.name}
                             </CustomLink>

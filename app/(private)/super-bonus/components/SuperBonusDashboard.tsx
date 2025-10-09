@@ -94,7 +94,8 @@ const SuperBonusDashboard = () => {
     <>
       <section>
         <div className="max-w-7xl mx-auto w-full">
-          <div className="mx-auto gap-6 py-8 sm:py-10 md:py-12 lg:py-14 px-[50px] lg:px-[60px]">
+          {/* <div className="mx-auto gap-6 py-8 sm:py-10 md:py-12 lg:py-14 px-[50px] lg:px-[60px]"> */}
+          <div className="mx-auto gap-6 pt-8 sm:pt-10 md:pt-12 lg:pt-14 pb-12 sm:pb-18 md:pb-20 lg:pb-22 px-[50px] lg:px-[60px]">
             <div>
               <div>
                 <p className="font-bold text-center text-[var(--color-blue)] rounded-5xl pb-7 text-[30px] lg:text-[25px]">
