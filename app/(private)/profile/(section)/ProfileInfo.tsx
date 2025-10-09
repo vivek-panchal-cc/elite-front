@@ -168,7 +168,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
             }`}
           >
             {!isMobile && (
-              <h3 className="font-bold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
+              <h3 className="font-semibold text-[20px] sm:text-[22px] md:text-[25px] text-[var(--color-dark-blue)]">
                 {profileLabels.profileInfo}
               </h3>
             )}
@@ -179,7 +179,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                 <>
                   <Button
                     type="button"
-                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-medium hover:opacity-90"
+                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-bold hover:opacity-90 h-[29px]"
                     // onClick={() => router.push("/change-password")}
                     onClick={() => setShowChangePassword(true)}
                   >
@@ -187,7 +187,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                   </Button>
                   <Button
                     type="button"
-                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-medium hover:opacity-90 flex items-center justify-center gap-1"
+                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-bold hover:opacity-90 flex items-center justify-center gap-1 h-[29px]"
                     onClick={() => setIsEditing(true)}
                   >
                     <Edit
@@ -201,13 +201,13 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                 <>
                   <Button
                     type="submit"
-                    className="min-w-[75px] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-dark-blue)] text-[var(--color-white)] text-[12px] font-medium hover:opacity-90 flex items-center justify-center gap-1"
+                    className="min-w-[75px] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-dark-blue)] text-[var(--color-white)] text-[12px] font-bold h-[29px] hover:opacity-90 flex items-center justify-center gap-1"
                   >
                     {commonLabels.update}
                   </Button>
                   <Button
                     type="button"
-                    className="bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] text-[12px] rounded-full px-5 py-2"
+                    className="bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] text-[12px] font-bold h-[29px] rounded-full px-5 py-2"
                     onClick={() => {
                       setIsEditing(false);
                       formik.resetForm();
@@ -218,6 +218,11 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                   </Button>
                 </>
               )}
+              {isMobile && (
+              <h3 className="font-semibold text-[18px] text-[var(--color-dark-blue)] mt-3">
+                {profileLabels.profileInfo}
+              </h3>
+            )}
             </div>
           </div>
 
@@ -241,7 +246,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                     : ""
                 }
               >
-                <Label className="font-medium text-[14px] lg:text-[16px]">
+                <Label className="font-semibold opacity-60 text-[var(--color-black)] text-[14px] lg:text-[16px]">
                   {label}
                 </Label>
                 <Input
@@ -265,7 +270,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
 
           {/* Address Section */}
           <h3
-            className={`text-[18px] sm:text-[20px] md:text-[25px] font-bold text-[var(--color-dark-blue)] mb-4 ${
+            className={`text-[18px] sm:text-[20px] md:text-[25px] font-semibold text-[var(--color-dark-blue)] mb-4 ${
               isMobile ? "mt-4" : ""
             }`}
           >
@@ -274,13 +279,13 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
 
           {/* Billing Address */}
           <div className="mb-8">
-            <h4 className="text-sm sm:text-md md:text-md font-semibold mb-2 sm:mb-3">
+            <h4 className="text-[14px] sm:text-[16px] font-semibold mb-2 sm:mb-3 text-[var(--color-black)]">
               {profileLabels.billingAddress}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {Object.entries(formik.values.billing).map(([key, value]) => (
                 <div key={key}>
-                  <Label className="font-medium text-[12px] lg:text-[12px]">
+                  <Label className="font-semibold opacity-60 text-[var(--color-black)] text-[12px] lg:text-[12px]">
                     {
                       profileLabels.billing[
                         key as keyof typeof profileLabels.billing
@@ -312,7 +317,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
           {/* Shipping Address */}
           <div>
             <div className={`${isMobile ? "" : "flex justify-between"}`}>
-              <h4 className="text-sm sm:text-md md:text-md font-semibold mb-2 sm:mb-3">
+              <h4 className="text-[14px] sm:text-[16px] font-semibold mb-2 sm:mb-3 text-[var(--color-black)]">
                 {profileLabels.shipping.shippingAdd}
               </h4>
               <div className="flex items-center mb-4">
@@ -328,7 +333,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                 />
                 <label
                   htmlFor="sameAsBilling"
-                  className={`text-xs sm:text-xs md:text-xs lg:text-xs font-medium ${
+                  className={`text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] font-semibold text-[var(--color-black)] ${
                     !isEditing ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                 >

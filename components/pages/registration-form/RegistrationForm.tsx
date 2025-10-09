@@ -185,7 +185,7 @@ const RegistrationForm = ({
               {registrationLabels.verifyDealer}
             </h2>
             <div className="space-y-1">
-              <Label className="font-normal lg:text-[15px]">
+              <Label className="font-medium opacity-90 lg:text-[15px]">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
@@ -239,7 +239,7 @@ const RegistrationForm = ({
               </div>
             )}
             <div className="space-y-1">
-              <Label className="font-normal lg:text-[15px]">
+              <Label className="font-medium opacity-90 lg:text-[15px]">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
@@ -254,7 +254,7 @@ const RegistrationForm = ({
               />
             </div>
             <div className="space-y-1">
-              <Label className="font-normal lg:text-[15px]">
+              <Label className="font-medium opacity-90 lg:text-[15px]">
                 {registrationLabels.postCode}
               </Label>
               <Input
@@ -293,7 +293,7 @@ const RegistrationForm = ({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.dealerAccountRef}
                 </Label>
                 <Input
@@ -310,7 +310,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.dealerName}
                 </Label>
                 <Input
@@ -328,7 +328,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1 relative">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.password}
                 </Label>
                 <Input
@@ -361,7 +361,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1 relative">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.confirmPassword}
                 </Label>
                 <Input
@@ -397,7 +397,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.email}
                 </Label>
                 <Input
@@ -415,7 +415,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.mobileNumber}
                 </Label>
                 <Input
@@ -433,7 +433,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.postCode}
                 </Label>
                 <Input
@@ -449,7 +449,7 @@ const RegistrationForm = ({
               </div>
 
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.city}
                 </Label>
                 <Input
@@ -470,7 +470,7 @@ const RegistrationForm = ({
             {/* Address Fields */}
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-1">
-                <Label className="font-normal leading-[24.42px] tracking-[0px] lg:text-[15px]">
+                <Label className="font-medium opacity-90 leading-[24.42px] tracking-[0px] lg:text-[15px]">
                   {registrationLabels.address}
                 </Label>
                 <Input

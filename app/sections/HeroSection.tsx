@@ -131,6 +131,7 @@ export default function HeroSection() {
                 width={422}
                 height={458}
                 alt="product image"
+                className="-mt-9"
               />
             </div>
           </div>
@@ -142,7 +143,7 @@ export default function HeroSection() {
                   {homepageLabels.loginFeatures.title}
                 </h2>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-6 gap-x-4 sm:gap-0">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-6 gap-x-4 sm:gap-2">
                   {[
                     {
                       img: images.bankStagementNew,
@@ -180,9 +181,7 @@ export default function HeroSection() {
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <span className="mt-3 text-[13px] sm:text-[17px] font-semibold uppercase tracking-wide leading-tight">
-                        {label}
-                      </span>
+                      <span className="mt-3 text-[13px] sm:text-[17px] font-semibold uppercase tracking-wide leading-tight" dangerouslySetInnerHTML={{__html: label}}></span>
                     </div>
                   ))}
                 </div>

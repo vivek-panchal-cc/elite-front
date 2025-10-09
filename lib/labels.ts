@@ -283,12 +283,12 @@ export const labels = {
     },
     loginFeatures: {
       title: "LOG IN TO",
-      seeLatestStatement: "SEE YOUR LATEST STATEMENT",
-      checkClaimRewards: "CHECK AND CLAIM REWARDS",
+      seeLatestStatement: "SEE YOUR <br /> LATEST STATEMENT",
+      checkClaimRewards: "CHECK AND <br /> CLAIM REWARDS",
       orderVapeProducts: "ORDER VAPE PRODUCTS",
       orderSims: "ORDER SIMS",
       claimSuperBonus: "CLAIM SUPER BONUS",
-      checkSimCard: "CHECK & SIM CARD",
+      checkSimCard: "CHECK A SIM CARD",
     },
     products: {
       vape: "Vape",
