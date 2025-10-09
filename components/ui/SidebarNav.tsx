@@ -51,7 +51,7 @@ export function SidebarNav({
     <nav
       className={cn(
         "flex flex-col",
-        isMobileOrTablet ? "gap-6" : "gap-2",
+        isMobileOrTablet ? "gap-5" : "gap-2",
         className
       )}
       {...props}
@@ -75,7 +75,7 @@ export function SidebarNav({
                   : "bg-[var(--color-light-gray)] text-[var(--color-black)] hover:bg-[var(--color-red)] hover:text-[var(--color-white)] hover:border-none"
               )}
             >
-              <span className="px-4 flex gap-3 items-center text-[14px] sm:text-[12px] leading-[100%] font-semibold">
+              <span className="px-4 flex gap-3 items-center text-[14px] sm:text-[12px] leading-[100%] lg:leading-[25px] font-semibold">
                 {item.icon && (
                   <span
                     className={cn(

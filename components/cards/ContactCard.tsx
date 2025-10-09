@@ -11,14 +11,14 @@ export default function ContactCard() {
       <div className="flex flex-col gap-2 w-full px-6 sm:px-12">
         <a
           href={`tel:${profileLabels.profilePhone}`}
-          className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full max-h-[29px]"
+          className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full max-h-[29px] !leading-[20px]"
         >
           <Phone fill="var(--color-white)" className="h-3 w-3" />
           {profileLabels.profilePhone}
         </a>
         <a
           href={`mailto:${profileLabels.profileEmail}`}
-          className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full max-h-[29px]"
+          className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full max-h-[29px] !leading-[20px]"
         >
           <Mail fill="var(--color-white)" />
           {profileLabels.profileEmail}

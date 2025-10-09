@@ -30,7 +30,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
           </p>
         </div>
       </div>
-      <div className="mt-3">
+      <div className="custom-reports-graph-responsive-box">
         <Line data={rewardGraphData} options={rewardGraphOptions} />
       </div>
     </div>

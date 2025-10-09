@@ -23,7 +23,7 @@ export default function GraphCard() {
           </p>
         </div>
       </div>
-      <div className="mt-3">
+      <div className="custom-graph-responsive-box">
         <Line data={rewardGraphData} options={rewardGraphOptions} />
       </div>
     </div>

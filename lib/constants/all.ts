@@ -74,6 +74,8 @@ const rewardGraphOptions = {
     },
     y: { display: false, grid: { display: false } },
   },
+  maintainAspectRatio: false,
+  responsive: true,
 };
 
 const normalizeMonthKey = (key: string) => {

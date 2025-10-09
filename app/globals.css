@@ -246,7 +246,7 @@
 .profile-header-section {
   @apply bg-cover bg-center text-white min-h-screen flex items-center justify-center;
   /* background-image: url("../components/images/public_background_layout.png"); */
-  background: linear-gradient(180deg, #10499E -38.93%, #ED174B 122.78%);
+  background: linear-gradient(180deg, #10499e -38.93%, #ed174b 122.78%);
   background-repeat: repeat;
   background-position: center center;
   /* width: 100%;
@@ -336,4 +336,12 @@
     rgba(129, 59, 124, 1) 38%,
     rgba(16, 73, 158, 1) 55%
   );
+}
+
+.custom-graph-responsive-box {
+  @apply mt-3 h-[200px] sm:h-[174px] md:h-[220px] lg:h-[200px] xl:h-[200px] w-full;
+}
+
+.custom-reports-graph-responsive-box {
+  @apply mt-3 h-[200px] sm:h-[200px] md:h-[320px] lg:h-[320px] xl:h-[370px] w-full;
 }

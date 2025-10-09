@@ -52,14 +52,16 @@ export default function ProfileDashboard() {
           </>
         )}
       </h2>
-      <p className="text-[var(--color-black)] text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px]">
+      <p className="text-[var(--color-black)] text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px] leading-[29px]">
         {profileLabels.yourRewardBalance}
       </p>
       <p className="font-extrabold text-[var(--color-dark-blue)] text-[48px] sm:text-[60px] md:text-[70px] leading-none mb-6 sm:mb-8 md:mb-10">
         {loadingSumm ? (
           <LoaderDiv height={50} />
         ) : (
-          <WrapAmount value={Number(summaryList?.current_amount_bal)} />
+          <span className="leading-[29px]">
+            <WrapAmount value={Number(summaryList?.current_amount_bal)} />
+          </span>
         )}
       </p>
       <div className="flex flex-row lg:flex-col gap-3 w-full">

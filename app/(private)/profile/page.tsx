@@ -88,10 +88,12 @@ const Profile: React.FC = () => {
       {/* <PrivateLayout> */}
       <div className="max-w-7xl mx-auto w-full">
         <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-          <div className="flex-1 space-y-4 pt-6 pb-16">
-            <h2 className="text-xl font-semibold mb-6">
-              {profileLabels.myAccount}
-            </h2>
+          <div className="flex-1 space-y-4 pt-8 sm:pt-6 pb-16">
+            {!isMobile && (
+              <h2 className="text-[22px] font-semibold mb-6">
+                {profileLabels.myAccount}
+              </h2>
+            )}
             <div className="flex flex-col md:flex-row gap-4">
               {/* Sidebar */}
               <div className="w-full md:w-1/3">
