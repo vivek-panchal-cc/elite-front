@@ -34,8 +34,8 @@ ChartJS.register(
 export default function ProfileDashboard({ loading, points }: ReportsProps) {
   const router = useRouter();
   const RewardBalanceCard = (
-    <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-4 sm:p-5 md:p-16 flex flex-col items-center justify-center text-center">
-      <h2 className="text-[18px] sm:text-[18px] md:text-[26px] lg:text-[32px] font-bold mb-4 sm:mb-6 text-[var(--color-dark-blue)]">
+    <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-4 pt-8 sm:p-5 md:p-16 flex flex-col items-center justify-center text-center max-h-[432px]">
+      <h2 className="text-[18px] sm:text-[18px] md:text-[26px] lg:text-[32px] font-bold mb-4 sm:mb-12 text-[var(--color-dark-blue)] leading-[21px]">
         {loading ? (
           <LoaderDiv height={50} />
         ) : (
@@ -44,10 +44,10 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
           </>
         )}
       </h2>
-      <p className="text-[var(--color-black)] text-[18px]  mb-0 sm:text-[18px]  md:text-[20px] lg:text-[30px] font-medium">
+      <p className="text-[var(--color-black)] text-[18px] mb-0 sm:text-[18px] md:text-[20px] lg:text-[30px] font-medium leading-[41px]">
         {profileLabels.yourRewardBalance}
       </p>
-      <p className="font-extrabold text-[var(--color-dark-blue)] text-[43px] mb-3 sm:text-[60px] md:text-[96px]  leading-none ">
+      <p className="font-extrabold text-[var(--color-dark-blue)] text-[43px] mb-3 sm:text-[60px] md:text-[96px] leading-none ">
         {loading ? (
           <LoaderDiv height={50} />
         ) : (
@@ -55,7 +55,7 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
         )}
       </p>
       {points.last_10_transactions_amount && (
-        <p className="font-bold text-[var(--color-black)] text-[12px] sm:text-[22px] md:text-[22px]  leading-none mb-3 sm:mb-8 md:mb-10">
+        <p className="font-bold text-[var(--color-black)] text-[12px] sm:text-[22px] md:text-[22px] leading-[38px] mb-3 sm:mb-8 md:mb-10">
           {profileLabels.lastTenTrans}&nbsp;
           <span className="font-bold text-[var(--color-dark-blue)]  text-[12px] sm:text-[22px] md:text-[22px]">
             {loading ? (
@@ -69,7 +69,7 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
 
       <div className="flex flex-row lg:flex-row gap-3 w-full">
         <Button
-          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-sm"
+          className="flex-1 lg:w-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] py-2 sm:py-2.5 md:py-3 lg:max-h-[36px] rounded-full text-[12px] sm:text-[14px]"
           onClick={() => router.push("/transfer")}
         >
           {profileLabels.withdraw}
@@ -106,7 +106,7 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
             {/* <div className="hidden gap-2 lg:grid grid-cols-1 lg:grid-cols-[696px_1fr]"> */}
             <div className="hidden gap-2 lg:grid grid-cols-1 lg:max-[1135px]:grid-cols-[550px_1fr] lg:min-[1136px]:grid-cols-[696px_1fr]">
               {RewardBalanceCard}
-              <div className="lg:grid lg:grid-cols-1 lg:gap-2 [&>*]:h-[235px]">
+              <div className="lg:grid lg:grid-cols-1 lg:gap-2 [&>*]:h-[212px]">
                 {<OrderHistoryCard />}
                 {<ContactCard />}
               </div>

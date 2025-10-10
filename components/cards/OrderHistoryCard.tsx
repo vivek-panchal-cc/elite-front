@@ -13,14 +13,14 @@ export default function OrderHistoryCard() {
   });
   return (
     <div className="overflow-hidden rounded-xl">
-      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar text-[var(--color-black)] h-[100%]">
+      <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 overflow-x-auto custom-scrollbar hide-scrollbar text-[var(--color-black)] h-[100%]">
         <h3 className="font-semibold text-[10px] sm:text-[12px] md:text-[14px]">
           {profileLabels.orderHistory}
         </h3>
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-1 leading-[20px]">
           {/* min-w-[349px] */}
           <thead>
-            <tr className="text-left text-[var(--color-black)] text-[10px]">
+            <tr className="text-left text-[var(--color-black)] text-[10px] font-medium">
               <th>{profileLabels.orderNo}</th>
               <th>{profileLabels.orderDate}</th>
               <th className="text-center">{profileLabels.total}</th>
@@ -54,7 +54,7 @@ export default function OrderHistoryCard() {
               orderHistory.slice(0, 5).map((o, idx) => (
                 <tr
                   key={idx}
-                  className="text-[var(--color-black)] rounded-lg text-[10px] leading-[20px]"
+                  className="text-[var(--color-black)] rounded-lg text-[10px] font-medium"
                 >
                   <td>{o.ord_id}</td>
                   <td>{formatDate(o.ord_datetime)}</td>

@@ -206,7 +206,7 @@ export const labels = {
 
   //registration
   registration: {
-    verifyDealer: "Verify Dealer",
+    verifyDealer: "VERIFY DEALER",
     dealerRegistration: "Dealer Registration",
     receiveOffer:
       "I would like to receive marketing communications and exclusive offers.",
@@ -223,7 +223,7 @@ export const labels = {
     city: "City",
     address: "Address",
     reCaptchaMissing: "ReCAPTCHA configuration is missing.",
-    submit: "Submit",
+    submit: "SUBMIT",
     notYourEmail: "Not your email address?",
     contactName: "Contact Name",
     contactDetails: "Enter your contact details",

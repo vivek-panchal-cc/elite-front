@@ -71,11 +71,69 @@ const rewardGraphOptions = {
     x: {
       grid: { display: false },
       border: { display: false },
+      ticks: {
+        color: "#000000b3" as const,
+        font: {
+          size: 10 as const,
+        },
+      },
     },
     y: { display: false, grid: { display: false } },
   },
   maintainAspectRatio: false,
   responsive: true,
+};
+
+const detailsGraphOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false }, // hide legend
+    tooltip: {
+      enabled: true,
+      backgroundColor: "#fff",
+      titleColor: "#000",
+      bodyColor: "#000",
+      borderColor: "#ccc",
+      borderWidth: 1,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false, // hide vertical grid lines
+      },
+      border: {
+        display: false, // hides x-axis border line
+      },
+      ticks: {
+        color: "#000000b3" as const,
+        font: {
+          size: 10 as const,
+        },
+      },
+    },
+    y: {
+      grid: {
+        color: "gray", // faint gridlines
+        drawBorder: false,
+      },
+      border: {
+        display: false, // hides y-axis border line
+      },
+      ticks: {
+        mirror: true,
+        padding: 5,
+        labelOffset: -6,
+        align: "end" as const,
+        color: "#000000b3",
+        font: {
+          size: 12,
+        },
+        stepSize: 50,
+      },
+    },
+  },
 };
 
 const normalizeMonthKey = (key: string) => {
@@ -96,6 +154,7 @@ export {
   formatDate,
   getRewardGraphData,
   rewardGraphOptions,
+  detailsGraphOptions,
   CAT_TYPE_ID,
   WITHDRAWAL,
   SAVED_CARD,

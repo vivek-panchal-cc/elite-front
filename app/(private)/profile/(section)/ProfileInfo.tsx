@@ -179,7 +179,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                 <>
                   <Button
                     type="button"
-                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-bold hover:opacity-90 h-[29px]"
+                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-semibold hover:opacity-90 h-[29px]"
                     // onClick={() => router.push("/change-password")}
                     onClick={() => setShowChangePassword(true)}
                   >
@@ -187,7 +187,7 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                   </Button>
                   <Button
                     type="button"
-                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-bold hover:opacity-90 flex items-center justify-center gap-1 h-[29px]"
+                    className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-white text-[12px] font-semibold hover:opacity-90 flex items-center justify-center gap-1 h-[29px]"
                     onClick={() => setIsEditing(true)}
                   >
                     <Edit
@@ -201,13 +201,13 @@ export default function ProfileInfo({ isMobile }: IsMobileProps) {
                 <>
                   <Button
                     type="submit"
-                    className="min-w-[75px] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-dark-blue)] text-[var(--color-white)] text-[12px] font-bold h-[29px] hover:opacity-90 flex items-center justify-center gap-1"
+                    className="min-w-[75px] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[var(--color-dark-blue)] text-[var(--color-white)] text-[12px] font-semibold h-[29px] hover:opacity-90 flex items-center justify-center gap-1"
                   >
                     {commonLabels.update}
                   </Button>
                   <Button
                     type="button"
-                    className="bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] text-[12px] font-bold h-[29px] rounded-full px-5 py-2"
+                    className="bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] text-[12px] font-semibold h-[29px] rounded-full px-5 py-2"
                     onClick={() => {
                       setIsEditing(false);
                       formik.resetForm();

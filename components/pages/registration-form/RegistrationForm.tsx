@@ -176,16 +176,16 @@ const RegistrationForm = ({
     <>
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full max-w-[600px] bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
+        className="w-full max-w-full bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
       >
         {/* Step 1: Verify Dealer */}
         {step === "verifyDealer" && (
           <>
-            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+            <h2 className="text-xl md:text-2xl font-bold text-center text-[var(--color-blue)] pt-4">
               {registrationLabels.verifyDealer}
             </h2>
-            <div className="space-y-1">
-              <Label className="font-medium opacity-90 lg:text-[15px]">
+            <div className="space-y-1 lg:px-8">
+              <Label className="text-[11px] opacity-90 lg:text-[11px] font-medium">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
@@ -198,20 +198,22 @@ const RegistrationForm = ({
                 value={formik.values.dealer_ref}
                 error={formik.touched.dealer_ref && formik.errors.dealer_ref}
               />
-              <Button
-                type="button"
-                className="w-full mt-4 rounded-[50px]"
-                onClick={handleDealerExists}
-              >
-                {registrationLabels.submit}
-              </Button>
-              <Button
-                type="button"
-                className="w-full mt-2 rounded-[50px] bg-transparent text-[var(--color-blue)] border border-[var(--color-blue)] hover:bg-[var(--color-blue)] hover:text-[var(--color-white)]"
-                onClick={handleLogin}
-              >
-                {commonLabels.login}
-              </Button>
+              <div className="mt-6 flex w-full gap-4 pb-4">
+                <Button
+                  type="button"
+                  className="h-[32px] flex-1 rounded-[50px] font-bold leading-[52px] bg-[var(--color-red)] hover:bg-[var(--color-red-hover)]"
+                  onClick={handleDealerExists}
+                >
+                  {registrationLabels.submit}
+                </Button>
+                <Button
+                  type="button"
+                  className="h-[32px] flex-1 font-bold leading-[52px] rounded-[50px] text-[var(--color-white)] border border-[var(--color-blue)] hover:text-[var(--color-white)]"
+                  onClick={handleLogin}
+                >
+                  {commonLabels.loginCaps}
+                </Button>
+              </div>
             </div>
           </>
         )}
@@ -219,7 +221,7 @@ const RegistrationForm = ({
         {/* Step 2: Postcode verification */}
         {step === "postcode" && (
           <>
-            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+            <h2 className="text-xl md:text-2xl font-bold text-center text-[var(--color-blue)] pt-4">
               {registrationLabels.verifyDealer}
             </h2>
             {formik.status && (
@@ -238,8 +240,8 @@ const RegistrationForm = ({
                 </a>
               </div>
             )}
-            <div className="space-y-1">
-              <Label className="font-medium opacity-90 lg:text-[15px]">
+            <div className="space-y-1 lg:px-8">
+              <Label className="text-[11px] font-medium opacity-90 lg:text-[11px]">
                 {registrationLabels.dealerAccountRef}
               </Label>
               <Input
@@ -252,9 +254,8 @@ const RegistrationForm = ({
                 value={formik.values.dealer_ref}
                 error={formik.touched.dealer_ref && formik.errors.dealer_ref}
               />
-            </div>
-            <div className="space-y-1">
-              <Label className="font-medium opacity-90 lg:text-[15px]">
+
+              <Label className="text-[11px] font-medium opacity-90 lg:text-[11px]">
                 {registrationLabels.postCode}
               </Label>
               <Input
@@ -267,21 +268,23 @@ const RegistrationForm = ({
                 value={formik.values.postcode}
                 error={formik.touched.postcode && formik.errors.postcode}
               />
+              <div className="mt-6 flex w-full gap-4 pb-4">
+                <Button
+                  type="button"
+                  className="h-[32px] flex-1 rounded-[50px] font-bold leading-[52px] bg-[var(--color-red)] hover:bg-[var(--color-red-hover)]"
+                  onClick={handleDealerVerify}
+                >
+                  {registrationLabels.submit}
+                </Button>
+                <Button
+                  type="button"
+                  className="h-[32px] flex-1 font-bold leading-[52px] rounded-[50px] text-[var(--color-white)] border border-[var(--color-blue)] hover:text-[var(--color-white)]"
+                  onClick={handleLogin}
+                >
+                  {commonLabels.loginCaps}
+                </Button>
+              </div>
             </div>
-            <Button
-              type="button"
-              className="w-full mt-4 rounded-[50px] m-0"
-              onClick={handleDealerVerify}
-            >
-              {registrationLabels.submit}
-            </Button>
-            <Button
-              type="button"
-              className="w-full mt-2 rounded-[50px] bg-transparent text-[var(--color-blue)] border border-[var(--color-blue)] hover:bg-[var(--color-blue)] hover:text-[var(--color-white)]"
-              onClick={handleLogin}
-            >
-              {commonLabels.login}
-            </Button>
           </>
         )}
 

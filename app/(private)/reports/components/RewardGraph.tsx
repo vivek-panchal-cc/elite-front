@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import { images } from "@/components/images";
 import useDealerGraph from "@/hooks/useDealerGraph";
-import { getRewardGraphData, rewardGraphOptions } from "@/lib/constants/all";
+import { detailsGraphOptions, getRewardGraphData } from "@/lib/constants/all";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 
 const RewardGraph = ({ loading, points }: ReportsProps) => {
@@ -17,21 +17,21 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
   const RewardGraphCard = (
     <div className="bg-[var(--color-white)]">
       <div className="flex flex-row sm:flex-row justify-between sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
-        <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[16px]">
+        <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[18px] leading-[20px]">
           {profileLabels.rewardGraph}
         </h3>
         {/* keep labels inside card even on mobile */}
-        <div className="flex gap-3 text-[11px] sm:text-[12px] text-[var(--color-gray)] font-semibold leading-[20px]">
-          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)]">
+        <div className="flex gap-3 text-[8px] sm:text-[14px] text-[var(--color-gray)] font-semibold leading-[24px]">
+          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)] text-[var(--color-black)]">
             {profileLabels.received}
           </p>
-          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-dark-blue)]">
+          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-dark-blue)] text-[var(--color-black)]">
             {profileLabels.withdrawal}
           </p>
         </div>
       </div>
       <div className="custom-reports-graph-responsive-box">
-        <Line data={rewardGraphData} options={rewardGraphOptions} />
+        <Line data={rewardGraphData} options={detailsGraphOptions} />
       </div>
     </div>
   );
