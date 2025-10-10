@@ -583,7 +583,7 @@ const RegistrationForm = ({
 
             <Button
               type="submit"
-              className="w-full mt-0 rounded-[50px]"
+              className="w-full mt-0 rounded-[50px] text-[16px] font-semibold"
               disabled={formik.isSubmitting}
             >
               {formik.isSubmitting ? "Submitting..." : commonLabels.submit}

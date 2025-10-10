@@ -103,9 +103,10 @@ export default function ProfileDashboard({ loading, points }: ReportsProps) {
             </div>
 
             {/* Desktop -> Grid */}
-            <div className="hidden gap-2 lg:grid grid-cols-1 lg:grid-cols-[696px_1fr]">
+            {/* <div className="hidden gap-2 lg:grid grid-cols-1 lg:grid-cols-[696px_1fr]"> */}
+            <div className="hidden gap-2 lg:grid grid-cols-1 lg:max-[1135px]:grid-cols-[550px_1fr] lg:min-[1136px]:grid-cols-[696px_1fr]">
               {RewardBalanceCard}
-              <div className="lg:grid lg:grid-cols-1 lg:gap-2">
+              <div className="lg:grid lg:grid-cols-1 lg:gap-2 [&>*]:h-[235px]">
                 {<OrderHistoryCard />}
                 {<ContactCard />}
               </div>

@@ -89,8 +89,11 @@ export function FooterLayout() {
         <div className="block lg:hidden space-y-6 mb-8 md:mb-4">
           {/* Group 1: Get Started + Legals in a row */}
           <div className="grid grid-cols-2 gap-6 items-start">
-            {[footerSections[0], footerSections[1]].map((section) => (
-              <div key={section.title} className="flex-1">
+            {[footerSections[0], footerSections[1]].map((section, index) => (
+              <div
+                key={section.title}
+                className={`flex-1 ${index === 1 ? "[@media_(min-width:426px)_and_(max-width:493px)]:ml-16 [@media_(min-width:494px)_and_(max-width:639px)]:ml-35 [@media_(min-width:640px)_and_(max-width:1023px)]:ml-35" : ""}`}
+              >
                 <h3 className="text-[14px] sm:text-[14px] font-bold text-[var(--color-gray)] mb-2">
                   {section.title}
                 </h3>
@@ -138,7 +141,7 @@ export function FooterLayout() {
 
             {/* Awards in second column */}
             {/* <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4 justify-self-end"> */}
-            <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4">
+            <div className="grid grid-cols-2 w-fit gap-2 sm:gap-4 [@media_(min-width:426px)_and_(max-width:493px)]:ml-16 [@media_(min-width:494px)_and_(max-width:639px)]:ml-35 [@media_(min-width:640px)_and_(max-width:1023px)]:ml-35">
               {awards.map((award, index) => (
                 <div key={index} className="flex justify-center items-center">
                   <Image

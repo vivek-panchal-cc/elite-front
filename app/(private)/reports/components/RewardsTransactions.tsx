@@ -56,14 +56,14 @@ const RewardsTransactions = () => {
 
   const RewardsTransactions = (
     <div>
-      <p className="text-[22px] font-bold text-[var(--color-blue)] lg:text-[26px] text-center mb-3 lg:mb-3 lg:text-left">
+      <p className="text-[22px] font-bold text-[var(--color-blue)] lg:text-[26px] text-center mb-3 lg:mb-3 md:text-left lg:text-left">
         {reportsLabels.rewardTrans}
       </p>
       <div className="flex flex-col">
         <div className="flex flex-col items-center md:flex-row md:justify-end sm:items-end md:gap-3 w-full">
           <div className="relative w-full sm:w-58 md:w-58 lg:w-58 flex flex-col justify-center items-center sm:items-end">
             <Input
-              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 pr-8 text-[12px] placeholder:text-[12px] placeholder:text-[rgba(0,0,0,0.3)] font-semibold"
+              className="border-1 bg-[rgba(0,0,0,0.05)] border-[rgba(0,0,0,0.3)] pl-5 pr-8 !text-[12px] !leading-[22px] placeholder:text-[12px] placeholder:text-[rgba(0,0,0,0.3)] !font-medium"
               value={search}
               onChange={handleSearch}
               placeholder="Search"
@@ -322,10 +322,10 @@ const RewardsTransactions = () => {
   const TransactionTable = (
     <div className="overflow-hidden rounded-xl">
       <div className="bg-[var(--color-white)] rounded-xl px-0 py-3 sm:py-4 overflow-x-auto custom-scrollbar text-[var(--color-black)]">
-        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-2 min-w-[349px]">
+        <table className="w-full text-xs sm:text-sm border-separate border-spacing-y-4 min-w-[349px]">
           <thead>
-            <tr className="text-left text-[var(--color-black)] lg:text-[16px] lg:font-bold h-[57px]">
-              <th className="px-6">
+            <tr className="text-left text-[var(--color-black)] lg:text-[16px] lg:font-bold h-[57px] leading-[38px]">
+              <th className="px-12">
                 <Checkbox
                   disabled={transactionList.length <= 0}
                   defaultChecked
@@ -350,7 +350,7 @@ const RewardsTransactions = () => {
                     <td
                       key={colIdx}
                       className={`py-2 text-left ${
-                        colIdx === 0 ? "px-[24px]" : ""
+                        colIdx === 0 ? "px-[48px]" : ""
                       }`}
                     >
                       <div className="flex justify-start items-left">
@@ -368,9 +368,9 @@ const RewardsTransactions = () => {
               transactionList?.map((item) => (
                 <tr
                   key={item.redeem_id}
-                  className="text-left text-[var(--color-black)] text-[12px] h-[57px] font-medium bg-[rgba(246,246,246,0.7)] leading-5"
+                  className="text-left text-[var(--color-black)] text-[12px] h-[57px] font-medium bg-[rgba(246,246,246,0.7)] leading-[38px]"
                 >
-                  <td className="px-6">
+                  <td className="rounded-l-md px-12">
                     <Checkbox
                       defaultChecked
                       className="data-[state=checked]:bg-[var(--color-checkbox)] data-[state=checked]:border-[var(--color-checkbox)] border-[var(--color-black)] h-5.5 w-5.5 rounded"
@@ -394,13 +394,13 @@ const RewardsTransactions = () => {
                   <td>
                     <WrapAmount value={item.amount_balance} />
                   </td>
-                  <td>
+                  <td className="rounded-r-md">
                     <div className="flex flex-col">
-                      <span>{item.description}</span>
+                      <span className="leading-[15px]">{item.description}</span>
                       {item.redeem_id && (
                         <a
                           href={undefined}
-                          className="text-[12px] text-[#582CD9]"
+                          className="text-[12px] text-[var(--color-dark-blue)] leading-[15px]"
                         >
                           #{item.redeem_id}
                         </a>

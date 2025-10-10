@@ -16,7 +16,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
 
   const RewardGraphCard = (
     <div className="bg-[var(--color-white)]">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
+      <div className="flex flex-row sm:flex-row justify-between sm:justify-between sm:items-center text-[var(--color-black)] gap-2 sm:gap-0">
         <h3 className="font-bold text-[12px] text-[var(--color-blue)] sm:text-[16px]">
           {profileLabels.rewardGraph}
         </h3>
@@ -37,7 +37,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
   );
 
   const RewardGraphItems = (
-    <div className="flex gap-3 md:flex-col md:gap-3 md:items-center lg:items-center justify-center">
+    <div className="flex gap-2 flex-row-reverse md:flex-col md:gap-3 md:items-center lg:items-center justify-center">
       <div
         className="border-0 rounded-xl  p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
         style={{
@@ -60,7 +60,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
         </div>
       </div>
       <div
-        className="border rounded-xl p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
+        className="border-0 rounded-xl p-3 flex flex-row gap-3 md:flex-col justify-center items-center w-full h-full md:p-7"
         style={{
           background:
             " linear-gradient(180deg, #10499E -38.93%, #ED174B 131.64%)",
