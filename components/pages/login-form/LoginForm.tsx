@@ -82,7 +82,7 @@ const LoginForm = ({
         <Input
           type="text"
           name="email"
-          placeholder="Enter Email"
+          placeholder="Email Id"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="username"
           onChange={formik.handleChange}
@@ -100,7 +100,7 @@ const LoginForm = ({
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          placeholder="Enter Password"
+          placeholder="Password"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
           autoComplete="current-password"
           onChange={formik.handleChange}
@@ -119,7 +119,7 @@ const LoginForm = ({
         </span>
       </div>
 
-      <div className="text-xs text-left mb-1 ml-2 mt-8">
+      <div className="text-xs text-left mb-1 ml-2 mt-8 font-medium">
         <span className="text-[var(--color-black)]">
           {loginLabels.forgotPassword}{" "}
         </span>
@@ -136,13 +136,13 @@ const LoginForm = ({
 
       <Button
         type="submit"
-        className="w-full rounded-[50px]"
+        className="w-full rounded-[50px] text-[16px] font-semibold"
         disabled={formik.isSubmitting}
       >
         {formik.isSubmitting ? "Logging in..." : commonLabels.loginFormLabel}
       </Button>
 
-      <div className="text-xs text-center mt-2 cursor-pointer">
+      <div className="text-xs text-center mt-2 cursor-pointer font-medium">
         <span className="text-[var(--color-black)]">
           {loginLabels.dontHaveAccount}
         </span>{" "}
