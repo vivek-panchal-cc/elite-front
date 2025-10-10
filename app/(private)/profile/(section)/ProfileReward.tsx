@@ -216,7 +216,7 @@ export default function ProfileReward({ isMobile }: IsMobileProps) {
             <div className="custom-scrollbar max-h-[460px] hide-scrollbar">
               <table className="w-full max-w-[792px] rounded-lg border-separate border-spacing-x-2">
                 <thead className="border-b-[2px] border-[var(--table-border)] text-[10px] md:text-[12px]">
-                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px]">
+                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px] text-[var(--color-black)]">
                     <th className="py-3 pl-8 whitespace-nowrap">
                       {profileLabels.rewardWalletLabel.redeemDate}
                     </th>

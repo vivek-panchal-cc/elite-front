@@ -211,7 +211,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
             <div className="custom-scrollbar max-h-[400px] min-h-[400px] hide-scrollbar">
               <table className="w-full max-w-[792px] min-w-[770px] rounded-lg">
                 <thead className="border-b border-[var(--color-gray)] text-[10px] md:text-[12px]">
-                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px]">
+                  <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px] text-[var(--color-black)]">
                     <th className="px-6 py-3 whitespace-nowrap">
                       {profileLabels.profileOrderHistoryLabel.date}
                     </th>
