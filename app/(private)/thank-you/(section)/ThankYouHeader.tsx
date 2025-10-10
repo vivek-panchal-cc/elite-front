@@ -17,10 +17,12 @@ const ThankYouHeader = () => {
             {isMobile && (
               <div className="leading-8 lg:leading-10 flex flex-col justify-center items-center gap-2 mb-4">
                 <Check className="h-12 w-12" />
-                <h1 className="text-[26px] text-center font-bold">
-                  <span className="block">{checkoutLabels.thankYou}</span>
-                  <span className="block">{checkoutLabels.forYourOrder}</span>
-                </h1>
+                <h1
+                  className="text-[26px] text-center font-bold"
+                  dangerouslySetInnerHTML={{
+                    __html: checkoutLabels.thankYouOrder,
+                  }}
+                ></h1>
               </div>
             )}
 
@@ -35,10 +37,12 @@ const ThankYouHeader = () => {
             {!isMobile && (
               <div className="lg:basis-[50%] leading-8 lg:leading-10 flex flex-col justify-center items-center lg:items-center gap-2 mt-6 lg:mt-0">
                 <Check />
-                <h1 className="text-[26px] text-center lg:text-center lg:text-[42px] font-bold">
-                  <span className="block">{checkoutLabels.thankYou}</span>
-                  <span className="block">{checkoutLabels.forYourOrder}</span>
-                </h1>
+                <h1
+                  className="text-[26px] text-center lg:text-center lg:text-[42px] font-bold"
+                  dangerouslySetInnerHTML={{
+                    __html: checkoutLabels.thankYouOrder,
+                  }}
+                ></h1>
               </div>
             )}
           </div>

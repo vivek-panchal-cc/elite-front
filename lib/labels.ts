@@ -550,8 +550,7 @@ export const labels = {
     noCards: "Card not saved",
     cardExpMsg:
       "saved card has expired. To continue using this payment method, please delete the expired card and add it again.",
-    thankYou: "Thank you",
-    forYourOrder: "For your order",
+    thankYouOrder: "Thank you <br /> For Your Order",    
     confirming: "Confirming your order...",
     orderUpdates: "Order Updates",
     emailNot: "You’ll get shipping and delivery updates by email.",
