@@ -121,7 +121,7 @@ export default function ThankYouContent({
   // };
 
   return (
-    <div className="max-w-7xl mx-auto w-full py-8 sm:py-14">
+    <div className="max-w-7xl mx-auto w-full py-8 sm:py-16">
       <div className="items-center px-[30px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         {/* {!isOrderPlaced && (
           <div className="flex flex-col items-center text-center">
