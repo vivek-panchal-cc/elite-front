@@ -107,7 +107,7 @@ const detailsGraphOptions = {
         display: false, // hides x-axis border line
       },
       ticks: {
-        color: "#000000b3" as const,
+        color: "#000000" as const,
         font: {
           size: 10 as const,
         },

@@ -22,7 +22,7 @@ const RewardGraph = ({ loading, points }: ReportsProps) => {
         </h3>
         {/* keep labels inside card even on mobile */}
         <div className="flex gap-3 text-[8px] sm:text-[14px] text-[var(--color-gray)] font-semibold leading-[24px]">
-          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-orange)] text-[var(--color-black)]">
+          <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[#E15325] text-[var(--color-black)]">
             {profileLabels.received}
           </p>
           <p className="flex items-center gap-1 before:content-[''] before:w-3 before:h-3 before:rounded-full before:bg-[var(--color-dark-blue)] text-[var(--color-black)]">
