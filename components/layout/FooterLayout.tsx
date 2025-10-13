@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CustomLink } from "@/components/ui/CustomLink";
 import Image from "next/image";
 import { footerLabels } from "@/lib/labels";
+import { ReactNode } from "react";
 import {
   awardFive,
   awardFour,
@@ -17,32 +18,65 @@ import {
 import { Input } from "@/components/ui/Input";
 import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
 
+interface FooterLink {
+  name: string | ReactNode;
+  href: string;
+  id: string;
+}
+
 const footerSections = [
   {
     title: footerLabels.sections.getStarted,
     links: [
-      { name: "Home", href: "/dashboard" },
-      { name: "About Elite Galaxy", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Contact", href: "#" },
+      { name: "Home", href: "/dashboard", id: "home" },
+      { name: "About Elite Galaxy", href: "#", id: "about" },
+      { name: "Careers", href: "#", id: "careers" },
+      { name: "Contact", href: "#", id: "contact" },
     ],
   },
   {
     title: footerLabels.sections.legals,
     links: [
-      { name: footerLabels.sections.terms, href: "#" },
-      { name: footerLabels.sections.privacy, href: "/privacy-policy" },
-      { name: footerLabels.sections.cookies, href: "#" },
-      { name: footerLabels.sections.companyPolicy, href: "#" },
+      { name: footerLabels.sections.terms, href: "#", id: "terms" },
+      {
+        name: footerLabels.sections.privacy,
+        href: "/privacy-policy",
+        id: "privacy",
+      },
+      { name: footerLabels.sections.cookies, href: "#", id: "cookies" },
+      { name: footerLabels.sections.companyPolicy, href: "#", id: "policy" },
     ],
   },
   {
     title: footerLabels.sections.simCards,
     links: [
-      { name: footerLabels.contact.phone, href: "tel:01619071717" },
       {
-        name: footerLabels.contact.infoEmail,
-        href: "mailto:info@elitegalaxy.co.uk",
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.sections.call}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.contact.phone}
+            </span>
+          </span>
+        ),
+        href: "tel:01619071717",
+        id: "sim-phone",
+      },
+      {
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.contact.email}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.contact.infoEmail}
+            </span>
+          </span>
+        ),
+        href: "mailto:sims@elitemobile.com",
+        id: "sim-email",
       },
     ],
   },
@@ -50,22 +84,65 @@ const footerSections = [
     title: footerLabels.sections.dealerAccounts,
     links: [
       {
-        name: footerLabels.sections.dealerRegistration,
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.sections.call}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.sections.dealerRegistrationNumber}
+            </span>
+          </span>
+        ),
         href: "tel:+44(0)1785216850",
+        id: "dealer-phone",
       },
       {
-        name: footerLabels.contact.dealerEmail,
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.contact.email}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.contact.dealerEmailAdd}
+            </span>
+          </span>
+        ),
         href: "mailto:dealer@elitegalaxy.co.uk",
+        id: "dealer-email",
       },
     ],
   },
   {
     title: footerLabels.sections.corporateAccounts,
     links: [
-      { name: footerLabels.contact.corporatePhone, href: "tel:01619071717" },
       {
-        name: footerLabels.contact.corpEmail,
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.sections.call}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.contact.corporatePhone}
+            </span>
+          </span>
+        ),
+        href: "tel:+44(0)1785216850",
+        id: "corp-phone",
+      },
+      {
+        name: (
+          <span className="inline-flex items-center">
+            <span className="text-[var(--color-gray)]">
+              {footerLabels.contact.email}&nbsp;
+            </span>
+            <span className="hover:text-[var(--color-red)]">
+              {footerLabels.contact.corpEmail}
+            </span>
+          </span>
+        ),
         href: "mailto:corp@elitegalaxy.co.uk",
+        id: "corp-email",
       },
     ],
   },
@@ -92,17 +169,21 @@ export function FooterLayout() {
             {[footerSections[0], footerSections[1]].map((section, index) => (
               <div
                 key={section.title}
-                className={`flex-1 ${index === 1 ? "[@media_(min-width:426px)_and_(max-width:493px)]:ml-16 [@media_(min-width:494px)_and_(max-width:639px)]:ml-35 [@media_(min-width:640px)_and_(max-width:1023px)]:ml-35" : ""}`}
+                className={`flex-1 ${
+                  index === 1
+                    ? "[@media_(min-width:426px)_and_(max-width:493px)]:ml-16 [@media_(min-width:494px)_and_(max-width:639px)]:ml-35 [@media_(min-width:640px)_and_(max-width:1023px)]:ml-35"
+                    : ""
+                }`}
               >
                 <h3 className="text-[14px] sm:text-[14px] font-bold text-[var(--color-gray)] mb-2">
                   {section.title}
                 </h3>
                 <ul className="space-y-0 sm:space-y-2">
                   {section.links.map((link) => (
-                    <li key={link.name}>
+                    <li key={link.id}>
                       <CustomLink
                         href={link.href}
-                        className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
+                        className="text-[12px] sm:text-[14px] text-[var(--color-gray)] group"
                       >
                         {link.name}
                       </CustomLink>
@@ -124,10 +205,10 @@ export function FooterLayout() {
                     </h3>
                     <ul className="space-y-0 sm:space-y-2">
                       {section.links.map((link) => (
-                        <li key={link.name}>
+                        <li key={link.id}>
                           <CustomLink
                             href={link.href}
-                            className="text-[12px] sm:text-[14px] text-[var(--color-gray)]"
+                            className="text-[12px] sm:text-[14px] text-[var(--color-gray)] group"
                           >
                             {link.name}
                           </CustomLink>
@@ -167,10 +248,10 @@ export function FooterLayout() {
               </h3>
               <ul className="space-y-0 sm:space-y-2">
                 {section.links.map((link) => (
-                  <li key={link.name}>
+                  <li key={link.id}>
                     <CustomLink
                       href={link.href}
-                      className="text-[14px] sm:text-[16px] text-[var(--color-gray)] leading-[22px]"
+                      className="text-[14px] sm:text-[16px] text-[var(--color-gray)] leading-[22px] group"
                     >
                       {link.name}
                     </CustomLink>
