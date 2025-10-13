@@ -43,13 +43,13 @@ const Logout = ({
 
           <div className="flex flex-col md:flex-row w-full gap-3 sm:gap-4 mt-6 sm:mt-12">
             <Button
-              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-[var(--color-white)] py-2 rounded-full font-semibold text-[15px] leading-[20px]"
+              className="w-full md:flex-1 bg-[var(--color-red)] hover:bg-[var(--color-red)] text-[var(--color-white)] py-2 rounded-full font-semibold text-[15px] leading-[24px]"
               onClick={handleLogout}
             >
               {logoutLabels.logoutConfirm}
             </Button>
             <Button
-              className="w-full md:flex-1 bg-[var(--color-blue)] text-[var(--color-white)] py-2 rounded-full font-semibold text-[15px] leading-[20px]"
+              className="w-full md:flex-1 bg-[var(--color-blue)] text-[var(--color-white)] py-2 rounded-full font-semibold text-[15px] leading-[24px]"
               onClick={() => setLogoutOpen(false)}
             >
               {commonLabels.cancel}
