@@ -97,7 +97,9 @@ export function HeaderLayout() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen && (
-              <span className="h-[25px] w-[20px] min-w-[20px] min-h-[25px] px-2 font-semibold text-[var(--color-dark-gray)] text-[18px]">X</span>
+              <span className="h-[25px] w-[20px] min-w-[20px] min-h-[25px] px-2 font-semibold text-[var(--color-dark-gray)] text-[18px]">
+                X
+              </span>
               // <Image
               //   src={closeIcon}
               //   alt="close"
@@ -129,14 +131,32 @@ export function HeaderLayout() {
                 {navigationItems.map((item) => {
                   if ("children" in item && item.children?.length) {
                     return (
-                      <div key={item.name} className="relative group">
+                      <div
+                        key={item.name}
+                        className="relative group"
+                        onMouseEnter={() => {
+                          if (window.innerWidth >= 1024)
+                            setOpenMobileDropdown(item.name); // desktop
+                        }}
+                        onMouseLeave={() => {
+                          if (window.innerWidth >= 1024) setOpenMobileDropdown(null);
+                        }}
+                      >
                         <button
                           type="button"
                           onClick={() => {
-                            const width = window.innerWidth;
-                            // Only handle click for tablet screens (768px to 1023px)
-                            if (width >= 768 && width < 1024) {
-                              setOpenMobileDropdown(openMobileDropdown === item.name ? null : item.name);
+                            const isTouchDevice =
+                              "ontouchstart" in window ||
+                              navigator.maxTouchPoints > 0;
+                            const isDesktopNavVisible =
+                              window.innerWidth >= 768; // Based on your 'md:flex' class
+
+                            if (isDesktopNavVisible && isTouchDevice) {
+                              setOpenMobileDropdown(
+                                openMobileDropdown === item.name
+                                  ? null
+                                  : item.name
+                              );
                             }
                           }}
                           className="text-[14px] lg:text-[18px] link-hover cursor-pointer flex items-center justify-between w-full text-[var(--color-dark-gray)] px-3 py-2 hover:text-[var(--color-blue)]"
@@ -144,12 +164,18 @@ export function HeaderLayout() {
                           {item.name}
                         </button>
 
-                        <div className={`absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg transition-all duration-200 z-50 ${
-                          // Show on hover for desktop (1024px and above)
-                          'lg:opacity-0 lg:invisible lg:group-hover:visible lg:group-hover:opacity-100' +
-                          // Show on click for tablet (768px to 1023px)
-                          (openMobileDropdown === item.name ? ' opacity-100 visible' : ' opacity-0 invisible')
-                        }`}>
+                        <div
+                          className={`absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg transition-all duration-200 z-50 ${
+                            // Default hidden state
+                            "opacity-0 invisible" +
+                            // Show on hover for traditional desktop (lg and up)
+                            " lg:group-hover:visible lg:group-hover:opacity-100" +
+                            // Override with click-state if it's open (for touch devices, md and up)
+                            (openMobileDropdown === item.name
+                              ? " !opacity-100 !visible"
+                              : "")
+                          }`}
+                        >
                           {item.children.map((child) => (
                             <CustomLink
                               key={child.name}
