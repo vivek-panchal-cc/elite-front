@@ -212,7 +212,7 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
                       className="rounded-lg flex flex-col items-center text-center relative cursor-pointer w-24 sm:w-32 md:w-40"
                     >
                       {/* Image */}
-                      <div className="relative mb-1 sm:mb-2 w-full">
+                      <div className="relative mb-2 sm:mb-4 w-full">
                         <div className="relative h-24 w-full sm:h-32 md:h-40 rounded-md border border-[var(--color-red)] overflow-hidden">
                           <Image
                             src={
@@ -329,7 +329,7 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
                       <p className="text-xs sm:text-sm font-medium">
                         {p.prod_name}
                       </p>
-                      <p className="text-[10px] sm:text-xs text-gray-500">
+                      <p className="text-[9px] sm:text-[10px] text-gray-500 font-semibold">
                         {p.cat_name || ""}
                       </p>
 

@@ -475,7 +475,7 @@ export const labels = {
     shoppingCart: "Shopping Cart",
     price: "Price",
     sku: "SKU",
-    skus: "Skus",
+    skus: "SKUs",
     quantity: "Quantity",
     subtotal: "Subtotal",
     clearCart: "Clear Cart",

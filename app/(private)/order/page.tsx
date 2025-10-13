@@ -361,8 +361,8 @@ export default function Orders() {
                           : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
                       }`}
                     >
-                      <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                        <span className="font-medium text-xs sm:text-sm truncate max-w-[180px] sm:max-w-none">
+                      <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-8">
+                        <span className="font-medium text-[14px] sm:text-[14px] truncate max-w-[180px] sm:max-w-none leading-[22px]">
                           {cat.cat_name}
                         </span>
                       </div>
@@ -375,7 +375,7 @@ export default function Orders() {
 
                     {/* Subcategories / Products */}
                     {isOpen && (
-                      <div className="mt-[-8px] z-9 mx-2 sm:mx-4 pt-6 pb-8 sm:pt-8 sm:pb-10 px-3 sm:px-10 rounded-b-2xl sm:rounded-b-3xl border border-[var(--color-red)] border-t-0 space-y-3 sm:space-y-3 bg-[var(--color-light-gray)]">
+                      <div className="mt-[-8px] z-9 mx-2 sm:mx-4 pt-6 pb-8 sm:pt-8 sm:pb-10 px-3 sm:px-10 rounded-b-2xl sm:rounded-b-2xl border border-[var(--color-red)] border-t-0 space-y-3 sm:space-y-3 bg-[var(--color-light-gray)]">
                         {isProductLoading ? (
                           <LoaderProduct count={5} />
                         ) : !visibleProducts ||
@@ -397,8 +397,8 @@ export default function Orders() {
                                       : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
                                   }`}
                                 >
-                                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-5">
-                                    <span className="font-medium text-xs sm:text-sm truncate max-w-[150px] sm:max-w-none">
+                                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-8">
+                                    <span className="font-medium text-[14px] sm:text-[14px] truncate max-w-[150px] sm:max-w-none leading-[22px]">
                                       {sub.cat_name}
                                     </span>
                                   </div>
@@ -439,7 +439,7 @@ export default function Orders() {
                                         </div>
                                       </div>
                                     )}
-                                    <div className="pt-2 mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                                    <div className="pt-2 mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 max-[425px]:grid-cols-1">
                                       {sub.productList.map(
                                         (p: Product, idx: number) => (
                                           <ProductCard
@@ -475,7 +475,7 @@ export default function Orders() {
                           })
                         ) : directProducts.length > 0 ? (
                           /* Direct products (no subcategories) */
-                          <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
+                          <div className="mt-2 sm:mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 max-[425px]:grid-cols-1">
                             {directProducts.map((p: Product, idx: number) => (
                               <ProductCard
                                 key={p.prod_id}
@@ -564,7 +564,7 @@ export default function Orders() {
                 </div>
 
                 <button
-                  className="bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-xs sm:text-sm md:text-base mx-auto cursor-pointer"
+                  className="h-[30px] sm:h-[36px] bg-[var(--color-red)] text-[var(--color-white)] w-[90%] sm:w-[75%] px-4 py-1 sm:px-6 sm:py-2 rounded-full hover:bg-red-700 transition-colors text-[12px] sm:text-[14px] mx-auto font-semibold leading-[14px] cursor-pointer"
                   onClick={() => router.push("/cart")}
                 >
                   {commonLabels.viewCart}

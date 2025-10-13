@@ -42,21 +42,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div
       className={`rounded-lg p-2 sm:p-4 flex flex-col items-center text-center relative cursor-pointer ${
         selectedProduct === idx
-          ? "ring-1 sm:ring-2 ring-[var(--color-red)] bg-[var(--color-white)]"
+          // ? "ring-1 sm:ring-2 ring-[var(--color-red)] bg-[var(--color-white)]"
+          ? "ring-0 sm:ring-2 ring-[var(--color-red)] sm:bg-[var(--color-white)]"
           : ""
       }`}
-      // onClick={() => setSelectedProduct(idx)}
-      onMouseEnter={() => setSelectedProduct(idx)}
-      onMouseLeave={() => setSelectedProduct(null)}
+      onClick={() => setSelectedProduct(idx)}
+      // onMouseEnter={() => setSelectedProduct(idx)}
+      // onMouseLeave={() => setSelectedProduct(null)}
     >
       {/* Product Image + Info */}
-      <div className="relative mb-1 sm:mb-2">
-        <div className="relative mb-1 sm:mb-2 w-full">
+      <div className="relative mb-1 sm:mb-1">
+        <div className="relative mb-2 sm:mb-4 w-full">
           <div
-            className={`h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40 rounded-md overflow-hidden relative ${
+            // h-24 w-24 sm:h-32 sm:w-32 md:h-30 md:w-30 lg:h-40 lg:w-40
+            className={`h-35 w-35 sm:h-35 sm:w-35 md:h-35 md:w-35 lg:h-35 lg:w-35 xl:h-40 xl:w-40 rounded-md overflow-hidden relative ${
               selectedProduct !== idx
                 ? "border border-[var(--color-orange)]"
-                : "sm:border border-[#dcdcdc] sm:bg-[var(--color-soft-white)]"
+                : "border border-[var(--color-orange)] sm:border sm:border-[#dcdcdc] sm:bg-[var(--color-soft-white)]"
             }`}
           >
             <Image
@@ -80,11 +82,133 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 />
               </div>
             )}
+            {/* <div className="sm:hidden w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2"> */}
+            <div className="sm:hidden absolute bottom-0 left-0 w-full p-2 space-y-1 sm:space-y-2">
+              <div className="flex items-center justify-between w-full gap-2">
+                <div className="relative w-full h-5 items-center overflow-hidden lg:h-auto lg:overflow-visible">
+                  <button
+                    className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out lg:hidden ${
+                      (quantities[p.prod_id] || 0) === 0
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-90 pointer-events-none"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newQty = (quantities[p.prod_id] || 0) + step;
+                      handleQuantityChange(
+                        p.prod_id,
+                        Math.max(newQty, 0),
+                        p.prod_sku
+                      );
+                    }}
+                    disabled={!p.gcerp_product_status}
+                  >
+                    +
+                  </button>
+
+                  <div
+                    className={`absolute left-0 flex w-full items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden lg:hidden ${
+                      (quantities[p.prod_id] || 0) > 0
+                        ? "opacity-100 px-1 scale-x-100"
+                        : "opacity-0 px-0 scale-x-0 pointer-events-none"
+                    }`}
+                    style={{ transformOrigin: "left" }}
+                  >
+                    <button
+                      className="w-1/3 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newQty = (quantities[p.prod_id] || 0) - step;
+                        handleQuantityChange(
+                          p.prod_id,
+                          Math.max(newQty, 0),
+                          p.prod_sku
+                        );
+                      }}
+                      disabled={
+                        !p.gcerp_product_status ||
+                        (quantities[p.prod_id] || 0) <= 0
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="w-1/3 px-0 text-[10px] sm:text-xs text-center">
+                      {quantities[p.prod_id] || 0}
+                    </span>
+                    <button
+                      className="w-1/3 h-4 sm:h-5 flex items-center justify-center cursor-pointer text-xs"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newQty = (quantities[p.prod_id] || 0) + step;
+                        handleQuantityChange(p.prod_id, newQty, p.prod_sku);
+                      }}
+                      disabled={!p.gcerp_product_status}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* --- Desktop Version (No Transition) --- */}
+                  <div className="hidden lg:flex items-center border rounded-full px-1 bg-transparent">
+                    <button
+                      className="w-1/3 h-6 flex items-center justify-center cursor-pointer lg:border-r text-[#888888]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newQty = (quantities[p.prod_id] || 0) - step;
+                        handleQuantityChange(
+                          p.prod_id,
+                          Math.max(newQty, 0),
+                          p.prod_sku
+                        );
+                      }}
+                      disabled={
+                        !p.gcerp_product_status ||
+                        (quantities[p.prod_id] || 0) <= 0
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="w-1/3 px-0 text-sm text-center text-[var(--color-black)]">
+                      {quantities[p.prod_id] || 0}
+                    </span>
+                    <button
+                      className="w-1/3 h-6 flex items-center justify-center cursor-pointer lg:border-l text-[#888888]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newQty = (quantities[p.prod_id] || 0) + step;
+                        handleQuantityChange(p.prod_id, newQty, p.prod_sku);
+                      }}
+                      disabled={!p.gcerp_product_status}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 sm:gap-2 z-10">
+                  <>
+                    {p.is_favorite ? (
+                      <FilledHeart
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--color-red)] cursor-pointer"
+                        fill=""
+                        onClick={() =>
+                          addOrRemoveFavourite(p.prod_id, "remove")
+                        }
+                      />
+                    ) : (
+                      <Heart
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--color-red)] cursor-pointer"
+                        onClick={() => addOrRemoveFavourite(p.prod_id, "add")}
+                      />
+                    )}
+                  </>
+                </div>
+              </div>
+            </div>
           </div>
           {tag && (
             <span
               title={tag}
-              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full max-w-[90px] truncate ${(() => {
+              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-[10px] font-semibold rounded-full max-w-[100px] truncate ${(() => {
                 const styles: Record<string, string> = {
                   HOT: "bg-[var(--color-orange)] text-[var(--color-white)]",
                   "25%": "bg-[var(--color-green)] text-[var(--color-white)]",
@@ -97,40 +221,50 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 );
               })()} ${
                 selectedProduct === idx
-                  ? "-top-5 sm:-top-7 left-0"
-                  : "-top-2 sm:-top-3 left-2 sm:left-3"
+                  ? // ? "-top-5 sm:-top-7 left-0"
+                    "-top-2 sm:-top-7 left-3 sm:left-0"
+                  : "-top-2 sm:-top-3 left-3 sm:left-3"
+                // : "-top-2 sm:-top-3 left-2 sm:left-3"
               }`}
             >
               {tag === "HOT" && <Fire className="w-3 h-3 sm:w-4 sm:h-4" />}
-              {tag.length > 12 ? tag.slice(0, 12) + "..." : tag}
+              {tag.length > 18 ? tag.slice(0, 18) + "..." : tag}
             </span>
           )}
         </div>
-        <div className="px-2 max-w-24 sm:max-w-32 md:max-w-30 lg:max-w-40">
-          <p className="text-xs sm:text-sm font-medium">
+        <div className="px-2 max-w-35 sm:max-w-35 md:max-w-35 lg:max-w-35 xl:max-w-40">
+          <p className="text-[12px] sm:text-sm font-semibold sm:leading-[21px]">
             {p.prod_name || p.prod_long_name}
           </p>
           {p.cat_name && (
-            <p className="text-[10px] sm:text-xs text-gray-500">{p.cat_name}</p>
+            <p className="text-[9px] sm:text-[10px] text-[var(--color-black)] opacity-50 font-semibold leading-[20px] sm:leading-[25px]">
+              {p.cat_name}
+            </p>
           )}
         </div>
       </div>
 
       {/* Price + Icons */}
       <div className="w-full font-bold text-[var(--color-red)] px-1">
-        <div className="flex justify-between items-center text-xs sm:text-sm font-medium">
+        <div className="flex justify-center sm:justify-between items-center text-xs sm:text-sm font-medium">
           <div
-            className="flex items-center gap-1 sm:gap-2"
+            className="hidden sm:flex items-center gap-1 sm:gap-2"
             onClick={() => showDetails(p)}
           >
             {selectedProduct === idx ? (
               <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
             ) : null}
           </div>
-          <span className="text-base sm:text-lg md:text-[19px]">
+          <span
+            className={`text-[16px] sm:text-[19px] leading-[25px] sm:leading-[30px] font-medium ${
+              selectedProduct === idx
+                ? "sm:text-[16px] sm:font-bold sm:leading-[30px]"
+                : ""
+            }`}
+          >
             <WrapAmount value={p.prod_original_price} />
           </span>
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="hidden sm:flex items-center gap-1 sm:gap-2">
             {selectedProduct === idx ? (
               <>
                 {p.is_favorite ? (
@@ -153,11 +287,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Action Buttons */}
       {selectedProduct === idx && (
-        <div className="w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2">
+        <div className="hidden sm:block w-full mt-1 sm:mt-2 space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between w-full">
-            <div className="relative w-full h-5 items-center overflow-hidden lg:h-auto lg:overflow-visible">
+            {/* <div className="relative w-full h-5 items-center overflow-hidden lg:h-auto lg:overflow-visible"> */}
+            <div className="relative w-full h-5 items-center overflow-hidden sm:h-auto sm:overflow-visible">
               {/* --- Mobile & Tablet Transition Counter --- */}
-              <button
+              {/* <button
                 className={`absolute left-0 w-5 h-5 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] text-sm cursor-pointer transition-all duration-300 ease-in-out lg:hidden ${
                   (quantities[p.prod_id] || 0) === 0
                     ? "opacity-100 scale-100"
@@ -175,9 +310,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 disabled={!p.gcerp_product_status}
               >
                 +
-              </button>
+              </button> */}
 
-              <div
+              {/* <div
                 className={`absolute left-0 flex w-full items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-5 sm:h-5 transition-all duration-300 ease-in-out overflow-hidden lg:hidden ${
                   (quantities[p.prod_id] || 0) > 0
                     ? "opacity-100 px-1 scale-x-100"
@@ -216,10 +351,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 >
                   +
                 </button>
-              </div>
+              </div> */}
 
               {/* --- Desktop Version (No Transition) --- */}
-              <div className="hidden lg:flex items-center border rounded-full px-1 bg-transparent">
+              <div className="hidden sm:flex items-center border rounded-full px-1 bg-transparent">
                 <button
                   className="w-1/3 h-6 flex items-center justify-center cursor-pointer lg:border-r text-[#888888]"
                   onClick={(e) => {
