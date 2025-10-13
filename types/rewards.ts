@@ -84,7 +84,7 @@ export const medals: Medal[] = [
   {
     name: "Gold",
     gradient: "linear-gradient(90deg, #C5A158 0%, #FAD97B 50%, #C5A158 100%)",
-    color: "bg-[var(--color-blue)] text-[var(--color-white)]",
+    color: "bg-[var(--color-blue)] text-[var(--color-black)]",
     trophyColor: "text-[var(--color-gold)]",
     downArrowColor: "text-[var(--color-black)]",
     borderColor: "border-[var(--color-gold)]",
