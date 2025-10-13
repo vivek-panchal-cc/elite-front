@@ -66,7 +66,7 @@ export default function MidPageSection() {
           {/* Download App Card */}
           <div className="flex flex-col gap-10 w-full lg:w-1/2 order-3 lg:order-none">
             {/* Direct Top-Up Card */}
-            <Card className="border-[3px] border-[#10499E] rounded-[20px] py-0 sm:py-2">
+            <Card className="border-[3px] border-[var(--color-blue)] rounded-[20px] py-0 sm:py-2">
               <CardContent className="flex items-center gap-4 p-4 px-6 sm:px-14">
                 <Image
                   src={images.simply}
@@ -76,12 +76,12 @@ export default function MidPageSection() {
                   className="shrink-0"
                 />
                 <div>
-                  <h3 className="text-[#10499E] text-[17px] sm:text-[20px] md:text-[25px] font-extrabold leading-tight">
+                  <h3 className="text-[var(--color-blue)] text-[17px] sm:text-[20px] md:text-[25px] font-extrabold leading-tight">
                     {homepageLabels.platform.directTopUp}
                   </h3>
                   <Link
                     href="#"
-                    className="text-[#10499E] text-[14px] hover:underline sm:text-[15px] md:text-[20px] font-medium"
+                    className="text-[var(--color-blue)] text-[14px] hover:underline sm:text-[15px] md:text-[20px] font-medium"
                   >
                     {homepageLabels.platform.clickForMoreInfo}
                   </Link>

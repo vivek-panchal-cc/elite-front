@@ -88,7 +88,7 @@ export function HeaderLayout() {
     : publicNavigationItems;
 
   return (
-    <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-[var(--color-soft-white)] border-b border-gray-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-[12px] sm:px-[20px] md:px-[30px] lg:px-[60px] py-3">
         {/* Mobile menu button */}
         <div className="flex justify-end md:hidden">
@@ -165,7 +165,7 @@ export function HeaderLayout() {
                         </button>
 
                         <div
-                          className={`absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg transition-all duration-200 z-50 ${
+                          className={`absolute left-0 mt-1 w-48 bg-white border rounded shadow-lg transition-all duration-200 z-45 ${
                             // Default hidden state
                             "opacity-0 invisible" +
                             // Show on hover for traditional desktop (lg and up)

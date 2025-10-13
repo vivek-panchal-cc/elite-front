@@ -19,15 +19,11 @@ const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.pointerEvents = "none"; // disable background UI clicks
     } else {
       document.body.style.overflow = "auto";
-      document.body.style.pointerEvents = "auto";
     }
-
     return () => {
       document.body.style.overflow = "auto";
-      document.body.style.pointerEvents = "auto";
     };
   }, [isOpen]);
 
@@ -35,13 +31,12 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#000000bf] bg-opacity-50"
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-[#000000bf] bg-opacity-50"
       aria-modal="true"
       role="dialog"
-      style={{ pointerEvents: "auto" }}
     >
       <div
-        className={`relative bg-[var(--color-white)] rounded-[20px] shadow-lg max-h-[90vh] overflow-y-auto hide-scrollbar mx-4 ${classStyle}`}
+        className={`relative bg-[var(--color-white)] rounded-[20px] shadow-lg max-h-[90vh] overflow-y-auto hide-scrollbar mx-4 z-[1000] ${classStyle}`}
         onClick={(e) => e.stopPropagation()}
       >
         {isClose && (

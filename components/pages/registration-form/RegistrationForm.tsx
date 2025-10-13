@@ -510,7 +510,7 @@ const RegistrationForm = ({
             {/* reCAPTCHA */}
             <div className="flex justify-left">
               {SITE_KEY ? (
-                <div className="scale-80 origin-left sm:scale-100 sm:origin-left">
+                <div className="scale-80 origin-left sm:scale-100 sm:origin-left relative z-[1001]">
                   <ReCAPTCHA
                     sitekey={SITE_KEY}
                     onChange={(token: string | null) => {
