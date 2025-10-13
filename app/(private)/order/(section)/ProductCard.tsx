@@ -46,9 +46,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
           ? "ring-0 sm:ring-2 ring-[var(--color-red)] sm:bg-[var(--color-white)]"
           : ""
       }`}
-      onClick={() => setSelectedProduct(idx)}
-      // onMouseEnter={() => setSelectedProduct(idx)}
-      // onMouseLeave={() => setSelectedProduct(null)}
+      // onClick={() => setSelectedProduct(idx)}
+      onMouseEnter={() => setSelectedProduct(idx)}
+      onMouseLeave={() => setSelectedProduct(null)}
     >
       {/* Product Image + Info */}
       <div className="relative mb-1 sm:mb-1">
