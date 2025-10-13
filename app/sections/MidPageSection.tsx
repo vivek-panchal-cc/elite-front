@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/ButtonUI";
 import { Apple, Play } from "lucide-react";
 import Link from "next/link";
+const googleStoreUrl = process.env.NEXT_PUBLIC_GOOGLE_PLAY_STORE_URL;
+const appleStore = process.env.NEXT_PUBLIC_APP_STORE_URL;
 
 export default function MidPageSection() {
   return (
@@ -32,18 +34,30 @@ export default function MidPageSection() {
                   {homepageLabels.platform.downloadApp}
                 </h3>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  <Image
-                    src={images.googlePlay}
-                    alt="Google Play Icon"
-                    height={100}
-                    className="shrink-0 w-[128px]"
-                  />
-                  <Image
-                    src={images.appleStore}
-                    alt="Apple Store Icon"
-                    height={100}
-                    className="shrink-0 w-[128px]"
-                  />
+                  <Link
+                    href={googleStoreUrl as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src={images.googlePlay}
+                      alt="Google Play Icon"
+                      height={100}
+                      className="shrink-0 w-[128px]"
+                    />
+                  </Link>
+                  <Link
+                    href={appleStore as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src={images.appleStore}
+                      alt="Apple Store Icon"
+                      height={100}
+                      className="shrink-0 w-[128px]"
+                    />
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -82,19 +96,31 @@ export default function MidPageSection() {
                   <h3 className="text-[26px] font-bold text-[var(--color-black)] mb-4 leading-[100%]">
                     {homepageLabels.platform.downloadApp}
                   </h3>
-                  <div className="flex flex-wrap gap-4 justify-center">
-                    <Image
-                      src={images.googlePlay}
-                      alt="Google Play Icon"
-                      height={100}
-                      className="shrink-0 w-auto"
-                    />
-                    <Image
-                      src={images.appleStore}
-                      alt="Apple Store Icon"
-                      height={100}
-                      className="shrink-0 w-auto"
-                    />
+                  <div className="flex flex-wrap gap-4 justify-center cursor-pointer">
+                    <Link
+                      href={googleStoreUrl as string}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Image
+                        src={images.googlePlay}
+                        alt="Google Play Icon"
+                        height={100}
+                        className="shrink-0 w-auto"
+                      />
+                    </Link>
+                    <Link
+                      href={appleStore as string}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Image
+                        src={images.appleStore}
+                        alt="Apple Store Icon"
+                        height={100}
+                        className="shrink-0 w-auto"
+                      />
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
