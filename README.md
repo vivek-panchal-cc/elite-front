@@ -1,46 +1,102 @@
 # Elite Store Customer
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A modern e-commerce platform built with Next.js 15.4.5, featuring a robust customer interface for managing purchases, orders, and rewards.
 
-## Dependencies version
+## Features
 
-#### Next: v15.4.5
+- 🛒 Shopping Cart Management
+- 💳 Secure Checkout Process
+- 📊 Customer Dashboard
+- 🎁 Rewards System
+- 📱 Responsive Design
+- 🔐 Authentication & Authorization
+- 📊 Real-time Analytics
+- 🎯 Special Offers Section
+- 📋 Order History
+- 💰 Super Bonus System
 
-#### React: v19.1.0
+## Tech Stack
 
-#### Node: v22.14.0
+- **Framework:** Next.js 15.4.5
+- **Language:** TypeScript
+- **State Management:** Zustand
+- **Styling:** TailwindCSS
+- **UI Components:** 
+  - Radix UI
+  - Shadcn Components
+- **Data Fetching:** TanStack Query (React Query)
+- **Forms:** Formik + Yup
+- **Charts:** Chart.js, Recharts
+- **HTTP Client:** Axios
+- **Authentication:** Custom Auth Provider
+
+## Project Structure
+
+```
+├── app/                   # Next.js 13+ App Router
+│   ├── (private)/         # Protected Routes
+│   ├── (public)/          # Public Routes
+│   └── sections/          # Page Sections
+├── components/            # Reusable Components
+├── hooks/                 # Custom React Hooks
+├── http/                  # API Client Setup
+├── lib/                   # Utility Functions
+├── stores/                # Zustand Store Definitions
+└── types/                 # TypeScript Type Definitions
+```
+
+## Prerequisites
+
+- Node.js 22.14.0 or later
+- npm or yarn or pnpm or bun
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/prashantcct/elite_store_customer.git
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Starts development server with turbopack
+- `npm run build` - Creates production build
+- `npm start` - Starts production server
+- `npm run lint` - Runs ESLint for code linting
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env` file in the root directory with the following variables:
+(Check `lib/env.ts` for required environment variables)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is proprietary software. All rights reserved.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Project maintained by vivekpanchal
