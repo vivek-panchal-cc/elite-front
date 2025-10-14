@@ -357,7 +357,7 @@ const Cart = () => {
             <div className="lg:col-span-2 w-full overflow-x-auto custom-scrollbar">
               <div className="md:min-w-[700px]">
                 {/* Table Header */}
-                <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b pb-2 text-sm font-medium text-[var(--color-gray)] px-2 gap-2">
+                <div className="hidden md:grid grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1fr] items-center border-b-2 pb-2 text-sm font-medium text-[var(--color-gray)] px-2 gap-2">
                   <span className="min-w-[150px] mr-20">
                     {cartLabels.products}
                   </span>
@@ -624,7 +624,7 @@ const Cart = () => {
 
             {/* Right: Wallet & Summary */}
             <div
-              className={`lg:border-t lg:border-[var(--table-border)] space-y-4 lg:pt-4 lg:-ml-[24px] lg:pl-[24px] ${
+              className={`lg:border-t-2 lg:border-[var(--table-border)] space-y-4 lg:pt-4 lg:-ml-[24px] lg:pl-[24px] ${
                 loadingCart || items.length <= 0 ? "lg:mt-7" : "lg:mt-9"
               }`}
             >
