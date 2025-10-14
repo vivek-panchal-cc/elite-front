@@ -59,86 +59,9 @@ export default function ThankYouContent({
     user_s_post,
   } = user || {};
 
-  // useEffect(() => {
-  //   if (!isOrderPlaced) return;
-  //   (async () => {
-  //     if (isOrderPlaced) {
-  //       if (clearCart) await clearCart();
-  //       if (reloadCart) await reloadCart();
-  //     }
-  //   })();
-  // }, [isOrderPlaced]);
-
-  // useEffect(() => {
-  //   if (!referenceId) router.replace("/cart");
-  // }, [referenceId, router]);
-
-  // useEffect(() => {
-  //   if (!referenceId) return;
-  //   let interval: NodeJS.Timeout;
-  //   let retryCount = 0;
-  //   const maxRetries = 10;
-
-  //   const checkOrderStatus = async () => {
-  //     try {
-  //       const { data } = await apiRequest.checkOrderStatus({
-  //         transaction_reference: referenceId,
-  //       });
-  //       if (data?.success && data?.data?.isOrderPlaced) {
-  //         setIsOrderPlaced(true);
-  //         clearInterval(interval);
-  //         getOrderDetails();
-  //       }
-  //       retryCount++;
-  //       if (retryCount >= maxRetries) {
-  //         clearInterval(interval);
-  //         router.replace("/cart");
-  //       }
-  //     } catch (error: any) {
-  //       router.replace("/cart");
-  //     }
-  //   };
-  //   checkOrderStatus();
-  //   interval = setInterval(checkOrderStatus, 1000);
-  //   return () => clearInterval(interval);
-  // }, [referenceId]);
-
-  // const getOrderDetails = async () => {
-  //   if (!referenceId) return;
-  //   setIsLoading(true);
-  //   try {
-  //     const { data } = await apiRequest.getOrderDetails({
-  //       transaction_reference: referenceId,
-  //     });
-  //     if (!data.success) throw data.message;
-  //     setOrderCollection(data.data);
-  //   } catch (error: any) {
-  //     if (typeof error === "string") return toast.error(error);
-  //     router.replace("/cart");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   return (
     <div className="max-w-7xl mx-auto w-full py-8 sm:py-16">
       <div className="items-center px-[30px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
-        {/* {!isOrderPlaced && (
-          <div className="flex flex-col items-center text-center">
-            <div className="mt-4 flex items-center gap-2 text-yellow-600 font-medium">
-              <Image
-                src={spinner}
-                alt="Loading..."
-                width={50}
-                height={50}
-                className="animate-spin"
-              />
-              <span>{checkoutLabels.confirming}</span>
-            </div>
-          </div>
-        )} */}
-
-        {/* {isOrderPlaced && ( */}
         <>
           <div className="hidden sm:block border border-[rgba(0,0,0,0.5)] rounded-xl sm:rounded-3xl p-4 sm:p-6">
             <h2 className="font-bold text-[20px] sm:text-[22px] text-[var(--color-blue)]">
@@ -150,7 +73,7 @@ export default function ThankYouContent({
           </div>
           <div className="pt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="sm:space-y-4">
-              <div className="border border-[rgba(0,0,0,0.5)] rounded-xl sm:rounded-3xl p-4 sm:p-6">
+              <div className="border border-[rgba(0,0,0,0.5)] rounded-xl sm:rounded-3xl p-4 sm:p-6 leading-[18px]">
                 <h2 className="font-bold text-[20px] sm:text-[22px] text-[var(--color-blue)]">
                   {checkoutLabels.orderDetails}
                 </h2>
@@ -244,7 +167,7 @@ export default function ThankYouContent({
                   {checkoutLabels.yourCart}
                 </h2>
                 <button
-                  className={`flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[12px] font-semibold h-[28px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] ${
+                  className={`flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[12px] font-semibold h-[28px] px-3 py-1 rounded-xl bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] leading-[21px] ${
                     isLoading ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                   disabled={isLoading}
@@ -466,7 +389,6 @@ export default function ThankYouContent({
             </p>
           </div>
         </>
-        {/* )} */}
       </div>
     </div>
   );

@@ -81,7 +81,7 @@ const Transfer = () => {
               </div>
               <div className="lg:basis-[45%]">
                 <h1
-                  className="text-[26px] leading-8 lg:leading-14 text-center lg:text-left lg:text-[42px] mb-6 sm:mb-0 font-bold"
+                  className="text-[26px] leading-8 lg:leading-[53px] text-center lg:text-left lg:text-[42px] mb-6 sm:mb-0 font-bold"
                   dangerouslySetInnerHTML={{
                     __html: transferLabels.transferFund,
                   }}

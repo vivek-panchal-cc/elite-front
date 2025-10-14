@@ -233,7 +233,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
         <div className="px-2 max-w-35 sm:max-w-35 md:max-w-35 lg:max-w-35 xl:max-w-40">
-          <p className="text-[12px] sm:text-sm font-semibold sm:leading-[21px]">
+          <p className="text-[12px] sm:text-sm font-semibold leading-[21px] sm:leading-[25px]">
             {p.prod_name || p.prod_long_name}
           </p>
           {p.cat_name && (

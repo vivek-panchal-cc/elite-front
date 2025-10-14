@@ -495,7 +495,7 @@ export const labels = {
     vat: "VAT",
     offerDiscount: "Offer Discount",
     eliteRewards: "Elite Rewards",
-    total: "Total",
+    total: "TOTAL",
     proceedToPayment: "Proceed to Payment",
     continueShopping: "Continue Shopping",
     addToCart: "Add To Cart",

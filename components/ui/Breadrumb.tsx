@@ -4,7 +4,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
 
-const Breadcrumb = () => {
+interface BreadcrumbProps {
+  separator?: string;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ separator = "/" }) => {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean); // remove empty strings
 
@@ -33,7 +37,7 @@ const Breadcrumb = () => {
         </li>
         {breadcrumbLinks.map((crumb, idx) => (
           <React.Fragment key={crumb.href}>
-            <li>/</li>
+            <li>{separator}</li>
             <li>
               {idx === breadcrumbLinks.length - 1 ? (
                 <span className="text-[var(--color-gray)]">{crumb.label}</span>

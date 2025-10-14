@@ -65,7 +65,7 @@ const LoginForm = ({
       onSubmit={formik.handleSubmit}
       className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg p-6 md:p-8 space-y-4 mx-auto"
     >
-      <h2 className="text-[25px] ml-3 font-bold text-left mb-4 text-[var(--color-blue)]">
+      <h2 className="text-[25px] ml-3 font-bold text-left mb-4 text-[var(--color-blue)] leading-[25px]">
         {commonLabels.loginFormLabel}
       </h2>
 

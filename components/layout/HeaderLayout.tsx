@@ -76,6 +76,17 @@ export function HeaderLayout() {
   );
 
   useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
     const unsubscribe = cartSummaryEvents.subscribe((data) => {
       setCart(data);
     });
@@ -139,7 +150,8 @@ export function HeaderLayout() {
                             setOpenMobileDropdown(item.name); // desktop
                         }}
                         onMouseLeave={() => {
-                          if (window.innerWidth >= 1024) setOpenMobileDropdown(null);
+                          if (window.innerWidth >= 1024)
+                            setOpenMobileDropdown(null);
                         }}
                       >
                         <button

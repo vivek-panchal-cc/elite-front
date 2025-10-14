@@ -21,7 +21,7 @@ export default function HeroSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-center py-10 lg:py-16 px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
             {/* Left Content (Title, Image, Buttons, Find Out More) */}
             <div className="order-1 lg:order-1 space-y-2 sm:space-y-8">
-              <h1 className="text-[28px] md:text-[52px] font-bold leading-tight text-center md:text-left">
+              <h1 className="text-[28px] md:text-[52px] font-bold leading-[55px] text-center md:text-left">
                 {homepageLabels.hero.titleOne}
                 <br />
                 {homepageLabels.hero.titleTwo}
@@ -44,7 +44,7 @@ export default function HeroSection() {
                   <div className="flex sm:flex-row gap-2 sm:gap-4 items-center justify-center mb-2 sm:mb-4">
                     <Button
                       size="lg"
-                      className="btn px-8 py-2 text-[11px] sm:px-12 sm:py-7 sm:text-[16px] font-bold border-[var(--color-white)] rounded-[50px]"
+                      className="btn px-8 py-2 text-[11px] sm:px-12 sm:py-7 sm:text-[16px] font-bold border-[var(--color-white)] rounded-[50px] leading-[26px]"
                       onClick={() => setLoginOpen(true)}
                     >
                       {commonLabels.loginCaps}
@@ -54,7 +54,7 @@ export default function HeroSection() {
                     </span>
                     <Button
                       size="lg"
-                      className="btn px-8 py-2 text-[11px] sm:px-12 sm:py-7 sm:text-[16px] font-bold border-[var(--color-white)] rounded-[50px]"
+                      className="btn px-8 py-2 text-[11px] sm:px-12 sm:py-7 sm:text-[16px] font-bold border-[var(--color-white)] rounded-[50px] leading-[26px]"
                       onClick={() => setSignUpOpen(true)}
                     >
                       {commonLabels.signUpCaps}
@@ -181,7 +181,7 @@ export default function HeroSection() {
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      <span className="mt-3 text-[13px] sm:text-[17px] font-semibold uppercase tracking-wide leading-tight" dangerouslySetInnerHTML={{__html: label}}></span>
+                      <span className="mt-3 text-[13px] sm:text-[17px] font-bold uppercase tracking-wide leading-[100%]" dangerouslySetInnerHTML={{__html: label}}></span>
                     </div>
                   ))}
                 </div>

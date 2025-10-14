@@ -1,4 +1,11 @@
 import type { Metadata } from "next";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Elite Galaxy",
@@ -16,5 +23,9 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <div className={roboto.className}>
+      {children}
+    </div>
+  );
 }

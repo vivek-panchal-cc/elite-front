@@ -324,7 +324,7 @@ export default function Orders() {
               <Input
                 type="text"
                 placeholder="Start Typing To Filter Products..."
-                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-light-gray)] w-full p-[20px] sm:px-[40px] h-[55px] focus-visible:border-none focus-visible:ring-ring/0 focus-visible:ring-0"
+                className="rounded-r-none text-[12px] sm:text-[14px] bg-[var(--color-light-gray)] w-full p-[20px] sm:px-[40px] h-[55px] focus-visible:border-none focus-visible:ring-ring/0 focus-visible:ring-0 leading-[22px] font-medium"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />

@@ -343,11 +343,11 @@ const Cart = () => {
     <div className="max-w-7xl mx-auto w-full">
       <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
         <div className="flex-1 space-y-4 py-6">
-          <div className="flex items-center justify-between space-y-2 mb-6">
-            <h2 className="text-3xl font-bold">
-              <Breadcrumb />
+          <div className="flex items-center justify-between space-y-2 mb-2 px-2">
+            <div className="[&_nav]:text-[14px] md:[&_nav]:text-[18px] [&_a]:text-[var(--color-blue)] [&_span]:text-[var(--color-blue)] [&_li]:text-[var(--color-blue)] pb-4 font-bold leading-[27px]">
+              <Breadcrumb separator=">" />
               {/* {cartLabels.shoppingCart} */}
-            </h2>
+            </div>
           </div>
 
           {/* Two-column layout for content */}
@@ -386,7 +386,7 @@ const Cart = () => {
                 </div>
 
                 {/* Table Body */}
-                <div className="max-h-[540px] overflow-y-auto custom-scrollbar">
+                <div className="max-h-[580px] overflow-y-auto custom-scrollbar">
                   {loadingCart ? (
                     [...Array(4)].map((_, idx) => (
                       <div key={idx} className="rounded-[10px] p-2">
@@ -619,9 +619,13 @@ const Cart = () => {
             </div>
 
             {/* Right: Wallet & Summary */}
-            <div className="space-y-5">
+            <div
+              className={`lg:border-t lg:border-[var(--table-border)] space-y-4 lg:pt-4 lg:-ml-[24px] lg:pl-[24px] ${
+                loadingCart || items.length <= 0 ? "lg:mt-7" : "lg:mt-9"
+              }`}
+            >
               {/* Wallet */}
-              <div className="border rounded-md p-4 shadow-sm pl-[30px] pr-[30px]">
+              <div className="border rounded-lg p-4 shadow-[0_0_10px_rgba(0,0,0,0.10)] pl-[30px] pr-[30px]">
                 <h3 className="flex justify-center text-sm font-medium text-[var(--color-gray)] mb-2">
                   {/* {cartLabels.eliteWallet} */}
                   <Image
@@ -659,7 +663,7 @@ const Cart = () => {
               </div>
 
               {/* Order Summary */}
-              <div className="border rounded-md p-4 pb-6 shadow-sm space-y-3 px-[30px]">
+              <div className="border rounded-lg p-4 pb-6 shadow-[0_0_10px_rgba(0,0,0,0.10)] space-y-3 px-[30px]">
                 <h3 className="text-[12px] font-medium text-[var(--color-black)] mb-1 border-b p-2 pt-1">
                   {cartLabels.orderDetails}
                 </h3>
