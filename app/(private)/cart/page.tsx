@@ -32,6 +32,7 @@ import { useCheckout } from "@/components/context/CheckoutContext";
 import { apiRequest } from "@/lib/apiRequest";
 import { useLoader } from "@/components/providers/loader-provider";
 import useCartSummary from "@/hooks/useCartSummary";
+import ClearCart from "@/components/images/svgs/ClearCart";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
@@ -373,11 +374,14 @@ const Cart = () => {
                       <Button
                         variant="destructive"
                         size="sm"
-                        className="rounded-[50px] h-7 w-20 hover:bg-red-700 flex items-center justify-center gap-1"
+                        className="rounded-[50px] h-7 w-7 xl:w-20 hover:bg-red-700 flex items-center justify-center gap-1"
                         onClick={handleClearCart}
                       >
-                        <X className="w-3.5 h-3.5" />
-                        <span className="text-[10px]">
+                        <X className="w-3.5 h-3.5 hidden xl:block" />
+                        <span className="xl:hidden">
+                          <ClearCart />
+                        </span>
+                        <span className="text-[10px] hidden xl:block">
                           {cartLabels.clearCart}
                         </span>
                       </Button>
