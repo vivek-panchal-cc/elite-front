@@ -162,7 +162,7 @@ export default function ThankYouContent({
 
             <div className="border border-[rgba(0,0,0,0.5)] rounded-xl sm:rounded-3xl flex flex-col h-full">
               {/* Header */}
-              <div className="flex justify-between items-center mb-2 p-4 sm:p-6 sm:pb-2">
+              <div className="flex justify-between items-center p-4 sm:p-6 sm:pb-2">
                 <h2 className="font-bold text-[20px] sm:text-[22px] text-[var(--color-blue)]">
                   {checkoutLabels.yourCart}
                 </h2>
@@ -189,7 +189,7 @@ export default function ThankYouContent({
                 </button>
               </div>
 
-              <div className="flex-1 custom-scrollbar overflow-x-auto max-h-70 p-4 sm:p-0">
+              <div className="flex-1 custom-scrollbar overflow-x-auto max-h-70 p-4 pt-0 sm:p-0">
                 <div className="flex flex-col gap-3 sm:hidden">
                   {carts.map((cart: any) => (
                     <div
@@ -285,7 +285,7 @@ export default function ThankYouContent({
                 </div>
               </div>
 
-              <div className="border-t-1 text-[12px] border-[rgba(0,0,0,0.5)] sm:text-[14px] p-3 sm:p-2 sm:px-10 bg-[var(--color-light-gray)] rounded-b-3xl space-y-1">
+              <div className="border-t-1 text-[12px] border-[rgba(0,0,0,0.5)] sm:text-[14px] p-3 sm:p-2 px-6 sm:px-10 bg-[var(--color-light-gray)] rounded-b-3xl space-y-1">
                 <div className="flex justify-between text-[14px] sm:text-[14px] text-[var(--color-gray)]">
                   <span>{checkoutLabels.subTotal}</span>
                   <span>
