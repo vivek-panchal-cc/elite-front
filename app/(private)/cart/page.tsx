@@ -13,7 +13,6 @@ import {
   NEW_CARD,
   SAVED_CARD,
 } from "@/lib/constants/all";
-import Breadcrumb from "@/components/ui/Breadrumb";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -33,6 +32,7 @@ import { apiRequest } from "@/lib/apiRequest";
 import { useLoader } from "@/components/providers/loader-provider";
 import useCartSummary from "@/hooks/useCartSummary";
 import ClearCart from "@/components/images/svgs/ClearCart";
+import CustomizeBreadcrumb from "@/components/ui/CustomizeBreadcrumb";
 const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 const Cart = () => {
@@ -346,7 +346,7 @@ const Cart = () => {
         <div className="flex-1 space-y-4 py-6">
           <div className="flex items-center justify-between space-y-2 mb-2 px-2">
             <div className="[&_nav]:text-[14px] md:[&_nav]:text-[18px] [&_a]:text-[var(--color-blue)] [&_span]:text-[var(--color-blue)] [&_li]:text-[var(--color-blue)] pb-4 font-bold leading-[27px]">
-              <Breadcrumb separator=">" />
+              <CustomizeBreadcrumb rootLabel="Store"/>
               {/* {cartLabels.shoppingCart} */}
             </div>
           </div>
