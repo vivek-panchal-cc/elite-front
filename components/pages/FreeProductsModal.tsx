@@ -77,57 +77,69 @@ const FreeProductsModal = ({ setModalClose, products }: FreeProductsProps) => {
   return (
     <div className="w-full max-w-2xl bg-[var(--color-white)] rounded-lg flex flex-col max-h-[80vh]">
       {/* Header */}
-      <div className="p-4 md:p-5 border-b bg-[var(--color-blue)]">
-        <h2 className="text-xl font-bold text-left text-[var(--color-white)]">
+      <div className="p-3 md:p-3 bg-[var(--color-white)]">
+        <h2 className="text-[18px] sm:text-[24px] font-bold leading-[33px] sm:leading-[52px] text-center text-[var(--color-blue)]">
           {cartLabels.freeProductsHead}
         </h2>
       </div>
 
-      <div className="p-4 md:p-5">
+      <div className="px-6 sm:px-8">
         <h2 className="text-[14px] sm:text-xl font-bold text-left text-[var(--color-black)]">
           {cartLabels.maxFreeProducts} : {maxQuantity}
         </h2>
       </div>
 
       {/* Product List */}
-      <div className="flex-1 custom-scrollbar overflow-y-auto p-6 space-y-4">
+      <div className="grid max-[425px]:grid-cols-1 grid-cols-2 sm:grid-cols-3 custom-scrollbar overflow-y-auto p-4 sm:p-6 px-6 sm:px-8 space-y-0 gap-3">
         {products.items.map((product) => {
           const qty = quantities[product.prod_id];
           return (
             <div
               key={product.prod_id}
-              className="flex items-center gap-4 border rounded-lg p-3"
+              className="flex flex-col items-center gap-2 border border-[var(--color-red)] rounded-xl p-3"
             >
               {/* Product Image */}
-              <Image
-                src={
-                  product.images.prod_image
-                    ? `${imageBaseUrl}/medium/${product.images.prod_image}` //whenever data in small folder do change from medium to small
-                    : noProduct
-                }
-                alt={product.prod_short_name}
-                width={60}
-                height={60}
-                className="object-contain rounded-md w-[60px] h-[60px]"
-              />
+              <div className="relative w-[120px] h-[82px] flex items-center justify-center">                
+                <div className="rounded-md bg-[var(--color-light-gray)] overflow-hidden w-full h-full flex items-center justify-center">
+                  <Image
+                    src={
+                      product.images.prod_image
+                        ? `${imageBaseUrl}/medium/${product.images.prod_image}` //whenever data in small folder do change from medium to small
+                        : noProduct
+                    }
+                    alt={product.prod_short_name || product.prod_name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                {qty > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[var(--color-red)] text-white text-[8px] font-bold rounded-full h-[22px] w-[22px] flex items-center justify-center shadow-md">
+                    {qty * product.box_size}
+                  </span>
+                )}
+              </div>
 
               {/* Product Info */}
               <div className="flex flex-col flex-1">
-                <span className="font-semibold text-sm">
+                <span className="text-[10px] font-bold text-center">
                   {product.prod_short_name || product.prod_name}
                 </span>
-                {qty > 0 && (
-                  <span className="text-xs text-[var(--color-gray)]">
+                {/* {qty > 0 && (
+                  <span className="text-xs text-[var(--color-gray)] text-center">
                     {cartLabels.totalUnits} : {qty * product.box_size}
                   </span>
-                )}
+                )} */}
                 {/* <span className="text-xs text-[var(--color-gray)]">
                 <WrapAmount value={product.prod_sp_offer_price} />
               </span> */}
               </div>
 
               {/* Quantity Controls */}
-              <div className="flex w-20 items-center rounded-full bg-[var(--color-red)] text-[var(--color-white)] h-6 transition-all duration-300 ease-in-out">
+              <div
+                className={`w-full flex items-center rounded-full text-[var(--color-white)] h-6 transition-all duration-300 ease-in-out ${
+                  qty > 0 ? "bg-[var(--color-red)]" : "bg-[var(--color-blue)]"
+                }`}
+              >
                 <button
                   className="w-1/3 flex items-center justify-center text-xs cursor-pointer"
                   onClick={(e) => {

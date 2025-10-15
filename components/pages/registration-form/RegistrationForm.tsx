@@ -224,22 +224,26 @@ const RegistrationForm = ({
             <h2 className="text-xl md:text-2xl font-bold text-center text-[var(--color-blue)] pt-4">
               {registrationLabels.verifyDealer}
             </h2>
-            {formik.status && (
-              <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
-                {formik.status}
-              </div>
-            )}
-            {registeredDealermsg?.msg && (
-              <div className="text-[var(--color-red)] text-sm p-2 bg-red-50 rounded sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
-                <p>{registeredDealermsg.msg}</p>
-                <a
-                  className="mt-1 text-[var(--color-blue)] font-bold cursor-pointer hover:underline"
-                  onClick={() => setIsContactDetailsOpen(true)}
-                >
-                  {registrationLabels.notYourEmail}
-                </a>
-              </div>
-            )}
+            <div className="lg:px-8">
+              {formik.status && (
+                <div className="text-[var(--color-red)] text-[10px] sm:text-[12px] font-medium leading-[10px] sm:leading-[12px] p-2 px-4 sm:px-6 bg-[var(--color-light-gray)] rounded-xl sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
+                  {formik.status}
+                </div>
+              )}
+              {registeredDealermsg?.msg && (
+                <div className="text-[var(--color-red)] text-[10px] sm:text-[12px] font-medium leading-[10px] sm:leading-[12px] p-2 px-4 sm:px-6 bg-[var(--color-light-gray)] rounded-xl sm:max-w-[236px] md:max-w-[336px] lg:max-w-[436px] xl:max-w-[536px]">
+                  <p>
+                    {registeredDealermsg.msg}{" "}
+                    <a
+                      className="mt-1 text-[var(--color-blue)] font-bold cursor-pointer hover:underline"
+                      onClick={() => setIsContactDetailsOpen(true)}
+                    >
+                      {registrationLabels.notYourEmail}
+                    </a>
+                  </p>
+                </div>
+              )}
+            </div>
             <div className="space-y-1 lg:px-8">
               <Label className="text-[11px] font-medium opacity-90 lg:text-[11px]">
                 {registrationLabels.dealerAccountRef}
@@ -597,19 +601,20 @@ const RegistrationForm = ({
       <Modal
         isOpen={isContactDetailsOpen}
         onClose={() => setIsContactDetailsOpen(false)}
-        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+        classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] max-w-[516px]"
         isClose={true}
       >
         <ContactDetailsForm
           setContactClose={setIsContactDetailsOpen}
           details={formik.values}
           handleDataNull={() => setAlertModal(true)}
+          handleLogin={handleLogin}
         />
       </Modal>
       <Modal
         isOpen={alertModal}
         onClose={handleDataNull}
-        classStyle="sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px]"
+        classStyle="sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] max-w-[516px]"
         isClose={false}
       >
         <AlertModal

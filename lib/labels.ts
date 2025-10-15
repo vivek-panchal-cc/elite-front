@@ -226,7 +226,7 @@ export const labels = {
     submit: "SUBMIT",
     notYourEmail: "Not your email address?",
     contactName: "Contact Name",
-    contactDetails: "Enter your contact details",
+    contactDetails: "ENTER YOUR CONTACT DETAILS",
     contactDetailsMsg:
       "Please supply contact details below so that a member of our team can contact you . To speed up the changing of the email on this account it would also help if you could upload an image of a utility bill also.",
     thankYou: "Thank you for submitting your details",
@@ -503,7 +503,7 @@ export const labels = {
     units: "Units",
     items: "Items",
     cartEmpty: "Your cart is empty",
-    freeProductsHead: "Select a free product",
+    freeProductsHead: "SELECT A FREE PRODUCT",
     addToBasket: "Add to Basket",
     outOfStock: "Out of Stock",
     basket: "Basket",

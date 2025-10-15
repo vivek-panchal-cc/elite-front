@@ -356,7 +356,7 @@ export default function ProfileFavourite({ isMobile }: IsMobileProps) {
         <Modal
           isOpen={true}
           onClose={() => handleCloseFreeModal()}
-          classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
+          classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] max-w-[516px]"
           isClose={false}
         >
           <FreeProductsModal
