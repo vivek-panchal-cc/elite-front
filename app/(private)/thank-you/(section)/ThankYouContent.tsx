@@ -287,9 +287,9 @@ export default function ThankYouContent({
 
               <div className="border-t-1 text-[12px] border-[rgba(0,0,0,0.5)] sm:text-[14px] p-3 sm:p-2 px-6 sm:px-10 bg-[var(--color-light-gray)] rounded-b-3xl space-y-1">
                 <div className="flex justify-between text-[14px] sm:text-[14px] text-[var(--color-gray)]">
-                  <span>{checkoutLabels.subTotal}</span>
+                  <span>{checkoutLabels.delivery}</span>
                   <span>
-                    <WrapAmount value={sub_total} />
+                    <WrapAmount value={tariff_value} />
                   </span>
                 </div>
                 <div className="flex justify-between text-[14px] sm:text-[14px] text-[var(--color-gray)]">
@@ -299,9 +299,9 @@ export default function ThankYouContent({
                   </span>
                 </div>
                 <div className="flex justify-between text-[14px] sm:text-[14px] text-[var(--color-gray)]">
-                  <span>{checkoutLabels.delivery}</span>
+                  <span>{checkoutLabels.subTotal}</span>
                   <span>
-                    <WrapAmount value={tariff_value} />
+                    <WrapAmount value={sub_total} />
                   </span>
                 </div>
                 <div className="flex justify-between text-[14px] sm:text-[14px] text-[var(--color-black)]">
