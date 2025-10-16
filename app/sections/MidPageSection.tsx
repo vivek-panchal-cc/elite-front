@@ -16,7 +16,7 @@ export default function MidPageSection() {
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Mobile App Image */}
           <div className="flex justify-center w-full lg:w-1/2">
-            <div className="relative bg-[#E9E9E9] rounded-3xl w-full max-w-[100%] sm:max-w-[100%] md:max-w-[100%] lg:max-w-[560px] h-[200px] sm:h-[300px] md:h-[380px] lg:h-[400px] shadow-lg">
+            <div className="relative bg-[var(--color-soft-white)] rounded-3xl w-full max-w-[100%] sm:max-w-[100%] md:max-w-[100%] lg:max-w-[560px] h-[200px] sm:h-[300px] md:h-[380px] lg:h-[400px] shadow-lg">
               <Image
                 src={elite_mobile_img}
                 alt={altTextLabels.eliteMobileApp}
@@ -28,7 +28,7 @@ export default function MidPageSection() {
 
           {/* Info & Buttons */}
           <div className="w-full lg:hidden order-2">
-            <Card className="bg-[#E9E9E9] border-none">
+            <Card className="bg-[var(--color-soft-white)] border-none">
               <CardContent className="pt-0 pb-0 px-3 lg:p-6 flex flex-col items-center justify-center text-center h-full">
                 <h3 className="text-[17px] md:text-[26px] font-bold text-[var(--color-black)] mb-4 leading-[100%]">
                   {homepageLabels.platform.downloadApp}
@@ -91,7 +91,7 @@ export default function MidPageSection() {
 
             {/* Download App Card for desktop view only */}
             <div className="hidden lg:block">
-              <Card className="bg-[#E9E9E9] border-none">
+              <Card className="bg-[var(--color-soft-white)] border-none">
                 <CardContent className="p-6 px-10 flex flex-col items-center justify-center text-center h-full">
                   <h3 className="text-[26px] font-bold text-[var(--color-black)] mb-4 leading-[100%]">
                     {homepageLabels.platform.downloadApp}

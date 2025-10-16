@@ -207,8 +207,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           {tag && (
             <span
-              title={tag}
-              className={`absolute flex items-center gap-1 px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-[10px] font-semibold rounded-full max-w-[100px] truncate ${(() => {
+              title={tag.toUpperCase()}
+              className={`absolute flex items-center gap-1 px-2 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-[10px] font-semibold rounded-full max-w-[110px] truncate uppercase ${(() => {
                 const styles: Record<string, string> = {
                   HOT: "bg-[var(--color-orange)] text-[var(--color-white)]",
                   "25%": "bg-[var(--color-green)] text-[var(--color-white)]",
