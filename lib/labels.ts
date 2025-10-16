@@ -228,7 +228,7 @@ export const labels = {
     contactName: "Contact Name",
     contactDetails: "ENTER YOUR CONTACT DETAILS",
     contactDetailsMsg:
-      "Please supply contact details below so that a member of our team can contact you . To speed up the changing of the email on this account it would also help if you could upload an image of a utility bill also.",
+      "Please supply contact details below so that a member of our team can contact you. To speed up the changing of the email on this account it would also help if you could upload an image of a utility bill also.",
     thankYou: "Thank you for submitting your details",
     thankYouMsg:
       "A member of our rewards onboarding team will be in touch within the next 72 hours.",
