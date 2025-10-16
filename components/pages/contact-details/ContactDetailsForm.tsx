@@ -89,7 +89,7 @@ const ContactDetailsForm = ({
       <h2 className="text-[18px] sm:text-[25px] font-bold text-center leading-[33px] sm:leading-[50px] mb-0 text-[#00539C]">
         {registrationLabels.contactDetails}
       </h2>
-      <p className="text-[10px] font-medium  ml-0 text-[var(--color-black)]/70 !text-[11px]leading-[12px] text-center mb-0 px-2 md:px-4">
+      <p className="text-[10px] font-medium ml-0 text-[var(--color-black)]/70 leading-[12px] text-center mb-0 px-2 md:px-4">
         {registrationLabels.contactDetailsMsg}
       </p>
 
