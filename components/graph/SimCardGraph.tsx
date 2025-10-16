@@ -30,15 +30,15 @@ ChartJS.register(
   Legend
 );
 
-const ActivationSimCardsGraph = () => {
+const SimCardGraph = () => {
   const [activeFilter, setActiveFilter] = useState("1M");
   const years = getLastNYears(2);
   const [selectedYear, setSelectedYear] = useState(years[0]);
   const filterType = activeFilter === "1M" ? "month" : "quarter";
-  const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph(
-    selectedYear,
-    filterType
-  );
+  const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph({
+    year: selectedYear,
+    filter: filterType,
+  });
   const { labels, data: chartData } = activatedSIMGraphData
     ? formatGraphData(activatedSIMGraphData)
     : { labels: [], data: [] };
@@ -120,4 +120,4 @@ const ActivationSimCardsGraph = () => {
   );
 };
 
-export default ActivationSimCardsGraph;
+export default SimCardGraph;

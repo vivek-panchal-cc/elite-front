@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/apiRequest";
-import { ActivatedSIMGraphData } from "@/types/chart";
+import {
+  ActivatedSIMGraphDataMultipleReportData,
+  ActivatedSIMGraphDataReportData,
+  SimGraphReqParam,
+} from "@/types/chart";
 
-const useActivatedSIMGraph = () => {
+const useActivatedSIMGraph = ({ year = 0, filter = "" }: SimGraphReqParam) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [activatedSIMGraphData, setActivatedSIMGraphData] =
-    useState<ActivatedSIMGraphData | null>(null);
+  const [activatedSIMGraphData, setActivatedSIMGraphData] = useState<
+    | ActivatedSIMGraphDataReportData
+    | ActivatedSIMGraphDataMultipleReportData
+    | null
+  >(null);
   const [reloadFlag, setReloadFlag] = useState<boolean>(false);
 
   const reload = () => {
     setReloadFlag((cs) => !cs);
   };
 
-  const getActivatedSIMGraph = async () => {
+  const getActivatedSIMGraph = async (params: SimGraphReqParam) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.activatedSIMGraph();
+      const { data } = await apiRequest.activatedSIMGraph(params);
       if (!data.success) throw data.message;
       setActivatedSIMGraphData(data.data.graphData);
     } catch (error) {
@@ -26,8 +33,8 @@ const useActivatedSIMGraph = () => {
   };
 
   useEffect(() => {
-    getActivatedSIMGraph();
-  }, [reloadFlag]);
+    getActivatedSIMGraph({ year, filter });
+  }, [reloadFlag, year, filter.trim()]);
 
   return [loading, activatedSIMGraphData, reload] as const;
 };

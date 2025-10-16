@@ -7,6 +7,7 @@ const CAT_TYPE_ID = process.env.NODE_ENV === "production" ? 21 : 22;
 const WITHDRAWAL = "withdrawal";
 const SAVED_CARD = "SAVED_CARDS_PAYMENT";
 const NEW_CARD = "NEW_CARD_PAYMENT";
+const SIM_GRAPH_FILTER = ["1M", "1Y"];
 
 const objectToFormData = (values: Record<string, any>): FormData => {
   const formData = new FormData();
@@ -146,6 +147,81 @@ const safeNumber = (val: any) => {
   return Number.isNaN(num) ? 0 : num;
 };
 
+const buildGraphDataset = (labels: string[], chartData: number[]) => ({
+  labels,
+  datasets: [
+    {
+      label: "Activations",
+      data: chartData,
+      borderColor: "#FFFFFF",
+      backgroundColor: "transparent",
+      borderWidth: 1.5,
+      tension: 0,
+      stepped: false,
+      pointRadius: 1,
+      pointHoverRadius: 4,
+      pointHoverBackgroundColor: "#fff",
+    },
+  ],
+});
+
+const buildGraphOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false }, // hide legend
+    tooltip: {
+      enabled: true,
+      backgroundColor: "#fff",
+      titleColor: "#000",
+      bodyColor: "#000",
+      borderColor: "#ccc",
+      borderWidth: 1,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false, // hide vertical grid lines
+      },
+      border: {
+        display: false, // hides x-axis border line
+      },
+      ticks: {
+        color: "rgba(255, 255, 255, 0.5)",
+        font: {
+          size: 10,
+        },
+      },
+    },
+    y: {
+      grid: {
+        color: "rgba(255,255,255,0.3)", // faint gridlines
+        drawBorder: false,
+      },
+      border: {
+        display: false, // hides y-axis border line
+      },
+      ticks: {
+        mirror: true,
+        padding: 5,
+        labelOffset: -6,
+        align: "end" as const,
+        color: "rgba(255, 255, 255, 0.5)",
+        font: {
+          size: 12,
+        },
+        stepSize: 50,
+      },
+    },
+  },
+};
+
+const getLastNYears = (count: number = 4): number[] => {
+  const currentYear = new Date().getFullYear();
+  return Array.from({ length: count }, (_, i) => currentYear - i);
+};
+
 export {
   ELITE_LOGO,
   ELITE_WALLET,
@@ -161,4 +237,8 @@ export {
   NEW_CARD,
   normalizeMonthKey,
   safeNumber,
+  SIM_GRAPH_FILTER,
+  buildGraphDataset,
+  buildGraphOptions,
+  getLastNYears,
 };

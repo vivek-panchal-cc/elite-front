@@ -9,7 +9,11 @@ import { BranchAdd } from "@/types/branches";
 import { CompanyAdd } from "@/types/company";
 import { UserDetails } from "@/types/profile";
 import { objectToFormData } from "./constants/all";
-import { InitiatePayment, ProductAddToBasketParams, ProductRedeemAmount } from "@/types/product";
+import {
+  InitiatePayment,
+  ProductAddToBasketParams,
+  ProductRedeemAmount,
+} from "@/types/product";
 import {
   OrderStatus,
   OrderSummary,
@@ -17,6 +21,7 @@ import {
   Transfer,
 } from "@/types/payments";
 import { RewardReqParams } from "@/types/rewards";
+import { SimGraphReqParam } from "@/types/chart";
 
 // Types
 interface LoginCredentials {
@@ -348,8 +353,10 @@ const transferPaypal = (
   return axiosProductInstance.post(apiUrl.TRANSFER.TRANSFER_PAYPAL, data);
 };
 
-const activatedSIMGraph = (): Promise<AxiosResponse<ApiResponse>> => {
-  return axiosProductInstance.post(apiUrl.AUTH_ENDPOINTS.GET_SIM_GRAPH);
+const activatedSIMGraph = (
+  data: SimGraphReqParam
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.post(apiUrl.AUTH_ENDPOINTS.GET_SIM_GRAPH, data);
 };
 
 const getSuperBonus = (): Promise<AxiosResponse<ApiResponse>> => {

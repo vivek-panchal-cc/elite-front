@@ -1,11 +1,12 @@
 import React from 'react';
-import SuperBonusSimCardGraph from './components/SuperBonusSimCardGraph';
 import SuperBonusDashboard from './components/SuperBonusDashboard';
+import SimCardGraph from '@/components/graph/SimCardGraph';
 
 const SuperBonus = () => {
   return (
     <div>
-      <SuperBonusSimCardGraph />
+      {/* <SuperBonusSimCardGraph /> */}
+      <SimCardGraph />
       <SuperBonusDashboard />
     </div>
   );

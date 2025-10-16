@@ -13,6 +13,13 @@ import { Line } from "react-chartjs-2";
 import Breadcrumb from "@/components/ui/Breadrumb";
 import { reportsLabels } from "@/lib/labels";
 import useActivatedSIMGraph from "@/hooks/useActivatedSimGraph";
+import {
+  buildGraphDataset,
+  buildGraphOptions,
+  getLastNYears,
+  SIM_GRAPH_FILTER,
+} from "@/lib/constants/all";
+import { formatGraphData } from "@/lib/helpers/formatGraphData";
 
 ChartJS.register(
   LineElement,
@@ -25,79 +32,24 @@ ChartJS.register(
 
 const SuperBonusSimCardGraph = () => {
   const [activeFilter, setActiveFilter] = useState("1M");
-  const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph();
-
-  const data = {
-    labels: ["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"],
-    datasets: [
-      {
-        label: "Activations",
-        data: [40, 140, 180, 50],
-        borderColor: "#FFFFFF",
-        backgroundColor: "transparent",
-        borderWidth: 1.5,
-        tension: 0,
-        stepped: false,
-        pointRadius: 1, // hide dots
-        pointHoverRadius: 4,
-        pointHoverBackgroundColor: "#fff",
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false }, // hide legend
-      tooltip: {
-        enabled: true,
-        backgroundColor: "#fff",
-        titleColor: "#000",
-        bodyColor: "#000",
-        borderColor: "#ccc",
-        borderWidth: 1,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false, // hide vertical grid lines
-        },
-        border: {
-          display: false, // hides x-axis border line
-        },
-        ticks: {
-          color: "rgba(255, 255, 255, 0.5)",
-          font: {
-            size: 10,
-          },
-        },
-      },
-      y: {
-        grid: {
-          color: "rgba(255,255,255,0.3)", // faint gridlines
-          drawBorder: false,
-        },
-        border: {
-          display: false, // hides y-axis border line
-        },
-        ticks: {
-          mirror: true,
-          padding: 5,
-          labelOffset: -6,
-          align: "end" as const,
-          color: "rgba(255, 255, 255, 0.5)",
-          font: {
-            size: 12,
-          },
-          stepSize: 50,
-        },
-      },
-    },
-  };
-
-  const filters = ["1D", "1M", "1Y", "MAX"];
+  const years = getLastNYears(2);
+  const [selectedYear, setSelectedYear] = useState(years[0]);
+  const filterType = activeFilter === "1M" ? "month" : "quarter";
+  const [loading, activatedSIMGraphData, reload] = useActivatedSIMGraph(
+    selectedYear,
+    filterType
+  );
+  const { labels, data: chartData } = activatedSIMGraphData
+    ? formatGraphData(activatedSIMGraphData)
+    : { labels: [], data: [] };
+  const numericChartData = chartData.map((item) =>
+    Array.isArray(item)
+      ? Number(item[0])
+      : typeof item === "number"
+      ? item
+      : Number(item)
+  );
+  const data = buildGraphDataset(labels, numericChartData);
 
   return (
     <div
@@ -118,28 +70,48 @@ const SuperBonusSimCardGraph = () => {
                 <h2 className="text-[10px] sm:text-[12px]">
                   {reportsLabels.activatedSim}
                 </h2>
-                <p className="text-[20px] sm:text-[30px]">1,250</p>
+                <p className="text-[20px] sm:text-[30px]">
+                  {activatedSIMGraphData?.totalActivation}
+                </p>
               </div>
-
-              <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
-                {filters.map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition cursor-pointer ${
-                      activeFilter === filter
-                        ? "font-semibold border border-[var(--color-orange)] rounded-xl text-[var(--color-black)]"
-                        : "text-[var(--color-gray)]"
-                    }`}
+              <div className="flex flex-row sm:flex-row sm:items-center sm:justify-end gap-2">
+                <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
+                  {SIM_GRAPH_FILTER.map((filter) => (
+                    <button
+                      key={filter}
+                      onClick={() => setActiveFilter(filter)}
+                      className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition cursor-pointer ${
+                        activeFilter === filter
+                          ? "font-semibold border border-[var(--color-orange)] rounded-xl text-[var(--color-black)]"
+                          : "text-[var(--color-gray)]"
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
+                  <select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(Number(e.target.value))}
+                    className="px-3 py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none"
                   >
-                    {filter}
-                  </button>
-                ))}
+                    {years.map((year) => (
+                      <option
+                        key={year}
+                        value={year}
+                        className="text-[var(--color-black)]"
+                      >
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
             <div className="w-full min-h-[370px]">
-              <Line data={data} options={options} />
+              <Line data={data} options={buildGraphOptions} />
             </div>
           </div>
         </div>

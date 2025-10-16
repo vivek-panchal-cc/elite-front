@@ -513,7 +513,7 @@ export const labels = {
   },
 
   reports: {
-    activatedSim: "Currently activated sim cards",
+    activatedSim: "Currently Activated Sim Cards",
     reportsDashboard: "Dashboard",
     activation: "Activation",
     firstTopUp: "First Top Up",

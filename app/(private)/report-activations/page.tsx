@@ -1,11 +1,12 @@
-import React from 'react';
-import ActivationSimCardsGraph from './components/ActivationSimCardsGraph';
-import ActivationDashboard from './components/ActivationDashboard';
+import React from "react";
+import ActivationDashboard from "./components/ActivationDashboard";
+import SimCardGraph from "@/components/graph/SimCardGraph";
 
 const ReportActivations = () => {
   return (
     <div>
-      <ActivationSimCardsGraph />
+      {/* <ActivationSimCardsGraph /> */}
+      <SimCardGraph />
       <ActivationDashboard />
     </div>
   );
