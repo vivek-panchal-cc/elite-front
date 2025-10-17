@@ -154,7 +154,7 @@ const buildGraphDataset = (labels: string[], chartData: number[]) => ({
       label: "Activations",
       data: chartData,
       borderColor: "#FFFFFF",
-      backgroundColor: "transparent",
+      backgroundColor: "#7a3277",
       borderWidth: 1.5,
       tension: 0,
       stepped: false,
