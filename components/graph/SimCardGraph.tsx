@@ -20,6 +20,7 @@ import {
   SIM_GRAPH_FILTER,
 } from "@/lib/constants/all";
 import { formatGraphData } from "@/lib/helpers/formatGraphData";
+import LoaderDiv from "../loaders/LoaderDiv";
 
 ChartJS.register(
   LineElement,
@@ -71,16 +72,32 @@ const SimCardGraph = () => {
                   {reportsLabels.activatedSim}
                 </h2>
                 <p className="text-[20px] sm:text-[30px]">
-                  {activatedSIMGraphData?.totalActivation}
+                  {loading ? (
+                    <LoaderDiv
+                      height={30}
+                      width={100}
+                      backgroundColor="#9d588e"
+                      className="mt-2"
+                    />
+                  ) : (
+                    activatedSIMGraphData?.totalActivation
+                  )}
                 </p>
               </div>
               <div className="flex flex-row sm:flex-row sm:items-center sm:justify-end gap-2">
-                <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
+                <div
+                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity ${
+                    loading ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
+                >
                   {SIM_GRAPH_FILTER.map((filter) => (
                     <button
                       key={filter}
-                      onClick={() => setActiveFilter(filter)}
-                      className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition cursor-pointer ${
+                      onClick={() => !loading && setActiveFilter(filter)}
+                      disabled={loading}
+                      className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition ${
+                        loading ? "cursor-not-allowed" : "cursor-pointer"
+                      } ${
                         activeFilter === filter
                           ? "font-semibold border border-[var(--color-orange)] rounded-xl text-[var(--color-black)]"
                           : "text-[var(--color-gray)]"
@@ -90,11 +107,18 @@ const SimCardGraph = () => {
                     </button>
                   ))}
                 </div>
-                <div className="flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1">
+                <div
+                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity ${
+                    loading ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
+                >
                   <select
                     value={selectedYear}
-                    onChange={(e) => setSelectedYear(Number(e.target.value))}
-                    className="px-3 py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none"
+                    disabled={loading}
+                    onChange={(e) =>
+                      !loading && setSelectedYear(Number(e.target.value))
+                    }
+                    className="px-3 py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none disabled:cursor-not-allowed"
                   >
                     {years.map((year) => (
                       <option
@@ -110,8 +134,14 @@ const SimCardGraph = () => {
               </div>
             </div>
 
-            <div className="w-full min-h-[370px]">
-              <Line data={data} options={buildGraphOptions} />
+            <div className="relative w-full min-h-[370px] flex items-center justify-center">
+              {loading ? (
+                <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-white)]/20 backdrop-blur-sm rounded-xl">
+                  <div className="w-10 h-10 border-4 border-[var(--color-white)] border-t-[var(--color-orange)] rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <Line data={data} options={buildGraphOptions} />
+              )}
             </div>
           </div>
         </div>
