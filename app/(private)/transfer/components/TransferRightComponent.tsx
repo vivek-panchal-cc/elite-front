@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import Phone from "@/components/images/svgs/Phone";
 import Mail from "@/components/images/svgs/Mail";
 import { useAuthStoreWithAutoRefresh } from "@/stores/AuthStoreDealer";
+import IconTryAgain from "@/components/images/svgs/TryAgain";
 
 type FlagType = {
   gcerpid: string | null;
@@ -151,23 +152,25 @@ const TransferRightComponent = ({
         className={`border-[2px] border-[var(--color-red)] ${
           isMobile ? "border-t-0 rounded-t-none rounded-b-xl" : "rounded-xl"
         } ${
-          isEligible ? "px-6 py-6 sm:py-8 md:py-12 md:px-20" : "px-6 py-6"
+          isEligible ? "px-6 py-6 sm:py-8 md:py-12 md:px-20" : "px-6 py-6 sm:py-8 md:py-8 md:px-20"
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {isEligible ? (
           <div className="flex flex-wrap lg:flex-nowrap gap-5 md:gap-14 justify-center text-center lg:text-left">
             {/* <div> */}
-              <Image
-                className="h-[80px] md:h-auto w-auto"
-                src={content[activeIndex].image}
-                alt="transfer-img"
-              />
+            <Image
+              className="h-[80px] md:h-auto w-auto"
+              src={content[activeIndex].image}
+              alt="transfer-img"
+            />
             {/* </div> */}
             <div className="flex flex-col gap-3 md:gap-4">
               <h4 className="text-[18px] md:text-[29px] font-bold leading-[18px] sm:leading-[30px]">
                 {content[activeIndex].title}
               </h4>
-              <p className="text-[14px] leading-[14px] sm:leading-[18px] mb-2 sm:mb-0">{content[activeIndex].description}</p>
+              <p className="text-[14px] leading-[14px] sm:leading-[18px] mb-2 sm:mb-0">
+                {content[activeIndex].description}
+              </p>
               <div className="flex gap-2 md:gap-4">
                 <div className="flex flex-col gap-1 w-full">
                   <Input
@@ -198,7 +201,7 @@ const TransferRightComponent = ({
         ) : (
           <>
             <div className="flex flex-col gap-3 text-center">
-              <p className="text-[22px] md:text-[32px] font-bold text-[var(--color-blue)]">
+              {/* <p className="text-[22px] md:text-[32px] font-bold text-[var(--color-blue)]">
                 {activeIndex === 0
                   ? transferLabels.transSimplyHeader
                   : activeIndex === 1
@@ -206,9 +209,13 @@ const TransferRightComponent = ({
                   : activeIndex === 2
                   ? transferLabels.transPaypalHead
                   : ""}
-              </p>
-              <div className="bg-[var(--color-white)] rounded-xl shadow-lg pb-3 sm:pb-4 text-center flex flex-col justify-center text-[var(--color-black)]">
-                <p className="card-list-border-top text-[18px] sm:text-[20px] text-[var(--color-white)] font-semibold rounded-t-xl p-2 mb-2">
+              </p> */}
+              <div className="flex justify-center items-center">
+                <IconTryAgain className="w-[62px] h-[57px]" />
+              </div>
+              {/* <div className="bg-[var(--color-white)] rounded-xl shadow-lg pb-3 sm:pb-4 text-center flex flex-col justify-center text-[var(--color-black)]"> */}
+              <div className="pb-3 sm:pb-4 text-center flex flex-col justify-center text-[var(--color-black)]">
+                {/* <p className="card-list-border-top text-[18px] sm:text-[20px] text-[var(--color-white)] font-semibold rounded-t-xl p-2 mb-2">
                   {activeIndex === 0
                     ? transferLabels.transSimplySubHead
                     : activeIndex === 1
@@ -216,8 +223,8 @@ const TransferRightComponent = ({
                     : activeIndex === 2
                     ? transferLabels.transPaypalSubHead
                     : ""}
-                </p>
-                <p className="text-[14px] sm:text-[16px] leading-6 px-3">
+                </p> */}
+                <p className="text-[14px] sm:text-[16px] font-bold sm:font-semibold leading-[18px] sm:leading-[20px] px-3">
                   {activeIndex === 0
                     ? transferLabels.transSimplyDesc
                     : activeIndex === 1
@@ -227,22 +234,23 @@ const TransferRightComponent = ({
                     : ""}
                 </p>
               </div>
-              <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 text-center flex flex-col justify-center text-[var(--color-black)]">
-                <p className="text-[12px] sm:text-[14px] leading-6 mb-3">
+              {/* <div className="bg-[var(--color-white)] rounded-xl shadow-lg p-3 sm:p-4 text-center flex flex-col justify-center text-[var(--color-black)]"> */}
+              <div className="p-3 sm:p-4 pb-0 sm:pb-0 text-center flex flex-col justify-center text-[var(--color-black)]">
+                <p className="text-[12px] sm:text-[12px] leading-[17px] font-medium mb-3 text-[var(--color-black)]/80">
                   {transferLabels.trasnferCommonFooter}
                 </p>
                 <span className="">
-                  <div className="flex flex-col md:flex-row gap-2 w-full">
+                  <div className="flex flex-col lg:flex-row gap-2 w-full lg:px-24">
                     <a
                       href={`tel:${profileLabels.profilePhone}`}
-                      className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
+                      className="flex items-center justify-center gap-2 bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full h-[29px] w-full"
                     >
                       <Phone fill="var(--color-white)" />
                       {profileLabels.profilePhone}
                     </a>
                     <a
                       href={`mailto:${profileLabels.profileEmail}`}
-                      className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-full"
+                      className="flex items-center justify-center gap-2 bg-[var(--color-dark-blue)] hover:bg-primary/90 text-[var(--color-white)] text-xs sm:text-sm md:text-[12px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full h-[29px] w-full"
                     >
                       <Mail fill="var(--color-white)" />
                       {profileLabels.profileEmail}

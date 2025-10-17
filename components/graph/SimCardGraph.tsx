@@ -66,7 +66,7 @@ const SimCardGraph = () => {
           </div>
 
           <div className="border-2 border-[var(--color-white)] rounded-xl p-4 pb-6">
-            <div className="w-full flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
+            <div className="w-full flex sm:items-start justify-between max-[425px]:flex-col-reverse text-[var(--color-white)] mb-3 sm:mb-4 gap-3 sm:gap-0">
               <div className="text-left">
                 <h2 className="text-[10px] sm:text-[12px]">
                   {reportsLabels.activatedSim}
@@ -86,7 +86,7 @@ const SimCardGraph = () => {
               </div>
               <div className="flex flex-row sm:flex-row sm:items-center sm:justify-end gap-2">
                 <div
-                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity ${
+                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity h-[28px] sm:h-[35px] ${
                     loading ? "opacity-60 cursor-not-allowed" : ""
                   }`}
                 >
@@ -95,7 +95,7 @@ const SimCardGraph = () => {
                       key={filter}
                       onClick={() => !loading && setActiveFilter(filter)}
                       disabled={loading}
-                      className={`px-3 py-1 text-[10px] sm:text-[12px] rounded-md transition ${
+                      className={`px-3 sm:py-1 text-[10px] sm:text-[12px] rounded-md transition ${
                         loading ? "cursor-not-allowed" : "cursor-pointer"
                       } ${
                         activeFilter === filter
@@ -108,7 +108,7 @@ const SimCardGraph = () => {
                   ))}
                 </div>
                 <div
-                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity ${
+                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity h-[28px] sm:h-[35px] ${
                     loading ? "opacity-60 cursor-not-allowed" : ""
                   }`}
                 >
@@ -118,7 +118,7 @@ const SimCardGraph = () => {
                     onChange={(e) =>
                       !loading && setSelectedYear(Number(e.target.value))
                     }
-                    className="px-3 py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none disabled:cursor-not-allowed"
+                    className="px-3 sm:py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none disabled:cursor-not-allowed"
                   >
                     {years.map((year) => (
                       <option

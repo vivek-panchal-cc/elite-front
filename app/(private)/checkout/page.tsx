@@ -2,6 +2,8 @@
 
 import { useBasket } from "@/components/context/BasketContext";
 import { useCheckout } from "@/components/context/CheckoutContext";
+import ArrowLeft from "@/components/images/svgs/ArrowLeft";
+import DefaultCard from "@/components/images/svgs/DefaultCard";
 import LoaderCard from "@/components/loaders/LoaderCard";
 import { useLoader } from "@/components/providers/loader-provider";
 import { Button } from "@/components/ui/ButtonUI";
@@ -62,22 +64,24 @@ export default function Checkout() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full py-10 px-6 sm:px-4 md:px-6 lg:px-8">
-      <h1 className="pb-4 text-center text-2xl sm:text-4xl text-[var(--color-blue)]">
+    <div className="max-w-7xl mx-auto w-full py-10 sm:py-16 px-6 sm:px-4 md:px-6 lg:px-8">
+      <h1 className="pb-4 text-center text-[22px] sm:text-[32px] text-[var(--color-blue)] font-bold leading-[100%]">
         {checkoutLabels.selectCard}
       </h1>
-      <div className="relative bg-[var(--color-white)] rounded-xl shadow-lg py-8 px-4 md:p-10">
-        <div className="absolute card-list-border-top top-0 left-0 w-full h-5 rounded-t-lg bg-gradient-to-r"></div>
+      <div className="border-b-2 top-0 left-0 w-full h-5 rounded-t-lg bg-gradient-to-r"></div>
+      <div className="relative bg-[var(--color-white)] rounded-xl p-4 md:p-10">
+        {/* <div className="absolute card-list-border-top top-0 left-0 w-full h-5 rounded-t-lg bg-gradient-to-r"></div> */}
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center mb-6 gap-2">
+        <div className="flex flex-row sm:flex-row justify-between items-stretch sm:items-center mb-6 gap-2">
           <Button
-            className="bg-[var(--color-red)] text-[12px] sm:text-[14px] text-[var(--color-white)] px-4 py-2 rounded-md hover:bg-[var(--color-red-hover)] w-fit sm:w-auto"
+            className="bg-[var(--color-red)] text-[12px] sm:text-[14px] font-semibold text-[var(--color-white)] !px-4 sm:!px-6 py-2 rounded-full h-[30px] sm:h-[37px] hover:bg-[var(--color-red-hover)]"
             onClick={goBack}
           >
+            <ArrowLeft className="!h-3 !w-3" />
             {checkoutLabels.back}
           </Button>
           <Button
-            className="bg-[var(--color-blue)] text-[12px] sm:text-[14px] text-[var(--color-white)] px-4 py-2 rounded-md w-full sm:w-auto"
+            className="bg-[var(--color-blue)] text-[12px] sm:text-[14px] font-semibold text-[var(--color-white)] !px-4 sm:!px-6 py-2 rounded-full h-[30px] sm:h-[37px]"
             onClick={createPayment}
           >
             {checkoutLabels.payWithNew}
@@ -86,7 +90,7 @@ export default function Checkout() {
 
         {/* Cards Section */}
         {cardList.length > 0 && (
-          <h2 className="text-md sm:text-lg font-medium mb-4">
+          <h2 className="text-[14px] sm:text-[18px] font-semibold mb-4">
             {checkoutLabels.selectSavedCard}
           </h2>
         )}
@@ -95,7 +99,7 @@ export default function Checkout() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="border rounded-lg p-4 shadow-lg bg-[var(--color-white)]"
+                className="border rounded-lg p-4 shadow-lg bg-[var(--color-soft-white)]"
               >
                 <LoaderCard />
               </div>
@@ -106,7 +110,7 @@ export default function Checkout() {
             {checkoutLabels.noCards}
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-[12px] sm:text-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-[12px] sm:text-[14px]">
             {cardList.map((card: any) => {
               const isExpired =
                 new Date(`${card.expiry_year}-${card.expiry_month}-01`) <
@@ -114,26 +118,39 @@ export default function Checkout() {
               return (
                 <div
                   key={card.id}
-                  className="border rounded-lg p-4 flex flex-col shadow-lg bg-[var(--color-white)]"
+                  className={`relative border rounded-lg p-4 flex flex-col shadow-lg bg-[var(--color-soft-white)] ${
+                    card.is_default ? "border-2 border-[#FE174E]" : ""
+                  }`}
                 >
+                  {card.is_default && (
+                    <span className="absolute -top-3 -right-3 bg-[var(--color-red)] text-white text-[8px] font-bold rounded-full h-[22px] w-[22px] flex items-center justify-center shadow-md">
+                      <DefaultCard />
+                    </span>
+                  )}
                   <div>
-                    <p className="font-semibold">{card.card_type}</p>
-                    <p className="text-sm tracking-widest">
-                      **** **** **** {card.last4}
+                    <p className="text-[12px] text-[var(--color-black)]/50 font-semibold">
+                      {card.card_type}
                     </p>
-                    <p className="text-sm mt-1">
+                    <p
+                      className={`text-[14px] sm:text-[16px] text-[#0D4BA3] mt-1 tracking-widest ${
+                        card.is_default ? "font-medium" : "font-normal"
+                      }`}
+                    >
+                      ************{card.last4}
+                    </p>
+                    <p className="text-[12px] text-[var(--color-black)]/50 font-normal mt-1">
                       {!isExpired
                         ? checkoutLabels.expires
                         : checkoutLabels.expired}{" "}
-                      {!isExpired ? (
-                        <span>
-                          {card.expiry_month}-{card.expiry_year}
-                        </span>
-                      ) : (
-                        <span className="bg-[var(--color-red)] text-[var(--color-black)] p-1 px-2 rounded-sm">
-                          {card.expiry_month}-{card.expiry_year}
-                        </span>
-                      )}
+                      <span
+                        className={
+                          isExpired
+                            ? "bg-[var(--color-red)] text-[var(--color-black)] p-1 px-2 rounded-sm"
+                            : ""
+                        }
+                      >
+                        {card.expiry_month}-{card.expiry_year}
+                      </span>
                     </p>
                   </div>
 
@@ -141,27 +158,27 @@ export default function Checkout() {
                     {!isExpired && (
                       <>
                         <Button
-                          className="text-[12px] sm:text-[14px] bg-[var(--color-blue)] text-[var(--color-white)] px-3 py-0 sm:py-1 rounded-md h-7 sm:h-9"
+                          className="h-[30px] sm:h-[35px] text-[12px] font-semibold bg-[var(--color-blue)] text-[var(--color-white)] px-4 sm:px-6 rounded-full"
                           onClick={() => handlePayNow(card)}
                         >
                           {checkoutLabels.payNow}
                         </Button>
                         {!card.is_default && (
-                          <button
-                            className="border border-[var(--color-green)] text-[var(--color-green)] px-3 py-1 rounded-md hover:bg-[var(--color-green)] hover:text-[var(--color-white)] cursor-pointer"
+                          <Button
+                            className="h-[30px] sm:h-[35px] text-[12px] font-semibold bg-[#0091CA] hover:bg-[#0091CA]/80 px-4 sm:px-6 rounded-full hover:text-[var(--color-white)] cursor-pointer"
                             onClick={() => handleCardAction(card.id, "default")}
                           >
                             {checkoutLabels.setAsDefault}
-                          </button>
+                          </Button>
                         )}
                       </>
                     )}
-                    <button
-                      className="border border-[var(--color-red)] text-[var(--color-red)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] px-3 py-1 rounded-md cursor-pointer"
+                    <Button
+                      className="h-[30px] sm:h-[35px] text-[12px] font-semibold bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] px-4 sm:px-6 rounded-full cursor-pointer"
                       onClick={() => handleCardAction(card.id, "delete")}
                     >
                       {checkoutLabels.delete}
-                    </button>
+                    </Button>
                   </div>
 
                   {isExpired && (

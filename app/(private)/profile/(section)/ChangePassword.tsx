@@ -61,7 +61,7 @@ const ChangePassword = ({ onBack }: onBackProps) => {
 
   return (
     <form onSubmit={formik.handleSubmit} className="">
-      <h2 className="text-xl font-bold text-left mb-2 text-[var(--color-blue)]">
+      <h2 className="text-xl font-bold text-left mb-2 sm:mb-4 text-[var(--color-blue)]">
         {changePassowrdLabels.changePassword}
       </h2>
 
@@ -90,14 +90,14 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         </div> */}
 
       <div className="space-y-1 relative">
-        <Label className="font-medium leading-[24.42px] tracking-[0px]">
+        <Label className="font-semibold text-[12px] sm:text-[14px] leading-[24.42px] tracking-[0px] text-[var(--color-black)]/50 ml-0 mb-0 sm:mb-1">
           {changePassowrdLabels.oldPassword}
         </Label>
         <Input
           type={showOldPassword ? "text" : "password"}
           name="old_password"
           className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
-          placeholder="Enter Old Password"
+          // placeholder="Enter Old Password"
           autoComplete="new-password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -115,64 +115,65 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         </span>
       </div>
 
-      <div className="space-y-1 relative">
-        <Label className="font-medium leading-[24.42px] tracking-[0px]">
-          {changePassowrdLabels.newPassword}
-        </Label>
-        <Input
-          type={showNewPassword ? "text" : "password"}
-          name="new_password"
-          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
-          placeholder="Enter New Password"
-          autoComplete="new-password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.new_password}
-          //   onCopy={(e) => e.preventDefault()}
-          //   onPaste={(e) => e.preventDefault()}
-          error={formik.touched.new_password && formik.errors.new_password}
-          aria-label="Password"
-        />
-        <span
-          className="absolute right-3 top-9 cursor-pointer"
-          onClick={() => setShowNewPassword(!showNewPassword)}
-        >
-          {showNewPassword ? <IconEyeClose /> : <IconEyeOpen />}
-        </span>
-      </div>
+      <div className="w-full sm:flex gap-2 sm:mt-6">
+        <div className="flex-1 space-y-1 relative">
+          <Label className="font-semibold text-[12px] sm:text-[14px] leading-[24.42px] tracking-[0px] text-[var(--color-black)]/50 ml-0 mb-0 sm:mb-1">
+            {changePassowrdLabels.newPassword}
+          </Label>
+          <Input
+            type={showNewPassword ? "text" : "password"}
+            name="new_password"
+            className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px] text-[12px] sm:text-[14px]"
+            // placeholder="Enter New Password"
+            autoComplete="new-password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.new_password}
+            //   onCopy={(e) => e.preventDefault()}
+            //   onPaste={(e) => e.preventDefault()}
+            error={formik.touched.new_password && formik.errors.new_password}
+            aria-label="Password"
+          />
+          <span
+            className="absolute right-3 top-9 cursor-pointer"
+            onClick={() => setShowNewPassword(!showNewPassword)}
+          >
+            {showNewPassword ? <IconEyeClose /> : <IconEyeOpen />}
+          </span>
+        </div>
 
-      <div className="space-y-1 relative">
-        <Label className="font-medium leading-[24.42px] tracking-[0px]">
-          {changePassowrdLabels.confirmPassword}
-        </Label>
-        <Input
-          type={showConfirmPassword ? "text" : "password"}
-          name="confirm_password"
-          className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
-          placeholder="Enter Confirm Password"
-          autoComplete="new-password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirm_password}
-          onCopy={(e) => e.preventDefault()}
-          onPaste={(e) => e.preventDefault()}
-          error={
-            formik.touched.confirm_password && formik.errors.confirm_password
-          }
-          aria-label="Password"
-        />
-        <span
-          className="absolute right-3 top-9 cursor-pointer"
-          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-        >
-          {showConfirmPassword ? <IconEyeClose /> : <IconEyeOpen />}
-        </span>
+        <div className="flex-1 space-y-1 relative">
+          <Label className="font-semibold text-[12px] sm:text-[14px] leading-[24.42px] tracking-[0px] text-[var(--color-black)]/50 ml-0 mb-0 sm:mb-1">
+            {changePassowrdLabels.confirmPassword}
+          </Label>
+          <Input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirm_password"
+            className="bg-[var(--color-white)] placeholder:text-[12px] sm:placeholder:text-[14px]"
+            // placeholder="Enter Confirm Password"
+            autoComplete="new-password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.confirm_password}
+            onCopy={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
+            error={
+              formik.touched.confirm_password && formik.errors.confirm_password
+            }
+            aria-label="Password"
+          />
+          <span
+            className="absolute right-3 top-9 cursor-pointer"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <IconEyeClose /> : <IconEyeOpen />}
+          </span>
+        </div>
       </div>
-
-      <div className="flex flex-col sm:flex-row gap-2 mt-3">
+      <div className="flex flex-col min-[425px]:flex-row w-full sm:w-1/2 gap-2 mt-6">
         <Button
           type="submit"
-          className="w-full sm:w-fit rounded-[50px] text-[12px]"
+          className="flex-1 w-full rounded-[50px] text-[12px] sm:text-[14px] font-semibold h-[30px] sm:h-[32px] bg-[var(--color-red)] hover:bg-[var(--color-red-hover)]"
           disabled={formik.isSubmitting}
         >
           {formik.isSubmitting
@@ -183,7 +184,7 @@ const ChangePassword = ({ onBack }: onBackProps) => {
         {!formik.isSubmitting && (
           <Button
             type="button"
-            className="w-full sm:w-fit bg-gray-300 text-[var(--color-black)] hover:bg-[var(--color-red-hover)] hover:text-[var(--color-white)] rounded-[50px] px-5 py-2 text-[12px]"
+            className="flex-1 w-full h-[30px] sm:h-[32px] rounded-[50px] px-5 py-2 text-[12px] sm:text-[14px] font-semibold"
             disabled={formik.isSubmitting}
             onClick={() => {
               formik.resetForm();
