@@ -12,6 +12,7 @@ import LoaderDiv from "@/components/loaders/LoaderDiv";
 import { IsMobileProps } from "@/types/profile";
 import { useBasket } from "@/components/context/BasketContext";
 import { IconLoader } from "@/components/images/icons";
+import OrderHistoryDetails from "./OrderHistoryDetails";
 
 export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
   const { isLoading, handleDownloadInvoice } = useBasket();
@@ -24,6 +25,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [loadingId, setLoadingId] = useState<number | null>(null);
+  const [selectedOrderId, setSelectedOrderId] = useState<any | null>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -43,6 +45,26 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
       setLoadingId(null);
     }
   };
+
+  const handleViewOrder = (order_id: number) => {
+    setSelectedOrderId(order_id);
+  };
+
+  const handleBackToList = () => {
+    setSelectedOrderId(null);
+  };
+
+  if (selectedOrderId) {
+    return (
+      <OrderHistoryDetails
+        order_id={selectedOrderId}
+        onBack={handleBackToList}
+        isMobile={isMobile}
+        loadingId={loadingId}
+        handleInvoiceDownload={handleInvoiceDownload}
+      />
+    );
+  }
 
   return (
     <div
@@ -149,13 +171,16 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                   .viewReceipt
                               }
                             </button> */}
-                                {/* <button className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
+                                <button
+                                  className="block w-full border-b border-[var(--table-border)] text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer"
+                                  onClick={() => handleViewOrder(order.ord_id)}
+                                >
                                   {
                                     profileLabels.profileOrderHistoryLabel
                                       .viewOrder
                                   }
-                                </button> */}
-                                <button
+                                </button>
+                                {/* <button
                                   className={`block w-full px-3 py-1 text-center ${
                                     loadingId === order.ord_id
                                       ? "cursor-not-allowed"
@@ -169,19 +194,17 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                   {loadingId === order.ord_id ? (
                                     <>
                                       <span className="flex justify-center items-center gap-2 text-[var(--color-black)]">
-                                        {/* <IconLoader className="h-4 w-4 animate-spin" /> */}
                                         {checkoutLabels.downloading}
                                       </span>
                                     </>
                                   ) : (
                                     <>
                                       <span className="flex justify-center items-center gap-2 text-[var(--color-black)]">
-                                        {/* <Download className="h-3 w-3" /> */}
                                         {checkoutLabels.downloadInvoice}
                                       </span>
                                     </>
                                   )}
-                                </button>
+                                </button> */}
                                 {/* <button className="block w-full text-center px-3 py-1 hover:bg-gray-100 text-[var(--color-dark-blue)] hover:text-[var(--color-red)] text-[12px] cursor-pointer">
                               {profileLabels.profileOrderHistoryLabel.reOrder}
                             </button> */}
@@ -270,13 +293,13 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                             {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.viewReceipt}
                         </Button> */}
-                            {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
-                                {
-                                  profileLabels.profileOrderHistoryLabel
-                                    .viewOrder
-                                }
-                              </Button> */}
                             <Button
+                              className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal"
+                              onClick={() => handleViewOrder(order.ord_id)}
+                            >
+                              {profileLabels.profileOrderHistoryLabel.viewOrder}
+                            </Button>
+                            {/* <Button
                               className={`h-[23px] flex justify-center items-center gap-2 text-[var(--color-white)] text-[12px] sm:text-[12px] leading-[30px] font-medium px-3 py-1 rounded-xl ${
                                 loadingId === order.ord_id
                                   ? "cursor-not-allowed"
@@ -298,7 +321,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
                                   {checkoutLabels.downloadInvoice}
                                 </>
                               )}
-                            </Button>
+                            </Button> */}
                             {/* <Button className="h-[23px] w-[105px] px-3 py-1 rounded-full bg-[var(--color-dark-blue)] hover:bg-[var(--color-red-hover)] text-[10px] md:text-[12px] font-normal">
                           {profileLabels.profileOrderHistoryLabel.reOrder}
                         </Button> */}

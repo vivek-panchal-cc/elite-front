@@ -9,3 +9,4 @@ export { default as IconCircle } from "./Circle";
 export { default as IconTrophy } from "./Trophy";
 export { default as IconCross } from "./Cross";
 export { default as IconLoader } from "./Loader";
+export { default as IconBack } from "./Back";

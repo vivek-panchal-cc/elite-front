@@ -270,6 +270,14 @@ const getOrderHistory = (
   );
 };
 
+const getOrderHistoryDetail = (
+  id: number
+): Promise<AxiosResponse<ApiResponse>> => {
+  return axiosProductInstance.get(
+    apiUrl.PRODUCT_ENDPOINTS.ORDER_HISTORY_DETAIL(id)
+  );
+};
+
 const clearCart = (): Promise<AxiosResponse<ApiResponse>> => {
   return axiosProductInstance.delete(apiUrl.PRODUCT_ENDPOINTS.CLEAR_CART);
 };
@@ -413,6 +421,7 @@ export const apiRequest = {
   getDealerLatestOffer,
   getTopCategory,
   getOrderHistory,
+  getOrderHistoryDetail,
   clearCart,
   cartItems,
   updateRedeemAmount,
@@ -471,6 +480,7 @@ export {
   getDealerLatestOffer,
   getTopCategory,
   getOrderHistory,
+  getOrderHistoryDetail,
   clearCart,
   cartItems,
   updateRedeemAmount,
