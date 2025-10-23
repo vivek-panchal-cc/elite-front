@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
       <Modal
         isOpen={isLogoutOpen}
         onClose={() => setLogoutOpen(false)}
-        classStyle=""
+        classStyle="border-2 border-[var(--color-red)]"
         isClose={false}
       >
         <LogoutForm setLogoutOpen={handleProfileInfo} />
