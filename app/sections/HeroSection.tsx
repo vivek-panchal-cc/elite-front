@@ -82,7 +82,7 @@ export default function HeroSection() {
               <div className="relative mt-12 flex justify-center lg:justify-start">
                 <div className="w-full lg:w-[392px] border border-[#D9D9D940] rounded-[15px] sm:rounded-[20px] pt-1 sm:pt-3 px-10 sm:px-4 md:px-6 pb-3 sm:pb-6">
                   {/* Modified label with better positioning and styling */}
-                  <div className="absolute px-2 text-[var(--color-white)] font-normal text-[10px] sm:text-[16px] -mt-3 sm:-mt-6 -ml-2 sm:ml-5 bg-[#7c3176] sm:bg-[#773277]">
+                  <div className="absolute px-2 text-[var(--color-white)] font-normal text-[10px] sm:text-[16px] -mt-3 sm:-mt-6 -ml-2 sm:ml-5 bg-[#7c3176] sm:bg-[#882d70] md:bg-[#912c6e] lg:bg-[#7e3075] xl:bg-[#7a3177]">
                     {homepageLabels.hero.findOutMore}
                   </div>
 
