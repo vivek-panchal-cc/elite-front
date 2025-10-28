@@ -231,7 +231,7 @@ export default function ProfileOrderHistory({ isMobile }: IsMobileProps) {
         ) : (
           // Desktop table
           <div className="overflow-hidden rounded-xl">
-            <div className="custom-scrollbar max-h-[400px] min-h-[400px] hide-scrollbar">
+            <div className="custom-scrollbar max-h-[400px] min-h-[400px]">
               <table className="w-full max-w-[792px] min-w-[770px] rounded-lg">
                 <thead className="border-b border-[var(--color-gray)] text-[10px] md:text-[12px]">
                   <tr className="text-left text-[12px] md:text-[14px] font-medium leading-[38px] text-[var(--color-black)]">

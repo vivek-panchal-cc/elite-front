@@ -56,13 +56,13 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
                 >
                   <IconBack className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 </button>
-                <span className="text-[var(--color-blue)] text-[18px] sm:text-[25px] font-semibold">
+                <span className="text-[#005198] text-[18px] sm:text-[25px] font-semibold">
                   {profileLabels.profileOrderHistory}
                 </span>
               </div>
 
               <Button
-                className={`h-[28px] flex justify-center items-center gap-2 text-[var(--color-white)] bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[12px] sm:text-[12px] leading-[30px] font-medium !px-3 sm:!px-5 py-1 rounded-xl ${
+                className={`h-[28px] flex justify-center items-center gap-2 text-[var(--color-white)] bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] text-[12px] sm:text-[12px] leading-[20px] font-medium !px-3 sm:!px-5 py-1 rounded-xl ${
                   loadingId === order_id
                     ? "cursor-not-allowed"
                     : "cursor-pointer"
@@ -116,58 +116,64 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
             {/* Main Layout */}
             <div className="flex flex-col lg:flex-row gap-5">
               {/* Left Side - Product List */}
-              <div className="flex-1 rounded-[10px]">
-                <div className="flex justify-between px-4 sm:px-6 text-[14px] font-bold leading-[38px] border-b-2 gap-4 border-[var(--table-border)] rounded-t-[10px] sticky">
-                  <span className="w-[80%]">
-                    {
-                      profileLabels.profileOrderHistoryLabel.orderHistoryDetails
-                        .product
-                    }
-                  </span>
-                  <span className="w-[20%] text-center">
-                    {
-                      profileLabels.profileOrderHistoryLabel.orderHistoryDetails
-                        .total
-                    }
-                  </span>
-                </div>
-
-                <div className="divide-y-2 divide-[var(--table-border)] overflow-y-auto max-h-[400px] custom-scrollbar sm:mb-3">
-                  {orderDetails?.carts.map((item) => (
-                    <div
-                      key={item.cart_id}
-                      className="flex justify-between items-center px-4 sm:px-6 py-4 gap-4"
-                    >
-                      <div className="flex items-center gap-4 w-[80%]">
-                        <div className="relative border border-[var(--table-border)] rounded-md p-2 flex-shrink-0 h-10 w-10 sm:h-10 sm:w-10 md:h-10 md:w-10 lg:h-12 lg:w-12 flex items-center justify-center">
-                          <div className="overflow-hidden rounded-md h-full w-full">
-                            <Image
-                              src={
-                                item.product.images[0]?.prod_image
-                                  ? `${imageBaseUrl}/medium/${item.product.images[0].prod_image}`
-                                  : noProduct
-                              }
-                              alt="Product"
-                              fill
-                              className="object-contain rounded p-1"
-                            />
+              <div className="flex-1 rounded-[10px] overflow-y-auto max-h-[400px] custom-scrollbar pr-2 sm:pr-4">
+                <table className="w-full border-collapse">
+                  <thead className="sticky top-0 z-10 bg-[var(--color-light-gray)]">
+                    <tr className="text-[14px] font-bold leading-[38px] border-b-2 border-[var(--table-border)] rounded-t-[10px]">
+                      <th className="w-[80%] text-left px-4 sm:px-6 bg-[var(--color-light-gray)]">
+                        {
+                          profileLabels.profileOrderHistoryLabel
+                            .orderHistoryDetails.product
+                        }
+                      </th>
+                      <th className="w-[20%] text-left px-4 sm:px-6 bg-[var(--color-light-gray)]">
+                        {
+                          profileLabels.profileOrderHistoryLabel
+                            .orderHistoryDetails.total
+                        }
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y-2 divide-[var(--table-border)] sm:mb-3">
+                    {orderDetails?.carts.map((item) => (
+                      <tr
+                        key={item.cart_id}
+                        className="px-4 sm:px-6 py-4 gap-4 align-middle"
+                      >
+                        <td className="w-[80%] px-4 sm:px-6 py-4">
+                          <div className="flex items-center gap-4">
+                            <div className="relative border border-[var(--table-border)] rounded-md p-2 flex-shrink-0 h-10 w-10 sm:h-10 sm:w-10 md:h-10 md:w-10 lg:h-12 lg:w-12 flex items-center justify-center">
+                              <div className="overflow-hidden rounded-md h-full w-full">
+                                <Image
+                                  src={
+                                    item.product.images[0]?.prod_image
+                                      ? `${imageBaseUrl}/medium/${item.product.images[0].prod_image}`
+                                      : noProduct
+                                  }
+                                  alt="Product"
+                                  fill
+                                  className="object-contain rounded p-1"
+                                />
+                              </div>
+                              <span className="absolute -top-2 -right-2 bg-[var(--color-red)] text-white text-[10px] font-bold rounded-full h-[18px] w-[18px] flex items-center justify-center shadow-md">
+                                {item.qty}
+                              </span>
+                            </div>
+                            <div className="overflow-hidden">
+                              <span className="text-[12px] font-medium leading-tight block break-words">
+                                {item.product.prod_name}
+                              </span>
+                            </div>
                           </div>
-                          <span className="absolute -top-2 -right-2 bg-[var(--color-red)] text-white text-[10px] font-bold rounded-full h-[18px] w-[18px] flex items-center justify-center shadow-md">
-                            {item.qty}
-                          </span>
-                        </div>
-                        <div className="overflow-hidden">
-                          <span className="text-[12px] font-medium leading-tight block break-words">
-                            {item.product.prod_name}
-                          </span>
-                        </div>
-                      </div>
-                      <span className="text-[12px] font-medium leading-tight items-start w-[20%] text-center">
-                        <WrapAmount value={item.price * item.qty} />
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                        </td>
+
+                        <td className="text-[12px] font-medium leading-tight text-left w-[20%] px-4 sm:px-6 py-4 align-top">
+                          <WrapAmount value={item.price * item.qty} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
 
               {/* Right Side - Order Summary */}
@@ -177,9 +183,7 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
                     profileLabels.profileOrderHistoryLabel.orderHistoryDetails
                       .orderNo
                   }
-                  <span className="text-[var(--color-blue)] font-medium">
-                    {orderDetails?.ord_id}
-                  </span>
+                  <span className="">{orderDetails?.ord_id}</span>
                 </p>
                 <hr className="border-t border-[var(--table-border)] my-3" />
 
@@ -252,19 +256,23 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
                     </span>{" "}
                     <WrapAmount value={Number(orderDetails?.tariff_value)} />
                   </p>
-                  {orderDetails?.discount_value && (
-                    <p className="flex justify-between sm:pr-8">
-                      <span className="font-bold">
-                        {
-                          profileLabels.profileOrderHistoryLabel
-                            .orderHistoryDetails.orderDiscount
-                        }
-                      </span>{" "}
-                      <WrapAmount
-                        value={Number(-orderDetails?.discount_value)}
-                      />
-                    </p>
-                  )}
+                  {/* {orderDetails?.discount_value && ( */}
+                  <p className="flex justify-between sm:pr-8">
+                    <span className="font-bold">
+                      {
+                        profileLabels.profileOrderHistoryLabel
+                          .orderHistoryDetails.orderDiscount
+                      }
+                    </span>{" "}
+                    <WrapAmount
+                      value={
+                        orderDetails?.discount_value
+                          ? Number(-orderDetails?.discount_value)
+                          : 0
+                      }
+                    />
+                  </p>
+                  {/* )} */}
                 </div>
 
                 <hr className="border-t border-[var(--table-border)] my-3" />
@@ -345,7 +353,7 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
             {/* Address Section */}
             <div className="max-[768px]:hidden flex flex-col sm:flex-row justify-start gap-6 px-4 sm:px-6 py-4">
               <div>
-                <p className="text-[var(--color-blue)] font-bold text-[16px] mb-1">
+                <p className="text-[var(--color-blue)] font-bold text-[16px] leading-[38px]">
                   {
                     profileLabels.profileOrderHistoryLabel.orderHistoryDetails
                       .billingAddress
@@ -368,7 +376,7 @@ const OrderHistoryDetails: React.FC<OrderHistoryDetailsProps> = ({
               </div>
 
               <div>
-                <p className="text-[var(--color-blue)] font-bold text-[16px] mb-1">
+                <p className="text-[var(--color-blue)] font-bold text-[16px] leading-[38px]">
                   {
                     profileLabels.profileOrderHistoryLabel.orderHistoryDetails
                       .shippingAddress

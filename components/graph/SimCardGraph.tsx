@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   LineElement,
@@ -21,6 +21,8 @@ import {
 } from "@/lib/constants/all";
 import { formatGraphData } from "@/lib/helpers/formatGraphData";
 import LoaderDiv from "../loaders/LoaderDiv";
+import { cn } from "@/lib/utils";
+import Arrow from "../images/svgs/Arrow";
 
 ChartJS.register(
   LineElement,
@@ -32,6 +34,8 @@ ChartJS.register(
 );
 
 const SimCardGraph = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState("1M");
   const years = getLastNYears(2);
   const [selectedYear, setSelectedYear] = useState(years[0]);
@@ -51,6 +55,20 @@ const SimCardGraph = () => {
       : Number(item)
   );
   const data = buildGraphDataset(labels, numericChartData);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div
@@ -108,28 +126,52 @@ const SimCardGraph = () => {
                   ))}
                 </div>
                 <div
-                  className={`flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] rounded-full px-2 p-1 transition-opacity h-[28px] sm:h-[35px] ${
-                    loading ? "opacity-60 cursor-not-allowed" : ""
-                  }`}
+                  ref={dropdownRef}
+                  className={`relative flex justify-between sm:justify-end gap-2 bg-[var(--color-white)] px-2 p-1 transition-opacity h-[28px] sm:h-[35px] ${
+                    dropdownOpen ? "rounded-t-xl" : "rounded-full"
+                  } ${loading ? "opacity-60 cursor-not-allowed" : ""}`}
                 >
-                  <select
-                    value={selectedYear}
+                  <button
+                    type="button"
+                    onClick={() => !loading && setDropdownOpen((prev) => !prev)}
                     disabled={loading}
-                    onChange={(e) =>
-                      !loading && setSelectedYear(Number(e.target.value))
-                    }
-                    className="px-3 sm:py-1 text-[10px] sm:text-[12px] rounded-md font-semibold border border-[var(--color-white)] text-[var(--color-black)] bg-transparent cursor-pointer focus:outline-none disabled:cursor-not-allowed"
+                    className={`relative w-full px-6 sm:py-2 text-[10px] sm:text-[12px] font-semibold text-[var(--color-black)] bg-[var(--color-white)] rounded-xl flex items-center justify-center transition ${
+                      loading
+                        ? "opacity-60 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
                   >
-                    {years.map((year) => (
-                      <option
-                        key={year}
-                        value={year}
-                        className="text-[var(--color-black)]"
-                      >
-                        {year}
-                      </option>
-                    ))}
-                  </select>
+                    <span className="text-center">{selectedYear}</span>
+                    <span
+                      className={cn(
+                        "absolute right-1 transition-transform duration-300",
+                        dropdownOpen ? "rotate-270" : "rotate-90"
+                      )}
+                    >
+                      <Arrow className="text-inherit" stroke="currentColor" />
+                    </span>
+                  </button>
+
+                  {dropdownOpen && (
+                    <ul className="absolute top-full left-0 mt-0 text-center bg-[var(--color-white)] rounded-b-xl shadow-lg w-full overflow-hidden z-10">
+                      {years.map((year) => (
+                        <li
+                          key={year}
+                          onClick={() => {
+                            setSelectedYear(year);
+                            setDropdownOpen(false);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] sm:text-[12px] font-medium text-[var(--color-black)] cursor-pointer hover:bg-gray-100 transition ${
+                            selectedYear === year
+                              ? "bg-gray-100 font-semibold"
+                              : ""
+                          }`}
+                        >
+                          {year}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
