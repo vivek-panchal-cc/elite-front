@@ -95,7 +95,7 @@ const Transfer = () => {
         <div className="items-center px-[40px] sm:px-[20px] md:px-[30px] lg:px-[60px]">
           {/* <Breadcrumb /> */}
           <div className="flex-1 space-y-4 py-12">
-            <div className="flex flex-col md:flex-row gap-16">
+            <div className="flex flex-col md:flex-row gap-14">
               {/* Sidebar */}
               <div className="w-full md:w-1/3">
                 <SidebarNav

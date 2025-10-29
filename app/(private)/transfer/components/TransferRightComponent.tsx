@@ -147,16 +147,18 @@ const TransferRightComponent = ({
   const isEligible = eligibilityRules[currentContent.flagKey](flagValue);
 
   return (
-    <div className={`${isMobile ? "w-[95%] mx-auto" : "w-3/4"}`}>
+    <div className={`${isMobile ? "w-[95%] mx-auto" : "w-[90%]"}`}> {/* w-3/4 */}      
       <div
         className={`border-[2px] border-[var(--color-red)] ${
           isMobile ? "border-t-0 rounded-t-none rounded-b-xl" : "rounded-xl"
         } ${
-          isEligible ? "px-6 py-6 sm:py-8 md:py-12 md:px-20" : "px-6 py-6 sm:py-8 md:py-8 md:px-20"
+          isEligible
+            ? "px-6 py-6 sm:py-8 md:py-12 md:px-20"
+            : "px-6 py-6 sm:py-8 md:py-8 md:px-20"
         } bg-[var(--color-light-gray)] shadow-sm`}
       >
         {isEligible ? (
-          <div className="flex flex-wrap lg:flex-nowrap gap-5 md:gap-14 justify-center text-center lg:text-left">
+          <div className="flex flex-wrap lg:flex-nowrap gap-5 md:gap-4 lg:gap-14 justify-center text-center lg:text-left">
             {/* <div> */}
             <Image
               className="h-[80px] md:h-auto w-auto"
@@ -165,10 +167,13 @@ const TransferRightComponent = ({
             />
             {/* </div> */}
             <div className="flex flex-col gap-3 md:gap-4">
-              <h4 className="text-[18px] md:text-[29px] font-bold leading-[18px] sm:leading-[30px]">
-                {content[activeIndex].title}
+              <h4
+                className="text-[18px] md:text-[29px] font-bold leading-[18px] sm:leading-[30px]"
+                dangerouslySetInnerHTML={{ __html: content[activeIndex].title }}
+              >
+                {/* {content[activeIndex].title} */}
               </h4>
-              <p className="text-[14px] leading-[14px] sm:leading-[18px] mb-2 sm:mb-0">
+              <p className="text-[14px] leading-[14px] sm:leading-[18px] mb-2 sm:mb-0 font-medium capitalize">
                 {content[activeIndex].description}
               </p>
               <div className="flex gap-2 md:gap-4">
@@ -186,7 +191,7 @@ const TransferRightComponent = ({
                   )}
                 </div>
                 <Button
-                  className="min-w-[76px] max-h-[28px] lg:min-w-[118px] lg:max-h-[37px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] sm:text-[14px] font-normal"
+                  className="min-w-[76px] max-h-[28px] lg:min-w-[118px] lg:max-h-[37px] bg-[var(--color-dark-blue)] text-[var(--color-white)] rounded-full px-5 py-2 text-[12px] sm:text-[14px] font-medium leading-[40px]"
                   onClick={handlePayment}
                   disabled={
                     parseFloat(amountInput) < 10 ||

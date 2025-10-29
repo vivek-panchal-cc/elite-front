@@ -1,4 +1,5 @@
 import { images } from "@/components/images";
+import { IconClose } from "@/components/images/icons";
 import { useLoader } from "@/components/providers/loader-provider";
 import { Button } from "@/components/ui/ButtonUI";
 import { Input } from "@/components/ui/Input";
@@ -84,29 +85,32 @@ const PaypalModal = ({
       classStyle="overflow-y-auto max-h-[90vh]"
       isClose={false}
     >
-      <div className="sticky top-0 z-20 h-[96px] text-white bg-[var(--color-blue)] text-center flex items-center justify-center">
-        <h4 className="text-[28px] md:text-[34px] font-bold">
+      <div className="sticky top-0 z-20 h-[96px] text-[var(--color-white)] bg-[var(--color-blue)] flex items-center justify-center">
+        <h4 className="text-[28px] md:text-[34px] font-bold absolute left-1/2 -translate-x-1/2">
           {transferLabels.ppModal}
         </h4>
+
         <Button
           variant="ghost"
           size="icon"
-          className="mt-[10px] mr-[10px] border text-white h-[20px] w-[20px] rounded-[50px] absolute top-2 right-2 text-2xl"
+          // className="mt-[10px] mr-[10px] border text-white h-[20px] w-[20px] rounded-[50px] absolute top-2 right-2 text-2xl"
+          className="border-2 text-[var(--color-white)] h-[25px] w-[25px] sm:h-[30px] sm:w-[30px] rounded-full absolute right-6 top-1/2 -translate-y-1/2 text-xl hover:!bg-transparent"
           onClick={handleCloseModal}
           aria-label="Close"
         >
-          &times;
+          <IconClose className="!h-[12px] !w-[12px] sm:!h-[14px] sm:!w-[14px]" />
         </Button>
       </div>
+
       <form
-        className="p-5 md:px-13 md:py-8 max-w-[809px] bg-[var(--color-light-gray)]"
+        className="p-5 md:px-13 md:py-8 max-w-[809px] bg-[var(--color-light-gray)] border-2 border-[var(--color-red)] rounded-b-[20px] border-t-0"
         onSubmit={formik.handleSubmit}
       >
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-4 md:gap-y-8`}
         >
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppAvailBal}
             </Label>
             <Input
@@ -125,7 +129,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppTransAmt}
             </Label>
             <Input
@@ -145,7 +149,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppFee}
             </Label>
             <Input
@@ -164,7 +168,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppRecAmt}
             </Label>
             <Input
@@ -186,7 +190,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppEmail}
             </Label>
             <Input
@@ -201,7 +205,7 @@ const PaypalModal = ({
           </div>
 
           <div className="space-y-1">
-            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)]">
+            <Label className="font-medium text-sm sm:text-base md:text-base text-[var(--color-black)] leading-[18px]">
               {transferLabels.ppEmailConfirm}
             </Label>
             <Input
