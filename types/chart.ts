@@ -47,6 +47,29 @@ export interface ActivatedSIMGraphDataMultipleReportData {
   totalActivation: number;
 }
 
+export interface ActivatedSIMGraphDataMonthlyReportData {
+  Total: {
+    quarter1?: (number | string)[];
+    quarter2?: (number | string)[];
+    quarter3?: (number | string)[];
+    quarter4?: (number | string)[];
+    January: number | string;
+    February: number | string;
+    March: number | string;
+    April: number | string;
+    May: number | string;
+    June: number | string;
+    July: number | string;
+    August: number | string;
+    September: number | string;
+    October: number | string;
+    November: number | string;
+    December: number | string;
+    total_of_Total: number;
+  };
+  totalActivation: number;
+}
+
 // export interface ActivatedSIMGraphData {
 //   graphData: ReportData | MultipleReportData;
 // }

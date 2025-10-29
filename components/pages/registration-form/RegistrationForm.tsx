@@ -181,7 +181,7 @@ const RegistrationForm = ({
         {/* Step 1: Verify Dealer */}
         {step === "verifyDealer" && (
           <>
-            <h2 className="text-xl md:text-2xl font-bold text-center text-[var(--color-blue)] pt-4">
+            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[var(--color-blue)] pt-0 leading-[33px] sm:leading-[52px]">
               {registrationLabels.verifyDealer}
             </h2>
             <div className="space-y-1 lg:px-8">
@@ -221,7 +221,7 @@ const RegistrationForm = ({
         {/* Step 2: Postcode verification */}
         {step === "postcode" && (
           <>
-            <h2 className="text-xl md:text-2xl font-bold text-center text-[var(--color-blue)] pt-4">
+            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[var(--color-blue)] pt-0 leading-[33px] sm:leading-[52px]">
               {registrationLabels.verifyDealer}
             </h2>
             <div className="lg:px-8">
@@ -295,7 +295,7 @@ const RegistrationForm = ({
         {/* Step 3: Registration */}
         {step === "registration" && (
           <>
-            <h2 className="text-xl md:text-2xl font-bold text-left text-[var(--color-blue)]">
+            <h2 className="text-[18px] md:text-[24px] font-bold text-left text-[var(--color-blue)] pt-0 leading-[33px] sm:leading-[52px]">
               {registrationLabels.dealerRegistration}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
