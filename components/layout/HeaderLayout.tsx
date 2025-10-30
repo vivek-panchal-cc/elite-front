@@ -432,7 +432,7 @@ export function HeaderLayout() {
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
         // classStyle="sm:min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:min-w-[600px]"
-        classStyle="w-full max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[600px] xl:max-w-[600px]"
+        classStyle="w-full max-w-[350px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[600px] xl:max-w-[600px]"
         isClose={true}
       >
         <RegistrationForm

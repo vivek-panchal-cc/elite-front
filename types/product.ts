@@ -46,6 +46,7 @@ export interface Category {
   cat_name: string;
   is_product?: number;
   productList?: Product[];
+  cat_image?: string | null;
   icon?: string;
   product_count?: string;
   manufacture?: any[];

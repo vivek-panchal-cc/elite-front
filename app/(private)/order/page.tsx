@@ -30,6 +30,7 @@ import Modal from "@/components/ui/Modal";
 import FreeProductsModal from "@/components/pages/FreeProductsModal";
 import WrapAmount from "@/components/wrapper/WrapAmount";
 import useCartSummary from "@/hooks/useCartSummary";
+const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
 export default function Orders() {
   const router = useRouter();
@@ -328,7 +329,7 @@ export default function Orders() {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
-              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[83px] max-w-[100px] h-[55px] sm:min-w-[148px] sm:max-w-[200px] sm:h-[55px] hover:bg-[var(--color-blue)] border border-[var(--color-red)] cursor-auto">
+              <Button className="rounded-[50px] text-[12px] sm:text-[14px] ml-[-20px] min-w-[83px] max-w-[100px] h-[55px] sm:min-w-[148px] sm:max-w-[200px] sm:h-[55px] hover:bg-[var(--color-blue)] border border-[var(--color-red)] border-y-0 border-r-0 cursor-auto">
                 <Image
                   src={searchIcon}
                   alt="search"
@@ -397,7 +398,16 @@ export default function Orders() {
                                       : "bg-[var(--color-blue)] text-[var(--color-white)] hover:bg-[var(--color-red)]"
                                   }`}
                                 >
-                                  <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-8">
+                                  <div className="flex items-center gap-3 sm:gap-6 pl-2 sm:pl-8">
+                                    {cat.cat_image && (
+                                      <Image
+                                        src={`${imageBaseUrl}/medium/${cat.cat_image}`}
+                                        alt={cat.cat_image}
+                                        width={12}
+                                        height={12}
+                                        className="object-contain w-fit"
+                                      />
+                                    )}
                                     <span className="font-medium text-[14px] sm:text-[14px] truncate max-w-[150px] sm:max-w-none leading-[22px]">
                                       {sub.cat_name}
                                     </span>

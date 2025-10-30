@@ -181,7 +181,7 @@ const RegistrationForm = ({
         {/* Step 1: Verify Dealer */}
         {step === "verifyDealer" && (
           <>
-            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[var(--color-blue)] pt-0 leading-[33px] sm:leading-[52px]">
+            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[#00539C] pt-0 leading-[33px] sm:leading-[52px]">
               {registrationLabels.verifyDealer}
             </h2>
             <div className="space-y-1 lg:px-8">
@@ -221,7 +221,7 @@ const RegistrationForm = ({
         {/* Step 2: Postcode verification */}
         {step === "postcode" && (
           <>
-            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[var(--color-blue)] pt-0 leading-[33px] sm:leading-[52px]">
+            <h2 className="text-[18px] md:text-[24px] font-bold text-center text-[#00539C] pt-0 leading-[33px] sm:leading-[52px]">
               {registrationLabels.verifyDealer}
             </h2>
             <div className="lg:px-8">

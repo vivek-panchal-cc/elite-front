@@ -146,7 +146,7 @@ export default function Offers() {
       <Modal
         isOpen={isSignUpOpen}
         onClose={() => setSignUpOpen(false)}
-        classStyle="w-full max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[600px] xl:max-w-[600px]"
+        classStyle="w-full max-w-[350px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[600px] xl:max-w-[600px]"
         isClose={true}
       >
         <RegistrationForm
