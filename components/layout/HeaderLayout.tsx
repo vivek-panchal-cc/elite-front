@@ -57,7 +57,7 @@ const privateNavigationItems: NavigationItem[] = [
     href: null,
     children: [
       { name: navigationLabels.rewardStatements, href: "/reports" },
-      // { name: "Activations ", href: "/report-activations" },
+      { name: "Activations ", href: "/report-activations" },
     ],
   },
   { name: navigationLabels.contactUs, href: "#" },

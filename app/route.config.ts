@@ -18,7 +18,7 @@ export const routeConfig = {
     "/profile",
     "/reports",
     // "/change-password",
-    // "/report-activations",
+    "/report-activations",
     "/checkout",
     "/thank-you",
     "/try-again",
